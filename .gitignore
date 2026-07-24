@@ -1,0 +1,24 @@
+# WordPress — ignore local config and generated content
+wp-config.php
+.htaccess
+
+# Uploads and cache
+wp-content/uploads/
+wp-content/cache/
+wp-content/upgrade/
+
+# Migration exports (regenerate from Laravel)
+migration/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Logs
+*.log
+error_log
+
+# Node (if theme uses Vite later)
+node_modules/
