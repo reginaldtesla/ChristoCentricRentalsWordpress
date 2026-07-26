@@ -1,9 +1,0 @@
-.sfw-step-content-actions {
-	display: flex;
-	justify-content: flex-end;
-	gap: wpVariables.$grid-unit-05 * 5;
-
-	&[hidden] {
-		display: none;
-	}
-}

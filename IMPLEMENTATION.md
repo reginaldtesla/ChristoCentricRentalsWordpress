@@ -1,7 +1,7 @@
-admin ligin :: http://christocentricrentalswordpress.test/wp-login.php?loggedout=true&wp_lang=en_US
-
-
 # Christocentric Rentals — WordPress Implementation Plan
+
+> For day-to-day local setup, see [README.md](README.md).  
+> Admin: http://christocentricrentalswordpress.test/wp-login.php
 
 This folder is the **new WordPress site**. The Laravel app at `../ChristocentricRentals/` stays untouched — we **copy** data and assets from it when needed.
 
@@ -26,7 +26,7 @@ ChristoCentricRentalsWordpress/     ← WordPress (this folder)
 | Rentopian sync | Custom plugin: `CCR_Rentopian_Sync` |
 | Homepage CMS | **ACF Pro** options pages (or Kadence + custom fields) |
 | Compare products | Phase 2 — small custom plugin or theme JS |
-| Newsletter | MailPoet / Newsletter plugin, or Contact Form 7 + list |
+| Newsletter | Custom list in `christocentric-rentals` plugin |
 | Admin returns/penalties | Phase 2 — WooCommerce order meta + admin UI |
 
 ---
@@ -46,7 +46,7 @@ Copy `wp-config-sample.php` → `wp-config.php` and set:
 ```php
 define('DB_NAME', 'christocentric_wp');
 define('DB_USER', 'root');
-define('DB_PASSWORD', 'your_password');
+define('DB_PASSWORD', ''); // Laragon default
 define('DB_HOST', 'localhost');
 ```
 
@@ -57,7 +57,7 @@ Generate salts: https://api.wordpress.org/secret-key/1.1/salt/
 Open in browser:
 
 ```
-http://localhost/ChristocentricRentals/ChristoCentricRentalsWordpress/
+http://christocentricrentalswordpress.test/
 ```
 
 Complete the 5-minute install. Use a strong admin password.

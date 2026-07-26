@@ -50,7 +50,7 @@ Exclude from production uploads (or delete on server after upload):
 - `wp-content/debug.log`
 - `.git/` (if present)
 - Local-only `wp-config.php` (create a **new** production `wp-config.php` on the server)
-- Unused marketing plugins (Jetpack, MailPoet, Google Listings, Pinterest, PayPal, etc.) — see §5
+- Unused marketing plugins — do not install Jetpack, MailPoet, ads/social Woo extensions, etc. (see plugins section)
 
 ---
 
@@ -224,18 +224,11 @@ require_once ABSPATH . 'wp-settings.php';
 | Christocentric Rentals | `christocentric-rentals/christocentric-rentals.php` | Rentals, pickup cash, Rentopian, newsletter |
 | Paystack for WooCommerce | `woo-paystack/woo-paystack.php` | Online payments (GHS, cards, mobile money) |
 
-### Should be **inactive** (bundled but not needed live)
+### Do **not** install marketing bloat
 
-These ship in the repo but the setup script disables them locally — keep them off on production unless the client explicitly wants them:
+This project keeps only the three plugins above. Do not add Jetpack, MailPoet, Google Listings, Pinterest/Reddit/Snapchat for WooCommerce, PayPal Payments, or Akismet unless the client explicitly needs them.
 
-- Jetpack
-- MailPoet
-- Google Listings and Ads
-- Pinterest / Reddit / Snapchat for WooCommerce
-- WooCommerce PayPal Payments
-- Akismet
-
-Activate/deactivate under **Plugins** in wp-admin, or run locally:
+Re-sync the local stack with:
 
 ```powershell
 php scripts\setup-christocentric.php
@@ -364,7 +357,7 @@ Configure API key under **WooCommerce → Christocentric Rentals**.
 - [ ] SSL forced (`https://`)
 - [ ] Strong admin password; limit admin users
 - [ ] `DISALLOW_FILE_EDIT` in `wp-config.php`
-- [ ] Remove unused plugins
+- [ ] Confirm only WooCommerce + Christocentric Rentals + Paystack are installed
 - [ ] Install **Wordfence** or use Hostinger security tools (optional)
 - [ ] Disable `WP_DEBUG` on production
 - [ ] Block public access to `/scripts/` (`.htaccess` deny or move outside web root)

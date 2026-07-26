@@ -27,33 +27,31 @@ require_once ABSPATH . 'wp-admin/includes/image.php';
 
 echo "=== Christocentric Rentals WordPress setup ===\n";
 
-// --- Plugins ---
-$deactivate = [
-    'google-listings-and-ads/google-listings-and-ads.php',
-    'jetpack/jetpack.php',
-    'mailpoet/mailpoet.php',
-    'pinterest-for-woocommerce/pinterest-for-woocommerce.php',
-    'reddit-for-woocommerce/reddit-for-woocommerce.php',
-    'snapchat-for-woocommerce/snapchat-for-woocommerce.php',
-    'woocommerce-paypal-payments/woocommerce-paypal-payments.php',
-    'akismet/akismet.php',
+// --- Plugins (keep only shop stack) ---
+$keep = [
+    'woocommerce/woocommerce.php',
+    'christocentric-rentals/christocentric-rentals.php',
+    'woo-paystack/woo-paystack.php',
 ];
 
-foreach ($deactivate as $plugin) {
-    if (is_plugin_active($plugin)) {
-        deactivate_plugins($plugin);
-        echo "Deactivated: {$plugin}\n";
-    }
+$active = (array) get_option('active_plugins', []);
+$cleaned = array_values(array_intersect($active, $keep));
+if ($cleaned !== $active) {
+    update_option('active_plugins', $cleaned);
+    echo "Cleaned active_plugins (removed missing / unused entries)\n";
 }
 
-$activate = 'christocentric-rentals/christocentric-rentals.php';
-if (! is_plugin_active($activate)) {
-    $result = activate_plugin($activate);
+foreach ($keep as $plugin) {
+    if (is_plugin_active($plugin)) {
+        echo "Already active: {$plugin}\n";
+        continue;
+    }
+    $result = activate_plugin($plugin);
     if (is_wp_error($result)) {
-        fwrite(STDERR, 'Failed to activate Christocentric Rentals: ' . $result->get_error_message() . "\n");
+        fwrite(STDERR, "Failed {$plugin}: " . $result->get_error_message() . "\n");
         exit(1);
     }
-    echo "Activated: Christocentric Rentals\n";
+    echo "Activated: {$plugin}\n";
 }
 
 // --- WooCommerce settings ---
