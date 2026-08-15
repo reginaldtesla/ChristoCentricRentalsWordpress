@@ -27,7 +27,7 @@ add_filter('woocommerce_enqueue_styles', '__return_empty_array');
 
 add_action('wp_enqueue_scripts', static function (): void {
     $uri = get_template_directory_uri() . '/assets/build/';
-    $ver = '3.31';
+    $ver = '3.41';
 
     wp_dequeue_style('wc-blocks-style');
     wp_dequeue_style('wc-blocks-vendors-style');
@@ -52,6 +52,38 @@ add_action('wp_enqueue_scripts', static function (): void {
             'full' => __('Compare list is full (max 4).', 'christocentric'),
         ],
     ]);
+    wp_localize_script('ccr-theme', 'ccrQuickAdd', [
+        'ajaxUrl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('ccr_quick_add'),
+        'i18n' => [
+            'add' => __('Add', 'christocentric'),
+            'adding' => __('Adding…', 'christocentric'),
+            'added' => __('Added', 'christocentric'),
+            'error' => __('Could not add to cart.', 'christocentric'),
+        ],
+    ]);
+
+    $interestPayload = [
+        'cookie' => 'ccr_interest',
+        'maxAge' => 30 * DAY_IN_SECONDS,
+        'productId' => 0,
+        'categories' => [],
+    ];
+    if (function_exists('is_product') && is_product()) {
+        $product = wc_get_product(get_queried_object_id());
+        if ($product instanceof WC_Product) {
+            $interestPayload['productId'] = (int) $product->get_id();
+            $terms = get_the_terms($product->get_id(), 'product_cat');
+            if (is_array($terms)) {
+                foreach ($terms as $term) {
+                    if ($term instanceof WP_Term && $term->slug !== '') {
+                        $interestPayload['categories'][] = $term->slug;
+                    }
+                }
+            }
+        }
+    }
+    wp_localize_script('ccr-theme', 'ccrInterest', $interestPayload);
 }, 100);
 
 // WC Blocks may re-enqueue after priority 100 — strip again before print.

@@ -19,6 +19,35 @@ $popular = ccr_get_products([
         'sony-lenses',
     ],
 ]);
+$newArrivals = ccr_get_products([
+    'limit' => 12,
+    'category' => ['new-arrivals'],
+    'orderby' => 'date',
+    'order' => 'DESC',
+]);
+if ($newArrivals === []) {
+    $newArrivals = ccr_get_products([
+        'limit' => 12,
+        'meta_query' => [['key' => '_ccr_is_new', 'value' => 'yes']],
+        'orderby' => 'date',
+        'order' => 'DESC',
+    ]);
+}
+if ($newArrivals === []) {
+    $newArrivals = ccr_get_products([
+        'limit' => 12,
+        'orderby' => 'date',
+        'order' => 'DESC',
+    ]);
+}
+$newArrivalsUrl = ccr_shop_url(['product_cat' => 'new-arrivals']);
+$termNew = get_term_by('slug', 'new-arrivals', 'product_cat');
+if ($termNew instanceof WP_Term) {
+    $link = get_term_link($termNew, 'product_cat');
+    if (! is_wp_error($link)) {
+        $newArrivalsUrl = (string) $link;
+    }
+}
 $panels = [
     'new' => ccr_get_products(['limit' => 6, 'orderby' => 'date', 'order' => 'DESC']),
     'featured' => ccr_get_products(['limit' => 6, 'meta_query' => [['key' => '_ccr_is_featured', 'value' => 'yes']]]),
@@ -29,6 +58,8 @@ $deals = ccr_deals_slides();
 $banners = ccr_brand_banners();
 $lighting = ccr_featured_lighting();
 $shop = ccr_shop_url();
+$pickedForYou = ccr_personalized_products(12);
+$pickedForYouUrl = ccr_personalized_shop_url();
 ?>
 
 <section class="ccr-promo-hero carousel-shell" data-hero-slider>
@@ -120,6 +151,42 @@ $shop = ccr_shop_url();
         </aside>
     </div>
 </section>
+
+<?php if ($newArrivals !== []) : ?>
+<section class="home-section ccr-new-arrivals" data-ccr-pop-section>
+    <div class="container-site">
+        <div class="ccr-new-arrivals-panel" data-ccr-pop-panel>
+            <div class="ccr-new-arrivals-head" data-ccr-pop-item>
+                <span class="ccr-new-arrivals-badge"><?php esc_html_e('Just in', 'christocentric'); ?></span>
+                <?php
+                get_template_part('template-parts/section-title', null, [
+                    'title' => __('New Arrivals', 'christocentric'),
+                    'link' => $newArrivalsUrl,
+                    'link_text' => __('See all new gear', 'christocentric'),
+                ]);
+                ?>
+            </div>
+            <div data-ccr-pop-item>
+                <?php get_template_part('template-parts/product-scroll', null, ['products' => $newArrivals]); ?>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
+<?php if ($pickedForYou !== []) : ?>
+<section class="home-section container-site ccr-picked-for-you">
+    <?php
+    get_template_part('template-parts/section-title', null, [
+        'title' => __('Picked for you', 'christocentric'),
+        'link' => $pickedForYouUrl,
+        'link_text' => __('See more like this', 'christocentric'),
+    ]);
+    ?>
+    <p class="ccr-picked-for-you-note"><?php esc_html_e('Based on gear you recently viewed on this device.', 'christocentric'); ?></p>
+    <?php get_template_part('template-parts/product-scroll', null, ['products' => $pickedForYou]); ?>
+</section>
+<?php endif; ?>
 
 <section class="home-section home-section-alt">
     <div class="container-site">

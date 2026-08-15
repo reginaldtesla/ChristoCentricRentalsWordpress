@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Christocentric Rentals
  * Description: 24-hour camera & gear rentals — availability, pay-on-pickup, Paystack, SMTP, and optional Rentopian sync.
- * Version: 1.5.2
+ * Version: 1.5.3
  * Author: Christocentric Rentals
  * Requires at least: 6.4
  * Requires PHP: 8.1
@@ -11,7 +11,7 @@
 
 defined('ABSPATH') || exit;
 
-define('CCR_VERSION', '1.5.2');
+define('CCR_VERSION', '1.5.3');
 define('CCR_PLUGIN_FILE', __FILE__);
 define('CCR_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('CCR_PLUGIN_URL', plugin_dir_url(__FILE__));

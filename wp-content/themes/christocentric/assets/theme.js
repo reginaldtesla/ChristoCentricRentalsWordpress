@@ -86,6 +86,166 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    document.querySelectorAll('.ccr-shop-cats').forEach(function (tree) {
+        function isFlyoutMode() {
+            return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        }
+
+        function clearOpenState() {
+            tree.querySelectorAll('.ccr-shop-group.is-open, .ccr-shop-item.is-open').forEach(function (node) {
+                node.classList.remove('is-open');
+            });
+            tree.querySelectorAll('.ccr-shop-group-trigger, .ccr-shop-item-toggle').forEach(function (btn) {
+                btn.setAttribute('aria-expanded', 'false');
+            });
+        }
+
+        function openActiveForTouch() {
+            if (isFlyoutMode()) {
+                clearOpenState();
+                return;
+            }
+            tree.querySelectorAll('[data-ccr-active-group="1"]').forEach(function (group) {
+                group.classList.add('is-open');
+                var trigger = group.querySelector('.ccr-shop-group-trigger');
+                if (trigger) {
+                    trigger.setAttribute('aria-expanded', 'true');
+                }
+            });
+            tree.querySelectorAll('[data-ccr-active-item="1"]').forEach(function (item) {
+                item.classList.add('is-open');
+                var toggle = item.querySelector('.ccr-shop-item-toggle');
+                if (toggle) {
+                    toggle.setAttribute('aria-expanded', 'true');
+                }
+            });
+        }
+
+        openActiveForTouch();
+        window.matchMedia('(hover: hover) and (pointer: fine)').addEventListener('change', openActiveForTouch);
+
+        tree.querySelectorAll('.ccr-shop-group-trigger').forEach(function (trigger) {
+            trigger.addEventListener('click', function (e) {
+                if (isFlyoutMode()) {
+                    e.preventDefault();
+                    return;
+                }
+                var group = trigger.closest('.ccr-shop-group');
+                if (!group) {
+                    return;
+                }
+                var open = !group.classList.contains('is-open');
+                tree.querySelectorAll('.ccr-shop-group.is-open').forEach(function (other) {
+                    if (other !== group) {
+                        other.classList.remove('is-open');
+                        var otherTrigger = other.querySelector('.ccr-shop-group-trigger');
+                        if (otherTrigger) {
+                            otherTrigger.setAttribute('aria-expanded', 'false');
+                        }
+                    }
+                });
+                group.classList.toggle('is-open', open);
+                trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
+        });
+
+        tree.querySelectorAll('.ccr-shop-item-toggle').forEach(function (toggle) {
+            toggle.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (isFlyoutMode()) {
+                    return;
+                }
+                var item = toggle.closest('.ccr-shop-item');
+                if (!item) {
+                    return;
+                }
+                var open = !item.classList.contains('is-open');
+                item.classList.toggle('is-open', open);
+                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
+        });
+
+        // Phone: category product links jump down to the product grid after navigation.
+        tree.querySelectorAll('a.ccr-shop-item-link').forEach(function (link) {
+            link.addEventListener('click', function () {
+                if (isFlyoutMode()) {
+                    return;
+                }
+                try {
+                    sessionStorage.setItem('ccrScrollShopProducts', '1');
+                } catch (err) { /* ignore */ }
+            });
+        });
+    });
+
+    (function scrollShopProductsOnMobile() {
+        var target = document.getElementById('ccr-shop-products');
+        if (!target) {
+            return;
+        }
+
+        var mobile = window.matchMedia('(max-width: 1023px)').matches
+            || window.matchMedia('(hover: none), (pointer: coarse)').matches;
+        if (!mobile) {
+            return;
+        }
+
+        var shouldScroll = false;
+        try {
+            shouldScroll = sessionStorage.getItem('ccrScrollShopProducts') === '1';
+            if (shouldScroll) {
+                sessionStorage.removeItem('ccrScrollShopProducts');
+            }
+        } catch (err) { /* ignore */ }
+
+        if (!shouldScroll && window.location.hash === '#ccr-shop-products') {
+            shouldScroll = true;
+            if (window.history && window.history.replaceState) {
+                window.history.replaceState(null, '', window.location.pathname + window.location.search);
+            }
+        }
+
+        if (!shouldScroll) {
+            return;
+        }
+
+        function easeInOutCubic(t) {
+            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+
+        function smoothScrollTo(el, duration) {
+            var headerOffset = 72;
+            var startY = window.pageYOffset || document.documentElement.scrollTop || 0;
+            var rect = el.getBoundingClientRect();
+            var endY = Math.max(0, startY + rect.top - headerOffset);
+            var distance = endY - startY;
+            if (Math.abs(distance) < 4) {
+                return;
+            }
+            var startTime = null;
+
+            function step(now) {
+                if (startTime === null) {
+                    startTime = now;
+                }
+                var progress = Math.min(1, (now - startTime) / duration);
+                var y = startY + distance * easeInOutCubic(progress);
+                window.scrollTo(0, y);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            }
+
+            window.requestAnimationFrame(step);
+        }
+
+        // Start as soon as layout is ready — keep the wait tiny so it doesn't feel stuck.
+        window.setTimeout(function () {
+            smoothScrollTo(target, 550);
+        }, 16);
+    })();
+
     document.querySelectorAll('[data-product-tabs]').forEach(function (root) {
         var triggers = root.querySelectorAll('[data-tab-trigger]');
         var panels = root.querySelectorAll('[data-tab-panel]');
@@ -589,4 +749,161 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
+
+    document.querySelectorAll('[data-ccr-quick-add]').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (typeof ccrQuickAdd === 'undefined' || !ccrQuickAdd.ajaxUrl) {
+                return;
+            }
+            if (btn.disabled) {
+                return;
+            }
+
+            var productId = btn.getAttribute('data-product-id');
+            if (!productId) {
+                return;
+            }
+
+            var labelAdd = (ccrQuickAdd.i18n && ccrQuickAdd.i18n.add) || 'Add';
+            var labelAdding = (ccrQuickAdd.i18n && ccrQuickAdd.i18n.adding) || 'Adding…';
+            var labelAdded = (ccrQuickAdd.i18n && ccrQuickAdd.i18n.added) || 'Added';
+            var labelError = (ccrQuickAdd.i18n && ccrQuickAdd.i18n.error) || 'Could not add to cart.';
+
+            btn.disabled = true;
+            btn.textContent = labelAdding;
+
+            var body = new FormData();
+            body.set('action', 'ccr_quick_add');
+            body.set('nonce', ccrQuickAdd.nonce);
+            body.set('product_id', productId);
+
+            fetch(ccrQuickAdd.ajaxUrl, {
+                method: 'POST',
+                credentials: 'same-origin',
+                body: body
+            })
+                .then(function (res) { return res.json(); })
+                .then(function (payload) {
+                    if (!payload || !payload.success) {
+                        var msg = (payload && payload.data && payload.data.message) ? payload.data.message : labelError;
+                        window.alert(msg);
+                        btn.disabled = false;
+                        btn.textContent = labelAdd;
+                        btn.classList.remove('is-added');
+                        return;
+                    }
+
+                    var count = payload.data && typeof payload.data.cart_count !== 'undefined'
+                        ? parseInt(payload.data.cart_count, 10)
+                        : 0;
+                    document.querySelectorAll('[data-ccr-cart-count]').forEach(function (badge) {
+                        if (count > 0) {
+                            badge.hidden = false;
+                            badge.removeAttribute('hidden');
+                            badge.textContent = String(count);
+                        } else {
+                            badge.hidden = true;
+                            badge.setAttribute('hidden', '');
+                            badge.textContent = '';
+                        }
+                    });
+
+                    btn.textContent = labelAdded;
+                    btn.classList.add('is-added');
+                    window.setTimeout(function () {
+                        btn.disabled = false;
+                        btn.textContent = labelAdd;
+                        btn.classList.remove('is-added');
+                    }, 1600);
+                })
+                .catch(function () {
+                    window.alert(labelError);
+                    btn.disabled = false;
+                    btn.textContent = labelAdd;
+                    btn.classList.remove('is-added');
+                });
+        });
+    });
+
+    document.querySelectorAll('[data-ccr-pop-section]').forEach(function (section) {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            section.classList.add('is-inview');
+            return;
+        }
+        if (!('IntersectionObserver' in window)) {
+            section.classList.add('is-inview');
+            return;
+        }
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    section.classList.add('is-inview');
+                    observer.unobserve(section);
+                }
+            });
+        }, {
+            threshold: 0.22,
+            rootMargin: '0px 0px -8% 0px'
+        });
+        observer.observe(section);
+    });
+
+    // Browse-interest cookie for homepage personalization.
+    (function trackInterest() {
+        if (typeof ccrInterest === 'undefined' || !ccrInterest.productId) {
+            return;
+        }
+
+        var productId = parseInt(ccrInterest.productId, 10);
+        if (!productId) {
+            return;
+        }
+
+        var cookieName = ccrInterest.cookie || 'ccr_interest';
+        var maxAge = parseInt(ccrInterest.maxAge, 10) || (30 * 24 * 60 * 60);
+        var cats = Array.isArray(ccrInterest.categories) ? ccrInterest.categories : [];
+
+        function readCookie(name) {
+            var parts = (';cookie || '').split(';');
+            for (var i = 0; i < parts.length; i++) {
+                var part = parts[i].trim();
+                if (part.indexOf(name + '=') === 0) {
+                    return decodeURIComponent(part.slice(name.length + 1));
+                }
+            }
+            return '';
+        }
+
+        var data = { p: [], c: [] };
+        try {
+            var raw = readCookie(cookieName);
+            if (raw) {
+                var parsed = JSON.parse(raw);
+                if (parsed && typeof parsed === 'object') {
+                    data.p = Array.isArray(parsed.p) ? parsed.p : [];
+                    data.c = Array.isArray(parsed.c) ? parsed.c : [];
+                }
+            }
+        } catch (err) { /* ignore bad cookie */ }
+
+        data.p = data.p
+            .map(function (id) { return parseInt(id, 10); })
+            .filter(function (id) { return id > 0 && id !== productId; });
+        data.p.unshift(productId);
+        data.p = data.p.slice(0, 12);
+
+        cats.forEach(function (slug) {
+            if (!slug || typeof slug !== 'string') {
+                return;
+            }
+            data.c = data.c.filter(function (existing) { return existing !== slug; });
+            data.c.unshift(slug);
+        });
+        data.c = data.c.slice(0, 8);
+
+        document.cookie = cookieName + '=' + encodeURIComponent(JSON.stringify(data))
+            + '; path=/; max-age=' + maxAge + '; SameSite=Lax';
+    })();
 });

@@ -18,6 +18,135 @@ final class CCR_Rental_Cart
         add_action('woocommerce_check_cart_items', [self::class, 'validate_cart_availability']);
         add_action('wp_ajax_ccr_rental_quote', [self::class, 'ajax_quote']);
         add_action('wp_ajax_nopriv_ccr_rental_quote', [self::class, 'ajax_quote']);
+        add_action('wp_ajax_ccr_quick_add', [self::class, 'ajax_quick_add']);
+        add_action('wp_ajax_nopriv_ccr_quick_add', [self::class, 'ajax_quick_add']);
+    }
+
+    /**
+     * Default 24-hour rental window used by product-card quick add.
+     *
+     * @return array{start:string,end:string,pickup:string,return:string,days:int}
+     */
+    public static function default_rental_window(): array
+    {
+        $pickup = self::normalize_time((string) get_option('ccr_default_pickup_time', '09:00'));
+        $latest = self::latest_return_time();
+        $start = current_time('Y-m-d');
+
+        if (current_time('H:i') > $latest) {
+            $start = wp_date('Y-m-d', strtotime($start . ' +1 day'));
+        }
+
+        $auto = CCR_Rental_Pricing::add_hours_clamped($start, $pickup, 24, $latest) ?? [$start, $pickup];
+        $end = $auto[0];
+        $return = $auto[1];
+        $days = CCR_Rental_Pricing::rental_days($start, $end, $pickup, $return);
+
+        return [
+            'start' => $start,
+            'end' => $end,
+            'pickup' => $pickup,
+            'return' => $return,
+            'days' => max(1, $days),
+        ];
+    }
+
+    public static function ajax_quick_add(): void
+    {
+        check_ajax_referer('ccr_quick_add', 'nonce');
+
+        if (! function_exists('WC') || ! WC()->cart) {
+            wp_send_json_error(['message' => __('Cart is not available.', 'christocentric-rentals')]);
+        }
+
+        $productId = absint($_POST['product_id'] ?? 0); // phpcs:ignore
+        $product = wc_get_product($productId);
+
+        if (! $product instanceof WC_Product || ! $product->is_purchasable() || ! $product->is_in_stock()) {
+            wp_send_json_error(['message' => __('This item is unavailable.', 'christocentric-rentals')]);
+        }
+
+        $window = self::default_rental_window();
+        $start = $window['start'];
+        $end = $window['end'];
+        $pickup = $window['pickup'];
+        $return = $window['return'];
+        $days = $window['days'];
+
+        // So add_cart_item_data / validation see the same rental window.
+        $_REQUEST['ccr_rental_start'] = $start;
+        $_REQUEST['ccr_rental_end'] = $end;
+        $_REQUEST['ccr_pickup_time'] = $pickup;
+        $_REQUEST['ccr_return_time'] = $return;
+        $_POST['ccr_rental_start'] = $start;
+        $_POST['ccr_rental_end'] = $end;
+        $_POST['ccr_pickup_time'] = $pickup;
+        $_POST['ccr_return_time'] = $return;
+
+        $isKit = class_exists('CCR_Product_Kits') && CCR_Product_Kits::is_kit($productId);
+
+        if ($isKit) {
+            $availability = CCR_Product_Kits::availability_for_dates($productId, $start, $end, 1);
+            if ($availability['available'] < 1 || $availability['unavailable'] !== []) {
+                wp_send_json_error([
+                    'message' => __('This kit is not available for the default 24-hour window. Open the product to pick other dates.', 'christocentric-rentals'),
+                ]);
+            }
+
+            $kitKey = 'kit_' . $productId . '_' . wp_generate_password(6, false);
+            $added = 0;
+
+            foreach (CCR_Product_Kits::get_items($productId) as $item) {
+                $child = wc_get_product($item['product_id']);
+                if (! $child instanceof WC_Product || ! $child->is_purchasable()) {
+                    continue;
+                }
+                $lineQty = max(1, (int) $item['quantity']);
+                $key = WC()->cart->add_to_cart($item['product_id'], $lineQty, 0, [], [
+                    'ccr_rental_start' => $start,
+                    'ccr_rental_end' => $end,
+                    'ccr_pickup_time' => $pickup,
+                    'ccr_return_time' => $return,
+                    'ccr_rental_days' => $days,
+                    'ccr_kit_id' => $productId,
+                    'ccr_kit_key' => $kitKey,
+                    'unique_key' => md5($kitKey . $item['product_id'] . microtime(true)),
+                ]);
+                if ($key) {
+                    $added++;
+                }
+            }
+
+            if ($added < 1) {
+                wp_send_json_error(['message' => __('Could not add this kit to the cart.', 'christocentric-rentals')]);
+            }
+        } else {
+            $available = CCR_Rental_Availability::available_quantity($productId, $start, $end);
+            if ($available < 1) {
+                wp_send_json_error([
+                    'message' => __('Not available for the default 24-hour window. Open the product to pick other dates.', 'christocentric-rentals'),
+                ]);
+            }
+
+            $key = WC()->cart->add_to_cart($productId, 1, 0, [], [
+                'ccr_rental_start' => $start,
+                'ccr_rental_end' => $end,
+                'ccr_pickup_time' => $pickup,
+                'ccr_return_time' => $return,
+                'ccr_rental_days' => $days,
+                'unique_key' => md5($productId . $start . $end . $pickup . $return . microtime(true)),
+            ]);
+
+            if (! $key) {
+                wp_send_json_error(['message' => __('Could not add this item to the cart.', 'christocentric-rentals')]);
+            }
+        }
+
+        wp_send_json_success([
+            'message' => __('Added with default 24-hour rental. Change dates on the product page if needed.', 'christocentric-rentals'),
+            'cart_count' => (int) WC()->cart->get_cart_contents_count(),
+            'cart_url' => wc_get_cart_url(),
+        ]);
     }
 
     public static function latest_return_time(): string

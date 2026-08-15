@@ -64,16 +64,46 @@ $kitsView = ccr_is_kits_view();
     <div class="ccr-shop-layout">
         <aside class="ccr-shop-sidebar">
             <h2 class="mb-3 text-sm font-semibold text-gray-900"><?php esc_html_e('Categories', 'christocentric'); ?></h2>
-            <ul class="ccr-shop-cats space-y-3">
+            <ul class="ccr-shop-cats">
                 <?php foreach (ccr_nav_category_groups() as $group) : ?>
-                    <li>
-                        <p class="px-3 text-[11px] font-semibold uppercase tracking-wide text-gray-500"><?php echo esc_html($group['label']); ?></p>
-                        <ul class="mt-1 space-y-1">
+                    <?php
+                    $groupOpen = ! empty($group['active']);
+                    ?>
+                    <li class="ccr-shop-group<?php echo $groupOpen ? ' is-active' : ''; ?>"<?php echo $groupOpen ? ' data-ccr-active-group="1"' : ''; ?>>
+                        <button type="button" class="ccr-shop-group-trigger" aria-expanded="false">
+                            <span><?php echo esc_html($group['label']); ?></span>
+                            <svg class="ccr-shop-caret" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+                        </button>
+                        <ul class="ccr-shop-group-panel">
                             <?php foreach ($group['items'] as $item) : ?>
-                                <li>
-                                    <a href="<?php echo esc_url($item['url']); ?>" class="block rounded-lg px-3 py-2 text-sm <?php echo ! empty($item['active']) ? 'bg-primary-light font-medium text-primary' : 'text-gray-700 hover:bg-gray-100'; ?>">
-                                        <?php echo esc_html($item['label']); ?>
-                                    </a>
+                                <?php
+                                $hasChildren = ! empty($item['children']) && is_array($item['children']);
+                                $itemOpen = $hasChildren && ! empty($item['active']);
+                                ?>
+                                <li class="ccr-shop-item<?php echo $hasChildren ? ' has-children' : ''; ?><?php echo ! empty($item['active']) ? ' is-active' : ''; ?>"<?php echo $itemOpen ? ' data-ccr-active-item="1"' : ''; ?>>
+                                    <?php if ($hasChildren) : ?>
+                                        <div class="ccr-shop-item-row">
+                                            <a href="<?php echo esc_url($item['url']); ?>" class="ccr-shop-item-link<?php echo ! empty($item['active']) ? ' is-active' : ''; ?>">
+                                                <?php echo esc_html($item['label']); ?>
+                                            </a>
+                                            <button type="button" class="ccr-shop-item-toggle" aria-expanded="false" aria-label="<?php echo esc_attr(sprintf(__('Show subcategories of %s', 'christocentric'), $item['label'])); ?>">
+                                                <svg class="ccr-shop-caret" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+                                            </button>
+                                        </div>
+                                        <ul class="ccr-shop-item-panel">
+                                            <?php foreach ($item['children'] as $child) : ?>
+                                                <li>
+                                                    <a href="<?php echo esc_url($child['url']); ?>" class="ccr-shop-item-link ccr-shop-item-link--child<?php echo ! empty($child['active']) ? ' is-active' : ''; ?>">
+                                                        <?php echo esc_html($child['label']); ?>
+                                                    </a>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    <?php else : ?>
+                                        <a href="<?php echo esc_url($item['url']); ?>" class="ccr-shop-item-link<?php echo ! empty($item['active']) ? ' is-active' : ''; ?>">
+                                            <?php echo esc_html($item['label']); ?>
+                                        </a>
+                                    <?php endif; ?>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
@@ -86,7 +116,7 @@ $kitsView = ccr_is_kits_view();
                 </p>
             <?php endif; ?>
         </aside>
-        <div class="ccr-shop-main">
+        <div class="ccr-shop-main" id="ccr-shop-products">
             <?php if (woocommerce_product_loop()) : ?>
                 <?php woocommerce_product_loop_start(); ?>
                 <?php while (have_posts()) : the_post(); ?>

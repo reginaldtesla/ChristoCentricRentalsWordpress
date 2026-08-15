@@ -852,12 +852,14 @@ function ccr_nav_category_groups(): array
     $kitsView = ccr_is_kits_view();
     $shopActive = function_exists('is_shop') && is_shop() && $active === '' && ! $kitsView;
 
-    $resolve = static function (array $item) use ($active, $kitsView, $shopActive): array {
+    $resolve = null;
+    $resolve = static function (array $item) use (&$resolve, $active, $kitsView, $shopActive): array {
         $type = (string) ($item['type'] ?? 'category');
         $slug = (string) ($item['slug'] ?? '');
         $label = (string) ($item['label'] ?? '');
         $url = ccr_shop_url();
         $isActive = false;
+        $children = [];
 
         if ($type === 'kits') {
             $url = ccr_kits_url();
@@ -870,10 +872,53 @@ function ccr_nav_category_groups(): array
             if ($term instanceof WP_Term) {
                 $link = get_term_link($term, 'product_cat');
                 $url = is_wp_error($link) ? ccr_shop_url(['product_cat' => $slug]) : (string) $link;
+
+                $childTerms = get_terms([
+                    'taxonomy' => 'product_cat',
+                    'parent' => (int) $term->term_id,
+                    'hide_empty' => false,
+                ]);
+                if (! is_wp_error($childTerms)) {
+                    foreach ($childTerms as $childTerm) {
+                        if (! $childTerm instanceof WP_Term) {
+                            continue;
+                        }
+                        $children[] = $resolve([
+                            'label' => $childTerm->name,
+                            'slug' => $childTerm->slug,
+                        ]);
+                    }
+                }
             } else {
                 $url = ccr_shop_url(['product_cat' => $slug]);
             }
             $isActive = ! $kitsView && $active === $slug;
+        }
+
+        if (! empty($item['children']) && is_array($item['children'])) {
+            foreach ($item['children'] as $child) {
+                if (! is_array($child)) {
+                    continue;
+                }
+                $resolved = $resolve($child);
+                $dup = false;
+                foreach ($children as $existing) {
+                    if (($existing['slug'] ?? '') !== '' && ($existing['slug'] ?? '') === ($resolved['slug'] ?? '')) {
+                        $dup = true;
+                        break;
+                    }
+                }
+                if (! $dup) {
+                    $children[] = $resolved;
+                }
+            }
+        }
+
+        foreach ($children as $child) {
+            if (! empty($child['active'])) {
+                $isActive = true;
+                break;
+            }
         }
 
         return [
@@ -882,6 +927,7 @@ function ccr_nav_category_groups(): array
             'slug' => $slug,
             'type' => $type,
             'active' => $isActive,
+            'children' => $children,
         ];
     };
 
@@ -961,6 +1007,151 @@ function ccr_nav_category_groups(): array
     }
 
     return $groups;
+}
+
+/**
+ * Cookie name for browsing interest (viewed products / categories).
+ */
+function ccr_interest_cookie_name(): string
+{
+    return 'ccr_interest';
+}
+
+/**
+ * @return array{product_ids:list<int>,category_slugs:list<string>,top_category:string}
+ */
+function ccr_parse_interest_cookie(): array
+{
+    $raw = isset($_COOKIE[ccr_interest_cookie_name()])
+        ? (string) wp_unslash($_COOKIE[ccr_interest_cookie_name()]) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+        : '';
+
+    $empty = [
+        'product_ids' => [],
+        'category_slugs' => [],
+        'top_category' => '',
+    ];
+
+    if ($raw === '') {
+        return $empty;
+    }
+
+    $decoded = json_decode(rawurldecode($raw), true);
+    if (! is_array($decoded)) {
+        $decoded = json_decode($raw, true);
+    }
+    if (! is_array($decoded)) {
+        return $empty;
+    }
+
+    $productIds = [];
+    foreach ((array) ($decoded['p'] ?? []) as $id) {
+        $id = absint($id);
+        if ($id > 0 && ! in_array($id, $productIds, true)) {
+            $productIds[] = $id;
+        }
+        if (count($productIds) >= 12) {
+            break;
+        }
+    }
+
+    $slugs = [];
+    foreach ((array) ($decoded['c'] ?? []) as $slug) {
+        $slug = sanitize_title((string) $slug);
+        if ($slug !== '' && ! in_array($slug, $slugs, true)) {
+            $slugs[] = $slug;
+        }
+        if (count($slugs) >= 8) {
+            break;
+        }
+    }
+
+    return [
+        'product_ids' => $productIds,
+        'category_slugs' => $slugs,
+        'top_category' => $slugs[0] ?? '',
+    ];
+}
+
+/**
+ * Related in-stock products based on browsing interest cookie.
+ *
+ * @return list<WC_Product>
+ */
+function ccr_personalized_products(int $limit = 12): array
+{
+    if (! function_exists('wc_get_products')) {
+        return [];
+    }
+
+    $interest = ccr_parse_interest_cookie();
+    $exclude = $interest['product_ids'];
+    $categories = $interest['category_slugs'];
+
+    if ($categories === [] && $exclude === []) {
+        return [];
+    }
+
+    $limit = max(1, min(24, $limit));
+    $found = [];
+
+    if ($categories !== []) {
+        $related = ccr_get_products([
+            'limit' => $limit + count($exclude),
+            'category' => $categories,
+            'orderby' => 'date',
+            'order' => 'DESC',
+            'exclude' => $exclude,
+        ]);
+        foreach ($related as $product) {
+            if (! $product instanceof WC_Product || ! $product->is_purchasable()) {
+                continue;
+            }
+            $found[$product->get_id()] = $product;
+            if (count($found) >= $limit) {
+                return array_values($found);
+            }
+        }
+    }
+
+    // Soft fill: recently viewed items still in stock (newest interest first).
+    if (count($found) < $limit && $exclude !== []) {
+        foreach ($exclude as $id) {
+            if (isset($found[$id])) {
+                continue;
+            }
+            $product = wc_get_product($id);
+            if (! $product instanceof WC_Product || ! $product->is_purchasable() || ! $product->is_in_stock()) {
+                continue;
+            }
+            $found[$id] = $product;
+            if (count($found) >= $limit) {
+                break;
+            }
+        }
+    }
+
+    return array_values($found);
+}
+
+function ccr_personalized_shop_url(): string
+{
+    $interest = ccr_parse_interest_cookie();
+    $slug = $interest['top_category'];
+
+    if ($slug !== '') {
+        $term = get_term_by('slug', $slug, 'product_cat');
+        if ($term instanceof WP_Term) {
+            $link = get_term_link($term, 'product_cat');
+            if (! is_wp_error($link)) {
+                return (string) $link;
+            }
+        }
+
+        return ccr_shop_url(['product_cat' => $slug]);
+    }
+
+    return ccr_shop_url();
 }
 
 function ccr_is_kits_view(): bool
