@@ -10,6 +10,7 @@
 </head>
 <body <?php body_class('flex min-h-screen flex-col bg-white pb-16 md:pb-0'); ?>>
 <?php wp_body_open(); ?>
+<?php get_template_part('template-parts/promo-banner'); ?>
 <?php get_template_part('template-parts/header'); ?>
 <main class="flex-1">
     <?php if (function_exists('wc_print_notices')) { wc_print_notices(); } ?>

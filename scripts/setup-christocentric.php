@@ -64,7 +64,7 @@ update_option('woocommerce_allowed_countries', 'specific');
 update_option('woocommerce_specific_allowed_countries', ['GH']);
 update_option('woocommerce_calc_taxes', 'no');
 update_option('woocommerce_enable_guest_checkout', 'no');
-update_option('woocommerce_enable_signup_and_login_from_checkout', 'yes');
+update_option('woocommerce_enable_signup_and_login_from_checkout', 'no');
 update_option('woocommerce_onboarding_profile', ['completed' => true]);
 update_option('woocommerce_task_list_hidden', 'yes');
 update_option('woocommerce_task_list_tracked_completed_tasks', [
@@ -144,6 +144,17 @@ while (($row = fgetcsv($handle)) !== false) {
     $existing = wc_get_product_id_by_sku($sku);
     if ($existing) {
         $skipped++;
+        // Still attach image if product has no featured image yet.
+        if (! get_post_thumbnail_id($existing)) {
+            $imageRel = $row[$col['Images']] ?? '';
+            if ($imageRel !== '') {
+                $attachmentId = attach_product_image((int) $existing, $imageRel, $sku, $imagesTarget, $imagesSource, $imageCache);
+                if ($attachmentId) {
+                    set_post_thumbnail((int) $existing, $attachmentId);
+                    echo "Attached image to existing: {$sku}\n";
+                }
+            }
+        }
         continue;
     }
 

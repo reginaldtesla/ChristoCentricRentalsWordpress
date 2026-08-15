@@ -10,6 +10,7 @@ final class CCR_Rental_Cart
     public static function init(): void
     {
         add_action('woocommerce_before_add_to_cart_button', [self::class, 'render_product_fields']);
+        add_filter('woocommerce_add_to_cart_validation', [self::class, 'validate_add_to_cart'], 10, 3);
         add_filter('woocommerce_add_cart_item_data', [self::class, 'add_cart_item_data'], 10, 3);
         add_filter('woocommerce_get_item_data', [self::class, 'display_cart_item_data'], 10, 2);
         add_action('woocommerce_before_calculate_totals', [self::class, 'adjust_cart_prices'], 20);
@@ -17,6 +18,68 @@ final class CCR_Rental_Cart
         add_action('woocommerce_check_cart_items', [self::class, 'validate_cart_availability']);
         add_action('wp_ajax_ccr_rental_quote', [self::class, 'ajax_quote']);
         add_action('wp_ajax_nopriv_ccr_rental_quote', [self::class, 'ajax_quote']);
+    }
+
+    public static function latest_return_time(): string
+    {
+        return self::normalize_time((string) get_option('ccr_latest_return_time', '20:50'));
+    }
+
+    public static function normalize_time(string $time): string
+    {
+        if (preg_match('/^(\d{1,2}):(\d{2})/', trim($time), $m)) {
+            $h = min(23, max(0, (int) $m[1]));
+            $i = min(59, max(0, (int) $m[2]));
+
+            return sprintf('%02d:%02d', $h, $i);
+        }
+
+        return '20:50';
+    }
+
+    public static function is_after_closing(string $time): bool
+    {
+        return self::normalize_time($time) > self::latest_return_time();
+    }
+
+    public static function closing_time_label(): string
+    {
+        $time = self::latest_return_time();
+        $ts = strtotime('1970-01-01 ' . $time);
+
+        return $ts ? date_i18n(get_option('time_format', 'g:i a'), $ts) : $time;
+    }
+
+    /**
+     * @param mixed $passed
+     * @param mixed $productId
+     * @param mixed $quantity
+     */
+    public static function validate_add_to_cart($passed, $productId, $quantity): bool
+    {
+        if (! $passed) {
+            return false;
+        }
+
+        $return = sanitize_text_field(wp_unslash((string) ($_POST['ccr_return_time'] ?? $_REQUEST['ccr_return_time'] ?? '')));
+        if ($return === '') {
+            $return = (string) get_option('ccr_default_return_time', '17:00');
+        }
+
+        if (self::is_after_closing($return)) {
+            wc_add_notice(
+                sprintf(
+                    /* translators: %s: closing time */
+                    __('Return time must be by %s. The rental office closes then — please choose an earlier return time.', 'christocentric-rentals'),
+                    self::closing_time_label()
+                ),
+                'error'
+            );
+
+            return false;
+        }
+
+        return (bool) $passed;
     }
 
     public static function render_product_fields(): void
@@ -27,23 +90,39 @@ final class CCR_Rental_Cart
             return;
         }
 
-        $pickupDefault = get_option('ccr_default_pickup_time', '09:00');
-        $returnDefault = get_option('ccr_default_return_time', '17:00');
-        $today = gmdate('Y-m-d');
-        $startDefault = gmdate('Y-m-d', strtotime('+1 day'));
-        $endDefault = gmdate('Y-m-d', strtotime('+2 days'));
+        $pickupDefault = (string) get_option('ccr_default_pickup_time', '09:00');
+        $latestReturn = self::latest_return_time();
+        $today = current_time('Y-m-d');
+        $startDefault = $today;
+        $autoReturn = CCR_Rental_Pricing::add_hours_clamped($startDefault, $pickupDefault, 24, $latestReturn);
+        $endDefault = $autoReturn[0] ?? $today;
+        $returnDefault = $autoReturn[1] ?? $pickupDefault;
 
         wp_enqueue_script('ccr-rental', CCR_PLUGIN_URL . 'assets/rental-fields.js', ['jquery'], CCR_VERSION, true);
         wp_localize_script('ccr-rental', 'ccrRental', [
             'ajaxUrl' => admin_url('admin-ajax.php'),
             'productId' => $product->get_id(),
+            'isKit' => class_exists('CCR_Product_Kits') && CCR_Product_Kits::is_kit($product->get_id()),
             'nonce' => wp_create_nonce('ccr_rental_quote'),
+            'latestReturnTime' => $latestReturn,
+            'closingLabel' => self::closing_time_label(),
+            'defaultPeriodHours' => 24,
+            'i18n' => [
+                'returnTooLate' => sprintf(
+                    /* translators: %s: closing time */
+                    __('Return time must be before %s (office closing time).', 'christocentric-rentals'),
+                    self::closing_time_label()
+                ),
+                'quoteOne' => __('1 × 24 hours', 'christocentric-rentals'),
+                /* translators: %d: number of 24-hour periods */
+                'quoteMany' => __('%d × 24 hours', 'christocentric-rentals'),
+            ],
         ]);
 
         ?>
-        <div class="space-y-5 ccr-rental-fields">
+        <div class="space-y-5 ccr-rental-fields" data-return-auto="1">
             <div class="rental-datetime-group">
-                <p class="rental-datetime-label"><?php esc_html_e('Pickup date', 'christocentric-rentals'); ?></p>
+                <p class="rental-datetime-label"><?php esc_html_e('Pickup date & time', 'christocentric-rentals'); ?></p>
                 <div class="rental-datetime-row">
                     <div class="rental-datetime-field">
                         <span class="rental-datetime-icon" aria-hidden="true">
@@ -61,24 +140,24 @@ final class CCR_Rental_Cart
             </div>
 
             <div class="rental-datetime-group">
-                <p class="rental-datetime-label"><?php esc_html_e('Return date', 'christocentric-rentals'); ?></p>
+                <p class="rental-datetime-label"><?php esc_html_e('Return date & time', 'christocentric-rentals'); ?></p>
                 <div class="rental-datetime-row">
                     <div class="rental-datetime-field">
                         <span class="rental-datetime-icon" aria-hidden="true">
                             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                         </span>
-                        <input type="date" id="ccr_rental_end" name="ccr_rental_end" value="<?php echo esc_attr($endDefault); ?>" min="<?php echo esc_attr($today); ?>" required class="rental-datetime-input" data-rental-end>
+                        <input type="date" id="ccr_rental_end" name="ccr_rental_end" value="<?php echo esc_attr($endDefault); ?>" min="<?php echo esc_attr($startDefault); ?>" required class="rental-datetime-input" data-rental-end>
                     </div>
                     <div class="rental-datetime-field">
                         <span class="rental-datetime-icon" aria-hidden="true">
                             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </span>
-                        <input type="time" id="ccr_return_time" name="ccr_return_time" value="<?php echo esc_attr($returnDefault); ?>" required class="rental-datetime-input" data-rental-return-time>
+                        <input type="time" id="ccr_return_time" name="ccr_return_time" value="<?php echo esc_attr($returnDefault); ?>" max="<?php echo esc_attr($latestReturn); ?>" required class="rental-datetime-input" data-rental-return-time>
                     </div>
                 </div>
             </div>
 
-            <p class="ccr-quote text-sm text-gray-600" aria-live="polite"></p>
+            <p class="ccr-quote text-sm font-medium text-red-600" aria-live="polite"></p>
         </div>
         <?php
     }
@@ -87,6 +166,8 @@ final class CCR_Rental_Cart
     {
         $start = sanitize_text_field(wp_unslash($_POST['ccr_rental_start'] ?? '')); // phpcs:ignore
         $end = sanitize_text_field(wp_unslash($_POST['ccr_rental_end'] ?? '')); // phpcs:ignore
+        $pickup = self::normalize_time(sanitize_text_field(wp_unslash($_POST['ccr_pickup_time'] ?? get_option('ccr_default_pickup_time', '09:00')))); // phpcs:ignore
+        $return = self::normalize_time(sanitize_text_field(wp_unslash($_POST['ccr_return_time'] ?? get_option('ccr_default_return_time', '17:00')))); // phpcs:ignore
 
         if ($start === '' || $end === '') {
             wc_add_notice(__('Please select rental start and end dates.', 'christocentric-rentals'), 'error');
@@ -94,20 +175,20 @@ final class CCR_Rental_Cart
             return $cartItemData;
         }
 
-        $days = CCR_Rental_Pricing::rental_days($start, $end);
+        $days = CCR_Rental_Pricing::rental_days($start, $end, $pickup, $return);
 
         if ($days < 1) {
-            wc_add_notice(__('End date must be on or after start date.', 'christocentric-rentals'), 'error');
+            wc_add_notice(__('Return must be after pickup. Default rental is 24 hours.', 'christocentric-rentals'), 'error');
 
             return $cartItemData;
         }
 
         $cartItemData['ccr_rental_start'] = $start;
         $cartItemData['ccr_rental_end'] = $end;
-        $cartItemData['ccr_pickup_time'] = sanitize_text_field(wp_unslash($_POST['ccr_pickup_time'] ?? get_option('ccr_default_pickup_time', '09:00'))); // phpcs:ignore
-        $cartItemData['ccr_return_time'] = sanitize_text_field(wp_unslash($_POST['ccr_return_time'] ?? get_option('ccr_default_return_time', '17:00'))); // phpcs:ignore
+        $cartItemData['ccr_pickup_time'] = $pickup;
+        $cartItemData['ccr_return_time'] = $return;
         $cartItemData['ccr_rental_days'] = $days;
-        $cartItemData['unique_key'] = md5($productId . $start . $end . microtime(true));
+        $cartItemData['unique_key'] = md5($productId . $start . $end . $pickup . $return . microtime(true));
 
         return $cartItemData;
     }
@@ -115,15 +196,21 @@ final class CCR_Rental_Cart
     public static function display_cart_item_data(array $itemData, array $cartItem): array
     {
         if (! empty($cartItem['ccr_rental_start'])) {
+            $pickup = $cartItem['ccr_pickup_time'] ?? '';
+            $return = $cartItem['ccr_return_time'] ?? '';
             $itemData[] = [
                 'name' => __('Rental period', 'christocentric-rentals'),
-                'value' => esc_html($cartItem['ccr_rental_start'] . ' → ' . $cartItem['ccr_rental_end']),
+                'value' => esc_html(
+                    CCR_Rental_Pricing::format_schedule((string) $cartItem['ccr_rental_start'], $pickup ?: null)
+                    . ' → '
+                    . CCR_Rental_Pricing::format_schedule((string) $cartItem['ccr_rental_end'], $return ?: null)
+                ),
             ];
         }
 
         if (! empty($cartItem['ccr_rental_days'])) {
             $itemData[] = [
-                'name' => __('Days', 'christocentric-rentals'),
+                'name' => __('24hr periods', 'christocentric-rentals'),
                 'value' => (int) $cartItem['ccr_rental_days'],
             ];
         }
@@ -136,7 +223,14 @@ final class CCR_Rental_Cart
         foreach ($cart->get_cart() as $cartItem) {
             $product = $cartItem['data'];
             $days = (int) ($cartItem['ccr_rental_days'] ?? 1);
-            $daily = (float) get_post_meta($product->get_id(), '_ccr_price_per_day', true);
+
+            if (! $product instanceof WC_Product) {
+                continue;
+            }
+
+            $daily = function_exists('ccr_product_daily_price')
+                ? ccr_product_daily_price($product)
+                : (float) get_post_meta($product->get_id(), '_ccr_price_per_day', true);
 
             if ($daily <= 0) {
                 $daily = (float) $product->get_regular_price();
@@ -159,10 +253,38 @@ final class CCR_Rental_Cart
                 $item->add_meta_data($metaKey, $values[$cartKey], true);
             }
         }
+
+        $product = $item->get_product();
+        if ($product instanceof WC_Product) {
+            $daily = function_exists('ccr_product_regular_daily_price')
+                ? ccr_product_regular_daily_price($product)
+                : (float) get_post_meta($product->get_id(), '_ccr_price_per_day', true);
+            if ($daily > 0) {
+                $item->add_meta_data('_ccr_price_per_day', $daily, true);
+            }
+        }
     }
 
     public static function validate_cart_availability(): void
     {
+        foreach (WC()->cart->get_cart() as $cartItem) {
+            $return = (string) ($cartItem['ccr_return_time'] ?? '');
+            if ($return !== '' && self::is_after_closing($return)) {
+                $name = isset($cartItem['data']) && $cartItem['data'] instanceof WC_Product
+                    ? $cartItem['data']->get_name()
+                    : __('Item', 'christocentric-rentals');
+                wc_add_notice(
+                    sprintf(
+                        /* translators: 1: product name, 2: closing time */
+                        __('%1$s — return time must be by %2$s (office closing). Update the rental times or remove this item.', 'christocentric-rentals'),
+                        $name,
+                        self::closing_time_label()
+                    ),
+                    'error'
+                );
+            }
+        }
+
         $items = [];
 
         foreach (WC()->cart->get_cart() as $cartItem) {
@@ -194,21 +316,42 @@ final class CCR_Rental_Cart
         $productId = absint($_POST['product_id'] ?? 0); // phpcs:ignore
         $start = sanitize_text_field(wp_unslash($_POST['start'] ?? '')); // phpcs:ignore
         $end = sanitize_text_field(wp_unslash($_POST['end'] ?? '')); // phpcs:ignore
+        $pickup = sanitize_text_field(wp_unslash($_POST['pickup'] ?? get_option('ccr_default_pickup_time', '09:00'))); // phpcs:ignore
+        $return = sanitize_text_field(wp_unslash($_POST['return'] ?? get_option('ccr_default_return_time', '17:00'))); // phpcs:ignore
         $quantity = max(1, absint($_POST['quantity'] ?? 1)); // phpcs:ignore
 
-        $days = CCR_Rental_Pricing::rental_days($start, $end);
+        $days = CCR_Rental_Pricing::rental_days($start, $end, $pickup, $return);
         $product = wc_get_product($productId);
-        $daily = $product ? (float) get_post_meta($productId, '_ccr_price_per_day', true) : 0;
+        $daily = 0.0;
+        $isKit = class_exists('CCR_Product_Kits') && CCR_Product_Kits::is_kit($productId);
+        $available = 0;
+        $unavailable = [];
 
-        if ($daily <= 0 && $product) {
-            $daily = (float) $product->get_regular_price();
+        if ($product instanceof WC_Product) {
+            if ($isKit) {
+                $daily = CCR_Product_Kits::kit_daily_price($productId);
+                $kitAvailability = CCR_Product_Kits::availability_for_dates($productId, $start, $end, $quantity);
+                $available = (int) $kitAvailability['available'];
+                $unavailable = $kitAvailability['unavailable'];
+            } elseif (function_exists('ccr_product_daily_price')) {
+                $daily = ccr_product_daily_price($product);
+                $available = CCR_Rental_Availability::available_quantity($productId, $start, $end);
+            } else {
+                $daily = (float) get_post_meta($productId, '_ccr_price_per_day', true);
+                if ($daily <= 0) {
+                    $daily = (float) $product->get_regular_price();
+                }
+                $available = CCR_Rental_Availability::available_quantity($productId, $start, $end);
+            }
         }
 
         wp_send_json_success([
             'days' => $days,
             'total' => CCR_Rental_Pricing::line_total($daily, max(1, $days), $quantity),
-            'available' => CCR_Rental_Availability::available_quantity($productId, $start, $end),
-            'max_quantity' => CCR_Rental_Availability::available_quantity($productId, $start, $end),
+            'available' => $available,
+            'max_quantity' => $available,
+            'is_kit' => $isKit,
+            'unavailable_items' => $unavailable,
             'formatted_total' => CCR_Rental_Pricing::format(CCR_Rental_Pricing::line_total($daily, max(1, $days), $quantity)),
         ]);
     }

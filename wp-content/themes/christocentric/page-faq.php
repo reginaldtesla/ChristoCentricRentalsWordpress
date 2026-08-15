@@ -20,8 +20,13 @@ get_template_part('template-parts/page-hero', null, [
             </details>
         <?php endforeach; ?>
     </div>
-    <?php if (! empty($page['footer_note'])) : ?>
-        <p class="doc-footer-note"><?php echo esc_html($page['footer_note']); ?></p>
-    <?php endif; ?>
+    <div class="mt-10 border-t border-gray-200 pt-8 text-center text-sm text-gray-600">
+        <p>
+            Still need help?
+            <a href="<?php echo esc_url(home_url('/help/')); ?>" class="text-primary hover:underline">Help Center</a>
+            or
+            <a href="<?php echo esc_url(home_url('/contact/')); ?>" class="text-primary hover:underline">Contact us</a>.
+        </p>
+    </div>
 </div>
 <?php get_footer(); ?>

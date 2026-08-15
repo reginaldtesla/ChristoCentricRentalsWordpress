@@ -19,6 +19,7 @@ function ccr_account_hero(): void
         'view-order'   => ['Order Details', 'Rental booking summary.'],
         'edit-account' => ['My Profile', 'Update your account details.'],
         'edit-address' => ['Addresses', 'Billing and shipping addresses.'],
+        'rental-agreement' => ['Client verification', 'Ghana Card, guarantor, and pickup identity details.'],
     ];
 
     [$title, $subtitle] = $titles[$endpoint] ?? ['My Account', 'Manage orders and account details.'];

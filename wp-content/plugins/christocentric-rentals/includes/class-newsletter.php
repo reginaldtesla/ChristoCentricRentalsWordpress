@@ -152,6 +152,7 @@ final class CCR_Newsletter
 
         if ($ok) {
             self::send_subscription_emails($email, $token, $isNew);
+            self::sync_external($email);
         }
 
         return [
@@ -172,6 +173,64 @@ final class CCR_Newsletter
         }
     }
 
+    /**
+     * Push subscriber to Mailchimp and/or a generic webhook (FluentCRM, Zapier, Make, etc.).
+     */
+    public static function sync_external(string $email): void
+    {
+        self::sync_mailchimp($email);
+        self::sync_webhook($email);
+    }
+
+    public static function sync_mailchimp(string $email): void
+    {
+        $apiKey = (string) get_option('ccr_mailchimp_api_key', '');
+        $listId = (string) get_option('ccr_mailchimp_list_id', '');
+
+        if ($apiKey === '' || $listId === '' || ! str_contains($apiKey, '-')) {
+            return;
+        }
+
+        $dc = substr($apiKey, strrpos($apiKey, '-') + 1);
+        $memberId = md5(strtolower($email));
+        $url = sprintf('https://%s.api.mailchimp.com/3.0/lists/%s/members/%s', $dc, rawurlencode($listId), $memberId);
+
+        wp_remote_request($url, [
+            'method' => 'PUT',
+            'timeout' => 12,
+            'headers' => [
+                'Authorization' => 'apikey ' . $apiKey,
+                'Content-Type' => 'application/json',
+            ],
+            'body' => wp_json_encode([
+                'email_address' => $email,
+                'status_if_new' => 'subscribed',
+                'status' => 'subscribed',
+                'tags' => ['christocentric-rentals'],
+            ]),
+        ]);
+    }
+
+    public static function sync_webhook(string $email): void
+    {
+        $webhook = (string) get_option('ccr_newsletter_webhook_url', '');
+
+        if ($webhook === '' || ! wp_http_validate_url($webhook)) {
+            return;
+        }
+
+        wp_remote_post($webhook, [
+            'timeout' => 12,
+            'headers' => ['Content-Type' => 'application/json'],
+            'body' => wp_json_encode([
+                'email' => $email,
+                'source' => 'christocentric-rentals',
+                'site' => home_url('/'),
+                'subscribed_at' => current_time('c'),
+            ]),
+        ]);
+    }
+
     public static function send_welcome_email(string $email, string $token): void
     {
         $siteName = get_bloginfo('name');
@@ -181,15 +240,12 @@ final class CCR_Newsletter
             __('Welcome to %s newsletter', 'christocentric-rentals'),
             $siteName
         );
-        $body = sprintf(
-            "%s\n\n%s\n\n%s\n%s",
-            sprintf(__('Thanks for subscribing to %s!', 'christocentric-rentals'), $siteName),
-            __('You will receive updates about new gear, rental tips, and deals from our Kumasi inventory.', 'christocentric-rentals'),
-            __('Unsubscribe anytime:', 'christocentric-rentals'),
-            $unsubscribeUrl
-        );
+        $inner = '<p style="margin:0 0 14px;">' . esc_html(sprintf(__('Thanks for subscribing to %s!', 'christocentric-rentals'), $siteName)) . '</p>'
+            . '<p style="margin:0 0 14px;">' . esc_html__('You will receive updates about new gear, rental tips, and deals from our Kumasi inventory.', 'christocentric-rentals') . '</p>'
+            . '<p style="margin:0;font-size:13px;color:#6b7280;">' . esc_html__('Unsubscribe anytime:', 'christocentric-rentals')
+            . ' <a href="' . esc_url($unsubscribeUrl) . '">' . esc_html($unsubscribeUrl) . '</a></p>';
 
-        wp_mail($email, $subject, $body, self::mail_headers());
+        wp_mail($email, $subject, CCR_Email::wrap_html($subject, $inner), CCR_Email::html_headers());
     }
 
     public static function send_admin_notification(string $email): void
@@ -205,14 +261,13 @@ final class CCR_Newsletter
         }
 
         $subject = sprintf('[Christocentric Rentals] New newsletter subscriber: %s', $email);
-        $body = sprintf(
-            "New newsletter signup\n\nEmail: %s\nTime: %s\n\nView all subscribers:\n%s",
-            $email,
-            current_time('mysql'),
-            admin_url('admin.php?page=ccr-newsletter-subscribers')
-        );
+        $listUrl = admin_url('admin.php?page=ccr-newsletter-subscribers');
+        $inner = '<p style="margin:0 0 14px;"><strong>' . esc_html__('New newsletter signup', 'christocentric-rentals') . '</strong></p>'
+            . '<p style="margin:0 0 8px;">' . esc_html__('Email:', 'christocentric-rentals') . ' ' . esc_html($email) . '</p>'
+            . '<p style="margin:0 0 14px;">' . esc_html__('Time:', 'christocentric-rentals') . ' ' . esc_html(current_time('mysql')) . '</p>'
+            . '<p style="margin:0;"><a href="' . esc_url($listUrl) . '">' . esc_html__('View all subscribers', 'christocentric-rentals') . '</a></p>';
 
-        wp_mail($notify, $subject, $body, self::mail_headers());
+        wp_mail($notify, $subject, CCR_Email::wrap_html($subject, $inner), CCR_Email::html_headers());
     }
 
     /**
@@ -220,21 +275,7 @@ final class CCR_Newsletter
      */
     private static function mail_headers(): array
     {
-        $fromName = get_option('ccr_newsletter_from_name', get_bloginfo('name'));
-        $fromEmail = get_option('ccr_newsletter_from_email', '');
-
-        if (! is_string($fromEmail) || ! is_email($fromEmail)) {
-            $fromEmail = class_exists('CCR_Settings') ? CCR_Settings::default_support_email() : get_option('admin_email');
-        }
-
-        if (! is_string($fromName) || $fromName === '') {
-            $fromName = get_bloginfo('name');
-        }
-
-        return [
-            'Content-Type: text/plain; charset=UTF-8',
-            'From: ' . $fromName . ' <' . $fromEmail . '>',
-        ];
+        return CCR_Email::html_headers();
     }
 
     public static function unsubscribe_by_token(string $token): bool

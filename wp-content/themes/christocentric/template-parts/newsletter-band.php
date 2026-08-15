@@ -1,7 +1,7 @@
 <?php
 defined('ABSPATH') || exit;
 
-$n = ccr_site_config('newsletter', []);
+$n = ccr_newsletter_config();
 $flash = class_exists('CCR_Newsletter') ? CCR_Newsletter::flash() : null;
 $success = is_array($flash) && ! empty($flash['success']);
 $errors = is_array($flash['errors'] ?? null) ? $flash['errors'] : [];
@@ -26,7 +26,7 @@ $oldEmail = is_array($flash) ? ($flash['old_email'] ?? '') : '';
                 <?php endif; ?>
 
                 <form class="newsletter-form" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
-                    <input type="hidden" name="action" value="<?php echo esc_attr(CCR_Newsletter::SUBSCRIBE_ACTION); ?>">
+                    <input type="hidden" name="action" value="<?php echo esc_attr(class_exists('CCR_Newsletter') ? CCR_Newsletter::SUBSCRIBE_ACTION : 'ccr_newsletter_subscribe'); ?>">
                     <?php wp_nonce_field('ccr_newsletter'); ?>
                     <input type="text" name="ccr_company" value="" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true">
                     <label for="newsletter-email" class="sr-only">Email address</label>

@@ -1,6 +1,6 @@
 <?php
 defined('ABSPATH') || exit;
-$features = $args['features'] ?? ccr_site_config('trust_features', []);
+$features = $args['features'] ?? ccr_trust_features();
 ?>
 <section class="border-b border-gray-200 bg-gray-50">
     <div class="container-site">

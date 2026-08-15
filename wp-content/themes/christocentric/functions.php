@@ -4,6 +4,7 @@ defined('ABSPATH') || exit;
 
 require_once get_template_directory() . '/includes/site-config.php';
 require_once get_template_directory() . '/includes/account-helpers.php';
+require_once get_template_directory() . '/includes/acf-homepage.php';
 
 add_action('after_setup_theme', static function (): void {
     add_theme_support('title-tag');
@@ -16,11 +17,17 @@ add_action('after_setup_theme', static function (): void {
     ]);
 });
 
+add_action('init', static function (): void {
+    if (function_exists('ccr_ensure_nav_categories')) {
+        ccr_ensure_nav_categories();
+    }
+}, 20);
+
 add_filter('woocommerce_enqueue_styles', '__return_empty_array');
 
 add_action('wp_enqueue_scripts', static function (): void {
     $uri = get_template_directory_uri() . '/assets/build/';
-    $ver = '1.7';
+    $ver = '3.31';
 
     wp_dequeue_style('wc-blocks-style');
     wp_dequeue_style('wc-blocks-vendors-style');
@@ -34,6 +41,27 @@ add_action('wp_enqueue_scripts', static function (): void {
     wp_enqueue_style('ccr-overrides', get_template_directory_uri() . '/assets/theme-overrides.css', ['ccr-app'], $ver);
     wp_enqueue_script('ccr-app', $uri . 'app-C_fcRPYi.js', [], $ver, true);
     wp_enqueue_script('ccr-theme', get_template_directory_uri() . '/assets/theme.js', ['ccr-app'], $ver, true);
+    wp_localize_script('ccr-theme', 'ccrCompare', [
+        'ajaxUrl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('ccr_compare'),
+        'max' => 4,
+        'i18n' => [
+            'add' => __('Add to compare', 'christocentric'),
+            'compare' => __('Compare', 'christocentric'),
+            'inCompare' => __('In compare', 'christocentric'),
+            'full' => __('Compare list is full (max 4).', 'christocentric'),
+        ],
+    ]);
+}, 100);
+
+// WC Blocks may re-enqueue after priority 100 — strip again before print.
+add_action('wp_print_styles', static function (): void {
+    wp_dequeue_style('wc-blocks-style');
+    wp_dequeue_style('wc-blocks-vendors-style');
+    wp_dequeue_style('wp-block-library');
+    wp_dequeue_style('wp-block-library-theme');
+    wp_dequeue_style('classic-theme-styles');
+    wp_dequeue_style('global-styles');
 }, 100);
 
 add_filter('body_class', static function (array $classes): array {
@@ -68,22 +96,34 @@ add_filter('woocommerce_product_loop_start', static function (string $html): str
 
 add_action('woocommerce_product_query', static function (WP_Query $query): void {
     if (isset($_GET['product_cat']) || ! isset($_GET['category'])) { // phpcs:ignore
-        return;
+        // continue to search handling below
+    } else {
+        $slug = sanitize_title(wp_unslash((string) $_GET['category'])); // phpcs:ignore
+
+        if ($slug !== '') {
+            $taxQuery = (array) $query->get('tax_query');
+            $taxQuery[] = [
+                'taxonomy' => 'product_cat',
+                'field' => 'slug',
+                'terms' => $slug,
+            ];
+            $query->set('tax_query', $taxQuery);
+        }
     }
 
-    $slug = sanitize_title(wp_unslash((string) $_GET['category'])); // phpcs:ignore
-
-    if ($slug === '') {
-        return;
+    if (! empty($_GET['s'])) { // phpcs:ignore
+        $query->set('s', sanitize_text_field(wp_unslash((string) $_GET['s']))); // phpcs:ignore
     }
 
-    $taxQuery = (array) $query->get('tax_query');
-    $taxQuery[] = [
-        'taxonomy' => 'product_cat',
-        'field' => 'slug',
-        'terms' => $slug,
-    ];
-    $query->set('tax_query', $taxQuery);
+    // Shop filter: rental kits only.
+    if (function_exists('ccr_is_kits_view') && ccr_is_kits_view()) {
+        $metaQuery = (array) $query->get('meta_query');
+        $metaQuery[] = [
+            'key' => '_ccr_is_kit',
+            'value' => 'yes',
+        ];
+        $query->set('meta_query', $metaQuery);
+    }
 }, 20);
 
 add_action('woocommerce_before_cart', static function (): void {
@@ -174,10 +214,20 @@ add_action('after_switch_theme', static function (): void {
         update_option('page_on_front', (int) $home_id);
     }
 
-    foreach (['about', 'contact', 'faq', 'help', 'terms', 'privacy'] as $slug) {
+    $pages = [
+        'about' => 'About',
+        'contact' => 'Contact',
+        'faq' => 'FAQ',
+        'help' => 'Help',
+        'terms' => 'Terms',
+        'privacy' => 'Privacy',
+        'studio' => 'Studio',
+        'compare' => 'Compare',
+    ];
+    foreach ($pages as $slug => $title) {
         if (! get_page_by_path($slug)) {
             wp_insert_post([
-                'post_title' => ucfirst($slug),
+                'post_title' => $title,
                 'post_name' => $slug,
                 'post_status' => 'publish',
                 'post_type' => 'page',
@@ -186,4 +236,62 @@ add_action('after_switch_theme', static function (): void {
     }
 
     flush_rewrite_rules();
+});
+
+// Keep product images at maximum quality — use originals, don't downscale uploads.
+add_filter('jpeg_quality', static fn (): int => 100);
+add_filter('wp_editor_set_quality', static fn (): int => 100);
+add_filter('big_image_size_threshold', '__return_false');
+
+add_filter('woocommerce_get_image_size_single', static function (): array {
+    return [
+        'width' => 2000,
+        'height' => 2000,
+        'crop' => 0,
+    ];
+});
+
+add_filter('woocommerce_get_image_size_thumbnail', static function (): array {
+    return [
+        'width' => 800,
+        'height' => 800,
+        'crop' => 0,
+    ];
+});
+
+add_filter('woocommerce_get_image_size_gallery_thumbnail', static function (): array {
+    return [
+        'width' => 300,
+        'height' => 300,
+        'crop' => 0,
+    ];
+});
+
+// Shop / catalog performance defaults.
+add_filter('loop_shop_per_page', static fn (): int => 12, 20);
+
+add_action('init', static function (): void {
+    if (get_option('ccr_plain_login_v1') === 'yes') {
+        return;
+    }
+    update_option('woocommerce_registration_generate_password', 'no');
+    update_option('ccr_plain_login_v1', 'yes');
+});
+
+add_action('wp_head', static function (): void {
+    if (is_admin()) {
+        return;
+    }
+    echo '<link rel="dns-prefetch" href="//fonts.googleapis.com">' . "\n";
+    echo '<meta name="theme-color" content="#0f172a">' . "\n";
+}, 1);
+
+// Soft caching headers for anonymous catalog browsing (hosts/CDN may honor these).
+add_action('send_headers', static function (): void {
+    if (is_admin() || is_user_logged_in() || is_cart() || is_checkout() || is_account_page()) {
+        return;
+    }
+    if (is_front_page() || is_shop() || is_product_taxonomy() || is_product()) {
+        header('Cache-Control: public, max-age=300, s-maxage=600', false);
+    }
 });

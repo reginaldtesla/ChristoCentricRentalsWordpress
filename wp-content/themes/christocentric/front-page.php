@@ -4,54 +4,119 @@
  */
 get_header();
 
-$popular = ccr_get_products(['limit' => 12, 'orderby' => 'meta_value_num', 'meta_key' => '_ccr_rating', 'order' => 'DESC']);
+$popular = ccr_get_products([
+    'limit' => 12,
+    'orderby' => 'meta_value_num',
+    'meta_key' => '_ccr_rating',
+    'order' => 'DESC',
+    'category' => [
+        'cameras',
+        'canon-cameras',
+        'sony-cameras',
+        'lens',
+        'canon-lenses',
+        'sigma-lenses',
+        'sony-lenses',
+    ],
+]);
 $panels = [
     'new' => ccr_get_products(['limit' => 6, 'orderby' => 'date', 'order' => 'DESC']),
     'featured' => ccr_get_products(['limit' => 6, 'meta_query' => [['key' => '_ccr_is_featured', 'value' => 'yes']]]),
     'top_rated' => ccr_get_products(['limit' => 6, 'orderby' => 'meta_value_num', 'meta_key' => '_ccr_rating', 'order' => 'DESC']),
 ];
-$hero_slides = ccr_site_config('hero_slides', []);
-$deals = ccr_site_config('deals_slides', []);
-$banners = ccr_site_config('brand_banners', []);
-$weekly = ccr_site_config('weekly_deals', []);
-$lighting = ccr_site_config('featured_lighting', []);
+$hero_slides = ccr_hero_slides();
+$deals = ccr_deals_slides();
+$banners = ccr_brand_banners();
+$lighting = ccr_featured_lighting();
 $shop = ccr_shop_url();
 ?>
 
-<section class="carousel-shell" data-hero-slider>
-    <div class="relative min-h-[380px] md:min-h-[440px]">
+<section class="ccr-promo-hero carousel-shell" data-hero-slider>
+    <div class="ccr-promo-hero-track relative">
         <?php foreach ($hero_slides as $index => $slide) : ?>
-            <div data-hero-slide class="carousel-slide absolute inset-0 transition-opacity duration-500 <?php echo $index === 0 ? 'opacity-100' : 'pointer-events-none opacity-0'; ?>">
-                <div class="container-site flex h-full min-h-[380px] flex-col md:min-h-[440px] md:flex-row md:items-center md:gap-12">
-                    <div class="flex flex-1 flex-col justify-center py-10 md:py-12 md:pr-4">
-                        <p class="text-sm text-gray-500"><?php echo esc_html($slide['subtitle'] ?? ''); ?></p>
-                        <h1 class="mt-1 text-3xl font-semibold leading-tight text-gray-900 md:text-4xl lg:text-[2.75rem]"><?php echo esc_html($slide['title'] ?? ''); ?></h1>
-                        <p class="mt-3 max-w-md text-base leading-relaxed text-gray-600"><?php echo esc_html($slide['description'] ?? ''); ?></p>
-                        <a href="<?php echo esc_url(ccr_resolve_url($slide['cta_url'] ?? '/shop/')); ?>" class="btn-solid mt-7 w-fit"><?php echo esc_html($slide['cta_primary'] ?? 'Browse gear'); ?></a>
+            <?php
+            $theme = sanitize_html_class((string) ($slide['theme'] ?? 'mist'));
+            $isFirst = $index === 0;
+            ?>
+            <div
+                data-hero-slide
+                data-hero-theme="<?php echo esc_attr($theme); ?>"
+                class="ccr-promo-hero-slide ccr-promo-hero-slide--<?php echo esc_attr($theme); ?> carousel-slide absolute inset-0 transition-opacity duration-500 <?php echo $isFirst ? 'opacity-100' : 'pointer-events-none opacity-0'; ?>"
+            >
+                <div class="container-site ccr-promo-hero-inner">
+                    <div class="ccr-promo-hero-copy">
+                        <?php if (! empty($slide['eyebrow'])) : ?>
+                            <p class="ccr-promo-hero-eyebrow"><?php echo esc_html($slide['eyebrow']); ?></p>
+                        <?php endif; ?>
+                        <h1 class="ccr-promo-hero-title"><?php echo esc_html($slide['title'] ?? ''); ?></h1>
+                        <?php if (! empty($slide['description'])) : ?>
+                            <p class="ccr-promo-hero-desc"><?php echo esc_html($slide['description']); ?></p>
+                        <?php endif; ?>
+                        <?php if (! empty($slide['tagline'])) : ?>
+                            <p class="ccr-promo-hero-tagline"><?php echo esc_html($slide['tagline']); ?></p>
+                        <?php endif; ?>
+                        <a href="<?php echo esc_url(ccr_resolve_url($slide['cta_url'] ?? '/shop/')); ?>" class="ccr-promo-hero-cta">
+                            <?php echo esc_html($slide['cta_primary'] ?? 'Rent Now'); ?>
+                        </a>
                     </div>
-                    <div class="carousel-product-stage flex-1 pb-8 md:pb-0">
-                        <img src="<?php echo esc_url(ccr_image_url($slide['image'] ?? '')); ?>" alt="<?php echo esc_attr($slide['title'] ?? ''); ?>">
+                    <div class="ccr-promo-hero-media<?php echo ! empty($slide['flip']) ? ' ccr-promo-hero-media--flip' : ''; ?>">
+                        <img
+                            src="<?php echo esc_url($slide['image_url'] ?? ccr_image_url($slide['image'] ?? '')); ?>"
+                            alt="<?php echo esc_attr($slide['title'] ?? ''); ?>"
+                            loading="<?php echo $isFirst ? 'eager' : 'lazy'; ?>"
+                        >
                     </div>
                 </div>
             </div>
         <?php endforeach; ?>
-        <button type="button" data-hero-prev class="carousel-arrow carousel-arrow-prev" aria-label="Previous"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg></button>
-        <button type="button" data-hero-next class="carousel-arrow carousel-arrow-next" aria-label="Next"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></button>
+
+        <?php if (count($hero_slides) > 1) : ?>
+            <button type="button" data-hero-prev class="carousel-arrow carousel-arrow-prev ccr-promo-hero-arrow" aria-label="Previous">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button type="button" data-hero-next class="carousel-arrow carousel-arrow-next ccr-promo-hero-arrow" aria-label="Next">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+            <div class="ccr-promo-hero-dots" role="tablist" aria-label="<?php esc_attr_e('Hero slides', 'christocentric'); ?>">
+                <?php foreach ($hero_slides as $index => $slide) : ?>
+                    <button
+                        type="button"
+                        data-hero-dot
+                        class="ccr-promo-hero-dot <?php echo $index === 0 ? 'w-6 bg-primary' : 'w-1.5 bg-gray-300'; ?>"
+                        aria-label="<?php echo esc_attr(sprintf(/* translators: %d: slide number */ __('Go to slide %d', 'christocentric'), $index + 1)); ?>"
+                    ></button>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
     </div>
 </section>
 
 <?php get_template_part('template-parts/trust-bar'); ?>
 
-<section class="home-section container-site">
-    <?php get_template_part('template-parts/section-title', null, ['title' => 'Popular right now', 'link' => $shop, 'link_text' => 'All products']); ?>
-    <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px]">
-        <div class="min-w-0"><?php get_template_part('template-parts/product-scroll', null, ['products' => $popular]); ?></div>
-        <aside class="hidden lg:block">
-            <div class="sidebar-note sticky top-24">
-                <p class="text-sm font-medium text-gray-900">Lighting kits</p>
-                <p class="mt-2 text-sm leading-relaxed text-gray-600">LED panels and modifiers for interviews, film sets and events.</p>
-                <a href="<?php echo esc_url(ccr_shop_url(['product_cat' => 'continuous-light'])); ?>" class="mt-5 block text-sm font-medium text-primary hover:underline">Browse lights</a>
-            </div>
+<section class="home-section container-site ccr-popular-picks">
+    <?php get_template_part('template-parts/section-title', null, ['title' => "Today's Popular Picks", 'link' => $shop, 'link_text' => 'See All Products']); ?>
+    <div class="ccr-popular-picks-grid">
+        <div class="ccr-popular-picks-rail min-w-0">
+            <?php get_template_part('template-parts/product-scroll', null, ['products' => $popular, 'variant' => 'popular']); ?>
+        </div>
+        <aside class="ccr-popular-picks-promo">
+            <a
+                href="<?php echo esc_url(ccr_shop_url(['product_cat' => 'continuous-light'])); ?>"
+                class="ccr-gear-demand"
+            >
+                <div class="ccr-gear-demand-copy">
+                    <p class="ccr-gear-demand-title">Gear On<br>Demand.</p>
+                    <p class="ccr-gear-demand-tag">Best in lighting</p>
+                    <span class="ccr-gear-demand-cta">Rent Now</span>
+                </div>
+                <div class="ccr-gear-demand-media">
+                    <img
+                        src="<?php echo esc_url(ccr_theme_asset('images/promo/gear-on-demand-softbox.png') . '?v=3.14'); ?>"
+                        alt="<?php esc_attr_e('Studio softbox on light stand', 'christocentric'); ?>"
+                        loading="lazy"
+                    >
+                </div>
+            </a>
         </aside>
     </div>
 </section>
@@ -71,7 +136,7 @@ $shop = ccr_shop_url();
                                 <a href="<?php echo esc_url(ccr_resolve_url($deal['url'] ?? '/shop/')); ?>" class="btn-solid mt-6">View in shop</a>
                             </div>
                             <div class="flex items-center justify-center bg-gray-50 p-8 md:p-10">
-                                <img src="<?php echo esc_url(ccr_image_url($deal['image'] ?? '')); ?>" alt="<?php echo esc_attr($deal['title'] ?? ''); ?>" class="max-h-52 object-contain md:max-h-64">
+                                <img src="<?php echo esc_url($deal['image_url'] ?? ccr_image_url($deal['image'] ?? '')); ?>" alt="<?php echo esc_attr($deal['title'] ?? ''); ?>" class="max-h-52 object-contain md:max-h-64">
                             </div>
                         </div>
                     </div>
@@ -89,28 +154,11 @@ $shop = ccr_shop_url();
         <?php foreach ($banners as $banner) : ?>
             <a href="<?php echo esc_url(ccr_resolve_url($banner['url'] ?? '/shop/')); ?>" class="group block overflow-hidden rounded border border-gray-200 bg-white transition hover:border-gray-300">
                 <div class="aspect-[4/3] overflow-hidden bg-gray-100">
-                    <img src="<?php echo esc_url(ccr_image_url($banner['image'] ?? '')); ?>" alt="" class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]">
+                    <img src="<?php echo esc_url($banner['image_url'] ?? ccr_image_url($banner['image'] ?? '')); ?>" alt="<?php echo esc_attr($banner['title'] ?? ''); ?>" class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]" loading="lazy" decoding="async">
                 </div>
                 <div class="p-4">
                     <h3 class="font-medium text-gray-900"><?php echo esc_html($banner['title'] ?? ''); ?></h3>
                     <p class="mt-1 text-sm text-gray-600"><?php echo esc_html($banner['description'] ?? ''); ?></p>
-                </div>
-            </a>
-        <?php endforeach; ?>
-    </div>
-</section>
-
-<section class="home-section container-site">
-    <?php get_template_part('template-parts/section-title', null, ['title' => 'Staff picks', 'link' => $shop, 'link_text' => 'More gear', 'size' => 'large']); ?>
-    <div class="grid gap-4 md:grid-cols-3">
-        <?php foreach ($weekly as $deal) : ?>
-            <a href="<?php echo esc_url(ccr_resolve_url($deal['url'] ?? '/shop/')); ?>" class="pick-card group block overflow-hidden rounded border border-gray-200 bg-white transition hover:border-gray-300">
-                <div class="aspect-[16/10] overflow-hidden bg-gray-100">
-                    <img src="<?php echo esc_url(ccr_image_url($deal['image'] ?? '')); ?>" alt="" class="h-full w-full object-cover object-center transition duration-300 group-hover:scale-[1.02]">
-                </div>
-                <div class="p-5">
-                    <h3 class="font-medium text-gray-900"><?php echo esc_html($deal['title'] ?? ''); ?></h3>
-                    <p class="mt-1 text-sm text-gray-600"><?php echo esc_html($deal['description'] ?? ''); ?></p>
                 </div>
             </a>
         <?php endforeach; ?>
@@ -122,9 +170,9 @@ $shop = ccr_shop_url();
         <?php get_template_part('template-parts/section-title', null, ['title' => 'Lighting & grip', 'link' => ccr_shop_url(['product_cat' => 'continuous-light']), 'link_text' => 'All lighting']); ?>
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <?php foreach ($lighting as $item) : ?>
-                <a href="<?php echo esc_url(ccr_shop_url(['product_cat' => 'continuous-light'])); ?>" class="group block overflow-hidden rounded border border-gray-200 bg-white p-4 transition hover:border-gray-300">
+                <a href="<?php echo esc_url($item['url'] ?? ccr_shop_url(['product_cat' => 'continuous-light'])); ?>" class="group block overflow-hidden rounded border border-gray-200 bg-white p-4 transition hover:border-gray-300">
                     <div class="aspect-square overflow-hidden rounded bg-gray-50 p-4">
-                        <img src="<?php echo esc_url(ccr_image_url($item['image'] ?? '')); ?>" alt="" class="h-full w-full object-contain">
+                        <img src="<?php echo esc_url($item['image_url'] ?? ccr_image_url($item['image'] ?? '')); ?>" alt="<?php echo esc_attr($item['title'] ?? ''); ?>" class="h-full w-full object-contain">
                     </div>
                     <h3 class="mt-4 font-medium text-gray-900"><?php echo esc_html($item['title'] ?? ''); ?></h3>
                     <p class="mt-1 text-sm text-gray-600"><?php echo esc_html($item['description'] ?? ''); ?></p>

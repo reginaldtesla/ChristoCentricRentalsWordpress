@@ -134,7 +134,7 @@
         <ul>
             <li>Email: <a href="mailto:<?php echo esc_html(ccr_site_config('contact.support_email')); ?>"><?php echo esc_html(ccr_site_config('contact.support_email')); ?></a></li>
             <li>Phone: <a href="tel:<?php echo esc_attr(ccr_site_config('contact.phone')); ?>"><?php echo esc_html(ccr_site_config('contact.phone_display')); ?></a></li>
-            <li>Website: <a href="{{ config('app.url') }}">christocentricrentals.com</a></li>
+            <li>Website: <a href="<?php echo esc_url(home_url('/')); ?>">christocentricrentals.com</a></li>
             <li>Address: <?php echo esc_html(ccr_site_config('contact.address')); ?>, <?php echo esc_html(ccr_site_config('contact.city')); ?></li>
         </ul>
     </div>

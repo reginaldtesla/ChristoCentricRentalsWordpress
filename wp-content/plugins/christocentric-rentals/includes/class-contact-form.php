@@ -77,13 +77,15 @@ final class CCR_Contact_Form
 
         $to = self::support_email();
         $subject = sprintf('[Christocentric Rentals] Contact from %s', $name);
-        $body = "Name: {$name}\nEmail: {$email}\n\nMessage:\n{$message}";
-        $headers = [
-            'Content-Type: text/plain; charset=UTF-8',
+        $inner = '<p style="margin:0 0 8px;"><strong>' . esc_html__('Name:', 'christocentric-rentals') . '</strong> ' . esc_html($name) . '</p>'
+            . '<p style="margin:0 0 14px;"><strong>' . esc_html__('Email:', 'christocentric-rentals') . '</strong> ' . esc_html($email) . '</p>'
+            . '<p style="margin:0 0 8px;"><strong>' . esc_html__('Message:', 'christocentric-rentals') . '</strong></p>'
+            . '<p style="margin:0;white-space:pre-wrap;">' . nl2br(esc_html($message)) . '</p>';
+        $headers = CCR_Email::html_headers([
             'Reply-To: ' . $name . ' <' . $email . '>',
-        ];
+        ]);
 
-        $sent = wp_mail($to, $subject, $body, $headers);
+        $sent = wp_mail($to, $subject, CCR_Email::wrap_html($subject, $inner), $headers);
 
         if (! $sent) {
             self::redirect([

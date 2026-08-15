@@ -14,13 +14,20 @@ Camera, lens, and lighting gear rented by the day (GHS), with Paystack online pa
 
 ## Features
 
+- **Shop + categories + search** — catalog with category nav and header/mobile search
 - **Daily rental pricing** — per-day rates, pickup/return dates on cart and checkout
+- **Promo / sale pricing** — sale daily rates with strikethrough on cards and product pages
+- **Rental kits** — bundled products that add multiple items to the cart together
 - **Availability holds** — inventory reserved for pickup-cash and abandoned checkouts
 - **Payments** — Paystack (cards / mobile money) + Pay on pickup (cash)
+- **Static pages** — About, FAQ, Contact, Terms, Privacy, Help
+- **Contact form** — posts to admin email with success/error feedback
+- **Newsletter** — local subscriber list + optional Mailchimp / webhook sync (FluentCRM, Zapier, etc.)
 - **Rentopian sync** — optional inventory sync via API
-- **Newsletter** — custom subscriber list (no MailPoet)
-- **Contact form** — built into the Christocentric Rentals plugin
-- **Storefront** — custom `christocentric` theme (shop, product, cart, account pages)
+- **Storefront** — custom `christocentric` theme
+- **Homepage CMS** — Advanced Custom Fields (free) via **Appearance → Homepage CMS**
+- **Compare products** — up to 4 items, cookie + AJAX
+- **Studio booking page** — `/studio/`
 
 ---
 
@@ -31,6 +38,7 @@ Camera, lens, and lighting gear rented by the day (GHS), with Paystack online pa
 | CMS / shop | WordPress + WooCommerce |
 | Theme | `wp-content/themes/christocentric` |
 | Rentals plugin | `wp-content/plugins/christocentric-rentals` |
+| Homepage CMS | `wp-content/plugins/advanced-custom-fields` |
 | Online payments | `wp-content/plugins/woo-paystack` |
 | Currency / market | GHS · Ghana |
 
@@ -92,18 +100,25 @@ php scripts\check-admin.php
 
 This activates the Christocentric theme + plugins, sets store options, and imports products from `migration/woocommerce-products.csv` when present.
 
-### 7. Enable payments
+### 7. Enable payments & ops
+
+```powershell
+php scripts\configure-paystack.php   # loads test keys from Laravel .env
+php scripts\ensure-product-stock.php # qty 1 per item (kits use components)
+```
 
 **WooCommerce → Settings → Payments**
 
-- Enable **Paystack** (test keys for local)
-- Enable **Pay on pickup (cash)**
+- **Paystack** — enabled in **test mode** after the script (swap to live keys before production)
+- **Pay on pickup (cash)** — enabled
 
-**WooCommerce → Christocentric Rentals** (plugin settings)
+**WooCommerce → Christocentric Rentals**
 
-- Rentopian API key / base URL when available
-- Pickup-cash hold: **72 hours**
-- Abandoned checkout hold: **2 hours**
+- Staff booking workflow (Orders list shows rental dates)
+- **SMTP** — enable and enter Hostinger mailbox host/user/pass, then send a test email
+- Rentopian — leave empty (not required)
+
+Webhook for Paystack (when live): `https://yoursite.com/?wc-api=wc_gateway_paystack`
 
 ---
 
@@ -148,6 +163,7 @@ Run from the project root with PHP on your PATH (Laragon terminal is fine):
 | `php scripts\activate-theme.php` | Switch to `christocentric` theme |
 | `php scripts\activate-plugins.php` | Activate WooCommerce + Christocentric plugin |
 | `php scripts\setup-christocentric.php` | Full local setup + product import |
+| `php scripts\ensure-storefront.php` | Pages, permalinks, sample sales & kits |
 | `php scripts\check-admin.php` | Print site URL, plugins, product count |
 | `php scripts\check-payments.php` | Payment gateway status |
 | `php scripts\setup-newsletter.php` | Newsletter tables / options |
