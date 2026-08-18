@@ -27,7 +27,7 @@ add_filter('woocommerce_enqueue_styles', '__return_empty_array');
 
 add_action('wp_enqueue_scripts', static function (): void {
     $uri = get_template_directory_uri() . '/assets/build/';
-    $ver = '3.41';
+    $ver = '3.65';
 
     wp_dequeue_style('wc-blocks-style');
     wp_dequeue_style('wc-blocks-vendors-style');
@@ -65,9 +65,12 @@ add_action('wp_enqueue_scripts', static function (): void {
 
     $interestPayload = [
         'cookie' => 'ccr_interest',
+        'consentCookie' => 'ccr_cookie_consent',
         'maxAge' => 30 * DAY_IN_SECONDS,
+        'consentMaxAge' => 365 * DAY_IN_SECONDS,
         'productId' => 0,
         'categories' => [],
+        'privacyUrl' => home_url('/privacy/'),
     ];
     if (function_exists('is_product') && is_product()) {
         $product = wc_get_product(get_queried_object_id());
@@ -84,6 +87,10 @@ add_action('wp_enqueue_scripts', static function (): void {
         }
     }
     wp_localize_script('ccr-theme', 'ccrInterest', $interestPayload);
+
+    if (is_page('studio') && class_exists('CCR_Studio_Booking')) {
+        wp_localize_script('ccr-theme', 'ccrStudio', CCR_Studio_Booking::frontend_payload());
+    }
 }, 100);
 
 // WC Blocks may re-enqueue after priority 100 — strip again before print.
@@ -98,6 +105,9 @@ add_action('wp_print_styles', static function (): void {
 
 add_filter('body_class', static function (array $classes): array {
     $classes[] = 'ccr-theme';
+    if (is_page('studio')) {
+        $classes[] = 'ccr-studio-booking';
+    }
 
     return $classes;
 });

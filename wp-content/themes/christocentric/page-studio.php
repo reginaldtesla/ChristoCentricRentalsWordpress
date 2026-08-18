@@ -1,152 +1,196 @@
 <?php
 defined('ABSPATH') || exit;
 
-$contact = ccr_site_config('contact', []);
-$lights_url = ccr_shop_url(['product_cat' => 'continuous-light']);
-$cameras_url = ccr_shop_url(['product_cat' => 'cameras']);
-$audio_url = ccr_shop_url(['product_cat' => 'audio-gears']);
-$contact_url = home_url('/contact/');
+$successOrderId = absint($_GET['order'] ?? 0); // phpcs:ignore
+$bookingStatus = isset($_GET['booking']) ? sanitize_key(wp_unslash($_GET['booking'])) : ''; // phpcs:ignore
+$isSuccess = $bookingStatus === 'success' && $successOrderId > 0;
+$isPending = $bookingStatus === 'pending' && $successOrderId > 0;
+$successOrder = null;
+$waUrl = '';
+$waContext = 'paid';
 
-$gear_images = [];
-if (function_exists('wc_get_products')) {
-    $products = wc_get_products([
-        'status' => 'publish',
-        'limit' => 6,
-        'category' => ['continuous-light', 'cameras'],
-        'orderby' => 'date',
-        'order' => 'DESC',
-    ]);
-    foreach ($products as $product) {
-        $src = wp_get_attachment_image_url($product->get_image_id(), 'medium');
-        if ($src) {
-            $gear_images[] = [
-                'src' => $src,
-                'alt' => $product->get_name(),
-                'url' => $product->get_permalink(),
-            ];
-        }
+if (($isSuccess || $isPending) && function_exists('wc_get_order') && class_exists('CCR_Studio_Booking')) {
+    $successOrder = wc_get_order($successOrderId);
+    if ($successOrder instanceof WC_Order && (string) $successOrder->get_meta(CCR_Studio_Booking::META_FLAG) === '1') {
+        $settings = class_exists('CCR_Studio_Settings') ? CCR_Studio_Settings::get() : [];
+        $wa = preg_replace('/\D+/', '', (string) ($settings['whatsapp'] ?? '')) ?: '233532670582';
+        $waContext = $isPending ? 'pending' : 'paid';
+        $msg = CCR_Studio_Booking::whatsapp_message_for_order($successOrder, $waContext);
+        $waUrl = 'https://wa.me/' . $wa . '?text=' . rawurlencode($msg);
+    } else {
+        $isSuccess = false;
+        $isPending = false;
+        $successOrder = null;
     }
 }
 
-$uses = [
-    ['label' => 'Interviews', 'text' => 'Clean key light and a quiet backdrop for talking-head and documentary work.'],
-    ['label' => 'Portraits', 'text' => 'Controlled light for headshots, beauty, and creator stills.'],
-    ['label' => 'Product & brand', 'text' => 'Tabletop and lifestyle setups for packs, props, and social content.'],
-    ['label' => 'Church & team media', 'text' => 'Reliable space for announcements, worship clips, and training videos.'],
-];
-
-$steps = [
-    ['n' => '01', 'title' => 'Tell us the shoot', 'text' => 'Share your date, session length, and whether you need cameras, lights, or audio.'],
-    ['n' => '02', 'title' => 'Confirm the slot', 'text' => 'We check studio availability, quote the session, and reserve any gear with it.'],
-    ['n' => '03', 'title' => 'Show up ready', 'text' => 'Arrive on time. First-time clients should bring a valid Ghana Card.'],
-];
-
 get_header();
+
+$studioSettings = class_exists('CCR_Studio_Settings') ? CCR_Studio_Settings::get() : [];
+$heroImage = (string) ($studioSettings['hero_image_url'] ?? '');
+$heroClass = 'ccr-studio-book-hero' . ($heroImage !== '' ? ' has-image' : '');
+$heroStyle = $heroImage !== ''
+    ? ' style="--ccr-studio-hero-image:url(\'' . esc_url($heroImage) . '\')"'
+    : '';
+$momoNumber = (string) ($studioSettings['momo_pay_number'] ?? '');
+$momoNetwork = (string) ($studioSettings['momo_pay_network'] ?? 'MTN');
+$momoReference = (string) ($studioSettings['momo_reference'] ?? 'Studio Rentals');
+if ($successOrder instanceof WC_Order) {
+    $orderMomo = (string) $successOrder->get_meta('_ccr_studio_momo_pay_number');
+    if ($orderMomo !== '') {
+        $momoNumber = $orderMomo;
+    }
+    $orderNet = (string) $successOrder->get_meta('_ccr_studio_momo_pay_network');
+    if ($orderNet !== '') {
+        $momoNetwork = $orderNet;
+    }
+    $orderRef = (string) $successOrder->get_meta('_ccr_studio_momo_reference');
+    if ($orderRef !== '') {
+        $momoReference = $orderRef;
+    }
+}
+$amountDue = $successOrder instanceof WC_Order
+    ? (float) ($successOrder->get_meta('_ccr_studio_deposit_due') ?: $successOrder->get_meta('_ccr_studio_full_total'))
+    : 0.0;
+$holdMinutes = class_exists('CCR_Studio_Booking') ? (int) CCR_Studio_Booking::AWAITING_HOLD_MINUTES : 10;
 ?>
 
-<section class="ccr-studio-hero">
-    <div class="container-site ccr-studio-hero-inner">
-        <div class="ccr-studio-hero-copy">
-            <p class="ccr-studio-eyebrow"><?php esc_html_e('Kumasi · Bomso', 'christocentric'); ?></p>
-            <h1 class="ccr-studio-title"><?php esc_html_e('Studio', 'christocentric'); ?></h1>
-            <p class="ccr-studio-lead">
-                <?php esc_html_e('Book a controlled space for interviews, portraits, and content shoots — and pair it with rental cameras, lights, and audio from our inventory.', 'christocentric'); ?>
-            </p>
-            <div class="ccr-studio-hero-actions">
-                <a href="<?php echo esc_url($contact_url); ?>" class="btn-solid"><?php esc_html_e('Enquire to book', 'christocentric'); ?></a>
-                <a href="<?php echo esc_url($lights_url); ?>" class="ccr-studio-link"><?php esc_html_e('Browse lighting', 'christocentric'); ?></a>
-            </div>
-        </div>
-        <?php if ($gear_images !== []) : ?>
-            <div class="ccr-studio-hero-stage" aria-hidden="true">
-                <?php foreach (array_slice($gear_images, 0, 4) as $i => $img) : ?>
-                    <div class="ccr-studio-hero-tile ccr-studio-hero-tile--<?php echo (int) ($i + 1); ?>">
-                        <img src="<?php echo esc_url($img['src']); ?>" alt="" loading="eager">
+<div class="ccr-studio-book-shell ccr-studio-book-shell--mcb" data-ccr-studio-book>
+    <a href="<?php echo esc_url(home_url('/')); ?>" class="ccr-studio-book-back">
+        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd"/></svg>
+        <?php esc_html_e('Back', 'christocentric'); ?>
+    </a>
+
+    <?php if ($isPending && $successOrder instanceof WC_Order) : ?>
+        <div class="ccr-studio-book-layout">
+            <aside class="<?php echo esc_attr($heroClass); ?>"<?php echo $heroStyle; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+                <div class="ccr-studio-book-hero-inner">
+                    <a href="<?php echo esc_url(home_url('/')); ?>" class="ccr-studio-book-logo">
+                        <img src="<?php echo esc_url(ccr_theme_asset('images/brand/logo.png')); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>">
+                    </a>
+                    <h1 class="ccr-studio-book-title">
+                        <span><?php esc_html_e('Send', 'christocentric'); ?></span>
+                        <em><?php esc_html_e('MoMo', 'christocentric'); ?></em>
+                    </h1>
+                    <p class="ccr-studio-book-lead"><?php echo esc_html(sprintf(__('Your slot is held for %d minutes while you pay. After that others can book it, but we can still confirm your payment later and lock the time again if it is still free.', 'christocentric'), $holdMinutes)); ?></p>
+                </div>
+            </aside>
+            <section class="ccr-studio-book-panel">
+                <div class="ccr-studio-book-card">
+                    <h2 class="ccr-studio-book-heading"><?php esc_html_e('Pay by Mobile Money', 'christocentric'); ?></h2>
+                    <p class="ccr-studio-book-sub"><?php echo esc_html(sprintf(__('Order #%s', 'christocentric'), $successOrder->get_order_number())); ?></p>
+
+                    <div class="ccr-studio-momo-box">
+                        <div class="ccr-studio-momo-row"><span><?php esc_html_e('Amount', 'christocentric'); ?></span><strong>GHS <?php echo esc_html(number_format($amountDue, 2)); ?></strong></div>
+                        <div class="ccr-studio-momo-row"><span><?php esc_html_e('Network', 'christocentric'); ?></span><strong><?php echo esc_html($momoNetwork); ?></strong></div>
+                        <div class="ccr-studio-momo-row"><span><?php esc_html_e('MoMo number', 'christocentric'); ?></span><strong><?php echo esc_html($momoNumber); ?></strong></div>
+                        <div class="ccr-studio-momo-row"><span><?php esc_html_e('Reference', 'christocentric'); ?></span><strong><?php echo esc_html($momoReference); ?></strong></div>
+                        <p class="ccr-studio-momo-note"><?php esc_html_e('Use this exact reference so we can match your payment.', 'christocentric'); ?></p>
                     </div>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
-    </div>
-</section>
 
-<section class="ccr-studio-section">
-    <div class="container-site">
-        <div class="ccr-studio-section-head">
-            <h2><?php esc_html_e('Built for real shoots', 'christocentric'); ?></h2>
-            <p><?php esc_html_e('A practical studio environment for creators, churches, and production teams in Kumasi.', 'christocentric'); ?></p>
+                    <div class="ccr-studio-book-summary-static">
+                        <?php echo class_exists('CCR_Studio_Booking') ? CCR_Studio_Booking::summary_html($successOrder) : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                    </div>
+                    <div class="ccr-studio-book-actions">
+                        <?php if ($waUrl !== '') : ?>
+                            <a class="ccr-studio-book-btn ccr-studio-book-btn--solid" href="<?php echo esc_url($waUrl); ?>" target="_blank" rel="noopener noreferrer">
+                                <?php esc_html_e('Send proof on WhatsApp', 'christocentric'); ?>
+                            </a>
+                        <?php endif; ?>
+                        <a class="ccr-studio-book-btn ccr-studio-book-btn--ghost" href="<?php echo esc_url(home_url('/')); ?>">
+                            <?php esc_html_e('Back to home', 'christocentric'); ?>
+                        </a>
+                    </div>
+                </div>
+            </section>
         </div>
-        <ul class="ccr-studio-uses">
-            <?php foreach ($uses as $use) : ?>
-                <li>
-                    <span class="ccr-studio-use-label"><?php echo esc_html($use['label']); ?></span>
-                    <span class="ccr-studio-use-text"><?php echo esc_html($use['text']); ?></span>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-</section>
+    <?php elseif ($isSuccess && $successOrder instanceof WC_Order) : ?>
+        <div class="ccr-studio-book-layout">
+            <aside class="<?php echo esc_attr($heroClass); ?>"<?php echo $heroStyle; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+                <div class="ccr-studio-book-hero-inner">
+                    <a href="<?php echo esc_url(home_url('/')); ?>" class="ccr-studio-book-logo">
+                        <img src="<?php echo esc_url(ccr_theme_asset('images/brand/logo.png')); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>">
+                    </a>
+                    <h1 class="ccr-studio-book-title">
+                        <span><?php esc_html_e('Booking', 'christocentric'); ?></span>
+                        <em><?php esc_html_e('Confirmed', 'christocentric'); ?></em>
+                    </h1>
+                    <p class="ccr-studio-book-lead"><?php esc_html_e('Your MoMo payment is confirmed. We’ve emailed the details — you can also ping us on WhatsApp.', 'christocentric'); ?></p>
+                </div>
+            </aside>
+            <section class="ccr-studio-book-panel">
+                <div class="ccr-studio-book-card">
+                    <h2 class="ccr-studio-book-heading"><?php esc_html_e('You’re booked', 'christocentric'); ?></h2>
+                    <p class="ccr-studio-book-sub"><?php echo esc_html(sprintf(__('Order #%s', 'christocentric'), $successOrder->get_order_number())); ?></p>
+                    <div class="ccr-studio-book-summary-static">
+                        <?php echo class_exists('CCR_Studio_Booking') ? CCR_Studio_Booking::summary_html($successOrder) : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                    </div>
+                    <div class="ccr-studio-book-actions">
+                        <?php if ($waUrl !== '') : ?>
+                            <a class="ccr-studio-book-btn ccr-studio-book-btn--solid" href="<?php echo esc_url($waUrl); ?>" target="_blank" rel="noopener noreferrer">
+                                <?php esc_html_e('Message us on WhatsApp', 'christocentric'); ?>
+                            </a>
+                        <?php endif; ?>
+                        <a class="ccr-studio-book-btn ccr-studio-book-btn--ghost" href="<?php echo esc_url(home_url('/')); ?>">
+                            <?php esc_html_e('Back to home', 'christocentric'); ?>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    <?php else : ?>
+        <div class="ccr-studio-book-layout">
+            <aside class="<?php echo esc_attr($heroClass); ?>"<?php echo $heroStyle; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+                <div class="ccr-studio-book-hero-inner">
+                    <a href="<?php echo esc_url(home_url('/')); ?>" class="ccr-studio-book-logo">
+                        <img src="<?php echo esc_url(ccr_theme_asset('images/brand/logo.png')); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>">
+                    </a>
+                    <p class="ccr-studio-book-eyebrow" data-ccr-studio-eyebrow></p>
+                    <h1 class="ccr-studio-book-title">
+                        <span data-ccr-studio-t1></span>
+                        <span data-ccr-studio-t2></span>
+                        <em data-ccr-studio-te></em>
+                    </h1>
+                    <p class="ccr-studio-book-lead" data-ccr-studio-lead></p>
+                    <dl class="ccr-studio-book-stats" data-ccr-studio-stats></dl>
+                    <p class="ccr-studio-book-address" data-ccr-studio-address></p>
+                </div>
+            </aside>
 
-<?php if ($gear_images !== []) : ?>
-<section class="ccr-studio-section ccr-studio-section--alt">
-    <div class="container-site">
-        <div class="ccr-studio-section-head ccr-studio-section-head--row">
-            <div>
-                <h2><?php esc_html_e('Gear ready with your session', 'christocentric'); ?></h2>
-                <p><?php esc_html_e('Reserve lights, cameras, and audio alongside studio time so you walk into a complete setup.', 'christocentric'); ?></p>
-            </div>
-            <a href="<?php echo esc_url(ccr_shop_url()); ?>" class="ccr-studio-link"><?php esc_html_e('All products', 'christocentric'); ?></a>
-        </div>
-        <div class="ccr-studio-gear-rail">
-            <?php foreach ($gear_images as $img) : ?>
-                <a href="<?php echo esc_url($img['url']); ?>" class="ccr-studio-gear-item">
-                    <img src="<?php echo esc_url($img['src']); ?>" alt="<?php echo esc_attr($img['alt']); ?>" loading="lazy">
-                    <span><?php echo esc_html($img['alt']); ?></span>
-                </a>
-            <?php endforeach; ?>
-        </div>
-        <div class="ccr-studio-gear-links">
-            <a href="<?php echo esc_url($cameras_url); ?>"><?php esc_html_e('Cameras', 'christocentric'); ?></a>
-            <a href="<?php echo esc_url($lights_url); ?>"><?php esc_html_e('Lights', 'christocentric'); ?></a>
-            <a href="<?php echo esc_url($audio_url); ?>"><?php esc_html_e('Audio', 'christocentric'); ?></a>
-        </div>
-    </div>
-</section>
-<?php endif; ?>
+            <section class="ccr-studio-book-panel" aria-labelledby="ccr-studio-book-heading">
+                <div class="ccr-studio-book-card" data-ccr-studio-wizard>
+                    <div class="ccr-studio-book-progress" aria-live="polite">
+                        <div class="ccr-studio-book-progress-meta">
+                            <span data-ccr-studio-step-label><?php esc_html_e('Step 1 of 6', 'christocentric'); ?></span>
+                            <span data-ccr-studio-step-pct>17%</span>
+                        </div>
+                        <div class="ccr-studio-book-progress-track" aria-hidden="true">
+                            <span class="ccr-studio-book-progress-fill" data-ccr-studio-progress style="width:17%"></span>
+                        </div>
+                    </div>
 
-<section class="ccr-studio-section">
-    <div class="container-site">
-        <div class="ccr-studio-section-head">
-            <h2><?php esc_html_e('How booking works', 'christocentric'); ?></h2>
-            <p><?php esc_html_e('Simple enquiry — we confirm space, kit, and timing before you pay.', 'christocentric'); ?></p>
-        </div>
-        <ol class="ccr-studio-steps">
-            <?php foreach ($steps as $step) : ?>
-                <li>
-                    <span class="ccr-studio-step-n"><?php echo esc_html($step['n']); ?></span>
-                    <h3><?php echo esc_html($step['title']); ?></h3>
-                    <p><?php echo esc_html($step['text']); ?></p>
-                </li>
-            <?php endforeach; ?>
-        </ol>
-    </div>
-</section>
+                    <h2 id="ccr-studio-book-heading" class="ccr-studio-book-heading"><?php esc_html_e('New Reservation', 'christocentric'); ?></h2>
+                    <p class="ccr-studio-book-sub" data-ccr-studio-step-sub><?php esc_html_e('Select a studio to begin — takes under 2 minutes.', 'christocentric'); ?></p>
 
-<section class="ccr-studio-book">
-    <div class="container-site ccr-studio-book-inner">
-        <div>
-            <h2><?php esc_html_e('Ready to book the studio?', 'christocentric'); ?></h2>
-            <p>
-                <?php echo esc_html($contact['address'] ?? 'Bomso, near Abesse Gaming Center'); ?>
-                · <?php echo esc_html($contact['city'] ?? 'Kumasi, Ghana'); ?>
-            </p>
-            <p class="ccr-studio-book-meta">
-                <a href="tel:<?php echo esc_attr($contact['phone'] ?? ''); ?>"><?php echo esc_html($contact['phone_display'] ?? ''); ?></a>
-                <span aria-hidden="true">·</span>
-                <a href="mailto:<?php echo esc_attr($contact['email'] ?? ''); ?>"><?php echo esc_html($contact['email'] ?? ''); ?></a>
-            </p>
+                    <div data-ccr-studio-mount></div>
+
+                    <p class="ccr-studio-book-error" data-ccr-studio-error hidden></p>
+
+                    <div class="ccr-studio-book-actions">
+                        <button type="button" class="ccr-studio-book-btn ccr-studio-book-btn--ghost" data-ccr-studio-prev hidden>
+                            <?php esc_html_e('Back', 'christocentric'); ?>
+                        </button>
+                        <button type="button" class="ccr-studio-book-btn ccr-studio-book-btn--solid" data-ccr-studio-next>
+                            <?php esc_html_e('Continue', 'christocentric'); ?>
+                        </button>
+                        <button type="button" class="ccr-studio-book-btn ccr-studio-book-btn--solid" data-ccr-studio-pay hidden>
+                            <?php esc_html_e('Confirm booking', 'christocentric'); ?>
+                        </button>
+                    </div>
+                </div>
+            </section>
         </div>
-        <a href="<?php echo esc_url($contact_url); ?>" class="btn-solid"><?php esc_html_e('Enquire to book', 'christocentric'); ?></a>
-    </div>
-</section>
+    <?php endif; ?>
+</div>
 
 <?php get_footer(); ?>

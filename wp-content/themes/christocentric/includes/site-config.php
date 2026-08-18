@@ -1017,20 +1017,41 @@ function ccr_interest_cookie_name(): string
     return 'ccr_interest';
 }
 
+function ccr_cookie_consent_name(): string
+{
+    return 'ccr_cookie_consent';
+}
+
+/**
+ * Whether the visitor allowed personalization cookies.
+ */
+function ccr_cookie_consent_allows_personalization(): bool
+{
+    $raw = isset($_COOKIE[ccr_cookie_consent_name()])
+        ? strtolower(trim((string) wp_unslash($_COOKIE[ccr_cookie_consent_name()]))) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+        : '';
+
+    return $raw === 'all' || $raw === '1' || $raw === 'accepted';
+}
+
 /**
  * @return array{product_ids:list<int>,category_slugs:list<string>,top_category:string}
  */
 function ccr_parse_interest_cookie(): array
 {
-    $raw = isset($_COOKIE[ccr_interest_cookie_name()])
-        ? (string) wp_unslash($_COOKIE[ccr_interest_cookie_name()]) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
-        : '';
-
     $empty = [
         'product_ids' => [],
         'category_slugs' => [],
         'top_category' => '',
     ];
+
+    if (! ccr_cookie_consent_allows_personalization()) {
+        return $empty;
+    }
+
+    $raw = isset($_COOKIE[ccr_interest_cookie_name()])
+        ? (string) wp_unslash($_COOKIE[ccr_interest_cookie_name()]) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+        : '';
 
     if ($raw === '') {
         return $empty;
@@ -1157,6 +1178,83 @@ function ccr_personalized_shop_url(): string
 function ccr_is_kits_view(): bool
 {
     return isset($_GET['ccr_kits']) && (string) wp_unslash($_GET['ccr_kits']) !== '' && (string) wp_unslash($_GET['ccr_kits']) !== '0'; // phpcs:ignore
+}
+
+/**
+ * Studio booking page config (McB-style wizard).
+ *
+ * @return array{
+ *   whatsapp:string,
+ *   eyebrow:string,
+ *   title_line_1:string,
+ *   title_line_2:string,
+ *   title_emphasis:string,
+ *   lead:string,
+ *   address:string,
+ *   stats:list<array{value:string,label:string}>,
+ *   studios:list<array{id:string,name:string,blurb:string,meta:string,image:string}>,
+ *   durations:list<array{id:string,label:string,hint:string}>,
+ *   times:list<string>
+ * }
+ */
+function ccr_studio_booking_config(): array
+{
+    $contact = ccr_site_config('contact', []);
+    $phone = preg_replace('/\D+/', '', (string) ($contact['phone'] ?? '+233532670582')) ?: '233532670582';
+    $fromConfig = ccr_site_config('studio_booking', []);
+    if (! is_array($fromConfig)) {
+        $fromConfig = [];
+    }
+
+    $defaults = [
+        'whatsapp' => $phone,
+        'eyebrow' => 'Kumasi · Bomso · Open daily',
+        'title_line_1' => 'Reserve',
+        'title_line_2' => 'Your',
+        'title_emphasis' => 'Studio',
+        'lead' => 'A controlled space for interviews, portraits, and content shoots — confirmed by WhatsApp within minutes.',
+        'address' => trim(($contact['address'] ?? 'Bomso, near Obesse Gaming Center') . ', ' . ($contact['city'] ?? 'Kumasi, Ghana'), ', '),
+        'stats' => [
+            ['value' => '1', 'label' => 'Studio'],
+            ['value' => 'Ready', 'label' => 'Lighting setup'],
+            ['value' => 'Full day', 'label' => 'Max session'],
+            ['value' => 'Gear', 'label' => 'Can pair rentals'],
+        ],
+        'studios' => [
+            [
+                'id' => 'main',
+                'name' => 'Main studio',
+                'blurb' => 'Controlled space in Bomso for interviews, portraits, and brand content.',
+                'meta' => 'Kumasi · Pair with rental gear',
+                'image' => '',
+            ],
+        ],
+        'durations' => [
+            ['id' => '2h', 'label' => '2 hours', 'hint' => 'Quick interview or headshots'],
+            ['id' => '4h', 'label' => '4 hours', 'hint' => 'Half-day content shoot'],
+            ['id' => 'full', 'label' => 'Full day', 'hint' => 'Extended production day'],
+        ],
+        'times' => ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'],
+    ];
+
+    $merged = array_replace_recursive($defaults, $fromConfig);
+    if (empty($merged['whatsapp'])) {
+        $merged['whatsapp'] = $phone;
+    }
+    if (! is_array($merged['stats']) || $merged['stats'] === []) {
+        $merged['stats'] = $defaults['stats'];
+    }
+    if (! is_array($merged['studios']) || $merged['studios'] === []) {
+        $merged['studios'] = $defaults['studios'];
+    }
+    if (! is_array($merged['durations']) || $merged['durations'] === []) {
+        $merged['durations'] = $defaults['durations'];
+    }
+    if (! is_array($merged['times']) || $merged['times'] === []) {
+        $merged['times'] = $defaults['times'];
+    }
+
+    return $merged;
 }
 
 function ccr_page_json(string $slug): array

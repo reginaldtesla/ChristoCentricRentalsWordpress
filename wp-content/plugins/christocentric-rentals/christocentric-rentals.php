@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Christocentric Rentals
  * Description: 24-hour camera & gear rentals — availability, pay-on-pickup, Paystack, SMTP, and optional Rentopian sync.
- * Version: 1.5.3
+ * Version: 1.7.1
  * Author: Christocentric Rentals
  * Requires at least: 6.4
  * Requires PHP: 8.1
@@ -11,7 +11,7 @@
 
 defined('ABSPATH') || exit;
 
-define('CCR_VERSION', '1.5.3');
+define('CCR_VERSION', '1.7.1');
 define('CCR_PLUGIN_FILE', __FILE__);
 define('CCR_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('CCR_PLUGIN_URL', plugin_dir_url(__FILE__));
@@ -34,8 +34,13 @@ require_once CCR_PLUGIN_DIR . 'includes/class-hold-expiry.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-legacy-redirects.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-google-auth.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-rental-agreement.php';
+require_once CCR_PLUGIN_DIR . 'includes/class-private-media.php';
+require_once CCR_PLUGIN_DIR . 'includes/class-admin-media-ui.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-verification-import.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-disable-email-confirm.php';
+require_once CCR_PLUGIN_DIR . 'includes/class-studio-cpt.php';
+require_once CCR_PLUGIN_DIR . 'includes/class-studio-settings.php';
+require_once CCR_PLUGIN_DIR . 'includes/class-studio-booking.php';
 
 final class Christocentric_Rentals
 {
@@ -69,8 +74,13 @@ final class Christocentric_Rentals
         CCR_Legacy_Redirects::init();
         CCR_Google_Auth::init();
         CCR_Rental_Agreement::init();
+        CCR_Private_Media::init();
+        CCR_Admin_Media_Ui::init();
         CCR_Verification_Import::init();
         CCR_Disable_Email_Confirm::init();
+        CCR_Studio_Cpt::init();
+        CCR_Studio_Settings::init();
+        CCR_Studio_Booking::init();
 
         if (! class_exists('WooCommerce')) {
             add_action('admin_notices', static function (): void {
@@ -126,6 +136,8 @@ final class Christocentric_Rentals
         CCR_Hold_Expiry::schedule();
         CCR_Late_Notices::schedule();
         CCR_Compare::ensure_page();
+        CCR_Studio_Cpt::register();
+        CCR_Studio_Cpt::maybe_seed_default();
         flush_rewrite_rules();
     }
 

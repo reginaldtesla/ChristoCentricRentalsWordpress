@@ -72,13 +72,12 @@
 
 <section id="cookies" class="doc-section">
     <h2>5. Cookies and Tracking Technologies</h2>
-    <p>Our website uses cookies to enhance your experience. We use cookies to:</p>
+    <p>Our website uses cookies to enhance your experience. We use:</p>
     <ul>
-        <li>Remember preferences and settings.</li>
-        <li>Gather anonymous analytics data.</li>
-        <li>Improve website functionality and navigation.</li>
+        <li><strong>Essential cookies</strong> — required for cart, checkout, account login, and compare.</li>
+        <li><strong>Personalization cookies</strong> — only with your consent, to suggest gear based on products you view (“Picked for you”).</li>
     </ul>
-    <p>You can control cookies through your browser settings. Disabling cookies may affect some site features.</p>
+    <p>You can choose <strong>Accept all</strong> or <strong>Essential only</strong> in our cookie banner. You can also control cookies in your browser settings. Disabling essential cookies may affect shop features.</p>
 </section>
 
 <section id="third-party" class="doc-section">

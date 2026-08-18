@@ -6,7 +6,7 @@ $search_q = ccr_shop_search_query();
 $nav_groups = ccr_nav_category_groups();
 $categories_open = (function_exists('is_shop') && is_shop()) || is_tax('product_cat') || ccr_is_kits_view();
 ?>
-<header class="sticky top-0 z-50 border-b border-gray-200 bg-white">
+<header class="ccr-site-header sticky top-0 border-b border-gray-200 bg-white" data-ccr-site-header>
     <div class="container-site">
         <div class="flex items-center gap-4 py-3 lg:py-4">
             <button type="button" class="p-1 text-gray-700 lg:hidden" data-mobile-menu-toggle aria-expanded="false" aria-controls="ccr-mobile-menu" aria-label="<?php esc_attr_e('Open menu', 'christocentric'); ?>">
@@ -46,34 +46,36 @@ $categories_open = (function_exists('is_shop') && is_shop()) || is_tax('product_
             <ul class="flex flex-wrap items-center gap-1 py-1">
                 <li><a href="<?php echo esc_url(home_url('/')); ?>" class="nav-link <?php echo is_front_page() ? 'nav-link-active' : ''; ?>"><?php esc_html_e('Home', 'christocentric'); ?></a></li>
                 <li class="ccr-nav-dropdown" data-ccr-nav-dropdown>
-                    <button type="button" class="nav-link ccr-nav-dropdown-trigger <?php echo $categories_open ? 'nav-link-active' : ''; ?>" data-ccr-nav-trigger aria-expanded="false" aria-haspopup="true">
+                    <button type="button" class="nav-link ccr-nav-dropdown-trigger <?php echo $categories_open ? 'nav-link-active' : ''; ?>" data-ccr-nav-trigger aria-expanded="false" aria-haspopup="true" aria-controls="ccr-nav-cats-panel">
                         <?php esc_html_e('Categories', 'christocentric'); ?>
                         <svg class="ccr-nav-caret" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
                     </button>
-                    <div class="ccr-nav-panel" data-ccr-nav-panel hidden>
-                        <div class="ccr-nav-panel-grid">
-                            <?php foreach ($nav_groups as $group) : ?>
-                                <div class="ccr-nav-group <?php echo ! empty($group['active']) ? 'is-active' : ''; ?>">
-                                    <p class="ccr-nav-group-title"><?php echo esc_html($group['label']); ?></p>
-                                    <ul class="ccr-nav-group-list">
-                                        <?php foreach ($group['items'] as $item) : ?>
-                                            <li>
-                                                <a href="<?php echo esc_url($item['url']); ?>" class="ccr-nav-item <?php echo ! empty($item['active']) ? 'is-active' : ''; ?>">
-                                                    <?php echo esc_html($item['label']); ?>
-                                                </a>
-                                            </li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
                 </li>
                 <li class="ml-auto"><a href="<?php echo esc_url(home_url('/studio/')); ?>" class="nav-link <?php echo is_page('studio') ? 'nav-link-active' : ''; ?>"><?php esc_html_e('Studio', 'christocentric'); ?></a></li>
                 <li><a href="<?php echo esc_url(home_url('/help/')); ?>" class="nav-link <?php echo is_page('help') ? 'nav-link-active' : ''; ?>"><?php esc_html_e('Help', 'christocentric'); ?></a></li>
                 <li><a href="<?php echo esc_url(home_url('/contact/')); ?>" class="nav-link <?php echo is_page('contact') ? 'nav-link-active' : ''; ?>"><?php esc_html_e('Contact', 'christocentric'); ?></a></li>
             </ul>
         </nav>
+    </div>
+    <div id="ccr-nav-cats-panel" class="ccr-nav-panel" data-ccr-nav-panel aria-hidden="true">
+        <div class="container-site">
+            <div class="ccr-nav-panel-grid">
+                <?php foreach ($nav_groups as $group) : ?>
+                    <div class="ccr-nav-group <?php echo ! empty($group['active']) ? 'is-active' : ''; ?>">
+                        <p class="ccr-nav-group-title"><?php echo esc_html($group['label']); ?></p>
+                        <ul class="ccr-nav-group-list">
+                            <?php foreach ($group['items'] as $item) : ?>
+                                <li>
+                                    <a href="<?php echo esc_url($item['url']); ?>" class="ccr-nav-item <?php echo ! empty($item['active']) ? 'is-active' : ''; ?>">
+                                        <?php echo esc_html($item['label']); ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
     </div>
     <div id="ccr-mobile-menu" class="hidden border-t border-gray-200 bg-white lg:hidden" data-mobile-menu hidden>
         <div class="container-site space-y-1 py-3">

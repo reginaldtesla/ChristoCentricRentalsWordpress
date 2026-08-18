@@ -19,27 +19,13 @@ $popular = ccr_get_products([
         'sony-lenses',
     ],
 ]);
+// Only products assigned to the New Arrivals category — no auto-fill fallbacks.
 $newArrivals = ccr_get_products([
     'limit' => 12,
     'category' => ['new-arrivals'],
     'orderby' => 'date',
     'order' => 'DESC',
 ]);
-if ($newArrivals === []) {
-    $newArrivals = ccr_get_products([
-        'limit' => 12,
-        'meta_query' => [['key' => '_ccr_is_new', 'value' => 'yes']],
-        'orderby' => 'date',
-        'order' => 'DESC',
-    ]);
-}
-if ($newArrivals === []) {
-    $newArrivals = ccr_get_products([
-        'limit' => 12,
-        'orderby' => 'date',
-        'order' => 'DESC',
-    ]);
-}
 $newArrivalsUrl = ccr_shop_url(['product_cat' => 'new-arrivals']);
 $termNew = get_term_by('slug', 'new-arrivals', 'product_cat');
 if ($termNew instanceof WP_Term) {

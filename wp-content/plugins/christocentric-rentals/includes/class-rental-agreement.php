@@ -388,7 +388,10 @@ final class CCR_Rental_Agreement
             ],
         ];
 
+        add_filter('upload_dir', ['CCR_Private_Media', 'upload_dir']);
         $moved = wp_handle_upload($file, $overrides);
+        remove_filter('upload_dir', ['CCR_Private_Media', 'upload_dir']);
+
         if (! is_array($moved) || ! empty($moved['error'])) {
             return new WP_Error('ccr_upload', is_array($moved) ? (string) $moved['error'] : __('Upload failed.', 'christocentric-rentals'));
         }
@@ -403,6 +406,10 @@ final class CCR_Rental_Agreement
         $attachId = wp_insert_attachment($attachment, $moved['file']);
         if (is_wp_error($attachId) || ! $attachId) {
             return new WP_Error('ccr_upload', __('Could not save uploaded file.', 'christocentric-rentals'));
+        }
+
+        if (class_exists('CCR_Private_Media')) {
+            CCR_Private_Media::mark_attachment((int) $attachId);
         }
 
         // Skip intermediate image sizes — ID docs are private and large phone photos often fatal the site.
