@@ -1,0 +1,13 @@
+Product: Canon 16- 35mm 2.8 III
+Rentopian ID: 383802
+Category: Lenses
+Type: rental
+Quantity: 5
+Daily rate (GHS): 200.0
+
+Description:
+The Canon 16- 35mm 2.8 III is a Canon photographic lens. A wide zoom for interiors, groups, and establishing shots.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

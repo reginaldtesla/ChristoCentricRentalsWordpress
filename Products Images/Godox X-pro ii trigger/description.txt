@@ -1,0 +1,17 @@
+Product: Godox X-pro ii trigger
+Rentopian ID: 383851
+Category: 
+Type: rental
+Quantity: 1
+Daily rate (GHS): 80.0
+
+Description:
+Godox XPro II trigger operates on the 2.4GHz X system with quoted 100m range, 32 channels, and expanded group control. It supports TTL, manual, stroboscopic modes, plus HSS up to 1/8000s, and adds Bluetooth app control for remote adjustments.
+
+For rentals, it is ideal when lighting setups are complex and speed matters. Photographers can make fast group-level changes from camera position and keep sessions flowing without repeatedly walking to each light.
+
+Short description: Advanced Godox trigger with TTL/HSS, 2.4GHz control, Bluetooth app support, and fast multi-group lighting control.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

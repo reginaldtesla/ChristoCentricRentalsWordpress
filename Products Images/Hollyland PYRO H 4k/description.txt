@@ -1,0 +1,17 @@
+Product: Hollyland PYRO H 4k
+Rentopian ID: 383860
+Category: Transmitters
+Type: rental
+Quantity: 5
+Daily rate (GHS): 200.0
+
+Description:
+Hollyland Pyro H is an HDMI-focused wireless system supporting up to 4K30 transmission, dual-band 2.4/5GHz operation, and quoted 1300ft LOS range in standard mode. It also offers HDMI loop-out, smart channel tools, and latency figures around 60ms class.
+
+Rental users benefit when they need long-range HDMI monitoring with simple setup and scalable receiver options. It is particularly useful for roaming camera teams, event floors, and live sets that demand flexible monitor distribution.
+
+Short description: HDMI-focused Pyro H wireless system with 4K30 support, dual-band transmission, and extended monitoring range.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

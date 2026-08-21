@@ -179,21 +179,41 @@
             }
             var text = periodText + ' — ' + data.formatted_total;
             var ok = data.available > 0 && data.available >= qty;
+            var fleet = parseInt(data.fleet, 10) || 0;
+            var live = '';
 
             if (!ok) {
                 if (data.is_kit && data.unavailable_items && data.unavailable_items.length) {
                     text += ' — unavailable (' + data.unavailable_items.join(', ') + ' booked)';
+                    live = 'Unavailable for these dates';
                 } else if (data.available <= 0) {
                     text += ' — unavailable for these dates';
+                    live = 'Unavailable for these dates';
                 } else {
                     text += ' — only ' + data.available + ' available';
+                    live = 'Only ' + data.available + ' available for these dates';
                 }
             } else if (data.is_kit) {
                 text += ' — kit available';
+                live = 'Kit available for these dates';
+            } else {
+                var ofFleet = '';
+                if (ccrRental.i18n && ccrRental.i18n.availableOf && fleet > 0) {
+                    ofFleet = ccrRental.i18n.availableOf.replace('%1$d', String(data.available)).replace('%2$d', String(fleet));
+                } else if (ccrRental.i18n && ccrRental.i18n.availableOne) {
+                    ofFleet = ccrRental.i18n.availableOne.replace('%d', String(data.available));
+                } else if (fleet > 0) {
+                    ofFleet = data.available + ' of ' + fleet + ' available for these dates';
+                } else {
+                    ofFleet = data.available + ' available for these dates';
+                }
+                text += ' — ' + ofFleet;
+                live = ofFleet;
             }
 
             $wrap.find('.ccr-quote').text(text);
-            $wrap.find('.ccr-quote').toggleClass('text-red-600', true).toggleClass('text-gray-600', false);
+            $wrap.find('.ccr-quote').toggleClass('text-red-600', !ok).toggleClass('text-green-700', ok).toggleClass('text-gray-600', false);
+            $('.ccr-availability-live').text(live).toggleClass('text-red-600', !ok).toggleClass('text-green-700', ok).toggleClass('text-gray-500', false);
             setAddButtonEnabled(ok);
         });
     }

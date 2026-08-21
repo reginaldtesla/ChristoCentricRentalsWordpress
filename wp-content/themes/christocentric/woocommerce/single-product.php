@@ -139,9 +139,9 @@ while (have_posts()) {
                     <p class="mt-2 text-sm text-primary"><?php esc_html_e('Rental kit — all items below are added together.', 'christocentric'); ?></p>
                 <?php endif; ?>
                 <?php if ($product->is_in_stock()) : ?>
-                    <p class="mt-2 text-sm text-green-700">Available to rent — pick dates below</p>
+                    <p class="ccr-availability-live mt-2 text-sm text-green-700"><?php esc_html_e('Pick dates below to see how many are free', 'christocentric'); ?></p>
                 <?php else : ?>
-                    <p class="mt-2 text-sm text-gray-500">Currently unavailable</p>
+                    <p class="ccr-availability-live mt-2 text-sm text-gray-500"><?php esc_html_e('Currently unavailable', 'christocentric'); ?></p>
                 <?php endif; ?>
                 <div class="mt-5 border border-gray-200 bg-gray-50 p-4 text-sm text-gray-600">
                     <p>Rental is charged per day. Choose your pickup and return dates and times below to see the total.</p>
@@ -162,7 +162,7 @@ while (have_posts()) {
         <div class="mt-14 product-detail-tabs" data-product-tabs data-tab-style="underline">
             <div class="flex gap-1 border-b border-gray-200">
                 <button type="button" data-tab-trigger="description" class="tab-trigger tab-trigger--active">Description</button>
-                <button type="button" data-tab-trigger="shipping" class="tab-trigger">Shipping &amp; Delivery</button>
+                <button type="button" data-tab-trigger="shipping" class="tab-trigger">Delivery</button>
                 <button type="button" data-tab-trigger="policy" class="tab-trigger">Rental Policy</button>
             </div>
             <div data-tab-panel="description" class="py-8">

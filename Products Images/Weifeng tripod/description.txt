@@ -1,0 +1,17 @@
+Product: Weifeng tripod
+Rentopian ID: 383845
+Category: Accessories,
+Type: rental
+Quantity: 9
+Daily rate (GHS): 120.0
+
+Description:
+Weifeng tripods are commonly used as practical video supports with fluid-head style operation and straightforward setup. They are favored in entry-to-mid production kits for stable framing, smoother pans, and predictable locking under modest camera loads.
+
+In rental use, this tripod class is effective for church media teams, interviews, and conference recordings that need dependable support without premium-system complexity. It offers strong value for recurring weekly production work.
+
+Short description: Practical fluid-head tripod support for stable interview and event coverage with user-friendly deployment.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

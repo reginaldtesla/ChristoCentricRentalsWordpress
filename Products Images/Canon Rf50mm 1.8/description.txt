@@ -1,0 +1,13 @@
+Product: Canon Rf50mm 1.8
+Rentopian ID: 383816
+Category: Lenses
+Type: rental
+Quantity: 1
+Daily rate (GHS): 100.0
+
+Description:
+The Canon Rf50mm 1.8 is a Canon photographic lens at f/50. It is built for RF-mount cameras. Match it to a compatible camera body and adapter if the mounts differ.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

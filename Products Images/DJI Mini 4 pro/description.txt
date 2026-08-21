@@ -1,0 +1,17 @@
+Product: DJI Mini 4 pro
+Rentopian ID: 383833
+Category: Drone
+Type: rental
+Quantity: 3
+Daily rate (GHS): 500.0
+
+Description:
+The DJI Mini 4 Pro expands compact-drone capability with improved sensing, intelligent tracking, and high-quality imaging features in a highly portable body. It is designed for creators who need strong autonomous support while maintaining lightweight travel convenience.
+
+For Ghana production teams covering resorts, city visuals, and destination events, Mini 4 Pro offers reliable cinematic capture with minimal setup overhead. It is a top rental pick for agile aerial storytelling in fast-moving schedules.
+
+Short description: Advanced compact drone with improved sensing and tracking, ideal for agile cinematic aerial storytelling.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

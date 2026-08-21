@@ -1,0 +1,17 @@
+Product: Batmax NPF battery
+Rentopian ID: 383874
+Category: Accessories
+Type: rental
+Quantity: 28
+Daily rate (GHS): 45.0
+
+Description:
+BATMAX NP-F batteries follow the Sony L-series form factor used by many monitors, LED panels, and wireless video systems. Typical listings use 7.2V nominal output and multiple capacities across NP-F550, NP-F750, and NP-F970 sizes to match different runtime and weight needs.
+
+As a rental accessory, this is practical set power for long interview days and mobile rigs where wall power is limited. Clients can scale runtime by battery size and keep production moving without frequent tethered charging breaks.
+
+Short description: Sony NP-F style battery option for monitors, lights, and wireless gear, with scalable runtime across form factors.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

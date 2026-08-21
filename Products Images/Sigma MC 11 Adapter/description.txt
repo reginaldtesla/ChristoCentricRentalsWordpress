@@ -1,0 +1,13 @@
+Product: Sigma MC 11 Adapter
+Rentopian ID: 393854
+Category: Accessories
+Type: rental
+Quantity: 6
+Daily rate (GHS): 60.0
+
+Description:
+The Sigma MC 11 Adapter is a mount or signal adapter between camera, lens, or cable standards. Match the ends in the product name (EF-RF, HDMI, USB-C, and so on) to the bodies you are using.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

@@ -1,0 +1,17 @@
+Product: DJI Ronin RS4
+Rentopian ID: 383829
+Category: Gimbals
+Type: rental
+Quantity: 8
+Daily rate (GHS): 280.0
+
+Description:
+The DJI RS 4 is a newer-generation stabilizer with improved workflow integration, stronger stabilization behavior, and efficient balancing for modern camera builds. It is designed for operators who need dependable performance across rapid scene changes.
+
+For Ghana commercial teams and independent filmmakers, the RS 4 is a smart rental when mobility and speed are equally important. It supports polished motion language in tight city spaces, interiors, and outdoor lifestyle sequences.
+
+Short description: Next-gen DJI stabilizer offering refined balance workflow and reliable cinematic motion for modern camera setups.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

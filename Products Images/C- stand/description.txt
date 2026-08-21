@@ -1,0 +1,17 @@
+Product: C- stand
+Rentopian ID: 383870
+Category: Accessories
+Type: rental
+Quantity: 7
+Daily rate (GHS): 80.0
+
+Description:
+A C-stand provides stable support for lights, flags, scrims, and grip arms in professional sets. Its steel construction, turtle base style footprint, and gobo head workflow make it a core tool for shaping light safely and repeatably.
+
+Rental teams rely on C-stands when precision placement matters more than speed-only setup. It is ideal for negative fill, overhead diffusion, and boom-mounted fixtures where lightweight stands can drift or tip under load.
+
+Short description: Heavy-duty C-stand for secure light shaping, flagging, and boom support in controlled production environments.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

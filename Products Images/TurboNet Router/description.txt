@@ -1,0 +1,13 @@
+Product: TurboNet Router
+Rentopian ID: 418807
+Category: Accessories
+Type: rental
+Quantity: 1
+Daily rate (GHS): 150.0
+
+Description:
+The TurboNet Router is a wireless network unit for on-set internet, live streams, and file transfer. Confirm SIM, coverage, and power for the location before relying on it for the shoot.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

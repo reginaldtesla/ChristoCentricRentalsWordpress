@@ -25,6 +25,17 @@ function ccr_site_config(string $key, mixed $default = null): mixed
         $value = $value[$segment];
     }
 
+    if (class_exists('CCR_Settings')) {
+        $contactEmail = CCR_Settings::contact_email();
+        if ($key === 'contact' && is_array($value)) {
+            $value['email'] = $contactEmail;
+            $value['support_email'] = $contactEmail;
+            $value['feedback_email'] = $contactEmail;
+        } elseif (in_array($key, ['contact.email', 'contact.support_email', 'contact.feedback_email'], true)) {
+            $value = $contactEmail;
+        }
+    }
+
     return $value;
 }
 
@@ -1212,19 +1223,19 @@ function ccr_studio_booking_config(): array
         'title_line_1' => 'Reserve',
         'title_line_2' => 'Your',
         'title_emphasis' => 'Studio',
-        'lead' => 'A controlled space for interviews, portraits, and content shoots — confirmed by WhatsApp within minutes.',
+        'lead' => 'Book a set in our Bomso studio for interviews, portraits, and content shoots — confirmed by WhatsApp within minutes.',
         'address' => trim(($contact['address'] ?? 'Bomso, near Obesse Gaming Center') . ', ' . ($contact['city'] ?? 'Kumasi, Ghana'), ', '),
         'stats' => [
-            ['value' => '1', 'label' => 'Studio'],
+            ['value' => '5', 'label' => 'Sets'],
             ['value' => 'Ready', 'label' => 'Lighting setup'],
             ['value' => 'Full day', 'label' => 'Max session'],
             ['value' => 'Gear', 'label' => 'Can pair rentals'],
         ],
         'studios' => [
             [
-                'id' => 'main',
-                'name' => 'Main studio',
-                'blurb' => 'Controlled space in Bomso for interviews, portraits, and brand content.',
+                'id' => 'set-1',
+                'name' => 'Set 1',
+                'blurb' => 'Set 1 in the Bomso studio — book this set, not the whole studio.',
                 'meta' => 'Kumasi · Pair with rental gear',
                 'image' => '',
             ],

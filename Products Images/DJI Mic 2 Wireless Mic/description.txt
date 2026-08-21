@@ -1,0 +1,13 @@
+Product: DJI Mic 2 Wireless Mic
+Rentopian ID: 383835
+Category: Audio gears
+Type: rental
+Quantity: 2
+Daily rate (GHS): 200.0
+
+Description:
+The DJI Mic 2 Wireless Mic is DJI location or studio audio gear for dialogue, podcasts, or live capture. Check whether you need extra cables, stands, or wireless receivers for your setup.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

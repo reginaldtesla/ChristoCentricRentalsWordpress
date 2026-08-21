@@ -1,0 +1,17 @@
+Product: Panasonic UX90
+Rentopian ID: 383825
+Category: Camcorder
+Type: rental
+Quantity: 2
+Daily rate (GHS): 350.0
+
+Description:
+The Panasonic UX90 is a professional handheld camcorder designed for efficient ENG, event, and documentary coverage. Its integrated zoom range and practical controls allow operators to respond quickly to changing scenes without lens swaps. The camera supports broadcast-style operation with stable handling for long sessions.
+
+With dual SD recording, professional audio inputs, and dependable autofocus behavior, the UX90 is a strong fit for conferences, church broadcasts, and institutional video work. It simplifies multi-hour recording where reliability and clear sound are essential. For teams in Ghana needing a ready-to-shoot camcorder package, the UX90 is a smart rental choice.
+
+Short description: Panasonic UX90 camcorder is built for efficient long-form event, ENG, and documentary coverage.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

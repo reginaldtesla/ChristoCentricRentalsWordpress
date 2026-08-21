@@ -1,0 +1,17 @@
+Product: S2 bracket
+Rentopian ID: 383855
+Category: 
+Type: rental
+Quantity: 13
+Daily rate (GHS): 30.0
+
+Description:
+The S2 bracket improves on legacy speedlight holders with stronger grip geometry and easier flash insertion/removal, while retaining Bowens accessory compatibility. It supports bare flash heads or small battery strobes in compact modifier setups.
+
+For rental users, S2 is a practical bridge between portable flashes and larger soft-light tools. It delivers cleaner rigging, quicker changes, and a more stable modifier connection during repeated setup cycles.
+
+Short description: Improved Bowens-compatible speedlight bracket for faster setup, stronger grip, and flexible modifier workflows.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

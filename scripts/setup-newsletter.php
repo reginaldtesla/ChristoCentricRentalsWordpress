@@ -14,9 +14,9 @@ CCR_Newsletter::install();
 $defaults = [
     'ccr_newsletter_send_welcome' => 'yes',
     'ccr_newsletter_notify_admin' => 'yes',
-    'ccr_newsletter_notify_email' => 'support@christocentricrentals.com',
+    'ccr_newsletter_notify_email' => 'christocentricrentals@gmail.com',
     'ccr_newsletter_from_name' => 'Christocentric Rentals',
-    'ccr_newsletter_from_email' => 'support@christocentricrentals.com',
+    'ccr_newsletter_from_email' => 'christocentricrentals@gmail.com',
 ];
 
 foreach ($defaults as $key => $value) {

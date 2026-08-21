@@ -54,14 +54,18 @@ if ($isPopular) {
         </h3>
         <div class="product-card-meta <?php echo $isPopular ? 'product-card-meta--popular' : 'mt-auto space-y-2'; ?>">
             <p class="product-card-price <?php echo $isPopular ? 'product-card-price--popular' : 'text-sm font-semibold text-gray-900'; ?>">
-                <?php if ($onSale) : ?>
-                    <span class="mr-1 text-xs font-normal text-gray-400 line-through"><?php echo esc_html(ccr_format_price($regular)); ?></span>
+                <?php if ($price > 0) : ?>
+                    <?php if ($onSale) : ?>
+                        <span class="mr-1 text-xs font-normal text-gray-400 line-through"><?php echo esc_html(ccr_format_price($regular)); ?></span>
+                    <?php endif; ?>
+                    <?php echo esc_html(ccr_format_price($price)); ?><span class="product-card-price-unit"><?php echo $isPopular ? '/Day' : '/day'; ?></span>
+                <?php else : ?>
+                    <span class="font-medium text-gray-600"><?php esc_html_e('Price on request', 'christocentric'); ?></span>
                 <?php endif; ?>
-                <?php echo esc_html(ccr_format_price($price)); ?><span class="product-card-price-unit"><?php echo $isPopular ? '/Day' : '/day'; ?></span>
             </p>
             <?php if (! $isPopular) : ?>
                 <div class="product-card-actions">
-                    <?php if ($in_stock) : ?>
+                    <?php if ($in_stock && $price > 0) : ?>
                         <button
                             type="button"
                             class="product-card-add"
@@ -70,6 +74,8 @@ if ($isPopular) {
                         >
                             <?php esc_html_e('Add', 'christocentric'); ?>
                         </button>
+                    <?php elseif ($in_stock) : ?>
+                        <a class="product-card-add" href="<?php echo esc_url($url); ?>"><?php esc_html_e('View', 'christocentric'); ?></a>
                     <?php else : ?>
                         <span class="product-card-unavailable"><?php esc_html_e('Unavailable', 'christocentric'); ?></span>
                     <?php endif; ?>

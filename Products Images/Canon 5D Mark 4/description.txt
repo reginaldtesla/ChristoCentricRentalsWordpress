@@ -1,0 +1,13 @@
+Product: Canon 5D Mark 4
+Rentopian ID: 383792
+Category: Cameras
+Type: rental
+Quantity: 10
+Daily rate (GHS): 250.0
+
+Description:
+The Canon 5D Mark 4 is a Canon camera body for stills and video. Canon DSLR with EF lens mount.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

@@ -1,0 +1,13 @@
+Product: Canon 70- 200mm 2.8 III
+Rentopian ID: 383800
+Category: Lenses
+Type: rental
+Quantity: 20
+Daily rate (GHS): 230.0
+
+Description:
+The Canon 70- 200mm 2.8 III is a Canon photographic lens. A telephoto zoom for portraits, events, and compressed backgrounds.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

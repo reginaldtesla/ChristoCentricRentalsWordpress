@@ -1,0 +1,13 @@
+Product: Godox Tube Light
+Rentopian ID: 450068
+Category: Cameras
+Type: rental
+Quantity: 4
+Daily rate (GHS): 200.0
+
+Description:
+The Godox Tube Light is a Godox camera body for stills and video.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

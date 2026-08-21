@@ -1,0 +1,17 @@
+Product: ATEM Mini Extreme Pro ISO
+Rentopian ID: 383843
+Category: 
+Type: rental
+Quantity: 1
+Daily rate (GHS): 450.0
+
+Description:
+This profile targets the ATEM Mini Extreme ISO class workflow: 8 HDMI inputs, hardware streaming, multiview, and ISO recording of all sources plus program. Blackmagic specs note up to 70Mb/s H.264 ISO files and automatic DaVinci Resolve project generation for post-event fixes.
+
+In rentals, it is the right switcher for multi-camera church services, conferences, and hybrid events where immediate live output and editable records are both required. Operators can stream, record isolated feeds, and turn around highlights quickly with less rework.
+
+Short description: 8-input HDMI live switcher workflow with ISO recording, multiview, and fast DaVinci post handoff for events.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

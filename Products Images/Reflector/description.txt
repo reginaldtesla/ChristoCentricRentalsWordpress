@@ -1,0 +1,13 @@
+Product: Reflector
+Rentopian ID: 406238
+Category: Accessories
+Type: rental
+Quantity: 2
+Daily rate (GHS): 50.0
+
+Description:
+The Reflector is a collapsible reflector for bouncing or filling light on faces and products. Use silver or white for fill, gold for warmer skin, and the black side as a flag.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

@@ -1,0 +1,17 @@
+Product: Amaran 150c
+Rentopian ID: 383863
+Category: 
+Type: rental
+Quantity: 1
+Daily rate (GHS): 200.0
+
+Description:
+The amaran 150c is a 150W RGBWW Bowens-mount point source designed for creators who need fast color control without carrying a heavy cinema head. Its 2,500K-7,500K CCT range, full HSI color tools, and strong color metrics make it practical for skin tones, product shots, and stylized music visuals.
+
+For Ghana shoots, this unit is a smart pick when you need one lamp to cover interviews, events, and social content in mixed light. Pair it with softboxes or projection modifiers, run quiet fan modes for dialogue, and build polished lighting setups even in tight apartments or church interiors.
+
+Short description: 150W RGBWW Bowens light with 2,500K-7,500K control, ideal for flexible interviews, content, and creative color scenes in Ghana.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

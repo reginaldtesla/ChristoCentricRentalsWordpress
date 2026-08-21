@@ -18,6 +18,9 @@ $v = static function (string $key) use ($values): string {
 };
 
 $fileLabel = static function (string $attachId): string {
+    if (class_exists('CCR_Client_Store') && CCR_Client_Store::parse_file_id($attachId) > 0) {
+        return CCR_Client_Store::file_display_name($attachId);
+    }
     $id = (int) $attachId;
     if ($id <= 0) {
         return '';

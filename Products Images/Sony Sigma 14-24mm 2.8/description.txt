@@ -1,0 +1,13 @@
+Product: Sony Sigma 14-24mm 2.8
+Rentopian ID: 383820
+Category: Lenses
+Type: rental
+Quantity: 2
+Daily rate (GHS): 200.0
+
+Description:
+The Sony Sigma 14-24mm 2.8 is a Sony photographic lens. It is built for Sony E-mount cameras. A wide zoom for interiors, groups, and establishing shots.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

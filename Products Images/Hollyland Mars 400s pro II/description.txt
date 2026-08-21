@@ -1,0 +1,17 @@
+Product: Hollyland Mars 400s pro II
+Rentopian ID: 383858
+Category: Transmitters
+Type: rental
+Quantity: 3
+Daily rate (GHS): 210.0
+
+Description:
+Mars 400S Pro II updates the line with quoted 450ft LOS range, 70ms HD-mode latency, and SDI+HDMI dual-port flexibility. It also supports HollyView app monitoring and multi-receiver workflows for collaborative production environments.
+
+In rental terms, it is a dependable wireless monitor path for events, interviews, and camera-director handoff where cables are impractical. The improved latency profile helps operators make more confident timing and focus decisions.
+
+Short description: Updated Mars 400S Pro II wireless kit with 450ft range, 70ms latency, and SDI/HDMI flexibility.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

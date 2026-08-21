@@ -1,0 +1,17 @@
+Product: Tolifo 200W
+Rentopian ID: 383865
+Category: 
+Type: rental
+Quantity: 1
+Daily rate (GHS): 200.0
+
+Description:
+The Tolifo 200W is a practical high-power LED option for creators who need stronger key light than small panels can deliver. Its output class makes it suitable for interview keys, portrait setups, and controlled narrative scenes where consistent illumination is required.
+
+For rental users in Ghana, it provides a cost-effective step into more professional lighting ratios, especially when paired with diffusion and grids. It is a dependable choice for YouTube studios, church media teams, and small commercial crews.
+
+Short description: 200W-class LED option that delivers stronger key light for interviews, portrait work, and small commercial productions.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

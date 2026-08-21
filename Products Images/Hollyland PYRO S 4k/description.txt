@@ -1,0 +1,13 @@
+Product: Hollyland PYRO S 4k
+Rentopian ID: 391417
+Category: Transmitters
+Type: rental
+Quantity: 11
+Daily rate (GHS): 250.0
+
+Description:
+The Hollyland PYRO S 4k is a wireless video transmitter/receiver set for on-set monitoring. Use it to send camera output to a director’s monitor without a long HDMI run.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

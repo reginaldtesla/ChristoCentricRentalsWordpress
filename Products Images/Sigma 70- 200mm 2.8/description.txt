@@ -1,0 +1,13 @@
+Product: Sigma 70- 200mm 2.8
+Rentopian ID: 383810
+Category: Lenses
+Type: rental
+Quantity: 4
+Daily rate (GHS): 200.0
+
+Description:
+The Sigma 70- 200mm 2.8 is a Sigma photographic lens. It is built for Sony E-mount cameras. A telephoto zoom for portraits, events, and compressed backgrounds.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

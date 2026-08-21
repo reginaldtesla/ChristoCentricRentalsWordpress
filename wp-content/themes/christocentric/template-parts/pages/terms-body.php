@@ -31,7 +31,7 @@
     <h2>3. Rental Process</h2>
     <ul>
         <li><strong>Equipment availability</strong> — subject to change; we make reasonable efforts to honor your requested dates.</li>
-        <li><strong>Rental period</strong> — begins at pickup or shipment and ends on the date in your Rental Agreement.</li>
+        <li><strong>Rental period</strong> — begins at pickup or delivery and ends on the date in your Rental Agreement.</li>
         <li><strong>Reservation</strong> — select items, dates, and payment on the Site; confirmation is sent by email.</li>
     </ul>
 </section>
@@ -57,11 +57,11 @@
 </section>
 
 <section id="shipping" class="doc-section">
-    <h2>6. Shipping and Delivery</h2>
+    <h2>6. Delivery</h2>
     <ul>
-        <li><strong>Shipping</strong> — where applicable, to the address provided at booking.</li>
-        <li><strong>Delivery/collection</strong> — pickup at our designated location or delivery where offered.</li>
-        <li><strong>Return shipping</strong> — your responsibility unless otherwise agreed.</li>
+        <li><strong>Delivery</strong> — where offered, to the address provided at booking.</li>
+        <li><strong>Pickup</strong> — collect at our designated location, or request delivery where available.</li>
+        <li><strong>Return delivery</strong> — your responsibility unless otherwise agreed.</li>
     </ul>
 </section>
 

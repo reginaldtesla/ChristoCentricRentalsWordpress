@@ -1,0 +1,13 @@
+Product: Canon RF 24- 70mm
+Rentopian ID: 449536
+Category: Lenses
+Type: rental
+Quantity: 1
+Daily rate (GHS): 300.0
+
+Description:
+The Canon RF 24- 70mm is a Canon photographic lens at f/24. It is built for RF-mount cameras. A standard zoom for events, interviews, and general production.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

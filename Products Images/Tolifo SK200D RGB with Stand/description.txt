@@ -1,0 +1,13 @@
+Product: Tolifo SK200D RGB with Stand
+Rentopian ID: 402492
+Category: 
+Type: rental
+Quantity: 1
+Daily rate (GHS): 240.0
+
+Description:
+The Tolifo SK200D RGB with Stand is a continuous LED fixture for video and mixed lighting. Use it as key, fill, or background light; add a stand and modifier when you need control.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

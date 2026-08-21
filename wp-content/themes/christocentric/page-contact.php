@@ -29,16 +29,8 @@ get_template_part('template-parts/page-hero', null, [
                     <dd class="mt-1"><a href="tel:<?php echo esc_attr($contact['phone'] ?? ''); ?>" class="hover:text-primary"><?php echo esc_html($contact['phone_display'] ?? ''); ?></a></dd>
                 </div>
                 <div>
-                    <dt class="font-medium text-gray-900">Customer support</dt>
+                    <dt class="font-medium text-gray-900">Email</dt>
                     <dd class="mt-1"><a href="mailto:<?php echo esc_attr($contact['support_email'] ?? ''); ?>" class="hover:text-primary"><?php echo esc_html($contact['support_email'] ?? ''); ?></a></dd>
-                </div>
-                <div>
-                    <dt class="font-medium text-gray-900">General inquiries</dt>
-                    <dd class="mt-1"><a href="mailto:<?php echo esc_attr($contact['email'] ?? ''); ?>" class="hover:text-primary"><?php echo esc_html($contact['email'] ?? ''); ?></a></dd>
-                </div>
-                <div>
-                    <dt class="font-medium text-gray-900">Feedback</dt>
-                    <dd class="mt-1"><a href="mailto:<?php echo esc_attr($contact['feedback_email'] ?? ''); ?>" class="hover:text-primary"><?php echo esc_html($contact['feedback_email'] ?? ''); ?></a></dd>
                 </div>
             </dl>
             <p class="mt-6 text-sm text-gray-600">

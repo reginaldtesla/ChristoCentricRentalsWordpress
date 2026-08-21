@@ -1,0 +1,13 @@
+Product: Gimbal Handle
+Rentopian ID: 420774
+Category: Accessories
+Type: rental
+Quantity: 3
+Daily rate (GHS): 20.0
+
+Description:
+The Gimbal Handle is a motorized camera stabilizer for walking shots, reveals, and handheld moves. Balance the camera and lens on the gimbal before the shoot; extra batteries are recommended for long days.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

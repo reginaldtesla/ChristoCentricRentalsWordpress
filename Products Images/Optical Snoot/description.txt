@@ -1,0 +1,13 @@
+Product: Optical Snoot
+Rentopian ID: 486517
+Category: 
+Type: rental
+Quantity: 1
+Daily rate (GHS): 100.0
+
+Description:
+The Optical Snoot is a production accessory: grip, power, mounting, or a small kit item used with a camera or light. Read the product name for size, mount, and what it attaches to.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

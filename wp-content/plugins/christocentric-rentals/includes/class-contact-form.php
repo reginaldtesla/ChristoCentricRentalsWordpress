@@ -99,26 +99,13 @@ final class CCR_Contact_Form
 
     private static function support_email(): string
     {
-        if (function_exists('ccr_site_config')) {
-            $email = ccr_site_config('contact.support_email');
-
-            if (is_string($email) && is_email($email)) {
-                return $email;
-            }
+        if (class_exists('CCR_Settings')) {
+            return CCR_Settings::contact_email();
         }
 
-        $file = dirname(CCR_PLUGIN_DIR, 2) . '/migration/site-settings.json';
+        $admin = get_option('admin_email');
 
-        if (is_file($file)) {
-            $json = json_decode((string) file_get_contents($file), true);
-            $email = $json['laravel_config_defaults']['contact']['support_email'] ?? '';
-
-            if (is_string($email) && is_email($email)) {
-                return $email;
-            }
-        }
-
-        return get_option('admin_email');
+        return is_string($admin) && is_email($admin) ? $admin : (class_exists('CCR_Settings') ? CCR_Settings::CONTACT_EMAIL : 'christocentricrentals@gmail.com');
     }
 
     private static function redirect(array $data): void

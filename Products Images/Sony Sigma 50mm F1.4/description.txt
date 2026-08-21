@@ -1,0 +1,13 @@
+Product: Sony Sigma 50mm F1.4
+Rentopian ID: 445094
+Category: Lenses
+Type: rental
+Quantity: 1
+Daily rate (GHS): 200.0
+
+Description:
+The Sony Sigma 50mm F1.4 is a Sony photographic lens at f/1.4. It is built for Sony E-mount cameras. Match it to a compatible camera body and adapter if the mounts differ.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

@@ -1,0 +1,17 @@
+Product: Zoom H5 field recorder
+Rentopian ID: 383839
+Category: Audio gears
+Type: rental
+Quantity: 2
+Daily rate (GHS): 90.0
+
+Description:
+The Zoom H5 is a portable handheld recorder built for location sound, interviews, and backup recording in unpredictable environments. Its interchangeable capsule ecosystem, XLR inputs, and reliable battery operation make it a practical tool for solo operators and small crews.
+
+Across Ghana documentary and event jobs, the H5 is useful for capturing ambient sound, clean dialogue, and safety tracks away from camera position. It is a dependable rental option for teams that need portable multichannel recording without complexity.
+
+Short description: Portable field recorder with XLR inputs and capsule flexibility for interviews, ambience, and reliable location backup.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

@@ -1,0 +1,13 @@
+Product: Coman DX16S Tripod
+Rentopian ID: 449093
+Category: Tripods
+Type: rental
+Quantity: 7
+Daily rate (GHS): 120.0
+
+Description:
+The Coman DX16S Tripod is a camera or lighting stand. Use it to lock off a shot or hold a fixture; check payload against your camera or light.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

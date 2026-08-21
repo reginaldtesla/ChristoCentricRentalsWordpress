@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Christocentric Rentals
  * Description: 24-hour camera & gear rentals — availability, pay-on-pickup, Paystack, SMTP, and optional Rentopian sync.
- * Version: 1.7.1
+ * Version: 1.9.18
  * Author: Christocentric Rentals
  * Requires at least: 6.4
  * Requires PHP: 8.1
@@ -11,7 +11,7 @@
 
 defined('ABSPATH') || exit;
 
-define('CCR_VERSION', '1.7.1');
+define('CCR_VERSION', '1.9.18');
 define('CCR_PLUGIN_FILE', __FILE__);
 define('CCR_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('CCR_PLUGIN_URL', plugin_dir_url(__FILE__));
@@ -19,6 +19,7 @@ define('CCR_PLUGIN_URL', plugin_dir_url(__FILE__));
 require_once CCR_PLUGIN_DIR . 'includes/class-rental-pricing.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-rental-availability.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-rentopian-sync.php';
+require_once CCR_PLUGIN_DIR . 'includes/class-rentopian-catalog.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-product-meta.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-product-kits.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-settings.php';
@@ -34,6 +35,7 @@ require_once CCR_PLUGIN_DIR . 'includes/class-hold-expiry.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-legacy-redirects.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-google-auth.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-rental-agreement.php';
+require_once CCR_PLUGIN_DIR . 'includes/class-client-store.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-private-media.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-admin-media-ui.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-verification-import.php';
@@ -41,6 +43,7 @@ require_once CCR_PLUGIN_DIR . 'includes/class-disable-email-confirm.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-studio-cpt.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-studio-settings.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-studio-booking.php';
+require_once CCR_PLUGIN_DIR . 'includes/class-studio-subdomain.php';
 
 final class Christocentric_Rentals
 {
@@ -60,10 +63,12 @@ final class Christocentric_Rentals
 
     public function init(): void
     {
+        CCR_Rental_Availability::init();
         CCR_Settings::init();
         CCR_Product_Meta::init();
         CCR_Product_Kits::init();
         CCR_Rentopian_Sync::init();
+        CCR_Rentopian_Catalog::init();
         CCR_Contact_Form::init();
         CCR_Newsletter::init();
         CCR_Smtp::init();
@@ -74,6 +79,7 @@ final class Christocentric_Rentals
         CCR_Legacy_Redirects::init();
         CCR_Google_Auth::init();
         CCR_Rental_Agreement::init();
+        CCR_Client_Store::init();
         CCR_Private_Media::init();
         CCR_Admin_Media_Ui::init();
         CCR_Verification_Import::init();
@@ -81,6 +87,7 @@ final class Christocentric_Rentals
         CCR_Studio_Cpt::init();
         CCR_Studio_Settings::init();
         CCR_Studio_Booking::init();
+        CCR_Studio_Subdomain::init();
 
         if (! class_exists('WooCommerce')) {
             add_action('admin_notices', static function (): void {
@@ -108,7 +115,10 @@ final class Christocentric_Rentals
         add_option('ccr_pickup_cash_enabled', 'yes');
         add_option('ccr_pickup_cash_hold_hours', 72);
         add_option('ccr_online_hold_hours', 2);
-        add_option('ccr_rentopian_base_url', 'https://api.rentopian.com');
+        add_option('ccr_rentopian_base_url', 'https://account.rentopian.com/api/v1');
+        add_option('ccr_rentopian_website', 'https://christocentricrentals.com');
+        add_option('ccr_rentopian_pull_products', 'yes');
+        add_option('ccr_rentopian_push_products', 'no');
         add_option('ccr_default_pickup_time', '09:00');
         add_option('ccr_default_return_time', '17:00');
         add_option('ccr_latest_return_time', '20:50');
@@ -122,9 +132,10 @@ final class Christocentric_Rentals
         add_option('ccr_banner_cta', 'Shop');
         add_option('ccr_newsletter_send_welcome', 'yes');
         add_option('ccr_newsletter_notify_admin', 'yes');
-        add_option('ccr_newsletter_notify_email', 'support@christocentricrentals.com');
+        add_option('ccr_newsletter_notify_email', 'christocentricrentals@gmail.com');
         add_option('ccr_newsletter_from_name', 'Christocentric Rentals');
-        add_option('ccr_newsletter_from_email', 'support@christocentricrentals.com');
+        add_option('ccr_newsletter_from_email', 'christocentricrentals@gmail.com');
+        add_option('ccr_smtp_from_email', 'christocentricrentals@gmail.com');
         add_option('ccr_smtp_enabled', 'no');
         add_option('ccr_smtp_port', 587);
         add_option('ccr_smtp_encryption', 'tls');
@@ -138,6 +149,7 @@ final class Christocentric_Rentals
         CCR_Compare::ensure_page();
         CCR_Studio_Cpt::register();
         CCR_Studio_Cpt::maybe_seed_default();
+        CCR_Client_Store::bootstrap();
         flush_rewrite_rules();
     }
 
@@ -145,6 +157,7 @@ final class Christocentric_Rentals
     {
         CCR_Hold_Expiry::unschedule();
         CCR_Late_Notices::unschedule();
+        CCR_Rentopian_Catalog::unschedule();
     }
 }
 

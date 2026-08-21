@@ -1,0 +1,13 @@
+Product: SDI CABLE G12 SDI CABLE Long G12
+Rentopian ID: 475718
+Category: CABLE
+Type: rental
+Quantity: 4
+Daily rate (GHS): 200.0
+
+Description:
+The SDI CABLE G12 SDI CABLE Long G12 is a signal cable for video or power interconnects. Use the correct HDMI, SDI, or USB-C ends listed in the product name.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

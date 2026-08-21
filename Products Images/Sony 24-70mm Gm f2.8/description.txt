@@ -1,0 +1,13 @@
+Product: Sony 24-70mm Gm f2.8
+Rentopian ID: 447117
+Category: Lenses
+Type: rental
+Quantity: 1
+Daily rate (GHS): 250.0
+
+Description:
+The Sony 24-70mm Gm f2.8 is a Sony photographic lens at f/2.8. It is built for Sony E-mount cameras. A standard zoom for events, interviews, and general production.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

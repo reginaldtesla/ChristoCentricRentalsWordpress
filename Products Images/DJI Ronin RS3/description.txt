@@ -1,0 +1,17 @@
+Product: DJI Ronin RS3
+Rentopian ID: 383827
+Category: Gimbals
+Type: rental
+Quantity: 2
+Daily rate (GHS): 250.0
+
+Description:
+The DJI RS 3 modernizes solo-operator stabilization with quick setup features, automated axis behavior, and dependable payload support for mirrorless camera rigs. It is optimized for speed, reducing balancing friction so creators can focus on shot design.
+
+In Ghana's fast event environments, RS 3 helps videographers move from handheld prep to stabilized coverage quickly. It is a practical rental favorite for weddings, real estate walk-throughs, and social-first brand filmmaking.
+
+Short description: Fast, creator-friendly gimbal that streamlines setup and delivers stable footage for events and branded video.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

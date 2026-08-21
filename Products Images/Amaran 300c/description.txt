@@ -1,0 +1,17 @@
+Product: Amaran 300c
+Rentopian ID: 383862
+Category: 
+Type: rental
+Quantity: 3
+Daily rate (GHS): 300.0
+
+Description:
+The amaran 300c steps up output for teams that want full-color control with more punch than compact LEDs. It combines RGBWW color mixing, wide CCT adjustment, and professional color fidelity, giving filmmakers room to shape both natural and stylized looks.
+
+On commercial and wedding jobs around Accra, this fixture helps you maintain consistent key light while still matching practicals and ambient daylight. With Bowens compatibility, you can quickly move from soft beauty light to hard dramatic setups without changing your core fixture.
+
+Short description: High-output RGBWW Bowens fixture for productions needing stronger output, accurate color, and versatile modifier support.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

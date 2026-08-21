@@ -1,0 +1,13 @@
+Product: Sony 70- 200mm 2.8 GM OSS
+Rentopian ID: 413066
+Category: Lenses
+Type: rental
+Quantity: 4
+Daily rate (GHS): 300.0
+
+Description:
+The Sony 70- 200mm 2.8 GM OSS is a Sony photographic lens. It is built for Sony E-mount cameras. A telephoto zoom for portraits, events, and compressed backgrounds.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

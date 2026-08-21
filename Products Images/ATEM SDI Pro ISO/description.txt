@@ -1,0 +1,17 @@
+Product: ATEM SDI Pro ISO
+Rentopian ID: 383842
+Category: 
+Type: rental
+Quantity: 1
+Daily rate (GHS): 350.0
+
+Description:
+ATEM SDI Pro ISO is built for SDI-centric production with 4 x 3G-SDI inputs, hardware streaming, and ISO capture of all inputs plus program. Official specs include H.264 recording up to 70Mb/s and separate audio files with a generated Resolve project for finishing.
+
+For renters working with professional camera chains, this model reduces HDMI conversion points and improves operational confidence. It is a strong fit for broadcast-style worship, studio panels, and event control rooms that prefer SDI robustness.
+
+Short description: 4-input SDI live switcher with ISO recording, hardware streaming, and Resolve-ready files for post correction.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

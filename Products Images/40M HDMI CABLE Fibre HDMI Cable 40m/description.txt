@@ -1,0 +1,13 @@
+Product: 40M HDMI CABLE Fibre HDMI Cable 40m
+Rentopian ID: 393932
+Category: CABLE
+Type: rental
+Quantity: 9
+Daily rate (GHS): 150.0
+
+Description:
+The 40M HDMI CABLE Fibre HDMI Cable 40m is a 40 m signal cable for video or power interconnects. Use the correct HDMI, SDI, or USB-C ends listed in the product name.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

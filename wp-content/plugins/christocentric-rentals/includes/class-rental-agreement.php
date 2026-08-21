@@ -98,6 +98,13 @@ final class CCR_Rental_Agreement
             return true;
         }
 
+        if (class_exists('CCR_Client_Store')) {
+            CCR_Client_Store::migrate_user($userId);
+            if (CCR_Client_Store::is_complete($userId)) {
+                return true;
+            }
+        }
+
         if (get_user_meta($userId, '_ccr_agreement_completed', true) === 'yes') {
             return true;
         }
@@ -217,12 +224,18 @@ final class CCR_Rental_Agreement
             $full = $user->display_name;
         }
 
+        $stored = [];
+        if (class_exists('CCR_Client_Store')) {
+            CCR_Client_Store::migrate_user($userId);
+            $stored = CCR_Client_Store::get_payload($userId);
+        }
+
         $values = [];
         foreach (self::text_field_map() as $field => $meta) {
-            $values[$field] = (string) get_user_meta($userId, $meta, true);
+            $values[$field] = (string) ($stored[$field] ?? get_user_meta($userId, $meta, true));
         }
         foreach (self::file_field_map() as $field => $meta) {
-            $values[$field] = (string) get_user_meta($userId, $meta, true);
+            $values[$field] = (string) ($stored[$field] ?? get_user_meta($userId, $meta, true));
         }
 
         if ($values['full_name'] === '') {
@@ -268,8 +281,9 @@ final class CCR_Rental_Agreement
         }
 
         $existingFiles = [];
+        $stored = class_exists('CCR_Client_Store') ? CCR_Client_Store::get_payload($userId) : [];
         foreach (self::file_field_map() as $field => $meta) {
-            $existingFiles[$field] = (int) get_user_meta($userId, $meta, true);
+            $existingFiles[$field] = (string) ($stored[$field] ?? get_user_meta($userId, $meta, true));
         }
 
         $uploads = [];
@@ -280,8 +294,8 @@ final class CCR_Rental_Agreement
                 wp_safe_redirect(self::url());
                 exit;
             }
-            if ($uploaded > 0) {
-                $uploads[$field] = $uploaded;
+            if ($uploaded !== '' && $uploaded !== 0) {
+                $uploads[$field] = (string) $uploaded;
             }
         }
 
@@ -302,12 +316,16 @@ final class CCR_Rental_Agreement
             exit;
         }
 
+        if (class_exists('CCR_Client_Store') && CCR_Client_Store::is_ready()) {
+            CCR_Client_Store::save($userId, $fields, $fileIds, true);
+        }
+
         foreach (self::text_field_map() as $field => $meta) {
             update_user_meta($userId, $meta, $fields[$field]);
         }
         foreach (self::file_field_map() as $field => $meta) {
             if (! empty($fileIds[$field])) {
-                update_user_meta($userId, $meta, (string) (int) $fileIds[$field]);
+                update_user_meta($userId, $meta, (string) $fileIds[$field]);
             }
         }
 
@@ -346,10 +364,19 @@ final class CCR_Rental_Agreement
     }
 
     /**
-     * @return int|WP_Error Attachment ID, 0 if no file, or error.
+     * @return string|int|WP_Error File ref, 0 if no file, or error.
      */
     private static function handle_upload(string $field, int $userId)
     {
+        if (class_exists('CCR_Client_Store') && CCR_Client_Store::is_ready()) {
+            $stored = CCR_Client_Store::store_upload($field, $userId);
+            if ($stored === '') {
+                return 0;
+            }
+
+            return $stored;
+        }
+
         if (empty($_FILES[$field]) || ! is_array($_FILES[$field])) {
             return 0;
         }
@@ -444,7 +471,7 @@ final class CCR_Rental_Agreement
 
     /**
      * @param array<string,string> $fields
-     * @param array<string,int> $fileIds
+     * @param array<string,string|int> $fileIds
      * @return list<string>
      */
     private static function validate(array $fields, array $fileIds, bool $read, bool $consent, bool $rights): array
@@ -547,7 +574,17 @@ final class CCR_Rental_Agreement
         }
 
         foreach (self::agreement_meta_keys() as $key) {
-            $value = (string) get_user_meta($userId, $key, true);
+            $value = '';
+            if (class_exists('CCR_Client_Store')) {
+                $payload = CCR_Client_Store::get_payload($userId);
+                $flip = array_flip(array_merge(self::text_field_map(), self::file_field_map()));
+                if (isset($flip[$key]) && isset($payload[$flip[$key]])) {
+                    $value = (string) $payload[$flip[$key]];
+                }
+            }
+            if ($value === '') {
+                $value = (string) get_user_meta($userId, $key, true);
+            }
             if ($value !== '') {
                 $order->update_meta_data($key, $value);
             }
@@ -574,6 +611,14 @@ final class CCR_Rental_Agreement
 
     private static function file_link(string $attachId, string $fallbackUrl = ''): string
     {
+        if (class_exists('CCR_Client_Store') && CCR_Client_Store::parse_file_id($attachId) > 0) {
+            $url = CCR_Client_Store::file_url($attachId);
+            $label = CCR_Client_Store::file_display_name($attachId) ?: __('View file', 'christocentric-rentals');
+            if ($url !== '') {
+                return '<a href="' . esc_url($url) . '" target="_blank" rel="noopener">' . esc_html($label) . '</a>';
+            }
+        }
+
         $id = (int) $attachId;
         if ($id > 0) {
             $url = wp_get_attachment_url($id);

@@ -1,0 +1,17 @@
+Product: ATEM Mini Pro ISO
+Rentopian ID: 383841
+Category: 
+Type: rental
+Quantity: 1
+Daily rate (GHS): 300.0
+
+Description:
+ATEM Mini Pro ISO builds on the Pro platform with isolated recording of each HDMI input plus the program output. It also saves a DaVinci Resolve project file, enabling fast timeline reconstruction and shot replacement after the live event.
+
+This is a high-value rental for productions that cannot risk a one-take-only result. Churches, webinars, and panel discussions benefit from a live stream now and full editorial flexibility later, all from one compact switcher.
+
+Short description: ATEM Mini Pro ISO adds per-input recording and Resolve project export for live-now, edit-later workflows.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

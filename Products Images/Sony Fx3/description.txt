@@ -1,0 +1,17 @@
+Product: Sony Fx3
+Rentopian ID: 383797
+Category: Cameras
+Type: rental
+Quantity: 5
+Daily rate (GHS): 450.0
+
+Description:
+The Sony FX3 is a compact cinema camera from Sony's Cinema Line, engineered for serious video production in a small form factor. Its full-frame sensor delivers cinematic depth, strong dynamic range, and excellent low-light performance for documentary, worship, and branded film work. The included mounting points and modular design make it easy to build lightweight rigs for gimbals, handheld, or vehicle setups.
+
+Professional codecs, advanced autofocus, dual base ISO behavior, and full-size HDMI support help crews capture high-quality footage with confidence. Active cooling enables extended takes for interviews and live event capture in warm environments. For production houses and creators in Ghana, the FX3 is a premium rental choice when video quality and reliability are non-negotiable.
+
+Short description: Sony FX3 cinema body offers full-frame cinematic video quality in a compact production-ready form.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

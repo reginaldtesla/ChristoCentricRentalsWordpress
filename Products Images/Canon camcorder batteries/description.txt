@@ -1,0 +1,13 @@
+Product: Canon camcorder batteries
+Rentopian ID: 383876
+Category: camcorder
+Type: rental
+Quantity: 5
+Daily rate (GHS): 25.0
+
+Description:
+The Canon camcorder batteries is a Canon shoulder-style or handheld camcorder for events, church, and long-form video. Built-in lens and XLR or mic options vary by model; confirm audio inputs for your shoot.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

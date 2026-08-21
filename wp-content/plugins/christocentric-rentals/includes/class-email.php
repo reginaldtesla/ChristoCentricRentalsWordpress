@@ -113,13 +113,7 @@ final class CCR_Email
         if ($fromName === '') {
             $fromName = (string) get_option('ccr_newsletter_from_name', get_bloginfo('name'));
         }
-        $fromEmail = (string) get_option('ccr_smtp_from_email', '');
-        if ($fromEmail === '' || ! is_email($fromEmail)) {
-            $fromEmail = (string) get_option('ccr_newsletter_from_email', '');
-        }
-        if ($fromEmail === '' || ! is_email($fromEmail)) {
-            $fromEmail = class_exists('CCR_Settings') ? CCR_Settings::default_support_email() : (string) get_option('admin_email');
-        }
+        $fromEmail = class_exists('CCR_Settings') ? CCR_Settings::contact_email() : (string) get_option('ccr_smtp_from_email', '');
 
         $headers = [
             'Content-Type: text/html; charset=UTF-8',

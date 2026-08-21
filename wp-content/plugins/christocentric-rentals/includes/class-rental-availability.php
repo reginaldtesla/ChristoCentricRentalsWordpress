@@ -7,18 +7,44 @@ defined('ABSPATH') || exit;
  */
 final class CCR_Rental_Availability
 {
-    public static function available_quantity(int $productId, string $start, string $end, ?int $excludeOrderId = null): int
+    public static function init(): void
+    {
+        add_filter('woocommerce_can_reduce_order_stock', '__return_false', 20);
+        add_filter('woocommerce_prevent_adjust_line_item_product_stock', '__return_true', 20);
+    }
+
+    public static function fleet_quantity(int $productId): int
     {
         $product = wc_get_product($productId);
-
-        if (! $product || $product->get_stock_status() !== 'instock') {
+        if (! $product instanceof WC_Product) {
+            return 0;
+        }
+        if ($product->get_stock_status() === 'outofstock') {
             return 0;
         }
 
-        $quantity = $product->get_manage_stock()
-            ? $product->get_stock_quantity()
-            : get_post_meta($productId, '_ccr_rental_quantity', true);
-        $stock = max(1, (int) ($quantity ?: 1));
+        $meta = (int) get_post_meta($productId, '_ccr_rental_quantity', true);
+        if ($product->get_manage_stock()) {
+            $stock = (int) $product->get_stock_quantity();
+            if ($stock > 0) {
+                return $stock;
+            }
+            if ($meta > 0) {
+                return $meta;
+            }
+
+            return 1;
+        }
+
+        return $meta > 0 ? $meta : 1;
+    }
+
+    public static function available_quantity(int $productId, string $start, string $end, ?int $excludeOrderId = null): int
+    {
+        $stock = self::fleet_quantity($productId);
+        if ($stock <= 0) {
+            return 0;
+        }
         $booked = self::booked_quantity($productId, $start, $end, $excludeOrderId);
 
         return max(0, $stock - $booked);
@@ -36,10 +62,10 @@ final class CCR_Rental_Availability
         $onlineCutoff = gmdate('Y-m-d H:i:s', time() - ($onlineHoldHours * HOUR_IN_SECONDS));
 
         $excludeSql = $excludeOrderId ? $wpdb->prepare(' AND oi.order_id != %d', $excludeOrderId) : '';
+        $useHpos = class_exists('\Automattic\WooCommerce\Utilities\OrderUtil')
+            && \Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled();
 
-        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-        $sql = $wpdb->prepare(
-            "SELECT COALESCE(SUM(CAST(qty.meta_value AS UNSIGNED)), 0)
+        $itemJoins = "
             FROM {$wpdb->prefix}woocommerce_order_items oi
             INNER JOIN {$wpdb->prefix}woocommerce_order_itemmeta pid
                 ON pid.order_item_id = oi.order_item_id AND pid.meta_key = '_product_id' AND pid.meta_value = %d
@@ -48,31 +74,68 @@ final class CCR_Rental_Availability
             INNER JOIN {$wpdb->prefix}woocommerce_order_itemmeta rs
                 ON rs.order_item_id = oi.order_item_id AND rs.meta_key = '_ccr_rental_start'
             INNER JOIN {$wpdb->prefix}woocommerce_order_itemmeta re
-                ON re.order_item_id = oi.order_item_id AND re.meta_key = '_ccr_rental_end'
-            INNER JOIN {$wpdb->posts} p ON p.ID = oi.order_id
-            LEFT JOIN {$wpdb->postmeta} pm_status ON pm_status.post_id = p.ID AND pm_status.meta_key = '_ccr_payment_method'
-            WHERE oi.order_item_type = 'line_item'
-              AND p.post_type = 'shop_order'
-              AND p.post_status NOT IN ('wc-cancelled', 'trash', 'auto-draft')
-              AND rs.meta_value <= %s
-              AND re.meta_value >= %s
-              {$excludeSql}
-              AND (
-                p.post_status IN ('wc-processing', 'wc-completed')
-                OR (
-                    p.post_status IN ('wc-pending', 'wc-on-hold')
-                    AND (
-                        (pm_status.meta_value = 'pickup_cash' AND p.post_date_gmt >= %s)
-                        OR ((pm_status.meta_value IS NULL OR pm_status.meta_value != 'pickup_cash') AND p.post_date_gmt >= %s)
+                ON re.order_item_id = oi.order_item_id AND re.meta_key = '_ccr_rental_end'";
+
+        if ($useHpos) {
+            $ordersTable = $wpdb->prefix . 'wc_orders';
+            $ordersMeta = $wpdb->prefix . 'wc_orders_meta';
+            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $sql = $wpdb->prepare(
+                "SELECT COALESCE(SUM(CAST(qty.meta_value AS UNSIGNED)), 0)
+                {$itemJoins}
+                INNER JOIN {$ordersTable} o ON o.id = oi.order_id AND o.type = 'shop_order'
+                LEFT JOIN {$ordersMeta} pm_status ON pm_status.order_id = o.id AND pm_status.meta_key = '_ccr_payment_method'
+                WHERE oi.order_item_type = 'line_item'
+                  AND o.status NOT IN ('wc-cancelled', 'trash', 'auto-draft')
+                  AND rs.meta_value <= %s
+                  AND re.meta_value >= %s
+                  {$excludeSql}
+                  AND (
+                    o.status IN ('wc-processing', 'wc-completed')
+                    OR (
+                        o.status IN ('wc-pending', 'wc-on-hold')
+                        AND (
+                            (pm_status.meta_value = 'pickup_cash' AND o.date_created_gmt >= %s)
+                            OR ((pm_status.meta_value IS NULL OR pm_status.meta_value != 'pickup_cash') AND o.date_created_gmt >= %s)
+                        )
                     )
-                )
-              )",
-            $productId,
-            $endDate,
-            $startDate,
-            $pickupCutoff,
-            $onlineCutoff
-        );
+                  )",
+                $productId,
+                $endDate,
+                $startDate,
+                $pickupCutoff,
+                $onlineCutoff
+            );
+        } else {
+            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $sql = $wpdb->prepare(
+                "SELECT COALESCE(SUM(CAST(qty.meta_value AS UNSIGNED)), 0)
+                {$itemJoins}
+                INNER JOIN {$wpdb->posts} p ON p.ID = oi.order_id
+                LEFT JOIN {$wpdb->postmeta} pm_status ON pm_status.post_id = p.ID AND pm_status.meta_key = '_ccr_payment_method'
+                WHERE oi.order_item_type = 'line_item'
+                  AND p.post_type = 'shop_order'
+                  AND p.post_status NOT IN ('wc-cancelled', 'trash', 'auto-draft')
+                  AND rs.meta_value <= %s
+                  AND re.meta_value >= %s
+                  {$excludeSql}
+                  AND (
+                    p.post_status IN ('wc-processing', 'wc-completed')
+                    OR (
+                        p.post_status IN ('wc-pending', 'wc-on-hold')
+                        AND (
+                            (pm_status.meta_value = 'pickup_cash' AND p.post_date_gmt >= %s)
+                            OR ((pm_status.meta_value IS NULL OR pm_status.meta_value != 'pickup_cash') AND p.post_date_gmt >= %s)
+                        )
+                    )
+                  )",
+                $productId,
+                $endDate,
+                $startDate,
+                $pickupCutoff,
+                $onlineCutoff
+            );
+        }
 
         return (int) $wpdb->get_var($sql);
     }

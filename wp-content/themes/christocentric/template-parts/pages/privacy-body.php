@@ -21,7 +21,7 @@
         <li>Name</li>
         <li>Email address</li>
         <li>Phone number</li>
-        <li>Billing and shipping address</li>
+        <li>Billing and delivery address</li>
         <li>Payment information (credit/debit card details, mobile money, PayPal, etc.)</li>
         <li>Date of birth (if applicable for age verification)</li>
         <li>User preferences (such as rental period and equipment choices)</li>

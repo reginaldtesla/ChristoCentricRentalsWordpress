@@ -1,0 +1,13 @@
+Product: Osee GoStream Duet (8) ISO
+Rentopian ID: 456591
+Category: 
+Type: rental
+Quantity: 1
+Daily rate (GHS): 400.0
+
+Description:
+The Osee GoStream Duet (8) ISO is a live video switcher for multicam events and streams. Plan HDMI or SDI inputs, a program output, and ISO recording if the model supports it.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

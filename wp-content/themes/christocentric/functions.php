@@ -17,6 +17,28 @@ add_action('after_setup_theme', static function (): void {
     ]);
 });
 
+/**
+ * Use the public-site favicon in wp-admin and on the login screen
+ * when no Customizer Site Icon is set.
+ */
+add_filter('get_site_icon_url', static function (string $url): string {
+    if ($url !== '') {
+        return $url;
+    }
+
+    $png = get_template_directory() . '/assets/images/brand/icon.png';
+    if (is_readable($png)) {
+        return ccr_theme_asset('images/brand/icon.png');
+    }
+
+    $ico = get_template_directory() . '/assets/favicon.ico';
+    if (is_readable($ico)) {
+        return ccr_theme_asset('favicon.ico');
+    }
+
+    return $url;
+});
+
 add_action('init', static function (): void {
     if (function_exists('ccr_ensure_nav_categories')) {
         ccr_ensure_nav_categories();
@@ -25,9 +47,97 @@ add_action('init', static function (): void {
 
 add_filter('woocommerce_enqueue_styles', '__return_empty_array');
 
+/**
+ * Customer-facing WooCommerce copy: “shipping” → “delivery” (Ghana).
+ */
+add_filter('woocommerce_shipping_package_name', static function (): string {
+    return __('Delivery', 'christocentric');
+});
+
+add_filter('gettext', static function (string $translated, string $text, string $domain): string {
+    if ($domain !== 'woocommerce') {
+        return $translated;
+    }
+    if (is_admin() && ! wp_doing_ajax()) {
+        return $translated;
+    }
+
+    $map = [
+        'Shipping' => 'Delivery',
+        'Shipping address' => 'Delivery address',
+        'Shipping Address' => 'Delivery address',
+        'Ship to a different address?' => 'Deliver to a different address?',
+        'Ship to a different address' => 'Deliver to a different address',
+        'Shipping options' => 'Delivery options',
+        'Shipping method' => 'Delivery method',
+        'Shipping methods' => 'Delivery methods',
+        'Calculate shipping' => 'Calculate delivery',
+        'Update totals' => 'Update totals',
+        'Change address' => 'Change address',
+        'Enter your address to view shipping options.' => 'Enter your address to view delivery options.',
+        'Shipping costs updated.' => 'Delivery costs updated.',
+        'Free shipping' => 'Free delivery',
+        'Free shipping on orders over %s' => 'Free delivery on orders over %s',
+        'No shipping options were found for %s.' => 'No delivery options were found for %s.',
+        'There are no shipping options available. Please ensure that your address has been entered correctly, or contact us if you need any help.' => 'There are no delivery options available. Please ensure that your address has been entered correctly, or contact us if you need any help.',
+        'Enter a different address' => 'Enter a different address',
+        'Shipping to %s.' => 'Delivery to %s.',
+        'Shipping to %s' => 'Delivery to %s',
+        'Cash on delivery' => 'Cash on pickup',
+        'Pay with cash upon delivery.' => 'Pay with cash at pickup.',
+        'Payment to be made upon delivery.' => 'Payment to be made at pickup.',
+        'Let your shoppers pay upon delivery — by cash or other methods of payment.' => 'Let your shoppers pay at pickup — by cash or other methods of payment.',
+        'via %s' => 'via %s',
+        'Customer provided note:' => 'Customer provided note:',
+    ];
+
+    if (isset($map[$text])) {
+        return $map[$text];
+    }
+    if (isset($map[$translated])) {
+        return $map[$translated];
+    }
+
+    return $translated;
+}, 20, 3);
+
+add_filter('ngettext', static function (string $translation, string $single, string $plural, int $number, string $domain): string {
+    if ($domain !== 'woocommerce') {
+        return $translation;
+    }
+    if (is_admin() && ! wp_doing_ajax()) {
+        return $translation;
+    }
+    if ($single === 'Shipping' || $single === 'Shipping %d') {
+        return $number === 1 ? 'Delivery' : sprintf('Delivery %d', $number);
+    }
+
+    return $translation;
+}, 20, 5);
+
+add_filter('woocommerce_gateway_title', static function (string $title, string $id): string {
+    if ($id === 'cod' && stripos($title, 'cash on delivery') !== false) {
+        return __('Cash on pickup', 'christocentric');
+    }
+
+    return $title;
+}, 20, 2);
+
+add_filter('woocommerce_gateway_description', static function (string $description, $id = ''): string {
+    if ((string) $id !== 'cod') {
+        return $description;
+    }
+
+    return str_ireplace(
+        ['upon delivery', 'on delivery', 'Cash on delivery'],
+        ['at pickup', 'on pickup', 'Cash on pickup'],
+        $description
+    );
+}, 20, 2);
+
 add_action('wp_enqueue_scripts', static function (): void {
     $uri = get_template_directory_uri() . '/assets/build/';
-    $ver = '3.65';
+    $ver = '3.80';
 
     wp_dequeue_style('wc-blocks-style');
     wp_dequeue_style('wc-blocks-vendors-style');
@@ -88,7 +198,7 @@ add_action('wp_enqueue_scripts', static function (): void {
     }
     wp_localize_script('ccr-theme', 'ccrInterest', $interestPayload);
 
-    if (is_page('studio') && class_exists('CCR_Studio_Booking')) {
+    if ((is_page('studio') || (function_exists('ccr_is_studio_subdomain') && ccr_is_studio_subdomain())) && class_exists('CCR_Studio_Booking')) {
         wp_localize_script('ccr-theme', 'ccrStudio', CCR_Studio_Booking::frontend_payload());
     }
 }, 100);
@@ -105,7 +215,7 @@ add_action('wp_print_styles', static function (): void {
 
 add_filter('body_class', static function (array $classes): array {
     $classes[] = 'ccr-theme';
-    if (is_page('studio')) {
+    if (is_page('studio') || (function_exists('ccr_is_studio_subdomain') && ccr_is_studio_subdomain())) {
         $classes[] = 'ccr-studio-booking';
     }
 
@@ -217,6 +327,95 @@ add_filter('woocommerce_account_menu_items', static function (array $items): arr
 
     return $items;
 }, 20);
+
+function ccr_remember_paid_order(int $orderId): void
+{
+    if ($orderId <= 0 || ! function_exists('WC') || ! WC()->session) {
+        return;
+    }
+    WC()->session->set('ccr_last_paid_order_id', $orderId);
+    WC()->session->set('ccr_last_paid_order_at', time());
+}
+
+function ccr_recent_paid_order_for_redirect(): ?WC_Order
+{
+    if (! function_exists('WC')) {
+        return null;
+    }
+
+    $orderId = 0;
+    $paidAt = 0;
+    if (WC()->session) {
+        $orderId = (int) WC()->session->get('ccr_last_paid_order_id');
+        $paidAt = (int) WC()->session->get('ccr_last_paid_order_at');
+    }
+
+    if ($orderId <= 0 && is_user_logged_in()) {
+        $orders = wc_get_orders([
+            'customer_id' => get_current_user_id(),
+            'limit' => 1,
+            'status' => ['processing', 'completed', 'on-hold'],
+            'orderby' => 'date',
+            'order' => 'DESC',
+        ]);
+        $candidate = $orders[0] ?? null;
+        if ($candidate instanceof WC_Order) {
+            $orderId = $candidate->get_id();
+            $created = $candidate->get_date_created();
+            $paidAt = $created ? $created->getTimestamp() : 0;
+        }
+    }
+
+    if ($orderId <= 0 || $paidAt < time() - (2 * HOUR_IN_SECONDS)) {
+        return null;
+    }
+
+    $order = wc_get_order($orderId);
+
+    return $order instanceof WC_Order ? $order : null;
+}
+
+add_action('woocommerce_payment_complete', static function ($orderId): void {
+    ccr_remember_paid_order((int) $orderId);
+}, 5);
+
+add_action('woocommerce_checkout_order_processed', static function ($orderId): void {
+    ccr_remember_paid_order((int) $orderId);
+}, 20);
+
+add_filter('woocommerce_get_return_url', static function (string $url, $order = null): string {
+    if (! $order instanceof WC_Order) {
+        return $url;
+    }
+    if ((string) $order->get_meta('_ccr_is_studio_booking') === '1') {
+        return $url;
+    }
+    ccr_remember_paid_order($order->get_id());
+
+    return $order->get_checkout_order_received_url();
+}, 30, 2);
+
+add_action('template_redirect', static function (): void {
+    if (! function_exists('is_cart') || ! is_cart() || is_checkout()) {
+        return;
+    }
+    if (! WC()->cart || ! WC()->cart->is_empty()) {
+        return;
+    }
+
+    $order = ccr_recent_paid_order_for_redirect();
+    if (! $order instanceof WC_Order) {
+        return;
+    }
+
+    $target = $order->get_checkout_order_received_url();
+    if ((string) $order->get_meta('_ccr_is_studio_booking') === '1' && class_exists('CCR_Studio_Booking')) {
+        $target = CCR_Studio_Booking::return_url($target, $order);
+    }
+
+    wp_safe_redirect($target);
+    exit;
+}, 8);
 
 add_action('template_redirect', static function (): void {
     if (! is_account_page() || ! is_user_logged_in() || is_wc_endpoint_url()) {

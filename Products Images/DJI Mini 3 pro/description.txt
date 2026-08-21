@@ -1,0 +1,17 @@
+Product: DJI Mini 3 pro
+Rentopian ID: 383832
+Category: Drone
+Type: rental
+Quantity: 1
+Daily rate (GHS): 400.0
+
+Description:
+The DJI Mini 3 Pro combines sub-250g portability with advanced camera features and intelligent flight safety tools. It provides strong video quality, flexible shooting modes, and practical obstacle sensing for creators who need lightweight aerial coverage.
+
+For Ghana operators traveling between locations, this drone is excellent for quick deployment at weddings, outdoor portraits, and social campaigns. It is an efficient rental option when you want professional-looking aerial shots with minimal logistical burden.
+
+Short description: Lightweight sub-250g drone delivering pro-looking aerial video with smart safety features and quick deployment.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

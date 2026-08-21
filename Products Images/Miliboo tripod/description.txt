@@ -1,0 +1,17 @@
+Product: Miliboo tripod
+Rentopian ID: 383844
+Category: Accessories
+Type: rental
+Quantity: 1
+Daily rate (GHS): 120.0
+
+Description:
+Miliboo tripod systems are commonly selected for video stability, fluid movement, and practical height/load ranges for mirrorless to cinema-light rigs. They are built to support repeatable pans and tilts while keeping setup and balancing approachable for small crews.
+
+As a rental support option, it is ideal for interviews, worship coverage, and conference stages where locked-off reliability and smooth reframing are both needed. It helps deliver cleaner footage without overcomplicating camera ops.
+
+Short description: Video tripod system for stable framing and smoother pans/tilts in interview, event, and stage productions.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

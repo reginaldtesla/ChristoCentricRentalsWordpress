@@ -46,7 +46,7 @@ final class CCR_Smtp
             $phpmailer->SMTPAutoTLS = false;
         }
 
-        $fromEmail = (string) get_option('ccr_smtp_from_email', '');
+        $fromEmail = class_exists('CCR_Settings') ? CCR_Settings::contact_email() : (string) get_option('ccr_smtp_from_email', '');
         $fromName = (string) get_option('ccr_smtp_from_name', get_bloginfo('name'));
         if ($fromEmail !== '' && is_email($fromEmail)) {
             $phpmailer->setFrom($fromEmail, $fromName !== '' ? $fromName : get_bloginfo('name'), false);

@@ -454,6 +454,57 @@ document.addEventListener('DOMContentLoaded', function () {
         window.setTimeout(openNotice, 450);
     })();
 
+    // Studio rental agreement — show on every visit.
+    (function () {
+        var root = document.querySelector('[data-studio-agreement]');
+        if (!root) return;
+
+        var closing = false;
+        var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function openNotice() {
+            root.removeAttribute('hidden');
+            root.setAttribute('aria-hidden', 'false');
+            void root.offsetWidth;
+            root.classList.add('is-open');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeNotice() {
+            if (closing || !root.classList.contains('is-open')) return;
+            closing = true;
+            root.classList.add('is-closing');
+            root.classList.remove('is-open');
+            document.body.classList.remove('overflow-hidden');
+
+            var finish = function () {
+                root.classList.remove('is-closing');
+                root.setAttribute('hidden', '');
+                root.setAttribute('aria-hidden', 'true');
+                closing = false;
+            };
+
+            if (reduceMotion) {
+                finish();
+                return;
+            }
+
+            window.setTimeout(finish, 300);
+        }
+
+        root.querySelectorAll('[data-studio-agreement-close]').forEach(function (el) {
+            el.addEventListener('click', closeNotice);
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && root.classList.contains('is-open')) {
+                closeNotice();
+            }
+        });
+
+        window.setTimeout(openNotice, 450);
+    })();
+
     // Product compare (AJAX + cookie-backed list)
     (function () {
         if (typeof ccrCompare === 'undefined' || !ccrCompare.ajaxUrl) return;
@@ -1028,7 +1079,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var totalSteps = 6;
         var current = 1;
         var state = {
-            studioId: studios[0] ? String(studios[0].id) : '',
+            studioId: '',
             packageId: '',
             sessionHours: 1,
             extendHours: 1,
@@ -1055,8 +1106,8 @@ document.addEventListener('DOMContentLoaded', function () {
         var monthLoadToken = 0;
 
         var subs = {
-            1: 'Select a studio to begin — takes under 2 minutes.',
-            2: 'Choose your package for the selected space.',
+            1: 'Select a set to begin — takes under 2 minutes.',
+            2: 'Choose your package for the selected set.',
             3: 'Pick a date and start time for your session.',
             4: 'Optional extras for your session.',
             5: 'How should we reach you?',
@@ -1439,7 +1490,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!mount) return;
             var html = '';
             if (current === 1) {
-                html = '<div class="ccr-studio-sec"><div class="ccr-studio-sec-head"><span class="ccr-studio-sec-num">1</span> Choose a studio</div>';
+                html = '<div class="ccr-studio-sec"><div class="ccr-studio-sec-head"><span class="ccr-studio-sec-num">1</span> Choose a set</div>';
                 studios.forEach(function (studio) {
                     var selected = String(studio.id) === String(state.studioId);
                     html += '<div class="ccr-studio-row' + (selected ? ' is-selected' : '') + '" data-pick-studio="' + esc(studio.id) + '">';
@@ -1573,19 +1624,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                     html += '</label>';
                 });
-                if (settings.promo_text) {
-                    html += '<div class="ccr-studio-promo">';
-                    html += '<div class="ccr-studio-promo-title">Exclusive Equipment Discount';
-                    if (settings.promo_badge) {
-                        html += ' <span class="ccr-studio-promo-badge">' + esc(settings.promo_badge) + '</span>';
-                    }
-                    html += '</div>';
-                    html += '<p>' + esc(settings.promo_text) + '</p>';
-                    if (settings.promo_url) {
-                        html += '<a href="' + esc(settings.promo_url) + '">Browse gear</a>';
-                    }
-                    html += '</div>';
-                }
                 html += '</div>';
             } else if (current === 5) {
                 html = '<div class="ccr-studio-sec"><div class="ccr-studio-sec-head"><span class="ccr-studio-sec-num">5</span> Your details</div><div class="ccr-studio-fields-grid">';
@@ -1609,7 +1647,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 html += '<p class="ccr-studio-momo-note">Send the full amount by Mobile Money using this exact reference. After you confirm, WhatsApp us your payment screenshot.</p>';
                 html += '</div>';
                 html += '<div class="ccr-studio-book-summary"><h3>Booking summary</h3><dl>';
-                html += '<div><dt>Studio</dt><dd>' + esc(studioName) + ' — ' + esc(pkgLabel) + ' · ' + esc(String(state.sessionHours)) + ' hr</dd></div>';
+                html += '<div><dt>Set</dt><dd>' + esc(studioName) + ' — ' + esc(pkgLabel) + ' · ' + esc(String(state.sessionHours)) + ' hr</dd></div>';
                 html += '<div><dt>Rate</dt><dd>' + esc(money(sessionRate())) + '/hr</dd></div>';
                 html += '<div><dt>Date</dt><dd>' + esc(state.date) + '</dd></div>';
                 html += '<div><dt>Time</dt><dd>' + esc(state.start) + ' → ' + esc(state.end) + '</dd></div>';
@@ -1641,7 +1679,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function validate() {
             showError('');
-            if (current === 1 && !state.studioId) { showError('Please select a studio.'); return false; }
+            if (current === 1 && !state.studioId) { showError('Please select a set.'); return false; }
             if (current === 2 && !state.packageId) { showError('Please select a package.'); return false; }
             if (current === 3) {
                 if (!state.date) { showError('Please choose a date.'); return false; }

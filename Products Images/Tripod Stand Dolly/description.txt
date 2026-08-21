@@ -1,0 +1,13 @@
+Product: Tripod Stand Dolly
+Rentopian ID: 449340
+Category: Accessories
+Type: rental
+Quantity: 1
+Daily rate (GHS): 50.0
+
+Description:
+The Tripod Stand Dolly is a camera or lighting stand. Use it to lock off a shot or hold a fixture; check payload against your camera or light.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

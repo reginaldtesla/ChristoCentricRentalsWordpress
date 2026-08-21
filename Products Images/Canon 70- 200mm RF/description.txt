@@ -1,0 +1,13 @@
+Product: Canon 70- 200mm RF
+Rentopian ID: 405500
+Category: Lenses
+Type: rental
+Quantity: 3
+Daily rate (GHS): 300.0
+
+Description:
+The Canon 70- 200mm RF is a Canon photographic lens. It is built for RF-mount cameras. A telephoto zoom for portraits, events, and compressed backgrounds.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

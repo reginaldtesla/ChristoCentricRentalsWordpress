@@ -1,0 +1,13 @@
+Product: HDMI Cable 100M
+Rentopian ID: 444000
+Category: Cable
+Type: rental
+Quantity: 4
+Daily rate (GHS): 200.0
+
+Description:
+The HDMI Cable 100M is a 100 m signal cable for video or power interconnects. Use the correct HDMI, SDI, or USB-C ends listed in the product name.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

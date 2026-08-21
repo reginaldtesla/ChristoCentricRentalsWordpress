@@ -1,0 +1,13 @@
+Product: Nikon D750
+Rentopian ID: 414676
+Category: Cameras
+Type: rental
+Quantity: 1
+Daily rate (GHS): 200.0
+
+Description:
+The Nikon D750 is a Nikon camera body for stills and video.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

@@ -13,6 +13,11 @@ final class CCR_Settings
         add_action('admin_post_ccr_toggle_taxes', [self::class, 'handle_toggle_taxes']);
         add_action('woocommerce_order_actions', [self::class, 'add_mark_paid_action']);
         add_action('woocommerce_order_action_ccr_mark_paid', [self::class, 'handle_mark_paid']);
+        add_filter('woocommerce_email_from_address', [self::class, 'contact_email'], 20);
+        add_filter('woocommerce_email_recipient_new_order', [self::class, 'force_contact_recipient'], 20);
+        add_filter('woocommerce_email_recipient_cancelled_order', [self::class, 'force_contact_recipient'], 20);
+        add_filter('woocommerce_email_recipient_failed_order', [self::class, 'force_contact_recipient'], 20);
+        add_action('init', [self::class, 'maybe_sync_contact_email'], 5);
     }
 
     public static function register_menu(): void
@@ -31,6 +36,9 @@ final class CCR_Settings
     {
         register_setting('ccr_settings', 'ccr_rentopian_api_key', ['sanitize_callback' => 'sanitize_text_field']);
         register_setting('ccr_settings', 'ccr_rentopian_base_url', ['sanitize_callback' => 'esc_url_raw']);
+        register_setting('ccr_settings', 'ccr_rentopian_website', ['sanitize_callback' => 'esc_url_raw']);
+        register_setting('ccr_settings', 'ccr_rentopian_pull_products', ['sanitize_callback' => [self::class, 'sanitize_yes_no']]);
+        register_setting('ccr_settings', 'ccr_rentopian_push_products', ['sanitize_callback' => [self::class, 'sanitize_yes_no']]);
         register_setting('ccr_settings', 'ccr_pickup_cash_hold_hours', ['sanitize_callback' => 'absint']);
         register_setting('ccr_settings', 'ccr_online_hold_hours', ['sanitize_callback' => 'absint']);
         register_setting('ccr_settings', 'ccr_default_pickup_time', ['sanitize_callback' => 'sanitize_text_field']);
@@ -69,6 +77,10 @@ final class CCR_Settings
 
     public static function sanitize_yes_no(mixed $value): string
     {
+        if (is_array($value)) {
+            $value = end($value);
+        }
+
         return $value === 'yes' ? 'yes' : 'no';
     }
 
@@ -86,7 +98,11 @@ final class CCR_Settings
         ?>
         <div class="wrap">
             <h1><?php esc_html_e('Christocentric Rentals', 'christocentric-rentals'); ?></h1>
-            <p><?php esc_html_e('Store ops without Rentopian: WooCommerce orders are your booking system. Paystack + pay-on-pickup handle payments; stock is managed in Products.', 'christocentric-rentals'); ?></p>
+            <p><?php esc_html_e('WooCommerce is the shop. Rentopian is optional: catalog can sync both ways, and paid orders are pushed to Rentopian.', 'christocentric-rentals'); ?></p>
+
+            <?php if (! empty($_GET['ccr_rentopian'])) : // phpcs:ignore ?>
+                <div class="notice notice-info is-dismissible"><p><?php echo esc_html(sanitize_text_field(wp_unslash((string) ($_GET['msg'] ?? '')))); ?></p></div>
+            <?php endif; ?>
 
             <?php if (! empty($_GET['ccr_smtp_test'])) : // phpcs:ignore ?>
                 <?php if ($_GET['ccr_smtp_test'] === 'ok') : // phpcs:ignore ?>
@@ -215,12 +231,39 @@ final class CCR_Settings
                         <th scope="row"><label for="ccr_rentopian_api_key"><?php esc_html_e('Rentopian API key (optional)', 'christocentric-rentals'); ?></label></th>
                         <td>
                             <input type="password" class="regular-text" id="ccr_rentopian_api_key" name="ccr_rentopian_api_key" value="<?php echo esc_attr(get_option('ccr_rentopian_api_key', '')); ?>" autocomplete="off">
-                            <p class="description"><?php esc_html_e('Leave empty — the store runs fully on WooCommerce without Rentopian.', 'christocentric-rentals'); ?></p>
+                            <p class="description"><?php esc_html_e('From Rentopian → Settings → Company Details → API key. Leave empty to skip all Rentopian sync.', 'christocentric-rentals'); ?></p>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row"><label for="ccr_rentopian_base_url"><?php esc_html_e('Rentopian base URL', 'christocentric-rentals'); ?></label></th>
-                        <td><input type="url" class="regular-text" id="ccr_rentopian_base_url" name="ccr_rentopian_base_url" value="<?php echo esc_attr(get_option('ccr_rentopian_base_url', 'https://api.rentopian.com')); ?>"></td>
+                        <td><input type="url" class="regular-text" id="ccr_rentopian_base_url" name="ccr_rentopian_base_url" value="<?php echo esc_attr(get_option('ccr_rentopian_base_url', class_exists('CCR_Rentopian_Sync') ? CCR_Rentopian_Sync::default_base_url() : 'https://account.rentopian.com/api/v1')); ?>"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><label for="ccr_rentopian_website"><?php esc_html_e('Rentopian website domain', 'christocentric-rentals'); ?></label></th>
+                        <td>
+                            <input type="url" class="regular-text" id="ccr_rentopian_website" name="ccr_rentopian_website" value="<?php echo esc_attr(get_option('ccr_rentopian_website', class_exists('CCR_Rentopian_Sync') ? CCR_Rentopian_Sync::website_domain() : 'https://christocentricrentals.com')); ?>">
+                            <p class="description"><?php esc_html_e('Must match the Website URL used when the API key was created in Rentopian (usually the live site).', 'christocentric-rentals'); ?></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php esc_html_e('Catalog: Rentopian → this shop', 'christocentric-rentals'); ?></th>
+                        <td>
+                            <label>
+                                <input type="hidden" name="ccr_rentopian_pull_products" value="no">
+                                <input type="checkbox" name="ccr_rentopian_pull_products" value="yes" <?php checked(get_option('ccr_rentopian_pull_products', 'yes'), 'yes'); ?>>
+                                <?php esc_html_e('Pull products (matched by Rentopian ID or SKU; never deletes existing products)', 'christocentric-rentals'); ?>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php esc_html_e('Catalog: this shop → Rentopian', 'christocentric-rentals'); ?></th>
+                        <td>
+                            <label>
+                                <input type="hidden" name="ccr_rentopian_push_products" value="no">
+                                <input type="checkbox" name="ccr_rentopian_push_products" value="yes" <?php checked(get_option('ccr_rentopian_push_products', 'no'), 'yes'); ?>>
+                                <?php esc_html_e('Push products to Rentopian (leave off — Rentopian is the catalog)', 'christocentric-rentals'); ?>
+                            </label>
+                        </td>
                     </tr>
                     <tr>
                         <th scope="row"><label for="ccr_pickup_cash_hold_hours"><?php esc_html_e('Pickup-cash stock hold (hours)', 'christocentric-rentals'); ?></label></th>
@@ -320,9 +363,10 @@ final class CCR_Settings
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><label for="ccr_newsletter_notify_email"><?php esc_html_e('Notification email', 'christocentric-rentals'); ?></label></th>
+                        <th scope="row"><?php esc_html_e('Notification email', 'christocentric-rentals'); ?></th>
                         <td>
-                            <input type="email" class="regular-text" id="ccr_newsletter_notify_email" name="ccr_newsletter_notify_email" value="<?php echo esc_attr(get_option('ccr_newsletter_notify_email', self::default_support_email())); ?>">
+                            <code><?php echo esc_html(self::contact_email()); ?></code>
+                            <p class="description"><?php esc_html_e('Uses the SMTP From email above.', 'christocentric-rentals'); ?></p>
                         </td>
                     </tr>
                     <tr>
@@ -332,9 +376,10 @@ final class CCR_Settings
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><label for="ccr_newsletter_from_email"><?php esc_html_e('From email', 'christocentric-rentals'); ?></label></th>
+                        <th scope="row"><?php esc_html_e('From email', 'christocentric-rentals'); ?></th>
                         <td>
-                            <input type="email" class="regular-text" id="ccr_newsletter_from_email" name="ccr_newsletter_from_email" value="<?php echo esc_attr(get_option('ccr_newsletter_from_email', self::default_support_email())); ?>">
+                            <code><?php echo esc_html(self::contact_email()); ?></code>
+                            <p class="description"><?php esc_html_e('Uses the SMTP From email above.', 'christocentric-rentals'); ?></p>
                         </td>
                     </tr>
                 </table>
@@ -446,11 +491,85 @@ final class CCR_Settings
                     </tr>
                     <tr>
                         <th scope="row"><label for="ccr_smtp_from_email"><?php esc_html_e('From email', 'christocentric-rentals'); ?></label></th>
-                        <td><input type="email" class="regular-text" id="ccr_smtp_from_email" name="ccr_smtp_from_email" value="<?php echo esc_attr(get_option('ccr_smtp_from_email', self::default_support_email())); ?>"></td>
+                        <td>
+                            <input type="email" class="regular-text" id="ccr_smtp_from_email" name="ccr_smtp_from_email" value="<?php echo esc_attr(get_option('ccr_smtp_from_email', self::default_support_email())); ?>">
+                            <p class="description"><?php esc_html_e('This is the only public contact address: footer, Contact page, contact form, studio booking notices, newsletter notices, and WooCommerce “from” emails.', 'christocentric-rentals'); ?></p>
+                        </td>
                     </tr>
                 </table>
                 <?php submit_button(); ?>
             </form>
+
+            <?php
+            $rentopianLog = class_exists('CCR_Rentopian_Catalog') ? CCR_Rentopian_Catalog::last_log() : [];
+            ?>
+            <div class="card" style="max-width:820px;padding:12px 16px;margin:16px 0">
+                <h2 style="margin-top:0"><?php esc_html_e('Rentopian catalog sync', 'christocentric-rentals'); ?></h2>
+                <p><?php esc_html_e('Rentopian’s API does not send prices. We imported your Inventory Export PDF (292 items, rental rates + quantities). After upload, click Apply saved rates & descriptions.', 'christocentric-rentals'); ?></p>
+                <div>
+                    <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="display:inline-block;margin-right:8px">
+                        <input type="hidden" name="action" value="ccr_rentopian_pull">
+                        <?php wp_nonce_field('ccr_rentopian_pull'); ?>
+                        <?php submit_button(__('Pull catalog from Rentopian', 'christocentric-rentals'), 'secondary', 'submit', false); ?>
+                    </form>
+                    <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="display:inline-block">
+                        <input type="hidden" name="action" value="ccr_rentopian_push">
+                        <?php wp_nonce_field('ccr_rentopian_push'); ?>
+                        <?php submit_button(__('Push catalog to Rentopian', 'christocentric-rentals'), 'secondary', 'submit', false); ?>
+                    </form>
+                </div>
+                <?php
+                $catalogCounts = class_exists('CCR_Rentopian_Catalog') ? CCR_Rentopian_Catalog::catalog_counts() : ['local' => 0, 'rentopian' => 0];
+                ?>
+                <p class="description" style="margin-top:12px">
+                    <?php echo esc_html(sprintf(
+                        /* translators: 1: rentopian count 2: local count */
+                        __('On this shop now: %1$d Rentopian products, %2$d local-only products.', 'christocentric-rentals'),
+                        (int) $catalogCounts['rentopian'],
+                        (int) $catalogCounts['local']
+                    )); ?>
+                </p>
+                <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="margin-top:8px" onsubmit="return confirm('Move local-only products to Trash? Rentopian items stay.');">
+                    <input type="hidden" name="action" value="ccr_rentopian_keep_only">
+                    <?php wp_nonce_field('ccr_rentopian_keep_only'); ?>
+                    <label>
+                        <input type="checkbox" name="ccr_confirm_keep_rentopian" value="1" required>
+                        <?php esc_html_e('I understand this trashes products that did not come from Rentopian. They can be restored from Trash.', 'christocentric-rentals'); ?>
+                    </label>
+                    <p>
+                        <?php submit_button(__('Keep Rentopian catalog only', 'christocentric-rentals'), 'delete', 'submit', false); ?>
+                    </p>
+                </form>
+                <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="margin-top:8px">
+                    <input type="hidden" name="action" value="ccr_rentopian_apply_fallback">
+                    <?php wp_nonce_field('ccr_rentopian_apply_fallback'); ?>
+                    <p class="description"><?php esc_html_e('Sets daily rates from the Rentopian PDF, fills descriptions when we have them, and attaches photos from Media plus the product-images folder in this plugin (~129 shots from the old shop).', 'christocentric-rentals'); ?></p>
+                    <?php submit_button(__('Apply saved rates & descriptions', 'christocentric-rentals'), 'primary', 'submit', false); ?>
+                </form>
+                <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="margin-top:8px">
+                    <input type="hidden" name="action" value="ccr_apply_folder_photos">
+                    <?php wp_nonce_field('ccr_apply_folder_photos'); ?>
+                    <p class="description"><?php esc_html_e('Uploads photos from the Products Images folder at the site root (including 00000) onto matching products. Replaces “photo coming soon” cards. Safe to run again — already attached files are skipped.', 'christocentric-rentals'); ?></p>
+                    <?php submit_button(__('Attach photos from Products Images', 'christocentric-rentals'), 'primary', 'submit', false); ?>
+                </form>
+                <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="margin-top:8px">
+                    <input type="hidden" name="action" value="ccr_rentopian_categorize">
+                    <?php wp_nonce_field('ccr_rentopian_categorize'); ?>
+                    <p class="description"><?php esc_html_e('Puts Rentopian items into Cameras, Lenses, Lighting, Audio, Gimbals, and the other shop categories from the product name.', 'christocentric-rentals'); ?></p>
+                    <?php submit_button(__('Categorize Rentopian products', 'christocentric-rentals'), 'secondary', 'submit', false); ?>
+                </form>
+                <?php if ($rentopianLog !== []) : ?>
+                    <p class="description">
+                        <?php echo esc_html(sprintf(
+                            /* translators: 1: action 2: datetime 3: message */
+                            __('Last %1$s: %2$s — %3$s', 'christocentric-rentals'),
+                            (string) ($rentopianLog['action'] ?? ''),
+                            (string) ($rentopianLog['at'] ?? ''),
+                            (string) ($rentopianLog['result']['message'] ?? '')
+                        )); ?>
+                    </p>
+                <?php endif; ?>
+            </div>
 
             <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="margin-top:8px">
                 <input type="hidden" name="action" value="ccr_smtp_test">
@@ -612,17 +731,44 @@ final class CCR_Settings
 
     public static function default_support_email(): string
     {
-        if (function_exists('ccr_site_config')) {
-            $email = ccr_site_config('contact.support_email');
+        return self::contact_email();
+    }
 
-            if (is_string($email) && is_email($email)) {
-                return $email;
-            }
+    public const CONTACT_EMAIL = 'christocentricrentals@gmail.com';
+
+    /**
+     * Fill SMTP From when empty or still on the old support@ mailbox.
+     */
+    public static function maybe_sync_contact_email(): void
+    {
+        $from = (string) get_option('ccr_smtp_from_email', '');
+        if ($from !== self::CONTACT_EMAIL) {
+            update_option('ccr_smtp_from_email', self::CONTACT_EMAIL);
+        }
+    }
+
+    /**
+     * One public/contact mailbox: SMTP From email, else SMTP username, else Gmail.
+     */
+    public static function contact_email($unused = null): string
+    {
+        $from = (string) get_option('ccr_smtp_from_email', '');
+        if (is_email($from)) {
+            return $from;
+        }
+        $user = (string) get_option('ccr_smtp_user', '');
+        if (is_email($user)) {
+            return $user;
         }
 
-        $admin = get_option('admin_email');
+        return self::CONTACT_EMAIL;
+    }
 
-        return is_string($admin) && is_email($admin) ? $admin : 'support@christocentricrentals.com';
+    public static function force_contact_recipient($recipient): string
+    {
+        $email = self::contact_email();
+
+        return is_email($email) ? $email : (is_string($recipient) ? $recipient : '');
     }
 
     public static function datetime_local_value(string $value): string

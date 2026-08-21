@@ -1,0 +1,17 @@
+Product: S1 bracket
+Rentopian ID: 383854
+Category: 
+Type: rental
+Quantity: 1
+Daily rate (GHS): 15.0
+
+Description:
+The S1-style bracket is a Bowens-mount speedlight holder designed to convert compact flashes into modifier-ready light sources. It allows quick mounting of softboxes and reflectors without stressing the flash shoe, making small lights more studio-capable.
+
+In rental environments, this bracket is valuable for budget-friendly lighting builds and fast location setups. It helps creators scale from on-camera flash to controlled off-camera key and fill using familiar accessory ecosystems.
+
+Short description: S1 bracket converts speedlights for Bowens modifier use, enabling faster off-camera lighting control on location.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

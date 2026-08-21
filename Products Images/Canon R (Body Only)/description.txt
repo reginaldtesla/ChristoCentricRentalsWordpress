@@ -1,0 +1,13 @@
+Product: Canon R (Body Only)
+Rentopian ID: 452927
+Category: Cameras
+Type: rental
+Quantity: 20
+Daily rate (GHS): 300.0
+
+Description:
+The Canon R (Body Only) is a Canon camera body for stills and video. This listing is the body only—pair it with a lens, cards, and batteries.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

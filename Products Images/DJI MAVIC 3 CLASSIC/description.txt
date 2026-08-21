@@ -1,0 +1,17 @@
+Product: DJI MAVIC 3 CLASSIC
+Rentopian ID: 410069
+Category: Drone
+Type: rental
+Quantity: 1
+Daily rate (GHS): 1200.0
+
+Description:
+The DJI Mavic 3 Classic centers on a high-quality Hasselblad camera experience with strong flight reliability and advanced obstacle sensing. It delivers professional imaging capability in a foldable drone platform that is practical for regular production deployment.
+
+For Ghana real estate, tourism, and event cinematography, Mavic 3 Classic offers clean aerial detail with efficient setup time. It is a premium rental choice when clients expect cinematic overheads and consistent image quality.
+
+Short description: Premium foldable drone with Hasselblad imaging and reliable flight tools for cinematic real estate and event aerials.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

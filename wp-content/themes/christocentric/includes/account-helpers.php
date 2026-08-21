@@ -18,7 +18,7 @@ function ccr_account_hero(): void
         'orders'       => ['My Orders', 'Track your rental bookings.'],
         'view-order'   => ['Order Details', 'Rental booking summary.'],
         'edit-account' => ['My Profile', 'Update your account details.'],
-        'edit-address' => ['Addresses', 'Billing and shipping addresses.'],
+        'edit-address' => ['Addresses', 'Billing and delivery addresses.'],
         'rental-agreement' => ['Client verification', 'Ghana Card, guarantor, and pickup identity details.'],
     ];
 

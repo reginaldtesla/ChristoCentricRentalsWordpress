@@ -1,0 +1,13 @@
+Product: 30M HDMI CABLE Fibre HDMI Cable 30m
+Rentopian ID: 393931
+Category: CABLE
+Type: rental
+Quantity: 0
+Daily rate (GHS): 150.0
+
+Description:
+The 30M HDMI CABLE Fibre HDMI Cable 30m is a 30 m signal cable for video or power interconnects. Use the correct HDMI, SDI, or USB-C ends listed in the product name.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

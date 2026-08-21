@@ -1,0 +1,17 @@
+Product: Canon E6N battery
+Rentopian ID: 383873
+Category: Accessories
+Type: rental
+Quantity: 20
+Daily rate (GHS): 15.0
+
+Description:
+Canon LP-E6N is a 7.2V, 1865mAh lithium-ion pack widely used across EOS DSLR and mirrorless bodies. It is known for broad cross-body compatibility and reliable performance in both stills bursts and hybrid video sessions.
+
+As a rental spare, LP-E6N is a safe baseline power option for creators running long shoot days with limited charging windows. It helps maintain continuity across A/B camera rotations without changing battery ecosystems mid-production.
+
+Short description: LP-E6N 7.2V 1865mAh Canon battery for dependable cross-body compatibility in stills and video workflows.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

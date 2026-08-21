@@ -1,0 +1,13 @@
+Product: DJI MINI 4 Additional
+Rentopian ID: 449045
+Category: Drone
+Type: rental
+Quantity: 2
+Daily rate (GHS): 500.0
+
+Description:
+The DJI MINI 4 Additional is a DJI drone for aerial establishing shots and overhead coverage. Fly only where local rules allow; extra batteries and an ND set help in bright Ghana sun.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

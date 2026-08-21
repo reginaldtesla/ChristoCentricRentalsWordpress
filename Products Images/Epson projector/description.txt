@@ -1,0 +1,17 @@
+Product: Epson projector
+Rentopian ID: 407957
+Category: Accessories
+Type: rental
+Quantity: 1
+Daily rate (GHS): 250.0
+
+Description:
+This Epson projector profile aligns with common rental-class 3LCD XGA units around 3600 lumens, designed for clear text and presentation visuals in lit rooms. Typical specs include HDMI connectivity, 4:3 native aspect behavior, and integrated speaker convenience.
+
+In rental contexts, it is a dependable projector for church announcements, classrooms, seminars, and community events. It is optimized for legibility and setup simplicity rather than cinema-grade contrast, which is ideal for presentation-first use.
+
+Short description: Bright 3LCD Epson presentation projector class for clear slides, announcements, and event visuals in lit spaces.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

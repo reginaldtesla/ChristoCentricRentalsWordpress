@@ -1,0 +1,13 @@
+Product: Sony A7iv
+Rentopian ID: 383798
+Category: Cameras
+Type: rental
+Quantity: 2
+Daily rate (GHS): 400.0
+
+Description:
+The Sony A7iv is a Sony camera body for stills and video. Sony full-frame mirrorless body; E-mount lenses attach directly.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

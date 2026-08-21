@@ -1,0 +1,13 @@
+Product: Sony FX3 A
+Rentopian ID: 442596
+Category: Cameras
+Type: rental
+Quantity: 3
+Daily rate (GHS): 450.0
+
+Description:
+The Sony FX3 A is a Sony camera body for stills and video. A Sony cinema-oriented body for run-and-gun and controlled video.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

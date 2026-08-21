@@ -1,0 +1,13 @@
+Product: Sony Sigma 24-70mm 2.8 DG DN II
+Rentopian ID: 489954
+Category: Lenses
+Type: rental
+Quantity: 1
+Daily rate (GHS): 250.0
+
+Description:
+The Sony Sigma 24-70mm 2.8 DG DN II is a Sony photographic lens. It is built for Sony E-mount cameras. A standard zoom for events, interviews, and general production.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

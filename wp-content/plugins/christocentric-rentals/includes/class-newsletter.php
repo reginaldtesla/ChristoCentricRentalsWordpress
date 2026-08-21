@@ -250,7 +250,7 @@ final class CCR_Newsletter
 
     public static function send_admin_notification(string $email): void
     {
-        $notify = get_option('ccr_newsletter_notify_email', '');
+        $notify = class_exists('CCR_Settings') ? CCR_Settings::contact_email() : (string) get_option('ccr_newsletter_notify_email', '');
 
         if (! is_string($notify) || ! is_email($notify)) {
             $notify = class_exists('CCR_Settings') ? CCR_Settings::default_support_email() : get_option('admin_email');

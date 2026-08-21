@@ -1,0 +1,13 @@
+Product: 60M HDMI CABLE
+Rentopian ID: 449306
+Category: CABLE
+Type: rental
+Quantity: 2
+Daily rate (GHS): 200.0
+
+Description:
+The 60M HDMI CABLE is a 60 m signal cable for video or power interconnects. Use the correct HDMI, SDI, or USB-C ends listed in the product name.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

@@ -1,0 +1,13 @@
+Product: Samsung 55- inch Smart TV
+Rentopian ID: 489071
+Category: TV
+Type: rental
+Quantity: 1
+Daily rate (GHS): 700.0
+
+Description:
+The Samsung 55- inch Smart TV is a display for playback, confidence monitoring, or event screens. Bring the correct HDMI input and a stand or wall position as needed.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

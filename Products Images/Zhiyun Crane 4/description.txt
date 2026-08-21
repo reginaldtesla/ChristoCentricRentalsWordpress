@@ -1,0 +1,17 @@
+Product: Zhiyun Crane 4
+Rentopian ID: 383831
+Category: Gimbals
+Type: rental
+Quantity: 1
+Daily rate (GHS): 280.0
+
+Description:
+The Zhiyun Crane 4 continues the brand's stabilizer line with improved ergonomics and creator-focused control refinements for modern camera work. It is suited to teams that want smooth movement, practical handling, and broad compatibility for hybrid video shoots.
+
+In Ghana's mixed indoor-outdoor productions, this gimbal supports efficient capture of reveal shots, tracking moves, and event coverage. It is a versatile rental option for crews balancing performance with portability.
+
+Short description: Versatile modern gimbal with improved handling for smooth tracking shots across event and commercial productions.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

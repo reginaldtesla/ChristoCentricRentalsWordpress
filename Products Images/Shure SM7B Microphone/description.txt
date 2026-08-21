@@ -1,0 +1,17 @@
+Product: Shure SM7B Microphone
+Rentopian ID: 407485
+Category: Audio gears
+Type: rental
+Quantity: 2
+Daily rate (GHS): 200.0
+
+Description:
+The Shure SM7B is a legendary broadcast dynamic microphone known for smooth vocal tone, controlled presence, and excellent rejection of room noise when positioned correctly. It is a studio staple for podcasting, voiceover, and music applications that demand rich, focused voice capture.
+
+For Ghana podcast studios and church media rooms, the SM7B provides a polished sound that listeners immediately recognize as professional. It is best paired with proper gain staging and clean preamp support for optimal performance.
+
+Short description: Broadcast-standard dynamic microphone delivering rich, controlled vocals for podcasts, voiceover, and studio speech.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

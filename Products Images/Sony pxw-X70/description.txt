@@ -1,0 +1,17 @@
+Product: Sony pxw-X70
+Rentopian ID: 383823
+Category: Camcorder
+Type: rental
+Quantity: 7
+Daily rate (GHS): 400.0
+
+Description:
+The Sony PXW-X70 is a compact professional camcorder that blends portability with features expected in broadcast and corporate environments. Its 1-inch class sensor helps produce cleaner images and better background separation than smaller-sensor camcorders. The built-in zoom lens and ergonomics support fast operation for interviews and event coverage.
+
+XLR audio support, ND filters, and long recording reliability make it useful for church media teams, field reporters, and documentary crews. It is easy to deploy for one-person productions while still delivering professional controls. For Ghana-based clients needing dependable run-and-gun video capture, the PXW-X70 remains a practical rental tool.
+
+Short description: Sony PXW-X70 packs pro camcorder controls and audio tools into a compact run-and-gun body.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

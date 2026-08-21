@@ -1,0 +1,17 @@
+Product: DJI Ronin RS4 pro
+Rentopian ID: 383828
+Category: Gimbals
+Type: rental
+Quantity: 3
+Daily rate (GHS): 300.0
+
+Description:
+The DJI RS 4 Pro class platform targets higher-end cinema and hybrid production rigs with greater control depth and payload confidence. It is designed for demanding workflows where focus systems, heavier lenses, and extended shoot schedules are part of the plan.
+
+On larger Ghana sets, this gimbal class is ideal for commercial storytelling, automotive shots, and premium wedding films that require consistent motion quality. It is a top-tier rental choice when production value is a core deliverable.
+
+Short description: High-end RS 4 Pro-class stabilization for heavier rigs and premium cinematic productions with complex workflows.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

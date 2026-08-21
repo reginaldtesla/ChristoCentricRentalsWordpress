@@ -1,0 +1,13 @@
+Product: Aputure 300d II
+Rentopian ID: 408122
+Category: 
+Type: rental
+Quantity: 1
+Daily rate (GHS): 300.0
+
+Description:
+The Aputure 300d II is a continuous LED fixture for video and mixed lighting. Use it as key, fill, or background light; add a stand and modifier when you need control.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

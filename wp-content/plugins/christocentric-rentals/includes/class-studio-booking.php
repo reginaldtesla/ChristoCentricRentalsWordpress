@@ -45,7 +45,7 @@ final class CCR_Studio_Booking
                 'booking' => 'success',
                 'order' => $order->get_id(),
             ],
-            home_url('/studio/')
+            class_exists('CCR_Studio_Subdomain') ? CCR_Studio_Subdomain::url('/') : home_url('/studio/')
         );
     }
 
@@ -84,7 +84,7 @@ final class CCR_Studio_Booking
                 'addons' => $settings['addons'],
             ],
             'studios' => $studios,
-            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'ajaxUrl' => class_exists('CCR_Studio_Subdomain') ? CCR_Studio_Subdomain::ajax_url() : admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('ccr_studio_book'),
             'currency' => 'GHS',
             'i18n' => [
@@ -318,7 +318,7 @@ final class CCR_Studio_Booking
 
         $studio = get_post($studioId);
         if (! $studio instanceof WP_Post || $studio->post_type !== CCR_Studio_Cpt::POST_TYPE || $studio->post_status !== 'publish') {
-            wp_send_json_error(['message' => __('Please select a valid studio.', 'christocentric-rentals')], 400);
+            wp_send_json_error(['message' => __('Please select a set.', 'christocentric-rentals')], 400);
         }
 
         $package = null;
@@ -428,8 +428,8 @@ final class CCR_Studio_Booking
 
         $fee = new WC_Order_Item_Fee();
         $fee->set_name(sprintf(
-            /* translators: 1: studio name 2: package label */
-            __('Studio booking — %1$s (%2$s)', 'christocentric-rentals'),
+            /* translators: 1: set name 2: package label */
+            __('Studio set — %1$s (%2$s)', 'christocentric-rentals'),
             $studio->post_title,
             $packageLabel
         ));
@@ -500,7 +500,7 @@ final class CCR_Studio_Booking
                 'booking' => 'pending',
                 'order' => $order->get_id(),
             ],
-            home_url('/studio/')
+            class_exists('CCR_Studio_Subdomain') ? CCR_Studio_Subdomain::url('/') : home_url('/studio/')
         );
 
         wp_send_json_success([
@@ -594,6 +594,9 @@ final class CCR_Studio_Booking
         }
 
         $adminTo = sanitize_email((string) ($settings['notify_email'] ?? ''));
+        if ($adminTo === '' && class_exists('CCR_Settings')) {
+            $adminTo = CCR_Settings::contact_email();
+        }
         if ($adminTo === '') {
             $adminTo = get_option('admin_email');
         }
@@ -636,6 +639,9 @@ final class CCR_Studio_Booking
         }
 
         $adminTo = sanitize_email((string) ($settings['notify_email'] ?? ''));
+        if ($adminTo === '' && class_exists('CCR_Settings')) {
+            $adminTo = CCR_Settings::contact_email();
+        }
         if ($adminTo === '') {
             $adminTo = get_option('admin_email');
         }
@@ -687,7 +693,7 @@ final class CCR_Studio_Booking
     public static function summary_html(WC_Order $order): string
     {
         $rows = [
-            __('Studio', 'christocentric-rentals') => (string) $order->get_meta('_ccr_studio_name'),
+            __('Set', 'christocentric-rentals') => (string) $order->get_meta('_ccr_studio_name'),
             __('Package', 'christocentric-rentals') => (string) $order->get_meta('_ccr_studio_package_label'),
             __('Date', 'christocentric-rentals') => (string) $order->get_meta('_ccr_studio_date'),
             __('Time', 'christocentric-rentals') => (string) $order->get_meta('_ccr_studio_start') . ' → ' . (string) $order->get_meta('_ccr_studio_end'),
@@ -729,7 +735,7 @@ final class CCR_Studio_Booking
             'Studio booking — Christocentric Rentals',
             'Order #' . $order->get_order_number(),
             '',
-            'Studio: ' . (string) $order->get_meta('_ccr_studio_name'),
+            'Set: ' . (string) $order->get_meta('_ccr_studio_name'),
             'Package: ' . (string) $order->get_meta('_ccr_studio_package_label'),
             'Date: ' . (string) $order->get_meta('_ccr_studio_date'),
             'Time: ' . (string) $order->get_meta('_ccr_studio_start') . ' → ' . (string) $order->get_meta('_ccr_studio_end'),

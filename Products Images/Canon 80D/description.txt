@@ -1,0 +1,17 @@
+Product: Canon 80D
+Rentopian ID: 383796
+Category: Cameras
+Type: rental
+Quantity: 2
+Daily rate (GHS): 150.0
+
+Description:
+The Canon 80D is a capable APS-C DSLR designed for creators who need strong autofocus, good battery life, and straightforward controls. Its 24.2MP sensor delivers detailed stills for school events, youth programs, and online marketing with manageable file sizes. The camera's ergonomics make it comfortable for newer operators and volunteers.
+
+For video, Dual Pixel AF and a fully articulating touchscreen help solo shooters frame confidently and keep interviews in focus. The 80D pairs well with affordable EF and EF-S lenses, making it easy to build complete kits for multi-camera coverage. It is a dependable rental option for practical, budget-aware productions in Ghana.
+
+Short description: Canon 80D is a reliable APS-C DSLR for events, interviews, and everyday content production.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

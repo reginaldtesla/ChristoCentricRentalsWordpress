@@ -1,0 +1,13 @@
+Product: AD600 Charger
+Rentopian ID: 447093
+Category: Accessories
+Type: rental
+Quantity: 2
+Daily rate (GHS): 50.0
+
+Description:
+The AD600 Charger is a flash or radio trigger for stills—portraits, events, and studio setups. Match the trigger to the camera brand (Canon, Sony, or Nikon) listed in the name.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

@@ -51,7 +51,7 @@ $categories_open = (function_exists('is_shop') && is_shop()) || is_tax('product_
                         <svg class="ccr-nav-caret" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
                     </button>
                 </li>
-                <li class="ml-auto"><a href="<?php echo esc_url(home_url('/studio/')); ?>" class="nav-link <?php echo is_page('studio') ? 'nav-link-active' : ''; ?>"><?php esc_html_e('Studio', 'christocentric'); ?></a></li>
+                <li class="ml-auto"><a href="<?php echo esc_url(function_exists('ccr_studio_url') ? ccr_studio_url() : home_url('/studio/')); ?>" class="nav-link <?php echo (is_page('studio') || (function_exists('ccr_is_studio_subdomain') && ccr_is_studio_subdomain())) ? 'nav-link-active' : ''; ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Studio', 'christocentric'); ?></a></li>
                 <li><a href="<?php echo esc_url(home_url('/help/')); ?>" class="nav-link <?php echo is_page('help') ? 'nav-link-active' : ''; ?>"><?php esc_html_e('Help', 'christocentric'); ?></a></li>
                 <li><a href="<?php echo esc_url(home_url('/contact/')); ?>" class="nav-link <?php echo is_page('contact') ? 'nav-link-active' : ''; ?>"><?php esc_html_e('Contact', 'christocentric'); ?></a></li>
             </ul>
@@ -115,7 +115,7 @@ $categories_open = (function_exists('is_shop') && is_shop()) || is_tax('product_
                 <?php $compare_count_m = class_exists('CCR_Compare') ? CCR_Compare::count() : 0; ?>
                 <span data-ccr-compare-count <?php echo $compare_count_m > 0 ? '' : 'hidden'; ?>><?php echo $compare_count_m > 0 ? ' (' . (int) $compare_count_m . ')' : ''; ?></span>
             </a>
-            <a href="<?php echo esc_url(home_url('/studio/')); ?>" class="block px-2 py-2 text-sm <?php echo is_page('studio') ? 'font-medium text-primary' : 'text-gray-700'; ?>"><?php esc_html_e('Studio', 'christocentric'); ?></a>
+            <a href="<?php echo esc_url(function_exists('ccr_studio_url') ? ccr_studio_url() : home_url('/studio/')); ?>" class="block px-2 py-2 text-sm <?php echo (is_page('studio') || (function_exists('ccr_is_studio_subdomain') && ccr_is_studio_subdomain())) ? 'font-medium text-primary' : 'text-gray-700'; ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Studio', 'christocentric'); ?></a>
             <a href="<?php echo esc_url(home_url('/about/')); ?>" class="block px-2 py-2 text-sm text-gray-700"><?php esc_html_e('About', 'christocentric'); ?></a>
             <a href="<?php echo esc_url(home_url('/faq/')); ?>" class="block px-2 py-2 text-sm text-gray-700"><?php esc_html_e('FAQ', 'christocentric'); ?></a>
             <a href="<?php echo esc_url(home_url('/contact/')); ?>" class="block px-2 py-2 text-sm <?php echo is_page('contact') ? 'font-medium text-primary' : 'text-gray-700'; ?>"><?php esc_html_e('Contact', 'christocentric'); ?></a>

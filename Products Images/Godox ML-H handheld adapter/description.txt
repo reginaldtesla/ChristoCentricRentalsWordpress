@@ -1,0 +1,13 @@
+Product: Godox ML-H handheld adapter
+Rentopian ID: 421100
+Category: Audio gears
+Type: rental
+Quantity: 2
+Daily rate (GHS): 40.0
+
+Description:
+The Godox ML-H handheld adapter is Godox location or studio audio gear for dialogue, podcasts, or live capture. Check whether you need extra cables, stands, or wireless receivers for your setup.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

@@ -1,0 +1,17 @@
+Product: Sony pxw-Z90
+Rentopian ID: 383822
+Category: Camcorder
+Type: rental
+Quantity: 12
+Daily rate (GHS): 450.0
+
+Description:
+The Sony PXW-Z90 is a compact 4K professional camcorder designed for high-efficiency production and quick turnaround delivery. Its fast hybrid autofocus and 1-inch class sensor help maintain sharp, clean images in dynamic environments. The integrated zoom and optical stabilization make it ideal for handheld event and documentary work.
+
+Professional audio inputs, HDR workflows, and dependable long-form recording support broadcast, corporate, and ministry productions. This camera is especially valuable for teams that need modern 4K acquisition without complex cinema rigging. It is a strong rental option for Ghanaian productions that prioritize speed, reliability, and professional output.
+
+Short description: Sony PXW-Z90 is a compact 4K pro camcorder for fast, reliable broadcast-style production.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

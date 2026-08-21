@@ -1,0 +1,13 @@
+Product: Sony Sigma 24-70mm 2.8
+Rentopian ID: 383819
+Category: Lenses
+Type: rental
+Quantity: 2
+Daily rate (GHS): 200.0
+
+Description:
+The Sony Sigma 24-70mm 2.8 is a Sony photographic lens. It is built for Sony E-mount cameras. A standard zoom for events, interviews, and general production.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

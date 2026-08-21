@@ -1,0 +1,13 @@
+Product: Canon RF 85mm F1.2
+Rentopian ID: 452187
+Category: Lenses
+Type: rental
+Quantity: 2
+Daily rate (GHS): 350.0
+
+Description:
+The Canon RF 85mm F1.2 is a Canon photographic lens at f/85. It is built for RF-mount cameras. Match it to a compatible camera body and adapter if the mounts differ.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

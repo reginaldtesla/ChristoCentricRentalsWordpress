@@ -1,0 +1,13 @@
+Product: 2TB SSD
+Rentopian ID: 459212
+Category: Accessories
+Type: rental
+Quantity: 4
+Daily rate (GHS): 150.0
+
+Description:
+The 2TB SSD is recording media for cameras and recorders. Confirm the card type (SD, microSD, or SSD) and speed class matches the body you are hiring.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

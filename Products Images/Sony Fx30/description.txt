@@ -1,0 +1,13 @@
+Product: Sony Fx30
+Rentopian ID: 416673
+Category: Cameras
+Type: rental
+Quantity: 2
+Daily rate (GHS): 350.0
+
+Description:
+The Sony Fx30 is a Sony camera body for stills and video. A Sony cinema-oriented body for run-and-gun and controlled video.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

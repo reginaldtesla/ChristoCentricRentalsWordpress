@@ -16,7 +16,7 @@
                 <h3 class="mb-3 text-sm font-semibold text-gray-900">Company</h3>
                 <ul class="space-y-2 text-sm text-gray-600">
                     <li><a href="<?php echo esc_url(home_url('/about/')); ?>" class="hover:text-primary">About</a></li>
-                    <li><a href="<?php echo esc_url(home_url('/studio/')); ?>" class="hover:text-primary">Studio</a></li>
+                    <li><a href="<?php echo esc_url(function_exists('ccr_studio_url') ? ccr_studio_url() : home_url('/studio/')); ?>" class="hover:text-primary" target="_blank" rel="noopener noreferrer">Studio</a></li>
                     <li><a href="<?php echo esc_url(home_url('/contact/')); ?>" class="hover:text-primary">Contact</a></li>
                 </ul>
             </div>

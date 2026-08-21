@@ -1,0 +1,13 @@
+Product: GODOX AD800 Pro
+Rentopian ID: 488774
+Category: 
+Type: rental
+Quantity: 1
+Daily rate (GHS): 250.0
+
+Description:
+The GODOX AD800 Pro is a flash or radio trigger for stills—portraits, events, and studio setups. Match the trigger to the camera brand (Canon, Sony, or Nikon) listed in the name.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

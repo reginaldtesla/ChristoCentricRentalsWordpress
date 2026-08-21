@@ -1,0 +1,17 @@
+Product: Godox X3 trigger
+Rentopian ID: 383853
+Category: 
+Type: rental
+Quantity: 1
+Daily rate (GHS): 80.0
+
+Description:
+The Godox X3 family is a minimal touchscreen trigger line built around the 2.4GHz X wireless platform. Typical specs include internal 850mAh battery, USB-C charging, 32 channels, and support for TTL/manual/multi modes with HSS capability.
+
+As a rental default, X3 triggers are great for creators who want faster menu interaction and less camera-top weight than larger transmitters. They are particularly useful in mobile kits where every gram and minute counts.
+
+Short description: Modern touchscreen Godox X3 trigger platform with rechargeable battery and fast TTL/HSS wireless flash control.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

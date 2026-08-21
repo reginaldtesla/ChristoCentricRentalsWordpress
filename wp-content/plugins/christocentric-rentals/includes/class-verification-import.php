@@ -284,6 +284,14 @@ final class CCR_Verification_Import
             update_user_meta($userId, '_ccr_agreement_signed_at', gmdate('c'));
         }
         update_user_meta($userId, '_ccr_agreement_imported', 'yes');
+
+        if (class_exists('CCR_Client_Store') && CCR_Client_Store::is_ready()) {
+            $fields = [];
+            foreach (array_keys($textMap) as $field) {
+                $fields[$field] = (string) get_user_meta($userId, $textMap[$field], true);
+            }
+            CCR_Client_Store::save($userId, $fields, [], true);
+        }
     }
 
     private static function normalize_id_type(string $value): string

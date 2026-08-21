@@ -1,0 +1,13 @@
+Product: Cameras Canon 1500D
+Rentopian ID: 436323
+Category: Cameras
+Type: rental
+Quantity: 1
+Daily rate (GHS): 100.0
+
+Description:
+The Cameras Canon 1500D is a Canon camera body for stills and video.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

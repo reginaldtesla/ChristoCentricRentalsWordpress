@@ -1,0 +1,17 @@
+Product: Acsoon Cineview SE
+Rentopian ID: 383861
+Category: Transmitters
+Type: rental
+Quantity: 1
+Daily rate (GHS): 200.0
+
+Description:
+Accsoon CineView SE uses dual-band 2.4GHz + 5GHz transmission with quoted sub-50ms latency and up to 1200ft line-of-sight range in controlled conditions. It supports HDMI and SDI up to 1080p60, making it a practical monitoring link for hybrid camera fleets.
+
+For rental productions, it is valuable when directors, focus pullers, or clients need untethered confidence monitors without costly wireless ecosystems. The system is compact, quick to pair, and dependable for interviews, worship broadcasts, and run-and-gun sets.
+
+Short description: Dual-band Accsoon wireless video kit with sub-50ms latency and up to 1200ft LOS range for 1080p monitoring.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

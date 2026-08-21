@@ -1,0 +1,17 @@
+Product: Zhiyun Crane 3S
+Rentopian ID: 383830
+Category: Gimbals
+Type: rental
+Quantity: 1
+Daily rate (GHS): 250.0
+
+Description:
+The Zhiyun Crane 3S is built for heavier cinema-style payloads and modular rigging flexibility. Its design supports larger cameras and accessory combinations, making it suitable for productions that need stabilized movement with pro-bodied systems.
+
+For Ghana crews handling RED or cinema-heavy mirrorless builds, the Crane 3S offers valuable payload headroom for demanding shots. It is a dependable rental option when smaller gimbals cannot safely carry the required setup.
+
+Short description: Heavy-duty gimbal with modular design and high payload support for cinema cameras and larger production rigs.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

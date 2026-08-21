@@ -1,0 +1,17 @@
+Product: Hollyland Mars 4k
+Rentopian ID: 383859
+Category: Transmitters
+Type: rental
+Quantity: 1
+Daily rate (GHS): 200.0
+
+Description:
+Hollyland Mars 4K is designed for wireless 4K30 HDMI workflows with SDI/HDMI support and quoted 450ft LOS range. Manufacturer data highlights low-latency transmission around 0.06s under test conditions and variable bitrates for stability tuning.
+
+For rentals, Mars 4K is ideal when teams need higher-resolution monitoring and broader format compatibility without stepping into premium cinema-link costs. It suits commercial shoots, worship media teams, and advanced creator rigs.
+
+Short description: Wireless 4K30-capable Mars system with SDI/HDMI support, 450ft LOS range, and low-latency monitoring.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

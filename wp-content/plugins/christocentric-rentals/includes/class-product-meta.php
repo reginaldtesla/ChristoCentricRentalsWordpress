@@ -12,6 +12,56 @@ final class CCR_Product_Meta
         add_action('woocommerce_product_options_general_product_data', [self::class, 'render_fields']);
         add_action('woocommerce_process_product_meta', [self::class, 'save_fields']);
         add_action('woocommerce_product_options_inventory_product_data', [self::class, 'render_inventory_note']);
+        add_filter('woocommerce_product_get_price', [self::class, 'filter_display_price'], 10, 2);
+        add_filter('woocommerce_product_get_regular_price', [self::class, 'filter_display_regular_price'], 10, 2);
+        add_filter('woocommerce_is_purchasable', [self::class, 'filter_purchasable'], 10, 2);
+    }
+
+    /**
+     * WooCommerce treats an empty price as not for sale. Use the daily rental rate when set.
+     */
+    public static function filter_display_price($price, $product)
+    {
+        if (! $product instanceof WC_Product) {
+            return $price;
+        }
+        if ($price !== '' && $price !== null && (float) $price > 0) {
+            return $price;
+        }
+        $daily = (string) $product->get_meta('_ccr_price_per_day');
+        $sale = (string) $product->get_meta('_ccr_sale_price_per_day');
+        if ($sale !== '' && (float) $sale > 0) {
+            return $sale;
+        }
+
+        return $daily !== '' && (float) $daily > 0 ? $daily : $price;
+    }
+
+    public static function filter_display_regular_price($price, $product)
+    {
+        if (! $product instanceof WC_Product) {
+            return $price;
+        }
+        if ($price !== '' && $price !== null && (float) $price > 0) {
+            return $price;
+        }
+        $daily = (string) $product->get_meta('_ccr_price_per_day');
+
+        return $daily !== '' && (float) $daily > 0 ? $daily : $price;
+    }
+
+    public static function filter_purchasable($purchasable, $product): bool
+    {
+        if ($purchasable || ! $product instanceof WC_Product) {
+            return (bool) $purchasable;
+        }
+        if ($product->get_status() !== 'publish') {
+            return false;
+        }
+        $daily = (float) $product->get_meta('_ccr_price_per_day');
+        $wc = (float) $product->get_regular_price('edit');
+
+        return $daily > 0 || $wc > 0;
     }
 
     public static function render_fields(): void
@@ -56,7 +106,7 @@ final class CCR_Product_Meta
         woocommerce_wp_text_input([
             'id' => '_ccr_rentopian_id',
             'label' => __('Rentopian product ID', 'christocentric-rentals'),
-            'description' => __('Optional external ID for Rentopian inventory sync.', 'christocentric-rentals'),
+            'description' => __('ID from Rentopian after catalog sync. Used to match products both ways.', 'christocentric-rentals'),
         ]);
 
         echo '</div>';

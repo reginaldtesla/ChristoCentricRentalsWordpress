@@ -1,0 +1,13 @@
+Product: Osee Gostream Deck Osee Go stream Deck
+Rentopian ID: 419818
+Category: 
+Type: rental
+Quantity: 2
+Daily rate (GHS): 250.0
+
+Description:
+The Osee Gostream Deck Osee Go stream Deck is a live video switcher for multicam events and streams. Plan HDMI or SDI inputs, a program output, and ISO recording if the model supports it.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

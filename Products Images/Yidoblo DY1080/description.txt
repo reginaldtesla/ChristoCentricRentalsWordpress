@@ -1,0 +1,17 @@
+Product: Yidoblo DY1080
+Rentopian ID: 383867
+Category: 
+Type: rental
+Quantity: 1
+Daily rate (GHS): 120.0
+
+Description:
+The Yidoblo DY1080 ring light is a straightforward beauty and portrait tool built for flattering, even facial illumination. Its circular form factor creates smooth catchlights and soft frontal light that works well for talking-head video, makeup content, and livestreams.
+
+For Ghana creators producing daily social content, this is an easy plug-and-shoot option that speeds setup in homes, salons, and small studios. It is especially useful for presenters who want clean skin tone rendering with minimal lighting complexity.
+
+Short description: Ring-light solution for flattering beauty, livestream, and talking-head content with fast setup and smooth facial light.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

@@ -1,0 +1,13 @@
+Product: Nikkor 50mm 1.8G
+Rentopian ID: 414677
+Category: Lenses
+Type: rental
+Quantity: 1
+Daily rate (GHS): 80.0
+
+Description:
+The Nikkor 50mm 1.8G is a photographic lens. It is built for Nikon F-mount cameras. Match it to a compatible camera body and adapter if the mounts differ.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

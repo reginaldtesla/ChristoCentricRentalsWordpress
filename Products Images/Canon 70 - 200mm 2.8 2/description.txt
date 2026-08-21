@@ -1,0 +1,13 @@
+Product: Canon 70 - 200mm 2.8 2
+Rentopian ID: 447147
+Category: Lenses
+Type: rental
+Quantity: 1
+Daily rate (GHS): 200.0
+
+Description:
+The Canon 70 - 200mm 2.8 2 is a Canon photographic lens. A telephoto zoom for portraits, events, and compressed backgrounds.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

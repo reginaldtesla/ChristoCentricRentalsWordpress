@@ -1,0 +1,13 @@
+Product: Canon 85mm 1.2 II
+Rentopian ID: 383806
+Category: Lenses
+Type: rental
+Quantity: 2
+Daily rate (GHS): 200.0
+
+Description:
+The Canon 85mm 1.2 II is a Canon photographic lens. Match it to a compatible camera body and adapter if the mounts differ.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

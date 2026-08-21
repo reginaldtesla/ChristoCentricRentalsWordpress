@@ -1443,6 +1443,10 @@
         width: min(100%, 32rem);
     }
 
+    .ccr-theme .ccr-welcome-notice--studio .ccr-welcome-notice__panel {
+        width: min(100%, 32rem);
+    }
+
     .ccr-theme .ccr-welcome-notice__hero {
         padding: 2rem 1.75rem 1.55rem;
     }
@@ -1497,6 +1501,49 @@
 .ccr-theme.ccr-studio-booking [data-welcome-notice] {
     display: none !important;
 }
+.ccr-theme.ccr-studio-booking .ccr-welcome-notice--studio {
+    z-index: 400;
+}
+.ccr-theme .ccr-welcome-notice--studio .ccr-welcome-notice__panel {
+    width: min(100%, 32rem);
+    max-height: min(92vh, 44rem);
+    overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.ccr-theme .ccr-welcome-notice--studio .ccr-welcome-notice__panel::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+}
+.ccr-theme .ccr-studio-agreement-meta {
+    margin: 0.75rem 0 0;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: #64748b;
+}
+.ccr-theme .ccr-studio-agreement-table {
+    width: 100%;
+    margin-top: 0.7rem;
+    border-collapse: collapse;
+    font-size: 0.75rem;
+    line-height: 1.4;
+}
+.ccr-theme .ccr-studio-agreement-table th,
+.ccr-theme .ccr-studio-agreement-table td {
+    padding: 0.45rem 0.5rem;
+    border: 1px solid #e5e7eb;
+    text-align: left;
+    vertical-align: top;
+}
+.ccr-theme .ccr-studio-agreement-table th {
+    background: #eff6ff;
+    color: #0f2744;
+    font-weight: 700;
+}
+.ccr-theme .ccr-studio-agreement-table td {
+    color: #4b5563;
+}
 .ccr-theme.ccr-studio-booking main.flex-1 {
     display: flex;
     flex-direction: column;
@@ -1542,6 +1589,57 @@
 @media (min-width: 1024px) {
     .ccr-theme .ccr-studio-book-layout {
         grid-template-columns: minmax(0, 0.95fr) minmax(24rem, 1.05fr);
+    }
+    html:has(body.ccr-studio-booking) {
+        height: 100%;
+        overflow: hidden;
+    }
+    .ccr-theme.ccr-studio-booking {
+        height: 100vh;
+        height: 100dvh;
+        overflow: hidden;
+        padding-bottom: 0 !important;
+    }
+    .ccr-theme.ccr-studio-booking.admin-bar {
+        height: calc(100vh - 32px);
+        height: calc(100dvh - 32px);
+    }
+    .ccr-theme.ccr-studio-booking main.flex-1 {
+        min-height: 0;
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+    .ccr-theme.ccr-studio-booking .ccr-studio-book-shell--mcb {
+        min-height: 0;
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+    .ccr-theme.ccr-studio-booking .ccr-studio-book-layout {
+        min-height: 0;
+        flex: 1 1 auto;
+        height: 100%;
+        overflow: hidden;
+    }
+    .ccr-theme.ccr-studio-booking .ccr-studio-book-hero {
+        height: 100%;
+        overflow: hidden;
+    }
+    .ccr-theme.ccr-studio-booking .ccr-studio-book-hero-inner {
+        height: 100%;
+        min-height: 0;
+        overflow: hidden;
+    }
+    .ccr-theme.ccr-studio-booking .ccr-studio-book-panel {
+        height: 100%;
+        min-height: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        align-items: flex-start;
     }
 }
 .ccr-theme .ccr-studio-book-hero {
@@ -4005,10 +4103,25 @@ body.ccr-agreement-lock {
 }
 .ccr-theme .ccr-confirm-items li {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     gap: 1rem;
     padding: 0.75rem 0;
     border-bottom: 1px solid #f3f4f6;
+}
+.ccr-theme .ccr-confirm-item-thumb {
+    display: block;
+    flex: 0 0 72px;
+    width: 72px;
+    height: 72px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+.ccr-theme .ccr-confirm-item-thumb img {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
 }
 .ccr-theme .ccr-confirm-item-main {
     display: flex;

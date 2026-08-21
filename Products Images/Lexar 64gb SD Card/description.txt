@@ -1,0 +1,17 @@
+Product: Lexar 64gb SD Card
+Rentopian ID: 448264
+Category: 
+Type: sale
+Quantity: 38
+Daily rate (GHS): 300.0
+
+Description:
+The 64GB Lexar SD option serves short-to-medium capture sessions with common UHS-I Class 10/U3/V30 performance tiers by model line. It is well suited to event segments, interviews, and B-camera coverage where card turnover is part of the workflow.
+
+In rental kits, 64GB cards simplify backup discipline and reduce risk concentration on one card. Teams can rotate media more frequently while still covering meaningful recording windows per camera.
+
+Short description: 64GB Lexar SD card for reliable HD/4K capture with practical media rotation in event and interview shoots.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

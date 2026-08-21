@@ -14,6 +14,7 @@ final class CCR_Studio_Cpt
         add_action('init', [self::class, 'register']);
         add_action('init', [self::class, 'maybe_seed_default'], 20);
         add_action('init', [self::class, 'maybe_upgrade_hourly_packages'], 21);
+        add_action('init', [self::class, 'maybe_ensure_sets'], 22);
         add_action('add_meta_boxes', [self::class, 'meta_boxes']);
         add_action('save_post_' . self::POST_TYPE, [self::class, 'save'], 10, 2);
         add_action('admin_enqueue_scripts', [self::class, 'admin_assets']);
@@ -25,11 +26,11 @@ final class CCR_Studio_Cpt
     {
         register_post_type(self::POST_TYPE, [
             'labels' => [
-                'name' => __('Studios', 'christocentric-rentals'),
-                'singular_name' => __('Studio', 'christocentric-rentals'),
-                'add_new_item' => __('Add New Studio', 'christocentric-rentals'),
-                'edit_item' => __('Edit Studio', 'christocentric-rentals'),
-                'menu_name' => __('Studios', 'christocentric-rentals'),
+                'name' => __('Studio sets', 'christocentric-rentals'),
+                'singular_name' => __('Set', 'christocentric-rentals'),
+                'add_new_item' => __('Add New Set', 'christocentric-rentals'),
+                'edit_item' => __('Edit Set', 'christocentric-rentals'),
+                'menu_name' => __('Studio sets', 'christocentric-rentals'),
             ],
             'public' => false,
             'show_ui' => true,
@@ -55,7 +56,7 @@ final class CCR_Studio_Cpt
     {
         add_meta_box(
             'ccr_studio_details',
-            __('Studio details', 'christocentric-rentals'),
+            __('Set details', 'christocentric-rentals'),
             [self::class, 'render_details'],
             self::POST_TYPE,
             'normal',
@@ -84,6 +85,8 @@ final class CCR_Studio_Cpt
         wp_nonce_field('ccr_studio_save', 'ccr_studio_nonce');
         $blurb = (string) get_post_meta($post->ID, '_ccr_studio_blurb', true);
         $meta = (string) get_post_meta($post->ID, '_ccr_studio_meta', true);
+        $imageId = (int) get_post_thumbnail_id($post);
+        $imageUrl = $imageId > 0 ? wp_get_attachment_image_url($imageId, 'medium') : '';
         ?>
         <p>
             <label for="ccr_studio_blurb"><strong><?php esc_html_e('Short description', 'christocentric-rentals'); ?></strong></label><br>
@@ -93,7 +96,50 @@ final class CCR_Studio_Cpt
             <label for="ccr_studio_meta"><strong><?php esc_html_e('Meta line', 'christocentric-rentals'); ?></strong></label><br>
             <input type="text" id="ccr_studio_meta" name="ccr_studio_meta" class="large-text" value="<?php echo esc_attr($meta); ?>" placeholder="<?php esc_attr_e('e.g. Kumasi · Pair with rental gear', 'christocentric-rentals'); ?>">
         </p>
-        <p class="description"><?php esc_html_e('Set a Featured Image for the studio thumbnail on the booking page. Use Order (Attributes) to sort studios.', 'christocentric-rentals'); ?></p>
+        <p>
+            <strong><?php esc_html_e('Set photo', 'christocentric-rentals'); ?></strong><br>
+            <input type="hidden" id="ccr_studio_image_id" name="ccr_studio_image_id" value="<?php echo esc_attr((string) $imageId); ?>">
+            <span id="ccr_studio_image_preview" style="display:block;margin:8px 0;">
+                <?php if (is_string($imageUrl) && $imageUrl !== '') : ?>
+                    <img src="<?php echo esc_url($imageUrl); ?>" alt="" style="max-width:220px;height:auto;border-radius:6px;">
+                <?php endif; ?>
+            </span>
+            <button type="button" class="button" id="ccr_studio_image_pick"><?php esc_html_e('Select photo', 'christocentric-rentals'); ?></button>
+            <button type="button" class="button" id="ccr_studio_image_clear"><?php esc_html_e('Remove photo', 'christocentric-rentals'); ?></button>
+        </p>
+        <p class="description"><?php esc_html_e('This photo appears on the booking page for this set. Edit the title above (Set 1, Set 2, …). Guests book one set at a time — not the whole studio.', 'christocentric-rentals'); ?></p>
+        <script>
+        (function(){
+            var pick = document.getElementById('ccr_studio_image_pick');
+            var clear = document.getElementById('ccr_studio_image_clear');
+            var input = document.getElementById('ccr_studio_image_id');
+            var preview = document.getElementById('ccr_studio_image_preview');
+            if (!pick || !input || !preview || typeof wp === 'undefined' || !wp.media) return;
+            var frame;
+            pick.addEventListener('click', function(e){
+                e.preventDefault();
+                if (frame) { frame.open(); return; }
+                frame = wp.media({
+                    title: 'Select set photo',
+                    button: { text: 'Use photo' },
+                    multiple: false
+                });
+                frame.on('select', function(){
+                    var att = frame.state().get('selection').first().toJSON();
+                    input.value = att.id || '0';
+                    preview.innerHTML = att.url ? '<img src="'+att.url+'" alt="" style="max-width:220px;height:auto;border-radius:6px;">' : '';
+                });
+                frame.open();
+            });
+            if (clear) {
+                clear.addEventListener('click', function(e){
+                    e.preventDefault();
+                    input.value = '0';
+                    preview.innerHTML = '';
+                });
+            }
+        })();
+        </script>
         <?php
     }
 
@@ -192,6 +238,13 @@ final class CCR_Studio_Cpt
         update_post_meta($postId, '_ccr_studio_blurb', sanitize_textarea_field(wp_unslash($_POST['ccr_studio_blurb'] ?? ''))); // phpcs:ignore
         update_post_meta($postId, '_ccr_studio_meta', sanitize_text_field(wp_unslash($_POST['ccr_studio_meta'] ?? ''))); // phpcs:ignore
 
+        $imageId = absint($_POST['ccr_studio_image_id'] ?? 0); // phpcs:ignore
+        if ($imageId > 0) {
+            set_post_thumbnail($postId, $imageId);
+        } else {
+            delete_post_thumbnail($postId);
+        }
+
         $rawPackages = isset($_POST['ccr_studio_packages']) && is_array($_POST['ccr_studio_packages']) ? wp_unslash($_POST['ccr_studio_packages']) : []; // phpcs:ignore
         $packages = [];
         foreach ($rawPackages as $i => $row) {
@@ -221,6 +274,11 @@ final class CCR_Studio_Cpt
     {
         $new = [];
         foreach ($columns as $key => $label) {
+            if ($key === 'cb') {
+                $new[$key] = $label;
+                $new['ccr_photo'] = __('Photo', 'christocentric-rentals');
+                continue;
+            }
             $new[$key] = $label;
             if ($key === 'title') {
                 $new['ccr_packages'] = __('Packages', 'christocentric-rentals');
@@ -232,6 +290,12 @@ final class CCR_Studio_Cpt
 
     public static function column_content(string $column, int $postId): void
     {
+        if ($column === 'ccr_photo') {
+            $thumb = get_the_post_thumbnail($postId, [48, 48]);
+            echo $thumb !== '' ? $thumb : '&mdash;'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+            return;
+        }
         if ($column !== 'ccr_packages') {
             return;
         }
@@ -302,39 +366,147 @@ final class CCR_Studio_Cpt
 
     public static function maybe_seed_default(): void
     {
-        $existing = get_posts([
-            'post_type' => self::POST_TYPE,
-            'post_status' => 'any',
-            'numberposts' => 1,
-            'fields' => 'ids',
-        ]);
-        if ($existing !== []) {
+        self::maybe_ensure_sets();
+    }
+
+    /**
+     * Ensure Set 1–5 exist as separately bookable spaces (not the whole studio).
+     */
+    public static function maybe_ensure_sets(): void
+    {
+        $flag = 'ccr_studio_sets_v1';
+        if (get_option($flag) === '1') {
             return;
         }
 
-        $id = wp_insert_post([
+        $posts = get_posts([
             'post_type' => self::POST_TYPE,
-            'post_status' => 'publish',
-            'post_title' => 'Main studio',
-            'menu_order' => 0,
-        ], true);
-        if (is_wp_error($id) || ! $id) {
-            return;
+            'post_status' => ['publish', 'draft', 'private', 'pending'],
+            'numberposts' => 50,
+            'orderby' => ['menu_order' => 'ASC', 'date' => 'ASC'],
+        ]);
+
+        $byTitle = [];
+        foreach ($posts as $post) {
+            if ($post instanceof WP_Post) {
+                $byTitle[strtolower(trim($post->post_title))] = $post;
+            }
         }
 
-        update_post_meta((int) $id, '_ccr_studio_blurb', 'Controlled space in Bomso for interviews, portraits, and brand content.');
-        update_post_meta((int) $id, '_ccr_studio_meta', 'Kumasi · Pair with rental gear');
-        update_post_meta((int) $id, '_ccr_studio_packages', [
-            ['id' => 'pictures', 'label' => 'Pictures', 'hours' => 4, 'price' => 200, 'pricing' => 'hourly'],
-            ['id' => 'video', 'label' => 'Video', 'hours' => 4, 'price' => 300, 'pricing' => 'hourly'],
-        ]);
-        update_post_meta((int) $id, '_ccr_studio_features', [
+        if (! isset($byTitle['set 1'])) {
+            foreach (['main studio', 'studio 1', 'studio 01', 'studio'] as $legacy) {
+                if (isset($byTitle[$legacy])) {
+                    $legacyPost = $byTitle[$legacy];
+                    wp_update_post([
+                        'ID' => $legacyPost->ID,
+                        'post_title' => 'Set 1',
+                        'post_status' => 'publish',
+                        'menu_order' => 1,
+                    ]);
+                    $legacyPost->post_title = 'Set 1';
+                    $byTitle['set 1'] = $legacyPost;
+                    unset($byTitle[$legacy]);
+                    break;
+                }
+            }
+        }
+
+        $source = $byTitle['set 1'] ?? ($posts[0] ?? null);
+        $sourceId = $source instanceof WP_Post ? (int) $source->ID : 0;
+        $packages = $sourceId > 0 ? self::get_packages($sourceId) : [];
+        if ($packages === []) {
+            $packages = [
+                ['id' => 'pictures', 'label' => 'Pictures', 'hours' => 4, 'price' => 200, 'pricing' => 'hourly'],
+                ['id' => 'video', 'label' => 'Video', 'hours' => 4, 'price' => 300, 'pricing' => 'hourly'],
+            ];
+        }
+        $features = $sourceId > 0 ? self::get_features($sourceId) : [
             'Controlled lighting environment',
             'Backdrop / cyclorama area',
             'Power for production gear',
             'Restroom access',
             'On-site support during session',
-        ]);
+        ];
+        $thumbId = $sourceId > 0 ? (int) get_post_thumbnail_id($sourceId) : 0;
+        $meta = $sourceId > 0
+            ? (string) get_post_meta($sourceId, '_ccr_studio_meta', true)
+            : 'Kumasi · Pair with rental gear';
+        if ($meta === '') {
+            $meta = 'Kumasi · Pair with rental gear';
+        }
+
+        $keepIds = [];
+        for ($n = 1; $n <= 5; $n++) {
+            $title = 'Set ' . $n;
+            $key = strtolower($title);
+            $existing = $byTitle[$key] ?? null;
+            if ($existing instanceof WP_Post) {
+                wp_update_post([
+                    'ID' => $existing->ID,
+                    'post_status' => 'publish',
+                    'menu_order' => $n,
+                ]);
+                if ((string) get_post_meta($existing->ID, '_ccr_studio_blurb', true) === '' || $n === 1) {
+                    update_post_meta($existing->ID, '_ccr_studio_blurb', self::set_blurb($n));
+                }
+                $keepIds[] = (int) $existing->ID;
+                continue;
+            }
+
+            $id = wp_insert_post([
+                'post_type' => self::POST_TYPE,
+                'post_status' => 'publish',
+                'post_title' => $title,
+                'menu_order' => $n,
+            ], true);
+            if (is_wp_error($id) || ! $id) {
+                continue;
+            }
+            $id = (int) $id;
+            update_post_meta($id, '_ccr_studio_blurb', self::set_blurb($n));
+            update_post_meta($id, '_ccr_studio_meta', $meta);
+            update_post_meta($id, '_ccr_studio_packages', $packages);
+            update_post_meta($id, '_ccr_studio_features', $features);
+            if ($thumbId > 0) {
+                set_post_thumbnail($id, $thumbId);
+            }
+            $keepIds[] = $id;
+        }
+
+        foreach ($posts as $post) {
+            if (! $post instanceof WP_Post) {
+                continue;
+            }
+            if (in_array((int) $post->ID, $keepIds, true)) {
+                continue;
+            }
+            if (preg_match('/^set\s+[1-5]$/i', trim($post->post_title))) {
+                continue;
+            }
+            wp_update_post([
+                'ID' => $post->ID,
+                'post_status' => 'draft',
+            ]);
+        }
+
+        if (class_exists('CCR_Studio_Settings')) {
+            $settings = get_option(CCR_Studio_Settings::OPTION, []);
+            if (is_array($settings) && isset($settings['stats'][0]) && is_array($settings['stats'][0])) {
+                $value = (string) ($settings['stats'][0]['value'] ?? '');
+                $label = strtolower((string) ($settings['stats'][0]['label'] ?? ''));
+                if ($value === '1' && in_array($label, ['studio', 'studios'], true)) {
+                    $settings['stats'][0] = ['value' => '5', 'label' => 'Sets'];
+                    update_option(CCR_Studio_Settings::OPTION, $settings, false);
+                }
+            }
+        }
+
+        update_option($flag, '1', false);
+    }
+
+    private static function set_blurb(int $n): string
+    {
+        return sprintf('Set %d in the Bomso studio — book this set, not the whole studio.', $n);
     }
 
     /** Migrate old fixed packages to Pictures/Video hourly rates. */

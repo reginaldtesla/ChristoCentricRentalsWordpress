@@ -1,0 +1,13 @@
+Product: walkie talkie
+Rentopian ID: 393593
+Category: Audio gears
+Type: rental
+Quantity: 8
+Daily rate (GHS): 50.0
+
+Description:
+The walkie talkie is location or studio audio gear for dialogue, podcasts, or live capture. Check whether you need extra cables, stands, or wireless receivers for your setup.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

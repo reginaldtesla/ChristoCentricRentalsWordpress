@@ -1,0 +1,13 @@
+Product: 50 HDMI CABLE Fibre HDMI Cable 50m
+Rentopian ID: 393933
+Category: CABLE
+Type: rental
+Quantity: 5
+Daily rate (GHS): 180.0
+
+Description:
+The 50 HDMI CABLE Fibre HDMI Cable 50m is a 50 m signal cable for video or power interconnects. Use the correct HDMI, SDI, or USB-C ends listed in the product name.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

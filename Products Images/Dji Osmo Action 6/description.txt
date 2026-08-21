@@ -1,0 +1,13 @@
+Product: Dji Osmo Action 6
+Rentopian ID: 470308
+Category: Accessories
+Type: rental
+Quantity: 2
+Daily rate (GHS): 250.0
+
+Description:
+The Dji Osmo Action 6 is a DJI production accessory: grip, power, mounting, or a small kit item used with a camera or light. Read the product name for size, mount, and what it attaches to.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

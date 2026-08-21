@@ -1,0 +1,17 @@
+Product: HDMI mini to Male HDMI adapter
+Rentopian ID: 383877
+Category: Accessories
+Type: rental
+Quantity: 7
+Daily rate (GHS): 0.0
+
+Description:
+This adapter converts mini HDMI camera outputs to full-size HDMI connections for monitors, switchers, and capture devices. It is a critical small part in many DSLR and mirrorless video kits where cameras use compact output ports.
+
+For rentals, having this adapter prevents avoidable signal downtime during setup and camera swaps. It is the kind of inexpensive but essential accessory that keeps production moving when connector types do not match.
+
+Short description: Mini-to-full HDMI adapter for connecting camera outputs to standard monitor, switcher, and capture inputs.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

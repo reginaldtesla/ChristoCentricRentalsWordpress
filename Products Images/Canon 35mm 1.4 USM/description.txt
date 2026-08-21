@@ -1,0 +1,13 @@
+Product: Canon 35mm 1.4 USM
+Rentopian ID: 412203
+Category: Lenses
+Type: rental
+Quantity: 1
+Daily rate (GHS): 150.0
+
+Description:
+The Canon 35mm 1.4 USM is a Canon photographic lens. Match it to a compatible camera body and adapter if the mounts differ.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

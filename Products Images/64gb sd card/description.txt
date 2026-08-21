@@ -1,0 +1,13 @@
+Product: 64gb sd card
+Rentopian ID: 444075
+Category: Cards
+Type: sale
+Quantity: 7
+Daily rate (GHS): 300.0
+
+Description:
+The 64gb sd card is recording media for cameras and recorders. Confirm the card type (SD, microSD, or SSD) and speed class matches the body you are hiring.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

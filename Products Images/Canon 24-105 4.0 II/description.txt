@@ -1,0 +1,13 @@
+Product: Canon 24-105 4.0 II
+Rentopian ID: 383805
+Category: Lenses
+Type: rental
+Quantity: 1
+Daily rate (GHS): 150.0
+
+Description:
+The Canon 24-105 4.0 II is a Canon photographic lens. A wide prime for interiors and dramatic foregrounds.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

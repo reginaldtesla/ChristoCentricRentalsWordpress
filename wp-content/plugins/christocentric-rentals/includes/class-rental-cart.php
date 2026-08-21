@@ -62,7 +62,23 @@ final class CCR_Rental_Cart
         $productId = absint($_POST['product_id'] ?? 0); // phpcs:ignore
         $product = wc_get_product($productId);
 
-        if (! $product instanceof WC_Product || ! $product->is_purchasable() || ! $product->is_in_stock()) {
+        if (! $product instanceof WC_Product || $product->get_status() !== 'publish') {
+            wp_send_json_error(['message' => __('This item is unavailable.', 'christocentric-rentals')]);
+        }
+
+        $daily = function_exists('ccr_product_daily_price')
+            ? ccr_product_daily_price($product)
+            : (float) $product->get_meta('_ccr_price_per_day');
+        if ($daily <= 0) {
+            $daily = (float) $product->get_regular_price('edit');
+        }
+        if ($daily <= 0) {
+            wp_send_json_error([
+                'message' => __('This item has no rental price yet. Open the product to check, or contact us.', 'christocentric-rentals'),
+            ]);
+        }
+
+        if (! $product->is_in_stock()) {
             wp_send_json_error(['message' => __('This item is unavailable.', 'christocentric-rentals')]);
         }
 
@@ -245,6 +261,9 @@ final class CCR_Rental_Cart
                 'quoteOne' => __('1 × 24 hours', 'christocentric-rentals'),
                 /* translators: %d: number of 24-hour periods */
                 'quoteMany' => __('%d × 24 hours', 'christocentric-rentals'),
+                /* translators: 1: available 2: fleet */
+                'availableOf' => __('%1$d of %2$d available for these dates', 'christocentric-rentals'),
+                'availableOne' => __('%d available for these dates', 'christocentric-rentals'),
             ],
         ]);
 
@@ -478,6 +497,7 @@ final class CCR_Rental_Cart
             'days' => $days,
             'total' => CCR_Rental_Pricing::line_total($daily, max(1, $days), $quantity),
             'available' => $available,
+            'fleet' => $isKit ? $available : CCR_Rental_Availability::fleet_quantity($productId),
             'max_quantity' => $available,
             'is_kit' => $isKit,
             'unavailable_items' => $unavailable,

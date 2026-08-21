@@ -1,0 +1,17 @@
+Product: Canon 6D
+Rentopian ID: 383795
+Category: Cameras
+Type: rental
+Quantity: 5
+Daily rate (GHS): 160.0
+
+Description:
+The Canon 6D remains a dependable full-frame DSLR for photographers who value clean low-light performance and classic Canon color science. Its 20.2MP sensor is well matched to portrait sessions, engagement shoots, and indoor events where natural rendering is more important than extreme resolution. The camera body is compact for a full-frame DSLR, making it comfortable for long handheld sessions.
+
+Integrated Wi-Fi and GPS simplify file previews and basic location tracking, while the EF lens ecosystem keeps setup options broad and affordable. For budget-conscious productions that still require full-frame depth and image quality, the 6D is a practical rental choice. It continues to serve ministries and small businesses throughout Ghana with consistent results.
+
+Short description: Canon 6D full-frame DSLR delivers clean low-light images in a practical, budget-friendly body.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

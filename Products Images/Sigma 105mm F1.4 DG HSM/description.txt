@@ -1,0 +1,13 @@
+Product: Sigma 105mm F1.4 DG HSM
+Rentopian ID: 489499
+Category: Lenses
+Type: rental
+Quantity: 1
+Daily rate (GHS): 250.0
+
+Description:
+The Sigma 105mm F1.4 DG HSM is a Sigma photographic lens at f/1.4. It is built for Sony E-mount cameras. Match it to a compatible camera body and adapter if the mounts differ.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

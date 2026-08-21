@@ -1,0 +1,13 @@
+Product: Canon 60D
+Rentopian ID: 411349
+Category: Cameras
+Type: rental
+Quantity: 1
+Daily rate (GHS): 100.0
+
+Description:
+The Canon 60D is a Canon camera body for stills and video. Canon DSLR with EF lens mount.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

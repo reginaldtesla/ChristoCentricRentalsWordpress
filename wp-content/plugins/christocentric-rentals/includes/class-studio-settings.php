@@ -34,12 +34,22 @@ final class CCR_Studio_Settings
         }
         $changed = false;
         $version = (int) ($stored['addons_catalog_version'] ?? 0);
-        if ($version < 4) {
-            $defaults = self::defaults();
-            $stored['addons'] = $defaults['addons'];
-            $stored['promo_text'] = $defaults['promo_text'];
-            $stored['promo_badge'] = $defaults['promo_badge'];
-            $stored['addons_catalog_version'] = 4;
+        if ($version < 5) {
+            if (! empty($stored['addons']) && is_array($stored['addons'])) {
+                $stored['addons'] = array_values(array_filter($stored['addons'], static function ($addon): bool {
+                    $id = is_array($addon) ? (string) ($addon['id'] ?? '') : '';
+
+                    return ! in_array($id, ['crane_jib', 'scaffold'], true);
+                }));
+            }
+            $stored['addons_catalog_version'] = 5;
+            $changed = true;
+        }
+        if ($version < 6) {
+            $stored['promo_text'] = '';
+            $stored['promo_badge'] = '';
+            $stored['promo_url'] = '';
+            $stored['addons_catalog_version'] = 6;
             $changed = true;
         }
         if (empty($stored['close_time'])) {
@@ -107,10 +117,10 @@ final class CCR_Studio_Settings
             'title_line_1' => 'Reserve',
             'title_line_2' => 'Your',
             'title_emphasis' => 'Studio',
-            'lead' => 'A controlled space for interviews, portraits, and content shoots — confirmed by WhatsApp within minutes.',
+            'lead' => 'Book a set in our Bomso studio for interviews, portraits, and content shoots — confirmed after MoMo payment.',
             'address' => 'Bomso, near Obesse Gaming Center, Kumasi, Ghana',
             'whatsapp' => $phone,
-            'notify_email' => 'support@christocentricrentals.com',
+            'notify_email' => 'christocentricrentals@gmail.com',
             'hero_image_id' => 0,
             'open_hour' => 8,
             'close_time' => '20:50',
@@ -120,11 +130,11 @@ final class CCR_Studio_Settings
             'momo_pay_number' => $phone,
             'momo_pay_network' => 'MTN',
             'momo_reference' => 'Studio Rentals',
-            'promo_text' => 'Exclusive equipment discount — clients renting gear from Christocentric Rentals for use in the studio receive 50% off rented equipment. Quote your booking reference when collecting.',
-            'promo_badge' => '50% OFF',
+            'promo_text' => '',
+            'promo_badge' => '',
             'promo_url' => '',
             'stats' => [
-                ['value' => '1', 'label' => 'Studios'],
+                ['value' => '5', 'label' => 'Sets'],
                 ['value' => 'Ready', 'label' => 'Lighting setup'],
                 ['value' => 'Full day', 'label' => 'Max session'],
                 ['value' => 'Gear', 'label' => 'Can pair rentals'],
@@ -242,22 +252,8 @@ final class CCR_Studio_Settings
                     'hint' => 'Stands and more — contact us',
                     'status' => 'contact',
                 ],
-                [
-                    'id' => 'crane_jib',
-                    'name' => 'Crane Jib',
-                    'price' => 0,
-                    'hint' => 'Professional crane jib for dynamic aerial-style shots',
-                    'status' => 'coming_soon',
-                ],
-                [
-                    'id' => 'scaffold',
-                    'name' => 'Electronic Scaffold',
-                    'price' => 0,
-                    'hint' => 'Motorised scaffold for elevated lighting and rigging setups',
-                    'status' => 'free',
-                ],
             ],
-            'addons_catalog_version' => 4,
+            'addons_catalog_version' => 6,
         ];
     }
 
@@ -298,6 +294,16 @@ final class CCR_Studio_Settings
         }
         if (empty($out['momo_pay_network'])) {
             $out['momo_pay_network'] = 'MTN';
+        }
+        if (! empty($out['addons']) && is_array($out['addons'])) {
+            $out['addons'] = array_values(array_filter($out['addons'], static function ($addon): bool {
+                $id = is_array($addon) ? (string) ($addon['id'] ?? '') : '';
+
+                return ! in_array($id, ['crane_jib', 'scaffold'], true);
+            }));
+        }
+        if (class_exists('CCR_Settings')) {
+            $out['notify_email'] = CCR_Settings::contact_email();
         }
 
         return $out;
@@ -382,7 +388,7 @@ final class CCR_Studio_Settings
             }
         }
         $out['addons'] = $addons;
-        $out['addons_catalog_version'] = 4;
+        $out['addons_catalog_version'] = 6;
 
         return $out;
     }
@@ -396,7 +402,7 @@ final class CCR_Studio_Settings
         ?>
         <div class="wrap">
             <h1><?php esc_html_e('Studio Booking Settings', 'christocentric-rentals'); ?></h1>
-            <p><?php esc_html_e('Customize the /studio/ booking page look, copy, hours, add-ons, and deposits. Manage individual studios under Studios.', 'christocentric-rentals'); ?></p>
+            <p><?php esc_html_e('Customize the /studio/ booking page look, copy, hours, add-ons, and deposits. Manage Set 1–5 under Studio sets — guests book a set, not the whole studio.', 'christocentric-rentals'); ?></p>
             <form method="post" action="options.php">
                 <?php settings_fields('ccr_studio_settings'); ?>
                 <h2><?php esc_html_e('Hero / left panel', 'christocentric-rentals'); ?></h2>
@@ -410,8 +416,14 @@ final class CCR_Studio_Settings
                     self::field_textarea('lead', __('Lead text', 'christocentric-rentals'), $s['lead']);
                     self::field_text('address', __('Address', 'christocentric-rentals'), $s['address']);
                     self::field_text('whatsapp', __('WhatsApp number (digits)', 'christocentric-rentals'), $s['whatsapp']);
-                    self::field_text('notify_email', __('Admin notify email', 'christocentric-rentals'), $s['notify_email']);
                     ?>
+                    <tr>
+                        <th><?php esc_html_e('Admin notify email', 'christocentric-rentals'); ?></th>
+                        <td>
+                            <code><?php echo esc_html(class_exists('CCR_Settings') ? CCR_Settings::contact_email() : (string) ($s['notify_email'] ?? '')); ?></code>
+                            <p class="description"><?php esc_html_e('Uses the SMTP From email (WooCommerce → Christocentric Rentals).', 'christocentric-rentals'); ?></p>
+                        </td>
+                    </tr>
                 </table>
 
                 <h2><?php esc_html_e('Stats (4 cards)', 'christocentric-rentals'); ?></h2>
@@ -590,7 +602,7 @@ final class CCR_Studio_Settings
         echo '</div>';
         echo '<button type="button" class="button" id="ccr-studio-hero-pick">' . esc_html__('Select image', 'christocentric-rentals') . '</button> ';
         echo '<button type="button" class="button" id="ccr-studio-hero-clear">' . esc_html__('Remove', 'christocentric-rentals') . '</button>';
-        echo '<p class="description">' . esc_html__('Shown behind the left panel text on /studio/. Studio list thumbnails still use each studio’s Featured image.', 'christocentric-rentals') . '</p>';
+        echo '<p class="description">' . esc_html__('Shown behind the left panel text on /studio/. Set cards still use each set’s Featured image.', 'christocentric-rentals') . '</p>';
         echo '</td></tr>';
     }
 

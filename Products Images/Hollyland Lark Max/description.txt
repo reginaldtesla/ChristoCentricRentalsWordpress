@@ -1,0 +1,17 @@
+Product: Hollyland Lark Max
+Rentopian ID: 383834
+Category: Audio gears
+Type: rental
+Quantity: 1
+Daily rate (GHS): 200.0
+
+Description:
+The Hollyland Lark Max is a dual-channel wireless mic system focused on compact operation and dependable voice quality. It includes on-transmitter recording support and practical controls that help creators maintain usable dialogue in dynamic shooting conditions.
+
+For Ghana content teams handling interviews, wedding stories, and mobile video shoots, Lark Max provides a strong balance of portability and professional results. It is a smart rental option when you need two-person dialogue coverage with minimal setup time.
+
+Short description: Dual-channel wireless mic system with onboard recording, ideal for interviews and two-person creator productions.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

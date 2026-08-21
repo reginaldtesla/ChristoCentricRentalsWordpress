@@ -1,0 +1,13 @@
+Product: Osee Gostream Duet Osee Go stream Duet
+Rentopian ID: 449031
+Category: 
+Type: rental
+Quantity: 5
+Daily rate (GHS): 300.0
+
+Description:
+The Osee Gostream Duet Osee Go stream Duet is a live video switcher for multicam events and streams. Plan HDMI or SDI inputs, a program output, and ISO recording if the model supports it.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

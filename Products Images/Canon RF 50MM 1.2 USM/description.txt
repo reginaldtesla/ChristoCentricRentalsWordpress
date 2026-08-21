@@ -1,0 +1,13 @@
+Product: Canon RF 50MM 1.2 USM
+Rentopian ID: 477973
+Category: Lenses
+Type: rental
+Quantity: 1
+Daily rate (GHS): 300.0
+
+Description:
+The Canon RF 50MM 1.2 USM is a Canon photographic lens at f/50. It is built for RF-mount cameras. Match it to a compatible camera body and adapter if the mounts differ.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

@@ -170,7 +170,7 @@ $holdMinutes = class_exists('CCR_Studio_Booking') ? (int) CCR_Studio_Booking::AW
                     </div>
 
                     <h2 id="ccr-studio-book-heading" class="ccr-studio-book-heading"><?php esc_html_e('New Reservation', 'christocentric'); ?></h2>
-                    <p class="ccr-studio-book-sub" data-ccr-studio-step-sub><?php esc_html_e('Select a studio to begin — takes under 2 minutes.', 'christocentric'); ?></p>
+                    <p class="ccr-studio-book-sub" data-ccr-studio-step-sub><?php esc_html_e('Select a set to begin — takes under 2 minutes.', 'christocentric'); ?></p>
 
                     <div data-ccr-studio-mount></div>
 

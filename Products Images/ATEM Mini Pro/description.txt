@@ -1,0 +1,17 @@
+Product: ATEM Mini Pro
+Rentopian ID: 383840
+Category: 
+Type: rental
+Quantity: 5
+Daily rate (GHS): 250.0
+
+Description:
+ATEM Mini Pro provides 4 HDMI inputs, direct Ethernet streaming via RTMP, USB webcam output, and multiview monitoring. Manufacturer specs highlight standards conversion on all inputs plus H.264 USB recording for streamlined live delivery.
+
+For rental teams, it is a compact control hub for podcasts, worship streams, and classroom broadcasts. It offers professional switching features without a heavy rack footprint, helping smaller crews run cleaner shows with fewer moving parts.
+
+Short description: 4-input ATEM switcher with direct RTMP streaming, USB webcam out, and multiview for compact live productions.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

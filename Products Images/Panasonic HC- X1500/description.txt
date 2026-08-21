@@ -1,0 +1,13 @@
+Product: Panasonic HC- X1500
+Rentopian ID: 444303
+Category: Camcorder
+Type: rental
+Quantity: 1
+Daily rate (GHS): 350.0
+
+Description:
+The Panasonic HC- X1500 is a Panasonic shoulder-style or handheld camcorder for events, church, and long-form video. Built-in lens and XLR or mic options vary by model; confirm audio inputs for your shoot.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

@@ -1,0 +1,17 @@
+Product: BOYA K4 Wireless mic
+Rentopian ID: 383838
+Category: Audio gears
+Type: rental
+Quantity: 1
+Daily rate (GHS): 150.0
+
+Description:
+The BOYA K4 wireless mic system is built for creators who need better spoken-word clarity than built-in camera or phone microphones can provide. It is designed for quick pairing, compact wearability, and practical voice capture for solo presenters and interviews.
+
+For Ghana creators covering events, church media, and social clips, this kit helps deliver cleaner dialogue in busy locations. It is a budget-friendly rental choice when you want immediate improvement in vocal presence without a complicated audio chain.
+
+Short description: Entry-friendly wireless mic kit for clearer speech capture in vlogs, interviews, and mobile content workflows.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

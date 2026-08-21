@@ -1,0 +1,17 @@
+Product: DJI Ronin RS2 pro
+Rentopian ID: 383826
+Category: Gimbals
+Type: rental
+Quantity: 4
+Daily rate (GHS): 200.0
+
+Description:
+The DJI RS 2 Pro is a professional 3-axis stabilizer built with lightweight carbon-fiber architecture and payload capacity for serious camera packages. It supports advanced focus and transmission ecosystems, giving filmmakers smoother movement and stronger control on narrative and commercial sets.
+
+For Ghana productions shooting weddings, music videos, and branded content, RS 2 Pro remains a reliable cinema-style gimbal that handles long days on location. It is ideal when you need stable motion shots without stepping into large rig complexity.
+
+Short description: Pro 3-axis gimbal with strong payload support and advanced control for cinematic moving shots on location.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

@@ -1,0 +1,17 @@
+Product: Hollyland Mars 400s pro
+Rentopian ID: 383857
+Category: Transmitters
+Type: rental
+Quantity: 7
+Daily rate (GHS): 200.0
+
+Description:
+Hollyland Mars 400S Pro is an SDI/HDMI wireless video system rated around 400ft LOS with quoted low-latency transmission near 0.1s class, and minimum figures around 0.08s in ideal conditions. It supports common 1080p production formats and app-assisted monitoring workflows.
+
+Rental crews use it for cable-free director and focus monitoring in small to mid-size venues. It is a practical bridge between affordability and pro connectivity when both HDMI and SDI cameras are in the same show.
+
+Short description: Mars 400S Pro wireless SDI/HDMI video link with low-latency monitoring and flexible on-set deployment.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

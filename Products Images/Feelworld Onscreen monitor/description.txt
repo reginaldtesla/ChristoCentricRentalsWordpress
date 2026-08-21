@@ -1,0 +1,17 @@
+Product: Feelworld Onscreen monitor
+Rentopian ID: 383869
+Category: Accessories
+Type: rental
+Quantity: 6
+Daily rate (GHS): 120.0
+
+Description:
+Feelworld on-camera monitors are typically designed to give larger, clearer framing and focus confidence than in-camera displays. Common models provide HDMI monitoring features like peaking, zebra, waveform tools, and LUT preview support depending on unit class.
+
+In rental use, these monitors are highly effective for solo operators and small crews that need better exposure judgment and client visibility. They speed up decision making on set and reduce avoidable focus errors in post.
+
+Short description: On-camera field monitor for better focus, exposure confidence, and director/client viewing during production.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

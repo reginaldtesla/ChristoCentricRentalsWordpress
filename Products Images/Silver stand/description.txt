@@ -1,0 +1,17 @@
+Product: Silver stand
+Rentopian ID: 383871
+Category: Accessories
+Type: rental
+Quantity: 14
+Daily rate (GHS): 40.0
+
+Description:
+A silver light stand offers stable vertical support for heads, modifiers, and small accessories in studio or location lighting. The finish is commonly associated with durable metal construction designed for frequent transport and setup cycles.
+
+For rentals, it is the essential backbone of everyday lighting deployment. Whether used for key, fill, backlight, or practicals, it keeps fixtures safely positioned and simplifies repeatable placement from scene to scene.
+
+Short description: Durable light stand for secure fixture support in studio and on-location lighting setups.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

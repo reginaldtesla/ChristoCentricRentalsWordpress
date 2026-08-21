@@ -125,10 +125,22 @@ $isPaid = $order instanceof WC_Order && ($order->is_paid() || $order->has_status
                         $start = (string) $item->get_meta('_ccr_rental_start');
                         $end = (string) $item->get_meta('_ccr_rental_end');
                         $days = (int) $item->get_meta('_ccr_rental_days');
+                        $permalink = $product instanceof WC_Product ? $product->get_permalink() : '';
                         ?>
                         <li>
+                            <?php if ($product instanceof WC_Product) : ?>
+                                <a class="ccr-confirm-item-thumb" href="<?php echo esc_url($permalink); ?>">
+                                    <?php echo $product->get_image('woocommerce_thumbnail', ['alt' => $item->get_name()]); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                                </a>
+                            <?php endif; ?>
                             <div class="ccr-confirm-item-main">
-                                <strong><?php echo esc_html($item->get_name()); ?></strong>
+                                <strong>
+                                    <?php if ($permalink !== '') : ?>
+                                        <a href="<?php echo esc_url($permalink); ?>"><?php echo esc_html($item->get_name()); ?></a>
+                                    <?php else : ?>
+                                        <?php echo esc_html($item->get_name()); ?>
+                                    <?php endif; ?>
+                                </strong>
                                 <span>× <?php echo esc_html((string) $item->get_quantity()); ?></span>
                                 <?php if ($start !== '' && $end !== '') : ?>
                                     <small>

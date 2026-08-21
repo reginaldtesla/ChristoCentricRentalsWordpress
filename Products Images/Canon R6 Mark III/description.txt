@@ -1,0 +1,13 @@
+Product: Canon R6 Mark III
+Rentopian ID: 452396
+Category: Cameras
+Type: rental
+Quantity: 1
+Daily rate (GHS): 450.0
+
+Description:
+The Canon R6 Mark III is a Canon camera body for stills and video. Canon RF-mount full-frame body aimed at hybrid photo and video work.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

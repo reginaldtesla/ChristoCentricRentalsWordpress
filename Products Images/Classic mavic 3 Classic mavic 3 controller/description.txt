@@ -1,0 +1,13 @@
+Product: Classic mavic 3 Classic mavic 3 controller
+Rentopian ID: 444280
+Category: Drone
+Type: rental
+Quantity: 1
+Daily rate (GHS): 500.0
+
+Description:
+The Classic mavic 3 Classic mavic 3 controller is a drone for aerial establishing shots and overhead coverage. Fly only where local rules allow; extra batteries and an ND set help in bright Ghana sun.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

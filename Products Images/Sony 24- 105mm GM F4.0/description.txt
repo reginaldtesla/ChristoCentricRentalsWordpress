@@ -1,0 +1,13 @@
+Product: Sony 24- 105mm GM F4.0
+Rentopian ID: 462232
+Category: Lenses
+Type: rental
+Quantity: 1
+Daily rate (GHS): 180.0
+
+Description:
+The Sony 24- 105mm GM F4.0 is a Sony photographic lens at f/4.0. It is built for Sony E-mount cameras. A wide prime for interiors and dramatic foregrounds.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

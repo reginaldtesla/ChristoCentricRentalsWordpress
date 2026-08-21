@@ -1,0 +1,13 @@
+Product: Mini HDMI to HDMI Cable 0.5m
+Rentopian ID: 411991
+Category: Cable
+Type: rental
+Quantity: 5
+Daily rate (GHS): 5.0
+
+Description:
+The Mini HDMI to HDMI Cable 0.5m is a 5 m signal cable for video or power interconnects. Use the correct HDMI, SDI, or USB-C ends listed in the product name.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

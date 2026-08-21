@@ -1,0 +1,13 @@
+Product: 1.5m HDMI Cable HDMI Cable 1.5m
+Rentopian ID: 383878
+Category: Cable
+Type: rental
+Quantity: 10
+Daily rate (GHS): 0.0
+
+Description:
+The 1.5m HDMI Cable HDMI Cable 1.5m is a 5 m signal cable for video or power interconnects. Use the correct HDMI, SDI, or USB-C ends listed in the product name.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg

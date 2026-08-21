@@ -1,0 +1,13 @@
+Product: Godox TL60 RGB Tube Light 3-Light Kit
+Rentopian ID: 489361
+Category: 
+Type: rental
+Quantity: 1
+Daily rate (GHS): 350.0
+
+Description:
+The Godox TL60 RGB Tube Light 3-Light Kit is a continuous LED fixture for video and mixed lighting. Use it as key, fill, or background light; add a stand and modifier when you need control.
+
+Photos:
+Add clear product photos to this folder (JPG or PNG preferred).
+Name files like: front.jpg, side.jpg, kit.jpg
