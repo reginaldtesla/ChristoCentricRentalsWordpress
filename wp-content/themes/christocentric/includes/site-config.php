@@ -34,9 +34,35 @@ function ccr_site_config(string $key, mixed $default = null): mixed
         } elseif (in_array($key, ['contact.email', 'contact.support_email', 'contact.feedback_email'], true)) {
             $value = $contactEmail;
         }
+        $whatsapp = trim((string) get_option('ccr_whatsapp', ''));
+        if ($whatsapp !== '') {
+            if ($key === 'contact' && is_array($value)) {
+                $value['whatsapp'] = $whatsapp;
+            } elseif ($key === 'contact.whatsapp') {
+                $value = $whatsapp;
+            }
+        }
     }
 
     return $value;
+}
+
+function ccr_whatsapp_chat_url(): string
+{
+    if (class_exists('CCR_Settings') && method_exists('CCR_Settings', 'whatsapp_url')) {
+        return CCR_Settings::whatsapp_url();
+    }
+
+    $raw = trim((string) get_option('ccr_whatsapp', ''));
+    if ($raw === '') {
+        $raw = 'https://wa.me/c/233532670582';
+    }
+    if (preg_match('#^https?://#i', $raw)) {
+        return $raw;
+    }
+    $digits = preg_replace('/\D+/', '', $raw) ?: '233532670582';
+
+    return 'https://wa.me/' . $digits;
 }
 
 function ccr_image_url(string $path): string

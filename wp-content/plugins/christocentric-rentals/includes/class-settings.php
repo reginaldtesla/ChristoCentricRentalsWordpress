@@ -73,6 +73,7 @@ final class CCR_Settings
         register_setting('ccr_settings', 'ccr_google_enabled', ['sanitize_callback' => [self::class, 'sanitize_yes_no']]);
         register_setting('ccr_settings', 'ccr_google_client_id', ['sanitize_callback' => 'sanitize_text_field']);
         register_setting('ccr_settings', 'ccr_google_client_secret', ['sanitize_callback' => 'sanitize_text_field']);
+        register_setting('ccr_settings', 'ccr_whatsapp', ['sanitize_callback' => 'sanitize_text_field']);
     }
 
     public static function sanitize_yes_no(mixed $value): string
@@ -225,6 +226,16 @@ final class CCR_Settings
 
             <form method="post" action="options.php">
                 <?php settings_fields('ccr_settings'); ?>
+                <h2 class="title"><?php esc_html_e('WhatsApp chat button', 'christocentric-rentals'); ?></h2>
+                <table class="form-table" role="presentation">
+                    <tr>
+                        <th scope="row"><label for="ccr_whatsapp"><?php esc_html_e('WhatsApp number or link', 'christocentric-rentals'); ?></label></th>
+                        <td>
+                            <input type="text" class="regular-text" id="ccr_whatsapp" name="ccr_whatsapp" value="<?php echo esc_attr((string) get_option('ccr_whatsapp', self::DEFAULT_WHATSAPP)); ?>" placeholder="233532670582">
+                            <p class="description"><?php esc_html_e('Used by the green chat button. Paste a full WhatsApp link (https://wa.me/c/233532670582) or digits with country code (233532670582).', 'christocentric-rentals'); ?></p>
+                        </td>
+                    </tr>
+                </table>
                 <h2 class="title"><?php esc_html_e('Rental holds & defaults', 'christocentric-rentals'); ?></h2>
                 <table class="form-table" role="presentation">
                     <tr>
@@ -548,8 +559,9 @@ final class CCR_Settings
                 </form>
                 <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="margin-top:8px">
                     <input type="hidden" name="action" value="ccr_apply_folder_photos">
+                    <input type="hidden" name="ccr_reset_folder_photos" value="1">
                     <?php wp_nonce_field('ccr_apply_folder_photos'); ?>
-                    <p class="description"><?php esc_html_e('Uploads photos from the Products Images folder at the site root (including 00000) onto matching products. Replaces “photo coming soon” cards. Safe to run again — already attached files are skipped.', 'christocentric-rentals'); ?></p>
+                    <p class="description"><?php esc_html_e('Uploads photos from public_html/Products Images onto matching products. Name the first photo main.png (or main.jpg) inside that product’s folder. 00000 is optional. Runs in small batches so Hostinger does not time out. Keep the tab open until it finishes.', 'christocentric-rentals'); ?></p>
                     <?php submit_button(__('Attach photos from Products Images', 'christocentric-rentals'), 'primary', 'submit', false); ?>
                 </form>
                 <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="margin-top:8px">
@@ -735,6 +747,32 @@ final class CCR_Settings
     }
 
     public const CONTACT_EMAIL = 'christocentricrentals@gmail.com';
+    public const DEFAULT_WHATSAPP = 'https://wa.me/c/233532670582';
+
+    public static function whatsapp_url(): string
+    {
+        $raw = trim((string) get_option('ccr_whatsapp', ''));
+        if ($raw === '' && function_exists('ccr_site_config')) {
+            $raw = trim((string) ccr_site_config('contact.whatsapp', ''));
+            if ($raw === '') {
+                $raw = trim((string) ccr_site_config('contact.phone', ''));
+            }
+        }
+        if ($raw === '') {
+            $raw = self::DEFAULT_WHATSAPP;
+        }
+        if (preg_match('#^https?://#i', $raw)) {
+            $url = esc_url_raw($raw);
+
+            return $url !== '' ? $url : self::DEFAULT_WHATSAPP;
+        }
+        $digits = preg_replace('/\D+/', '', $raw) ?: '233532670582';
+        if (str_contains(strtolower($raw), '/c/')) {
+            return 'https://wa.me/c/' . $digits;
+        }
+
+        return 'https://wa.me/' . $digits;
+    }
 
     /**
      * Fill SMTP From when empty or still on the old support@ mailbox.

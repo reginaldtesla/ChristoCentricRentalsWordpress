@@ -137,7 +137,7 @@ add_filter('woocommerce_gateway_description', static function (string $descripti
 
 add_action('wp_enqueue_scripts', static function (): void {
     $uri = get_template_directory_uri() . '/assets/build/';
-    $ver = '3.80';
+    $ver = '3.83';
 
     wp_dequeue_style('wc-blocks-style');
     wp_dequeue_style('wc-blocks-vendors-style');
@@ -383,6 +383,15 @@ add_action('woocommerce_checkout_order_processed', static function ($orderId): v
     ccr_remember_paid_order((int) $orderId);
 }, 20);
 
+function ccr_orders_page_url(?WC_Order $order = null): string
+{
+    if (function_exists('wc_get_account_endpoint_url')) {
+        return wc_get_account_endpoint_url('orders');
+    }
+
+    return $order instanceof WC_Order ? $order->get_checkout_order_received_url() : home_url('/my-account/orders/');
+}
+
 add_filter('woocommerce_get_return_url', static function (string $url, $order = null): string {
     if (! $order instanceof WC_Order) {
         return $url;
@@ -390,10 +399,45 @@ add_filter('woocommerce_get_return_url', static function (string $url, $order = 
     if ((string) $order->get_meta('_ccr_is_studio_booking') === '1') {
         return $url;
     }
+    if ($order->has_status('failed')) {
+        return $url;
+    }
     ccr_remember_paid_order($order->get_id());
+    if (function_exists('wc_add_notice')) {
+        wc_add_notice(
+            sprintf(
+                /* translators: %s: order number */
+                __('Order #%s is confirmed. You can view it below.', 'christocentric'),
+                $order->get_order_number()
+            ),
+            'success'
+        );
+    }
 
-    return $order->get_checkout_order_received_url();
+    return ccr_orders_page_url($order);
 }, 30, 2);
+
+add_action('template_redirect', static function (): void {
+    if (! function_exists('is_order_received_page') || ! is_order_received_page()) {
+        return;
+    }
+
+    global $wp;
+    $orderId = absint($wp->query_vars['order-received'] ?? 0);
+    $order = $orderId > 0 ? wc_get_order($orderId) : null;
+    if (! $order instanceof WC_Order) {
+        return;
+    }
+    if ($order->has_status('failed')) {
+        return;
+    }
+    if ((string) $order->get_meta('_ccr_is_studio_booking') === '1') {
+        return;
+    }
+
+    wp_safe_redirect(ccr_orders_page_url($order));
+    exit;
+}, 6);
 
 add_action('template_redirect', static function (): void {
     if (! function_exists('is_cart') || ! is_cart() || is_checkout()) {
@@ -408,9 +452,9 @@ add_action('template_redirect', static function (): void {
         return;
     }
 
-    $target = $order->get_checkout_order_received_url();
+    $target = ccr_orders_page_url($order);
     if ((string) $order->get_meta('_ccr_is_studio_booking') === '1' && class_exists('CCR_Studio_Booking')) {
-        $target = CCR_Studio_Booking::return_url($target, $order);
+        $target = CCR_Studio_Booking::return_url($order->get_checkout_order_received_url(), $order);
     }
 
     wp_safe_redirect($target);

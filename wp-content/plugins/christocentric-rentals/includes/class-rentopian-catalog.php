@@ -1117,46 +1117,107 @@ final class CCR_Rentopian_Catalog
             wp_die(esc_html__('Forbidden', 'christocentric-rentals'));
         }
         check_admin_referer('ccr_apply_folder_photos');
-        $result = self::apply_folder_photos(true);
-        wp_safe_redirect(add_query_arg([
-            'page' => 'christocentric-rentals',
-            'ccr_rentopian' => 'photos',
-            'msg' => rawurlencode((string) ($result['message'] ?? '')),
-        ], admin_url('admin.php')));
+        $reset = ! empty($_POST['ccr_reset_folder_photos']); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        $offset = max(0, (int) ($_REQUEST['ccr_photo_offset'] ?? 0)); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        $result = self::apply_folder_photos_batch($offset, 8, true, $reset);
+        if (! empty($result['done'])) {
+            wp_safe_redirect(add_query_arg([
+                'page' => 'christocentric-rentals',
+                'ccr_rentopian' => 'photos',
+                'msg' => rawurlencode((string) ($result['message'] ?? '')),
+            ], admin_url('admin.php')));
+            exit;
+        }
+        nocache_headers();
+        $next = add_query_arg([
+            'action' => 'ccr_apply_folder_photos',
+            '_wpnonce' => wp_create_nonce('ccr_apply_folder_photos'),
+            'ccr_photo_offset' => (int) ($result['next'] ?? 0),
+        ], admin_url('admin-post.php'));
+        echo '<!DOCTYPE html><html><head><meta charset="utf-8">';
+        echo '<meta http-equiv="refresh" content="1;url=' . esc_attr($next) . '">';
+        echo '<title>' . esc_html__('Attaching product photos', 'christocentric-rentals') . '</title></head><body>';
+        echo '<p style="font:16px/1.5 sans-serif;max-width:640px;margin:48px auto">';
+        echo esc_html((string) ($result['message'] ?? ''));
+        echo ' ' . esc_html__('Keep this tab open. The next batch starts automatically.', 'christocentric-rentals');
+        echo '</p><p style="text-align:center"><a href="' . esc_url($next) . '">' . esc_html__('Continue now', 'christocentric-rentals') . '</a></p>';
+        echo '</body></html>';
         exit;
     }
 
     /**
-     * Attach JPG/PNG/WebP files from /Products Images (and 00000) to matching products.
+     * Attach JPG/PNG/WebP files from /Products Images to matching products.
      *
-     * @return array{products:int,photos:int,skipped:int,message:string}
+     * @return array{products:int,photos:int,skipped:int,message:string,done?:bool,next?:int}
      */
     public static function apply_folder_photos(bool $replace = false): array
     {
-        @set_time_limit(0);
-        $out = ['products' => 0, 'photos' => 0, 'skipped' => 0, 'message' => ''];
-        foreach (self::product_ids() as $id) {
+        return self::apply_folder_photos_batch(0, 0, $replace, false);
+    }
+
+    /**
+     * @return array{products:int,photos:int,skipped:int,message:string,done:bool,next:int,offset:int,total:int}
+     */
+    public static function apply_folder_photos_batch(int $offset = 0, int $limit = 8, bool $replace = false, bool $reset = false): array
+    {
+        @set_time_limit(90);
+        $progressKey = 'ccr_folder_photo_progress';
+        $progress = $reset ? [] : (array) get_option($progressKey, []);
+        $totals = [
+            'products' => (int) ($progress['products'] ?? 0),
+            'photos' => (int) ($progress['photos'] ?? 0),
+            'skipped' => (int) ($progress['skipped'] ?? 0),
+        ];
+        $ids = self::product_ids();
+        $total = count($ids);
+        if ($limit <= 0) {
+            $limit = $total;
+        }
+        $slice = array_slice($ids, $offset, $limit);
+        foreach ($slice as $id) {
             $product = wc_get_product((int) $id);
             if (! $product instanceof WC_Product) {
-                $out['skipped']++;
+                $totals['skipped']++;
                 continue;
             }
             $added = self::attach_folder_photos($product, $replace);
             if ($added > 0) {
                 $product->save();
-                $out['products']++;
-                $out['photos'] += $added;
+                $totals['products']++;
+                $totals['photos'] += $added;
             } else {
-                $out['skipped']++;
+                $totals['skipped']++;
             }
         }
-        $out['message'] = sprintf(
-            /* translators: 1: products 2: photos */
-            __('Attached folder photos: %1$d products, %2$d images.', 'christocentric-rentals'),
-            $out['products'],
-            $out['photos']
-        );
-        self::store_log('folder-photos', $out);
+        $next = $offset + count($slice);
+        $done = $next >= $total;
+        $out = array_merge($totals, [
+            'done' => $done,
+            'next' => $next,
+            'offset' => $offset,
+            'total' => $total,
+            'message' => '',
+        ]);
+        if ($done) {
+            delete_option($progressKey);
+            $out['message'] = sprintf(
+                /* translators: 1: products 2: photos */
+                __('Attached folder photos: %1$d products, %2$d images.', 'christocentric-rentals'),
+                $out['products'],
+                $out['photos']
+            );
+            self::store_log('folder-photos', $out);
+        } else {
+            update_option($progressKey, $totals, false);
+            $out['message'] = sprintf(
+                /* translators: 1: processed 2: total 3: products 4: photos */
+                __('Attaching photos… %1$d of %2$d products scanned. %3$d products updated, %4$d images so far.', 'christocentric-rentals'),
+                $next,
+                $total,
+                $out['products'],
+                $out['photos']
+            );
+        }
 
         return $out;
     }
@@ -1176,9 +1237,11 @@ final class CCR_Rentopian_Catalog
                 continue;
             }
             $roots[] = $root;
-            $nested = $root . DIRECTORY_SEPARATOR . '00000';
-            if (is_dir($nested)) {
-                $roots[] = $nested;
+            foreach (['00000', '0000'] as $nestedName) {
+                $nested = $root . DIRECTORY_SEPARATOR . $nestedName;
+                if (is_dir($nested)) {
+                    $roots[] = $nested;
+                }
             }
         }
 
@@ -1244,19 +1307,34 @@ final class CCR_Rentopian_Catalog
         $wantTokens = self::name_tokens($product->get_name());
         $distinctWant = array_values(array_filter($wantTokens, [self::class, 'is_distinctive_token']));
         $bestPath = '';
-        $bestScore = 0;
-        $bestDistinct = 0;
+        $bestRank = [-1, 0, 0, -999];
         foreach ($index['folders'] as $folder) {
             $have = self::name_tokens((string) $folder['name']);
+            $distinctHave = array_values(array_filter($have, [self::class, 'is_distinctive_token']));
             $score = self::token_overlap($wantTokens, $have);
-            $dscore = self::token_overlap($distinctWant, $have);
+            $dscore = self::token_overlap($distinctWant, $distinctHave);
             $need = $distinctWant === [] ? 99 : max(1, (int) ceil(count($distinctWant) * 0.5));
             if ($score < $need || $dscore < 1) {
                 continue;
             }
-            if ($dscore > $bestDistinct || ($dscore === $bestDistinct && $score > $bestScore)) {
-                $bestDistinct = $dscore;
-                $bestScore = $score;
+            $extra = 0;
+            $haveSet = array_fill_keys($distinctWant, true);
+            foreach ($distinctHave as $token) {
+                if (! isset($haveSet[$token])) {
+                    $extra++;
+                }
+            }
+            // Do not give a more-specific folder (ISO / Extreme / Mark II) to a shorter product name.
+            if ($extra > 0) {
+                continue;
+            }
+            $missing = count($distinctWant) - $dscore;
+            $rank = [$dscore, $score, -$extra, -$missing];
+            if ($rank[0] > $bestRank[0]
+                || ($rank[0] === $bestRank[0] && $rank[1] > $bestRank[1])
+                || ($rank[0] === $bestRank[0] && $rank[1] === $bestRank[1] && $rank[3] > $bestRank[3])
+            ) {
+                $bestRank = $rank;
                 $bestPath = (string) $folder['path'];
             }
         }
@@ -1288,10 +1366,29 @@ final class CCR_Rentopian_Catalog
             }
         }
         usort($out, static function (string $a, string $b): int {
+            $ra = self::image_sort_rank($a);
+            $rb = self::image_sort_rank($b);
+            if ($ra !== $rb) {
+                return $ra <=> $rb;
+            }
+
             return strnatcasecmp(basename($a), basename($b));
         });
 
         return $out;
+    }
+
+    private static function image_sort_rank(string $path): int
+    {
+        $stem = strtolower((string) pathinfo($path, PATHINFO_FILENAME));
+        if ($stem === 'main' || str_starts_with($stem, 'main-') || str_starts_with($stem, 'main_')) {
+            return 0;
+        }
+        if (in_array($stem, ['cover', 'featured', 'hero', 'front'], true)) {
+            return 1;
+        }
+
+        return 2;
     }
 
     private static function is_placeholder_image(int $attachmentId): bool
@@ -1318,9 +1415,19 @@ final class CCR_Rentopian_Catalog
         if (! is_string($tmp) || ! copy($path, $tmp)) {
             return 0;
         }
-        $name = sanitize_file_name(basename($path));
-        if ($name === '') {
-            $name = 'product-photo.jpg';
+        $folder = basename(dirname($path));
+        $stem = (string) pathinfo($path, PATHINFO_FILENAME);
+        $ext = strtolower((string) pathinfo($path, PATHINFO_EXTENSION));
+        $name = sanitize_file_name($folder . '-' . $stem);
+        if ($name === '' || $name === '-') {
+            $name = 'product-photo';
+        }
+        $name .= '.' . ($ext !== '' ? $ext : 'png');
+        $existingId = self::media_id_for_source($path);
+        if ($existingId > 0) {
+            @unlink($tmp);
+
+            return $existingId;
         }
         $id = media_handle_sideload([
             'name' => $name,
@@ -1334,6 +1441,32 @@ final class CCR_Rentopian_Catalog
         update_post_meta((int) $id, '_ccr_source_photo', wp_normalize_path($path));
 
         return (int) $id;
+    }
+
+    private static function media_id_for_source(string $path): int
+    {
+        static $map = null;
+        if (! is_array($map)) {
+            $map = [];
+            global $wpdb;
+            $rows = $wpdb->get_results(
+                "SELECT post_id, meta_value FROM {$wpdb->postmeta} WHERE meta_key = '_ccr_source_photo'"
+            );
+            if (is_array($rows)) {
+                foreach ($rows as $row) {
+                    $src = wp_normalize_path((string) $row->meta_value);
+                    if ($src !== '') {
+                        $map[$src] = (int) $row->post_id;
+                    }
+                }
+            }
+        }
+        $norm = wp_normalize_path($path);
+        if (isset($map[$norm])) {
+            return (int) $map[$norm];
+        }
+
+        return 0;
     }
 
     /**
@@ -1387,7 +1520,8 @@ final class CCR_Rentopian_Catalog
         if ($finalIds === []) {
             return 0;
         }
-        if ($replace || (int) $product->get_image_id() <= 0 || self::is_placeholder_image((int) $product->get_image_id())) {
+        $before = (int) $product->get_image_id();
+        if ($replace || $before <= 0 || self::is_placeholder_image($before)) {
             $product->set_image_id($finalIds[0]);
             $product->set_gallery_image_ids(array_slice($finalIds, 1));
             foreach (array_unique($oldFromFolder) as $aid) {
@@ -1401,6 +1535,9 @@ final class CCR_Rentopian_Catalog
                 $finalIds
             )));
             $product->set_gallery_image_ids($gallery);
+        }
+        if ($added === 0 && (int) $product->get_image_id() !== $before) {
+            return 1;
         }
 
         return $added;
