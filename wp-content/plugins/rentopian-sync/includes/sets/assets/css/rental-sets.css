@@ -1,0 +1,160 @@
+/*--------------------------------------------------------------
+Sets Module — Front-end styles
+Author: Rentopian
+Website: https://rentopian.com
+Copyright 2023, Rentopian Inc. All Rights Reserved.
+
+Set product page (set items table) and the variant-picker modal
+that lets a customer swap an optional set item / addon item.
+
+Migrated from /assets/css/rntp-styles.css into the Sets module so
+all set-specific selectors live next to the JS, PHP and templates
+that produce them. Behaviour and visual output are unchanged.
+----------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+1. Set items table
+   Rendered in rentopian-sync.php on a single set product page.
+----------------------------------------------------------------*/
+table#rental_set_items_table td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+table td.td-item-type {
+    min-width: 5rem;
+    font-size: .85rem;
+}
+
+table td.td-item-name {
+    min-width: 12rem;
+    font-size: 1.1rem;
+}
+
+table td.td-item-img {
+    min-width: 10rem;
+}
+
+.is-add-on {
+    background-color: #ececec5c !important;
+}
+
+/*--------------------------------------------------------------
+2. Variant-picker modal (#myModalRental)
+   Driven by rental-sets.js — opened from .choose-item-variant
+   and .choose-item-variant-addon click handlers.
+----------------------------------------------------------------*/
+.modal-rental {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-rental h4 {
+    margin-bottom: 0;
+}
+
+.modal-rental-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    margin-top: 1rem;
+    width: 40rem;
+}
+
+.modal-rental-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.modal-rental-close:hover,
+.modal-rental-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-rental h6 {
+    margin-bottom: 0;
+}
+
+.variants-list ul {
+    list-style: none;
+    /* overflow-y: scroll; */
+}
+
+.variant-item-wrapper {
+    display: flex;
+    border-bottom: dotted 1px #ccc;
+}
+
+.variant-item-img-wrapper {
+    width: 14rem;
+    margin-right: 1rem;
+}
+
+.variant-item-content-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.variant-item-label {
+    margin-right: 1rem;
+}
+
+.action-btn-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.action-btn-wrapper button {
+    margin-right: .5rem;
+}
+
+.selected-variant-icon {
+    color: #59e159 !important;
+}
+
+/*--------------------------------------------------------------
+3. Flash-message UI (after a set update)
+   Populated by showModalMessage() in rental-sets.js.
+----------------------------------------------------------------*/
+#modalMessageContainer {
+    position: fixed;
+    top: 3rem;
+    right: 3rem;
+    z-index: 99999;
+    width: 300px;
+}
+
+.modal-message {
+    display: none;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-message.success {
+    background-color: #28a745;
+}
+
+.modal-message.error {
+    background-color: #dc3545;
+}

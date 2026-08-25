@@ -1,0 +1,82 @@
+/* Overrides for RentPro main product carousel */
+
+/* Position nav arrows inside the carousel */
+.rentpro-owl-carousel {
+    position: relative;
+}
+
+/* Style nav buttons */
+.rentpro-owl-carousel .owl-nav button.owl-prev,
+.rentpro-owl-carousel .owl-nav button.owl-next {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    color: #fff;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    /* Further styling as needed */
+}
+.rentpro-owl-carousel .owl-nav button.owl-prev {
+    left: 10px;
+}
+.rentpro-owl-carousel .owl-nav button.owl-next {
+    right: 10px;
+}
+/* Ensure pointer events */
+.rentpro-owl-carousel .owl-nav button {
+    pointer-events: all;
+}
+
+/* Dots styling */
+.rentpro-owl-carousel .owl-dots {
+    text-align: center;
+    margin-top: 10px;
+}
+.rentpro-owl-carousel .owl-dots .owl-dot span {
+    width: 10px;
+    height: 10px;
+    background: #ccc;
+    display: block;
+    border-radius: 50%;
+}
+.rentpro-owl-carousel .owl-dots .owl-dot.active span {
+    background: #333;
+}
+
+/* Make each item image fit */
+.rentpro-owl-carousel .item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.rentpro-thumbs {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 0.5em;
+  }
+  
+  .rentpro-thumb {
+    width: 60px;
+    height: auto;
+    margin: 0 4px;
+    cursor: pointer;
+    opacity: 0.6;
+    border: 2px solid transparent;
+    transition: opacity 0.2s, border-color 0.2s;
+  }
+  
+  .rentpro-thumb.active {
+    opacity: 1;
+    border-color: #333; /* or your accent color */
+  }
+
+  .rentpro-product-carousel-wrapper .rentpro-owl-carousel .owl-item .product-main-image {
+    height: auto !important;
+  }

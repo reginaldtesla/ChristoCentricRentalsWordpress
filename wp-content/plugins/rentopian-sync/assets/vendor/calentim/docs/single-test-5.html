@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html style="position:  absolute; top: 0; bottom:0; left: 0; right: 0;">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        Calentim - Datetime Range Picker
+    </title>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700" rel="stylesheet" />
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="../build/css/calentim.min.css" rel="stylesheet" />
+    <script src="../build/vendor/jquery.min.js"></script>
+    <script src="../build/vendor/moment.min.js"></script>
+    <script src="../build/vendor/jquery.hammer.js"></script>
+    <script src="../build/js/calentim.min.js"></script>
+</head>
+
+<body style="background:#00c2d5; display: flex; height: 100vh; width: 100vw; align-items: center; justify-content: center; padding: 0; margin: 0; box-sizing: border-box;">
+
+    <div>
+        <input type="text" id="calentim-ex" x-value="08/14/2018 10:08 AM"/>
+    </div>
+    <script type="text/javascript">
+        var calentim = null;
+        $("#calentim-ex").calentim({
+            oninit: function(instance){
+                calentim = instance;
+            },
+            disableDays: function(day){
+                if(calentim && calentim.globals.startSelected == false){
+                    var disabledDays = [
+                        moment().add(1, "day"),
+                        moment().add(4, "day"),
+                        moment("21-07-2018","dd-MM-yyyy")
+                    ];
+                    for(var i = 0, len = disabledDays.length; i < len; i++){
+                        if(disabledDays[i].isSame(day, "day")){
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>

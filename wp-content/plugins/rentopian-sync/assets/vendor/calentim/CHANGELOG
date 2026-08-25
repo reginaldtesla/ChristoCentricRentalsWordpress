@@ -1,0 +1,228 @@
+v1.0.0
+	- Released initial version.
+
+v1.0.1
+	- fixed minute step overflow error on last step range
+	- fixed ineffective initial value on `startEmpty: true` setting
+	- fixed parameterless hideDropdown call bug in firefox
+	- fixed multiple instance closing issues
+	- added option to remove time picker
+	- added infinite scroll on timepickers
+
+v1.0.2
+	- fixed target element confusion when different target option is specified
+	- added `showCalendars` option to disable date selection (only time picker)
+
+v1.1.0
+   - fixed an issue about time pickers setting the wrong value on first click
+   - fixed autoCloseOnSelect on singleDate version / mobile views
+   - changed code to make clicking on disabled days select start/end date
+   - added some transition delays to make it smoother
+   - added keyboard navigation (`enableKeyboard` option)
+        - up: previous week
+        - down: next week
+        - left: previous day
+        - right: next day
+        - space: select day
+        - pageup: previous month
+        - pagedown next month
+        - shift + pageup: previous year
+        - shift + pagedown: next year
+   - added easy year switch buttons on year list
+   - fixed startEmpty cell selected classes
+   - added destroy method and some extra tests
+   - fix custom target element reading in fetchInputs method
+
+v1.1.1
+   - fixed the month change problem which is caused by a reset when validating dates.
+
+v1.1.2
+   - fixed the problem about showing the initial month when the selected date is in a different month.
+   - added inline view support on mobile devices
+   - fixed startEmpty behaviour when clicking the cancel button on mobile
+
+v1.1.3
+   - added showButtons property for not automatically updating the input, default false
+   - added tests for showButtons property
+   - added time changes to onbeforechange and onafterchange event
+   - fixed range selection on instances with startEmpty: true defined
+   - fixed hovering bug after month change when first date is selected
+
+v1.1.4
+   - fixed button disabled state with startEmpty and showButtons are both active
+   - reapplied deleted locale setting
+   - innerWidth function was called on javascript object, not jQuery object, fixed.
+   - buttons now don't submit forms.
+
+v1.1.5
+   - configuration objects attached to prototype converted to independent objects
+   - startEmpty property clears input on initialization
+   - added jshint javascript linter to gruntfile
+   - some optimizations
+   - moved event bubbling in one method
+   - added "left" "right" display options ("showOn" option, default "bottom")
+   - added auto positioning enable/disable flag ("autoAlign" option, default "true")
+   - added position recalculation on window scroll and resize events
+   - fixed hour:minute scrolling issue
+   - fixed locale error on month selector
+   - added adjustment for font-size in month selector page
+
+v1.1.6
+   - Repeating day issue caused by daylight saving time activation fixed.
+
+v1.1.7
+   - fixed header display bug on startEmpty
+   - converted moment instances to unix timestamps on reDrawCells method
+   - added first and last hover classes (border radius effect)
+   - removed autoprefixer and added postcss plugin for browser compatible CSS
+   - fixed visibility issues
+   - Added `calentim-not-in-month` class for the days that don't belong to that month
+   - Replaced moment's `.startOf("day")` to `middleOfDay()` extension function to minimize DST change bugs.
+   - switched from grunt-jasmine to karma test runner
+
+v1.1.8
+   - added next day selection demo to linked single time pickers example
+   - fixed ESC key hiding inline calendars bug.
+   - added backup and restore time pickers method to keep time values intact on month changes
+   - added numericMonthSwitcher config option to show month numbers instead of month names in month selector
+   - fixed month selector styling on small calendars on all browsers
+   - removed clearing of user value when user inputs a valid date when startEmpty is still active
+   - skipped input clearing when the input contains a valid date even if startEmpty is set
+   - startDate and endDate setting on plugin intialization didn't work, fixed.
+   - fixed mobile inline view resize bug after month changes
+   - fixed dropdown closing issues
+
+v1.1.9
+   - fixed display bug on header (start week of day showed day number instead of name)
+   - improved linked single date picker example
+
+v1.2.0
+   - updated jQuery library in demos and readme to v3.1.2
+   - updated getDimensions method to more paint and memory friendly version
+   - added setStart, setEnd, setMinDate, setMaxDate and setDisplayDate methods
+   - added istanbul test code coverage tools
+   - added start and end date validation regarding minimum and maximum allowed dates
+   - added `reverseTimepickerArrows` option to reverse the actions of time picker arrows
+
+v1.2.1
+   - changed prev and next hour/minute displays regarding to reverseTimePickerArrows setting.
+   - fixed 12h display bug on showing dropdown in 24h format
+   - fixed dropdown positioning on inner scrolling container other than window
+
+v1.2.2
+   - fixed calendar header locale bug
+   - fixed startOnMonday dismissing the 1st day row when its on sunday
+
+v1.2.3
+   - added predefined events to hideDropdown and showDropdown to prevent var undefined exception.
+   - updated example about linked date pickers
+   - implemented ontimechange event
+   - added month name format on monthselector
+   - added week numbers on calendars
+
+v1.2.4
+   - Added right side range list panel settings
+   - Updated documentation
+   - added smart positioning on top/bottom dropdowns
+   - added selected range indicators
+   - massive performance upgrade
+   - added arrowOn parameter which moves the arrow to the desired position.
+   - improved positioning on viewport edges
+   - added center/center display option
+
+v1.2.5
+   - added onaftermonthchange and onafteryearchange to month and year selectors
+   - added calentim-disabled-range class on mindate/maxdate effective days
+   - added day clones instead of real ones as attributes of events
+   - fixed mobile button bug on month change
+   - fixed autocloseonselect not updating input on mobile
+   - fixed time up/down buttons
+
+v1.2.6
+   - documentation fixes
+   - removed firing onafterselect running after a time change
+   - separated time picker update code to let start or end date update their designated inputs separately
+   - added null controls to variables passed to events by cloning
+   - updated linked single date pickers example on documentation
+   - added onBeforeInit, onBeforeDestroy and ondestroy event
+   - fixed mobile modal resizing height issue
+
+v1.2.7
+   - added timepicker time limiting feature
+   - updated documentation
+
+v1.2.8
+   - added fix for IOS devices hover on first click feature/bug
+
+v1.2.9
+   - fix for timepicker up/down buttons activating wrong instances
+
+v1.2.10
+   - fix for timepicker hour up down buttons working with minuteSteps variable
+
+v1.2.11
+   - fix range selection ignores time
+
+v1.2.12
+   - new feature: hiding arrows before minDate and after maxDate
+   - fix for timepicker update on range selections
+   - css fix for Edge browser
+
+v1.2.13
+   - some styling fixes about height change on inline calendar month switches
+
+v1.3.0
+   - added hotel style booking feature for ranges
+   - added disableOnlyStart and disableOnlyEnd parameters
+   - selections not in month should have not-in-month class
+   - added minSelectedDays parameter to prevent users to select less than defined days
+   - added enableSwipe configuration parameter to enable/disable calendar swipe left/right to switch months, default enabled
+   - added configurations for icons in the plugin
+   - added auto close after range selection
+   - added DOBCalendar option to act as a date-of-birth selector
+   - added onCancel event to verify cancellation
+   - fix for wrong week start regarding to locale on Safari
+
+v1.3.1
+   - more localization on calendar numerals
+   - added keyboard support for time pickers
+   - added RTL support
+   - fixed isDisabled method resetting the time to middle of the day
+
+v1.3.2
+   - fixed hotel mode selection clear bug on dropdown open
+   - fixed IE9 & Edge right side range display
+   - added examples for disableOnlyStart and disableOnlyEnd options
+   - added examples for hotel style booking feature
+
+v1.3.3
+   - added "!default" for scss variables to enable overrides
+   - fixed range continuity check preventing date selection in single date mode
+   - added tests to package
+   - added date checks and needed conversions on initialization
+   - fixed single date selection on ranges
+
+v1.3.4
+   - prevented timepicker to change the day when overflow occurs
+   - fixed missing onCancel event handler
+   - changed checkMobile method to only use media queries, not browser agent strings
+   - added setting for mobile/desktop view threshold (mobileBreakpoint)
+   - added calendar close feature on mobile backdrop click
+   - fixed swipe month switch ignoring hideOutOfRange setting
+   - fixed tests differing between mobile and desktop view
+
+v1.3.5
+   - added support for multiple disabled time ranges
+   - removed time change modifying dates
+   - added example for multiple disabled time ranges
+
+v1.3.6
+   - fix for timepickers only view resetting to today's date on dropdown show event
+   - fix discontinuous selection mode when there are disabled ranges
+
+v1.3.7
+   - fix uninitialized disable cache bug
+   - fixed hideOutOfRange not affecting month and year selectors
+   - fix displaying current year in year selector
+   - improved theming support and created 3 themes besides the standard theme (dark, alt & dark-alt)
+   - added `dontPrefixHours` variable to prevent 12-hour format hour padding with zero

@@ -1,0 +1,523 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Text in function
+#: rentopian-sync/functions.php:480
+msgid " To get the API key, go to %1$s , click on \"Copy to Clipboard\" button and paste it into API key field."
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:465
+msgid "API Key:"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:450
+msgid "API key successfully saved"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:490
+msgid "Add to quote"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:635
+msgid "Adds an \"Event start time\" field in checkout section."
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:442
+msgid "All your existing products will be deleted during synchronization! If you have any existing WooCommerce data, it is highly recommended to backup first."
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:585
+msgid "Allow Direct Bookings"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:598
+msgid "Allow visitors add items to cart and checkout directly, without sending a quote first."
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/functions.php:1
+msgid "Apply coupon"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:490
+msgid "Buy Damage Waiver"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:524
+#: rentopian-sync/rentopian-sync.php:1091
+msgid "Cancel"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/functions.php:480
+msgid "Company details section"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/rentopian-sync.php:1094
+msgid "Confirm"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:490
+msgid "Coupon"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:1099
+msgid "Daily fee"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:490
+msgid "Damage Waiver"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:490
+msgid "Damage Waiver Tax"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:734
+msgid "Delete"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:793
+msgid "Delete Log"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:490
+msgid "Delivery"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:738
+msgid "Details"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/functions.php:1634
+msgid "End date is invalid!"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:1617
+msgid "Event Start Time"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/functions.php:1634
+msgid "Failed to insert test product"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:747
+#: rentopian-sync/functions.php:801
+msgid "File"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:520
+msgid "Finish"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:668
+msgid "Hide Product Price"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:643
+msgid "Hide Product Type Label"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:1099
+msgid "In stock"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:490
+msgid "Labor cost"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:748
+#: rentopian-sync/functions.php:802
+msgid "Line"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/functions.php:1
+msgid "Log"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:749
+#: rentopian-sync/functions.php:803
+msgid "Message"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:490
+msgid "No Damage Waiver"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:1099
+msgid "Out of stock"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/rentopian-sync.php:477
+msgid "Period"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:1596
+msgid "Pickup Date"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/rentopian-sync.php:1108
+msgid "Please download and Install WooCommerce plugin to be able to use Rentopian Sync."
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:1099
+msgid "Please enter dates and zip code!"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:1099
+msgid "Please provide rental dates and ZIP code!"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/rentopian-sync.php:1037
+msgid "Please select one of add-on variations"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:1099
+msgid "Please select the dates and zip code so that you can add a product to the cart!"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:1099
+msgid "Please select the dates and zip code to be able to add a product to the cart!"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:576
+msgid "Plugin Options"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/rentopian-sync.php:478
+msgid "Rate"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/functions.php:1
+msgid "Remove coupon"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:1099
+msgid "Rental"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:490
+msgid "Rental Dates"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:490
+msgid "Rental end date"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:490
+msgid "Rental start date"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:490
+msgid "Rental start time"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/functions.php:1
+#: rentopian-sync/functions.php:512
+msgid "Rentopian Sync"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/functions.php:1
+msgid "Rentopian Sync Log"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/functions.php:1
+msgid "Rentopian Sync Settings"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:1601
+msgid "Return Date"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:791
+msgid "Runtime Log"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:490
+msgid "Rush fee"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:1099
+msgid "Sale"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:474
+msgid "Save Key"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:694
+msgid "Save settings"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:1622
+msgid "Select a Time"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:1099
+msgid "Select rental dates to view availability!"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:490
+msgid "Send quote"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/functions.php:1
+msgid "Settings"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:570
+msgid "Settings saved successfully"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:490
+msgid "Shipping"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:622
+msgid "Show Event Start Time"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:1628
+msgid "Show Products"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/functions.php:1
+msgid "Some images were not retrieved during synchronization"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/functions.php:1
+msgid "Some images were not retrieved during synchronization. Please check the log and try to re-upload the listed images."
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:1099
+msgid "Sorry, but we do not have this product in such quantity!"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:1099
+msgid "Sorry, but we do not have this product variant in such quantity!"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:1099
+msgid "Sorry, this product is not available!"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:1099
+msgid "Sorry, this product variant is not available!"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:606
+msgid "Special Terms"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/functions.php:1634
+msgid "Start date is invalid!"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/functions.php:1634
+msgid "Start date is required!"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/functions.php:1634
+msgid "Start time is invalid!"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:746
+#: rentopian-sync/functions.php:800
+msgid "Status"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:497
+msgid "Status: The synchronization has been completed successfully."
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:721
+msgid "Synchronization Log"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:709
+msgid "Synchronization Results Log"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:731
+msgid "Synchronization Run On:"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/functions.php:1
+msgid "Synchronization has already been done"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:515
+msgid "Synchronization is in progress, please wait..."
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/functions.php:1
+#: rentopian-sync/functions.php:430
+msgid "Synchronization process completed successfully"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:501
+msgid "Synchronize"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:460
+msgid "Synchronize with Rentopian system"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:490
+msgid "Tax"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:614
+msgid "Text for special terms, appears on checkout section."
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/functions.php:1
+msgid "The API key is required"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/functions.php:1
+msgid "The import is now complete"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:660
+msgid "The label specifying if a product is rented or sold will not be shown."
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:436
+msgid "The synchronization is not complete, check the log section for details"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/rentopian-sync.php:1099
+msgid "This product is not available"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:750
+#: rentopian-sync/functions.php:804
+msgid "Time"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:778
+msgid "Total import time:"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/rentopian-sync.php:96
+msgid "Wrong API key provided"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:1610
+#: rentopian-sync/rentopian-sync.php:490
+msgid "ZIP Code"
+msgstr ""
+
+#. Text in echo
+#: rentopian-sync/functions.php:1585
+msgid "ZIP Code Issue"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/functions.php:1634
+msgid "ZIP code is invalid!"
+msgstr ""
+
+#. Text in function
+#: rentopian-sync/functions.php:1634
+msgid "ZIP code is required!"
+msgstr ""

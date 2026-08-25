@@ -1,0 +1,94 @@
+#rental_min_container {
+    margin-bottom: 1rem;
+}
+
+#rental_min_container .rental-min-form-row {
+    margin-bottom: 15px;
+}
+
+#rental_min_container .rental-min-form-row .rental-min-form-half-row {
+    width: 49%;
+    display: inline-block;
+    padding: 0 10px;
+}
+
+#rental_min_date_form{
+    position: relative;
+    z-index: 99;
+    background: #fff;
+    padding: 10px 20px 10px 20px;
+}
+
+/* The theme reserves 35px of side padding on every button, which leaves a
+   half-width row roughly 30px of content box - too narrow for the label, so it
+   overflows instead of centring. Width is already 100%, so trim the padding. */
+#rental_min_date_form_hide, #rental_min_date_form_submit {
+    width: 100%;
+    padding: 0 10px;
+    text-align: center;
+}
+
+#rental_min_date_input, #rental_min_date_range, #rental_min_zip_input {
+    padding:10px 12px
+}
+
+#rental_min_select_dates input {
+    padding: 16px 10px 7px 10px;
+    /* padding: 8px 10px; */
+}
+
+#rental_min_select_dates li strong {
+    width: 55px;
+}
+
+#rental_min_select_dates #rental_address_min, #rental_min_date_form #rental_address_min {
+    width: calc(100% - 6px) !important;
+    text-indent: .6rem !important;
+}
+
+#rental_min_error_notification {
+    text-align: center;
+    background: #e2401c;
+    color: #fff;
+    font-size: .9rem;
+    font-weight: 500;
+    padding: 6px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+#rental_min_error_notification:empty{display: none}
+
+/* .rental-min-loader {
+    border: 15px solid #f3f3f3;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+    border-top: 15px solid #555;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin: auto;
+} */
+
+.rental-min-loader {
+    display: none;               /* start hidden */
+    margin: auto;
+    width: 100px;
+    height: 100px;
+    border: 15px solid #f3f3f3;
+    border-top: 15px solid #555;
+    border-radius: 50%;
+    /* animation */
+    -webkit-animation: spin 1s linear infinite;
+            animation: spin 1s linear infinite;
+  }
+  
+  /* keyframes definitions */
+  @-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to   { -webkit-transform: rotate(360deg); }
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  

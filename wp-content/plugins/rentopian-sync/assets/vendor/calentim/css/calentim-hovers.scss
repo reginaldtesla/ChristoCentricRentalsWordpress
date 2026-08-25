@@ -1,0 +1,129 @@
+/* Hover fixes for mobile */
+
+.calentim-notouch {
+    .calentim-container,
+    .calentim-container-mobile {
+        .calentim-input {
+            .calentim-calendars {
+                .calentim-month-selector,
+                .calentim-year-selector {
+                    .calentim-ms-month {
+                        &:hover {
+                            background: $calentim-year-month-selector-buttons-hover-background;
+                            cursor: pointer;
+                            color: $calentim-year-month-selector-buttons-hover-text;
+                        }
+                    }
+                    .calentim-ys-year,
+                    .calentim-ys-year-next,
+                    .calentim-ys-year-prev {
+                        &:hover {
+                            background: $calentim-year-month-selector-buttons-hover-background;
+                            cursor: pointer;
+                            color: $calentim-year-month-selector-buttons-hover-text;
+                        }
+                    }
+                }
+                .calentim-calendar {
+                    .calentim-title {
+                        .calentim-prev,
+                        .calentim-next {
+                            i {
+                                &:hover {
+                                    text-shadow: 1px 2px 3px $calentim-calendar-header-hover-arrow-shadow;
+                                }
+                            }
+                        }
+                        span {
+                            .calentim-month-switch,
+                            .calentim-year-switch {
+                                &:hover {
+                                    color: $calentim-calendar-header-hover-text;
+                                    cursor: hand;
+                                    cursor: pointer;
+                                }
+                            }
+                        }
+                    }
+                    .calentim-days-container {
+                        .calentim-day {
+                            &:hover:not(.calentim-hovered):not(.calentim-selected) {
+                                background: $calentim-calendar-days-hover-background;
+                                border-radius: 3px;
+                            }
+                        }
+                    }
+                    .calentim-next,
+                    .calentim-prev {
+                        &:hover {
+                            text-shadow: 1px 2px 3px $calentim-calendar-header-hover-arrow-shadow;
+                        }
+                    }
+                }
+            }
+            .calentim-timepickers {
+                .calentim-timepicker {
+                    .calentim-timepicker-ampm {
+                        .calentim-timepicker-ampm-am:not(.calentim-ampm-selected) {
+                            &:hover {
+                                cursor: pointer;
+                                cursor: hand;
+                                background: $calentim-timepickers-buttons-hover-background;
+                                border:  $calentim-timepickers-buttons-hover-border;
+                                color:  $calentim-timepickers-buttons-hover-text;
+                            }
+                        }
+                        .calentim-timepicker-ampm-pm:not(.calentim-ampm-selected) {
+                            &:hover {
+                                cursor: pointer;
+                                cursor: hand;
+                                background: $calentim-timepickers-buttons-hover-background;
+                                border:  $calentim-timepickers-buttons-hover-border;
+                                color:  $calentim-timepickers-buttons-hover-text;
+                            }
+                        }
+                    }
+                    .calentim-timepicker-hour-arrows,
+                    .calentim-timepicker-minute-arrows {
+                        &>div:hover {
+                            background: $calentim-timepickers-buttons-hover-background;
+                            color: $calentim-timepickers-buttons-hover-text;
+                            cursor: pointer;
+                            cursor: hand;
+                        }
+                    }
+                }
+            }
+            .calentim-ranges {
+                .calentim-range {
+                    &:hover {
+                        text-decoration: underline;
+                        color: $calentim-horizontal-ranges-range-hover-text;
+                    }
+
+                    &.calentim-range-selected {
+                        &:hover {
+                            text-decoration: none;
+                        }
+                    }
+                }
+            }
+            .calentim-footer {
+                .calentim-apply:not(:disabled) {
+                    &:hover {
+                        background: $calentim-apply-button-hover-background;
+                        color: $calentim-apply-button-hover-text;
+                        border: $calentim-apply-button-hover-border;
+                    }
+                }
+                .calentim-cancel {
+                    &:hover {
+                        background: $calentim-cancel-button-hover-background;
+                        color: $calentim-cancel-button-hover-text;
+                        border: $calentim-cancel-button-hover-border;
+                    }
+                }
+            }
+        }
+    }
+}

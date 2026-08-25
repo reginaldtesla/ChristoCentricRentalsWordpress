@@ -1,0 +1,494 @@
+/**
+ * Rentopian Checkout Visual Builder — Styles
+ *
+ * Covers both the PHP template structure and JS-rendered content.
+ *
+ * @since 2.14.0
+ */
+
+/* ==========================================================================
+   CONTAINER (from PHP template)
+   ========================================================================== */
+.rvb-container { margin: 0; }
+
+.rvb-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+.rvb-header-left h2 { margin: 0 0 4px; }
+.rvb-header-left .description { margin: 0; }
+
+/* Save area — flex row keeps button position stable when message appears */
+.rvb-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 36px;
+    flex-shrink: 0;
+}
+#rvb-save { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+#rvb-save.rvb-dirty { box-shadow: 0 0 0 2px #2271b1; }
+
+/* Status message — inline, never pushes buttons */
+#rvb-save-status {
+    display: none;
+    font-size: 13px;
+    padding: 4px 10px;
+    border-radius: 3px;
+    white-space: nowrap;
+}
+#rvb-save-status.success { color: #00a32a; background: #edfaef; }
+#rvb-save-status.error   { color: #d63638; background: #fcf0f1; }
+#rvb-save-status.saving  { color: #72aee6; background: #f0f6fc; }
+
+/* ==========================================================================
+   WORKSPACE (palette + canvas side by side)
+   ========================================================================== */
+.rvb-workspace {
+    display: flex;
+    gap: 0;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    min-height: 550px;
+    background: #f9f9f9;
+}
+
+/* ==========================================================================
+   PALETTE (left sidebar — template container is #rvb-palette-groups)
+   STICKY: position sticky so it stays visible while scrolling canvas
+   ========================================================================== */
+.rvb-palette {
+    width: 270px;
+    min-width: 270px;
+    background: #f6f7f7;
+    border-right: 1px solid #c3c4c7;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: sticky;
+    top: 32px; /* WP admin bar height */
+    max-height: calc(100vh - 32px);
+    align-self: flex-start;
+}
+.rvb-palette-header {
+    padding: 12px;
+    border-bottom: 1px solid #dcdcde;
+    background: #fff;
+}
+.rvb-palette-header h3 { margin: 0 0 8px; font-size: 13px; font-weight: 600; }
+.rvb-field-search {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid #8c8f94;
+    border-radius: 3px;
+    font-size: 12px;
+    box-sizing: border-box;
+}
+
+#rvb-palette-groups {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px;
+}
+
+.rvb-palette-loading { text-align: center; padding: 20px; color: #646970; }
+
+/* Palette Groups */
+.rvb-palette-group { margin-bottom: 8px; border: 1px solid #dcdcde; border-radius: 3px; background: #fff; overflow: hidden; }
+.rvb-palette-group.rvb-group--collapsed .rvb-palette-group-body { display: none; }
+.rvb-palette-group-header {
+    display: flex; align-items: center; padding: 6px 8px; cursor: pointer;
+    background: #f0f0f1; border-bottom: 1px solid #dcdcde; gap: 6px;
+    font-size: 12px; font-weight: 600; user-select: none;
+}
+.rvb-palette-group-header:hover { background: #e8eaec; }
+.rvb-group-arrow { font-size: 14px; width: 14px; height: 14px; transition: transform 0.15s; }
+.rvb-group--collapsed .rvb-group-arrow { transform: rotate(-90deg); }
+.rvb-group-label { flex: 1; }
+.rvb-group-count {
+    background: #dcdcde; color: #50575e; padding: 1px 6px;
+    border-radius: 10px; font-size: 10px; font-weight: normal;
+}
+.rvb-palette-group-body { padding: 4px; }
+
+/* Palette Fields */
+.rvb-palette-field {
+    display: flex; align-items: center; padding: 5px 8px; margin: 2px 0;
+    background: #fff; border: 1px solid #dcdcde; border-radius: 3px;
+    cursor: grab; font-size: 12px; gap: 6px; transition: all 0.15s;
+}
+.rvb-palette-field:hover { border-color: #2271b1; background: #f0f6fc; }
+.rvb-palette-field.rvb-pf--placed {
+    opacity: 0.35; cursor: default; background: #f0f0f1;
+    border-style: dashed; pointer-events: none;
+}
+.rvb-palette-field.rvb-pf--dragging { opacity: 0.5; }
+.rvb-pf-label { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ==========================================================================
+   BADGES
+   ========================================================================== */
+.rvb-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 18px; height: 18px; border-radius: 3px;
+    font-size: 10px; font-weight: 700; line-height: 1; flex-shrink: 0;
+}
+.rvb-badge--mandatory { background: #d63638; color: #fff; }
+.rvb-badge--required  { background: #dba617; color: #fff; }
+.rvb-badge--optional  { background: #a7aaad; color: #fff; }
+
+/* Dependency badges */
+.rvb-dep-child {
+    display: inline-flex; align-items: center; padding: 2px 6px;
+    background: #e0e7f0; color: #2271b1; border-radius: 3px;
+    font-size: 10px; margin-left: 4px; white-space: nowrap;
+}
+.rvb-dep-parent {
+    display: inline-flex; align-items: center; padding: 2px 6px;
+    background: #f0e6ff; color: #7c3aed; border-radius: 3px;
+    font-size: 10px; margin-left: 4px; white-space: nowrap;
+}
+
+/* ==========================================================================
+   CANVAS (right area)
+   ========================================================================== */
+.rvb-canvas-wrapper { flex: 1; display: flex; flex-direction: column; }
+#rvb-canvas { flex: 1; padding: 16px; overflow-y: auto; }
+.rvb-canvas-empty {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; padding: 80px 20px; color: #a7aaad; text-align: center;
+}
+.rvb-canvas-empty p { font-size: 14px; max-width: 360px; }
+.rvb-canvas-actions { padding: 12px 16px; border-top: 1px solid #dcdcde; background: #fff; }
+
+/* ==========================================================================
+   SECTIONS (JS-rendered)
+   ========================================================================== */
+.rvb-section {
+    margin-bottom: 16px; border: 1px solid #c3c4c7; border-radius: 4px;
+    background: #fff; box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+}
+.rvb-section-header {
+    display: flex; align-items: flex-start; padding: 10px 12px;
+    background: #f0f0f1; border-bottom: 1px solid #c3c4c7;
+    border-radius: 3px 3px 0 0; gap: 8px;
+}
+.rvb-section-info { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.rvb-section-row { display: flex; align-items: center; gap: 8px; }
+.rvb-section-title {
+    flex: 1; padding: 4px 8px; font-size: 13px; font-weight: 600;
+    border: 1px solid #dcdcde; border-radius: 3px; background: #fff; min-width: 0;
+}
+.rvb-section-desc {
+    flex: 1; padding: 4px 8px; font-size: 12px;
+    border: 1px solid #dcdcde; border-radius: 3px; background: #fff;
+    color: #646970; min-width: 0;
+}
+.rvb-section-meta { display: flex; gap: 12px; font-size: 11px; color: #646970; align-items: center; }
+.rvb-section-meta code { font-size: 11px; padding: 1px 4px; background: #fff; border: 1px solid #dcdcde; border-radius: 2px; }
+.rvb-mini-input { padding: 2px 6px !important; font-size: 11px !important; border: 1px solid #dcdcde !important; border-radius: 2px !important; width: 140px; }
+.rvb-toggle-sm {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; color: #646970; cursor: pointer; white-space: nowrap; flex-shrink: 0;
+}
+.rvb-toggle-sm input[type="checkbox"] { margin: 0; }
+.rvb-section-btns { display: flex; gap: 4px; align-items: center; flex-shrink: 0; }
+.rvb-section-body { padding: 12px; }
+.rvb-section--collapsed .rvb-section-body { display: none; }
+
+/* ==========================================================================
+   ROWS
+   ========================================================================== */
+.rvb-row {
+    margin-bottom: 8px; border: 1px solid #dcdcde; border-radius: 3px; background: #fafafa;
+    transition: box-shadow 0.3s ease;
+}
+.rvb-row-header {
+    display: flex; align-items: center; padding: 6px 10px;
+    background: #f6f7f7; border-bottom: 1px solid #dcdcde;
+    border-radius: 2px 2px 0 0; gap: 8px; font-size: 12px;
+}
+.rvb-row-label { font-weight: 500; color: #50575e; flex-shrink: 0; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rvb-row-btns { display: flex; gap: 4px; align-items: center; flex-shrink: 0; margin-left: auto; }
+.rvb-row-body { /* wrapper for cols-container, enables collapse */ }
+
+/* Row collapse/expand */
+.rvb-row--collapsed > .rvb-row-body { display: none; }
+.rvb-row--collapsed > .rvb-row-header { border-bottom: none; border-radius: 3px; }
+
+/* ==========================================================================
+   WP DASHBOARD-STYLE ORDER BUTTONS (move higher / move lower)
+   Mirrors WordPress .handle-order-higher / .handle-order-lower pattern
+   with .order-higher-indicator / .order-lower-indicator CSS triangles.
+   ========================================================================== */
+.rvb-order-btns {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 1px;
+    flex-shrink: 0;
+}
+.rvb-order-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 13px;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #c3c4c7;
+    border-radius: 2px;
+    background: #f6f7f7;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    line-height: 1;
+    outline: none;
+}
+.rvb-order-btn:hover:not(:disabled) {
+    background: #f0f0f1;
+    border-color: #8c8f94;
+}
+.rvb-order-btn:focus:not(:disabled) {
+    box-shadow: 0 0 0 1px #2271b1;
+    border-color: #2271b1;
+}
+.rvb-order-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+    pointer-events: none;
+}
+
+/* CSS triangle arrows — matches WP core .order-higher-indicator / .order-lower-indicator */
+.rvb-order-btn .order-higher-indicator,
+.rvb-order-btn .order-lower-indicator {
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+.rvb-order-btn .order-higher-indicator {
+    border-width: 0 4px 5px 4px;
+    border-color: transparent transparent #50575e transparent;
+}
+.rvb-order-btn .order-lower-indicator {
+    border-width: 5px 4px 0 4px;
+    border-color: #50575e transparent transparent transparent;
+}
+.rvb-order-btn:hover:not(:disabled) .order-higher-indicator {
+    border-bottom-color: #2271b1;
+}
+.rvb-order-btn:hover:not(:disabled) .order-lower-indicator {
+    border-top-color: #2271b1;
+}
+
+/* ==========================================================================
+   FLASH HIGHLIGHT (visual feedback after reorder)
+   ========================================================================== */
+@keyframes rvb-flash-highlight {
+    0%   { box-shadow: 0 0 0 3px rgba(34, 113, 177, 0.5); }
+    100% { box-shadow: 0 0 0 0 rgba(34, 113, 177, 0); }
+}
+.rvb-flash {
+    animation: rvb-flash-highlight 0.7s ease-out;
+}
+
+/* Width bar */
+.rvb-width-bar { flex: 1; height: 14px; background: #e0e0e0; border-radius: 7px; position: relative; overflow: hidden; max-width: 160px; }
+.rvb-width-fill { height: 100%; border-radius: 7px; transition: width 0.2s, background 0.2s; }
+.rvb-wf--ok    { background: #00a32a; }
+.rvb-wf--under { background: #dba617; }
+.rvb-wf--over  { background: #d63638; }
+.rvb-width-text {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 700; color: #fff; text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+}
+
+/* ==========================================================================
+   COLUMNS (field cards)
+   ========================================================================== */
+.rvb-cols-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 10px; min-height: 50px; align-items: flex-start; }
+.rvb-column {
+    flex: 0 0 auto; width: calc(50% - 4px); min-width: 200px;
+    border: 1px solid #c3c4c7; border-radius: 4px; background: #fff;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: border-color 0.15s, opacity 0.15s;
+}
+.rvb-column:hover { border-color: #2271b1; }
+.rvb-col--inactive { opacity: 0.45; border-style: dashed; }
+.rvb-col--hidden-visual { background: #f8f0ff; border-color: #9b59b6; }
+
+.rvb-col-head {
+    display: flex; align-items: center; padding: 8px 10px;
+    border-bottom: 1px solid #f0f0f1; gap: 6px; flex-wrap: wrap;
+}
+.rvb-col-label { font-weight: 600; font-size: 12px; color: #1d2327; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rvb-col-id { padding: 2px 10px; font-size: 11px; }
+.rvb-col-id code { font-size: 11px; padding: 1px 4px; background: #f0f0f1; border-radius: 2px; color: #646970; }
+
+/* Controls */
+.rvb-col-controls { padding: 8px 10px; border-top: 1px solid #f0f0f1; background: #fafafa; border-radius: 0 0 3px 3px; }
+.rvb-ctrl-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
+.rvb-ctrl-row:last-child { margin-bottom: 0; }
+.rvb-ctrl-lbl { font-size: 11px; font-weight: 600; color: #50575e; min-width: 55px; flex-shrink: 0; }
+.rvb-ctrl-inline { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: #50575e; cursor: pointer; white-space: nowrap; }
+.rvb-ctrl-inline input[type="checkbox"] { margin: 0; }
+.rvb-col-width { width: 80px; padding: 3px 6px; font-size: 12px; border: 1px solid #8c8f94; border-radius: 3px; }
+.rvb-ctrl-dep { border-top: 1px dashed #dcdcde; padding-top: 6px; margin-top: 4px; }
+.rvb-col-depends-on { flex: 1; padding: 3px 6px; font-size: 11px; border: 1px solid #8c8f94; border-radius: 3px; max-width: 200px; }
+.rvb-ctrl-actions { justify-content: flex-end; }
+.rvb-lock { color: #a7aaad; display: inline-flex; align-items: center; }
+.rvb-lock .dashicons { font-size: 16px; width: 16px; height: 16px; }
+
+/* ==========================================================================
+   DRAG HANDLE (shared)
+   ========================================================================== */
+.rvb-drag-handle { cursor: grab; color: #a7aaad; font-size: 16px; width: 16px; height: 16px; flex-shrink: 0; }
+.rvb-drag-handle:hover { color: #2271b1; }
+
+/* ==========================================================================
+   ICON BUTTONS
+   ========================================================================== */
+.rvb-icon-btn {
+    background: none; border: 1px solid transparent; border-radius: 3px;
+    cursor: pointer; padding: 3px; color: #646970;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+}
+.rvb-icon-btn:hover { background: #f0f0f1; border-color: #c3c4c7; color: #2271b1; }
+.rvb-icon-btn--danger:hover { color: #d63638; background: #fcf0f1; border-color: #d63638; }
+.rvb-icon-btn .dashicons { font-size: 18px; width: 18px; height: 18px; }
+
+/* ==========================================================================
+   DROP ZONES
+   ========================================================================== */
+.rvb-drop-zone {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 12px; border: 2px dashed #dcdcde; border-radius: 4px;
+    color: #a7aaad; font-size: 12px; text-align: center;
+    transition: all 0.2s; margin-top: 8px;
+}
+.rvb-drop-zone .dashicons { font-size: 16px; width: 16px; height: 16px; }
+.rvb-drop-zone.rvb-dz--active { border-color: #2271b1; color: #2271b1; background: #f0f6fc; }
+.rvb-drop-zone.rvb-dz--hover { border-color: #00a32a; color: #00a32a; background: #edfaef; border-style: solid; }
+.rvb-drop-add-col { min-width: 60px; min-height: 50px; flex: 0 0 auto; margin-top: 0; padding: 8px; }
+
+/* ==========================================================================
+   SORTABLE PLACEHOLDERS
+   ========================================================================== */
+.rvb-sort-ph { border: 2px dashed #2271b1; border-radius: 4px; background: #f0f6fc; }
+.rvb-sort-ph--section { margin-bottom: 16px; min-height: 60px; }
+.rvb-sort-ph--row { margin-bottom: 8px; min-height: 40px; }
+.rvb-sort-ph--col { min-height: 80px; min-width: 100px; }
+
+/* ==========================================================================
+   LEGEND (from PHP template)
+   ========================================================================== */
+.rvb-legend {
+    display: flex; flex-wrap: wrap; gap: 16px; padding: 12px 0; margin-top: 12px;
+    font-size: 12px; color: #646970; align-items: center;
+}
+.rvb-legend-item { display: inline-flex; align-items: center; gap: 6px; }
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media screen and (max-width: 1024px) {
+    .rvb-workspace { flex-direction: column; }
+    .rvb-palette { width: 100%; min-width: 100%; max-height: 250px; border-right: none; border-bottom: 1px solid #c3c4c7; }
+    .rvb-column { width: 100%; }
+}
+@media screen and (max-width: 782px) {
+    .rvb-header { flex-direction: column; }
+    .rvb-header-actions { flex-wrap: wrap; }
+}
+
+/* ==========================================================================
+   PALETTE FIELD IDs (#3)
+   ========================================================================== */
+.rvb-pf-id {
+    font-size: 9px;
+    padding: 1px 4px;
+    background: #f0f0f1;
+    border-radius: 2px;
+    color: #646970;
+    flex-shrink: 0;
+    max-width: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+}
+.rvb-palette-field { flex-wrap: wrap; }
+.rvb-palette-field .rvb-pf-label { flex: 1 1 auto; min-width: 0; }
+
+/* ==========================================================================
+   LABEL OVERRIDE (#4)
+   ========================================================================== */
+.rvb-ctrl-label-row { border-bottom: 1px dashed #dcdcde; padding-bottom: 6px; margin-bottom: 6px; }
+.rvb-col-label-override {
+    flex: 1;
+    padding: 3px 6px;
+    font-size: 12px;
+    border: 1px solid #8c8f94;
+    border-radius: 3px;
+    min-width: 0;
+    max-width: 200px;
+}
+.rvb-col-label-override:focus { border-color: #2271b1; box-shadow: 0 0 0 1px #2271b1; outline: none; }
+.rvb-col-label-override::placeholder { color: #a7aaad; font-style: italic; }
+.rvb-clear-label-override { flex-shrink: 0; }
+.rvb-clear-label-override .dashicons { font-size: 14px; width: 14px; height: 14px; }
+
+/* ==========================================================================
+   VB FOOTER (#2)
+   ========================================================================== */
+.rvb-footer {
+    margin-top: 16px;
+    padding: 16px 0;
+    border-top: 1px solid #dcdcde;
+}
+.rvb-footer-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+.rvb-footer-status {
+    display: none;
+    font-size: 13px;
+    padding: 4px 10px;
+    border-radius: 3px;
+    white-space: nowrap;
+}
+.rvb-footer-status.success { color: #00a32a; background: #edfaef; }
+.rvb-footer-status.error   { color: #d63638; background: #fcf0f1; }
+.rvb-footer-status.saving  { color: #72aee6; background: #f0f6fc; }
+
+/* ==========================================================================
+   MARKETING BANNER PREVIEW
+   ========================================================================== */
+.rental-marketing-banner-preview {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+.rental-marketing-banner-preview img {
+    max-width: 400px;
+    height: auto;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    display: block;
+}
+.rental-marketing-banner-remove {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+.rental-marketing-banner-row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

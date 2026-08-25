@@ -1,0 +1,51 @@
+.calentim-container-mobile.calentim-inline {
+    box-sizing: border-box;
+    .calentim-input {
+        position: static;
+        box-shadow: none;
+        box-sizing: border-box;
+        .calentim-footer {
+            display: none !important;
+        }
+        &.calentim-hidden-calendar {
+            .calentim-timepickers {
+                max-width: 100%;
+                border-top-width: 0 !important;
+            }
+        }
+        @media screen and (orientation: landscape) {
+            flex-direction: column;
+            flex-wrap: wrap;
+            .calentim-calendars {
+                order: 0;
+                flex: 1 0 auto;
+                width: calc(50% - 1px);
+                border-left: none;
+                border-right: $calentim-container-border;
+            }
+            .calentim-header {
+                order: 1;
+                flex: 0 1 auto;
+                width: calc(50% - 1px);
+                border-left: none;
+                border-right: $calentim-container-border;
+                border-bottom: none;
+            }
+            .calentim-timepickers {
+                order: 2;
+                flex: 0 0 auto;
+                max-width: 50%;
+                border-left: none;
+                .calentim-timepicker-ampm {
+                    width: 7vmin;
+                }
+            }
+            .calentim-ranges {
+                order: 3;
+                flex: 0 1 auto;
+                width: 50%;
+                border-left: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,223 @@
+{
+  "_comment": "Rentopian Checkout Layout Configuration - Sample File",
+  "_version": "1.2.0",
+  "_description": "Default layout includes ALL registered fields. Dynamic fields from Rentopian API are AUTOMATICALLY appended to Section 4 when they exist.",
+  "_dynamic_fields_behavior": {
+    "how_it_works": [
+      "1. When you click 'Refresh Custom Fields from Rentopian', fields are fetched and stored",
+      "2. When default layout is generated (reset or first load), dynamic fields are AUTO-APPENDED",
+      "3. Each dynamic field gets its own row with 100% width in Section 4",
+      "4. Admin can then re-arrange fields by editing JSON or importing a custom layout"
+    ],
+    "field_id_format": "rental_custom_{slug}",
+    "example_fields": [
+      "rental_custom_outdoor",
+      "rental_custom_2-hour-delivery-window",
+      "rental_custom_2-hour-strike-window",
+      "rental_custom_how-can-we-help-you"
+    ]
+  },
+  "_fields_reference": {
+    "woocommerce_billing": [
+      "billing_first_name",
+      "billing_last_name",
+      "billing_company",
+      "billing_email",
+      "billing_phone",
+      "billing_address_1",
+      "billing_address_2",
+      "billing_city",
+      "billing_state",
+      "billing_postcode",
+      "billing_country"
+    ],
+    "woocommerce_shipping": [
+      "shipping_first_name",
+      "shipping_last_name",
+      "shipping_address_1",
+      "shipping_city",
+      "shipping_state",
+      "shipping_postcode"
+    ],
+    "rental_static": [
+      "rental_date_form_modern",
+      "rental_multi_day_event",
+      "rental_event_type",
+      "rental_referral_source",
+      "rental_payment_tips"
+    ],
+    "rental_dynamic": "Auto-generated from rental_custom_fields option"
+  },
+  "version": "1.0.0",
+  "grid_system": "rentopian",
+  "container_class": "rentopian-checkout-form",
+  "sections": [
+    {
+      "_comment": "SECTION 1: BILLING INFORMATION - Primary checkout fields (ACTIVE)",
+      "id": "billing_section",
+      "title": "Billing Information",
+      "description": "Please enter your billing details and event information.",
+      "class": "rentopian-billing-section",
+      "rows": [
+        {
+          "_comment": "ROW: Customer Name",
+          "id": "row_customer_name",
+          "class": "",
+          "columns": [
+            { "width": 6, "field": "billing_first_name", "class": "", "active": 1, "hidden_visual": 0, "depends_on": "" },
+            { "width": 6, "field": "billing_last_name", "class": "", "active": 1, "hidden_visual": 0, "depends_on": "" }
+          ]
+        },
+        {
+          "_comment": "ROW: Contact Info",
+          "id": "row_contact_info",
+          "class": "",
+          "columns": [
+            { "width": 6, "field": "billing_phone", "class": "", "active": 1, "hidden_visual": 0, "depends_on": "" },
+            { "width": 6, "field": "billing_email", "class": "", "active": 1, "hidden_visual": 0, "depends_on": "" }
+          ]
+        },
+        {
+          "_comment": "ROW: Date + Venue",
+          "id": "row_date_venue",
+          "class": "",
+          "columns": [
+            { "width": 6, "field": "rental_date_form_modern", "class": "", "active": 1, "hidden_visual": 0, "depends_on": "" },
+            { "width": 6, "field": "billing_address_1", "class": "", "active": 1, "hidden_visual": 0, "depends_on": "" }
+          ]
+        },
+        {
+          "_comment": "ROW: Hidden Address Fields - For Google Places Autocomplete",
+          "id": "row_address_autocomplete",
+          "class": "rentopian-hidden-row",
+          "columns": [
+            { "width": 4, "field": "billing_city", "class": "", "active": 1, "hidden_visual": 1, "depends_on": "billing_address_1" },
+            { "width": 4, "field": "billing_state", "class": "", "active": 1, "hidden_visual": 1, "depends_on": "billing_address_1" },
+            { "width": 4, "field": "billing_postcode", "class": "", "active": 1, "hidden_visual": 1, "depends_on": "billing_address_1" }
+          ]
+        },
+        {
+          "_comment": "ROW: Event Checkboxes",
+          "id": "row_event_checkboxes",
+          "class": "",
+          "columns": [
+            { "width": 6, "field": "rental_multi_day_event", "class": "", "active": 1, "hidden_visual": 0, "depends_on": "rental_date_form_modern" }
+          ]
+        },
+        {
+          "_comment": "ROW: Event Type",
+          "id": "row_event_type",
+          "class": "",
+          "columns": [
+            { "width": 12, "field": "rental_event_type", "class": "", "active": 1, "hidden_visual": 0, "depends_on": "" }
+          ]
+        },
+        {
+          "_comment": "ROW: Referral Source",
+          "id": "row_referral_source",
+          "class": "",
+          "columns": [
+            { "width": 12, "field": "rental_referral_source", "class": "", "active": 1, "hidden_visual": 0, "depends_on": "" }
+          ]
+        },
+        {
+          "_comment": "ROW: Payment Tips",
+          "id": "row_payment_tips",
+          "class": "",
+          "columns": [
+            { "width": 12, "field": "rental_payment_tips", "class": "", "active": 1, "hidden_visual": 0, "depends_on": "" }
+          ]
+        }
+      ]
+    },
+    {
+      "_comment": "SECTION 2: ADDITIONAL BILLING FIELDS - Optional (INACTIVE by default)",
+      "id": "additional_billing_section",
+      "title": "Additional Information",
+      "description": "",
+      "class": "rentopian-additional-section",
+      "rows": [
+        {
+          "id": "row_company",
+          "class": "",
+          "columns": [
+            { "width": 12, "field": "billing_company", "class": "", "active": 0, "hidden_visual": 0, "depends_on": "" }
+          ]
+        },
+        {
+          "id": "row_address_2",
+          "class": "",
+          "columns": [
+            { "width": 12, "field": "billing_address_2", "class": "", "active": 0, "hidden_visual": 0, "depends_on": "billing_address_1" }
+          ]
+        },
+        {
+          "id": "row_country",
+          "class": "",
+          "columns": [
+            { "width": 12, "field": "billing_country", "class": "", "active": 0, "hidden_visual": 0, "depends_on": "" }
+          ]
+        }
+      ]
+    },
+    {
+      "_comment": "SECTION 3: SHIPPING INFORMATION - All shipping fields (INACTIVE by default)",
+      "id": "shipping_section",
+      "title": "Shipping Information",
+      "description": "Enter shipping address if different from billing.",
+      "class": "rentopian-shipping-section",
+      "rows": [
+        {
+          "id": "row_shipping_name",
+          "class": "",
+          "columns": [
+            { "width": 6, "field": "shipping_first_name", "class": "", "active": 0, "hidden_visual": 0, "depends_on": "" },
+            { "width": 6, "field": "shipping_last_name", "class": "", "active": 0, "hidden_visual": 0, "depends_on": "" }
+          ]
+        },
+        {
+          "id": "row_shipping_address",
+          "class": "",
+          "columns": [
+            { "width": 12, "field": "shipping_address_1", "class": "", "active": 0, "hidden_visual": 0, "depends_on": "" }
+          ]
+        },
+        {
+          "id": "row_shipping_location",
+          "class": "",
+          "columns": [
+            { "width": 5, "field": "shipping_city", "class": "", "active": 0, "hidden_visual": 0, "depends_on": "shipping_address_1" },
+            { "width": 4, "field": "shipping_state", "class": "", "active": 0, "hidden_visual": 0, "depends_on": "shipping_address_1" },
+            { "width": 3, "field": "shipping_postcode", "class": "", "active": 0, "hidden_visual": 0, "depends_on": "shipping_address_1" }
+          ]
+        }
+      ]
+    },
+    {
+      "_comment": "SECTION 4: DYNAMIC FIELDS - AUTO-POPULATED from Rentopian API",
+      "_note": "Rows in this section are AUTOMATICALLY GENERATED from rental_custom_fields option. This sample shows example structure - actual fields depend on your Rentopian account.",
+      "id": "dynamic_fields_section",
+      "title": "Additional Event Details",
+      "description": "Custom fields from your Rentopian account.",
+      "class": "rentopian-dynamic-section",
+      "rows": [
+        {
+          "_example": "This row would be auto-generated for 'outdoor' field",
+          "id": "row_dynamic_0",
+          "class": "",
+          "columns": [
+            { "width": 12, "field": "rental_custom_outdoor", "class": "", "active": 1, "hidden_visual": 0, "depends_on": "" }
+          ]
+        },
+        {
+          "_example": "This row would be auto-generated for 'delivery window' field",
+          "id": "row_dynamic_1",
+          "class": "",
+          "columns": [
+            { "width": 12, "field": "rental_custom_2-hour-delivery-window", "class": "", "active": 1, "hidden_visual": 0, "depends_on": "" }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,9 +1,13 @@
 <?php
 defined('ABSPATH') || exit;
 
-$url = function_exists('ccr_whatsapp_chat_url')
-    ? ccr_whatsapp_chat_url()
-    : 'https://wa.me/c/233532670582';
+$url = 'https://wa.me/233532670582';
+if (function_exists('ccr_whatsapp_chat_url')) {
+    $fromSettings = ccr_whatsapp_chat_url();
+    if ($fromSettings !== '') {
+        $url = $fromSettings;
+    }
+}
 ?>
 <a
     class="ccr-whatsapp-fab"

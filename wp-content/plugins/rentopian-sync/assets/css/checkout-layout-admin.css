@@ -1,0 +1,1644 @@
+/**
+ * Checkout Layout Builder - Admin Styles
+ *
+ * Styles for the checkout layout configuration admin page.
+ *
+ * @package    Rentopian_Sync
+ * @since      2.13.0
+ */
+
+/* ==========================================================================
+   Layout Container
+   ========================================================================== */
+
+.rental-checkout-layout-wrap {
+    max-width: 1600px;
+}
+
+.rental-checkout-layout-wrap .wp-heading-inline {
+    margin-bottom: 5px;
+}
+
+.rental-checkout-layout-wrap > .description {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #646970;
+}
+
+.rental-checkout-layout-container {
+    margin-top: 20px;
+}
+
+/* ==========================================================================
+   Section Styling
+   ========================================================================== */
+
+.rental-layout-section {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.rental-layout-section h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+/* ==========================================================================
+   Toggle Switch
+   ========================================================================== */
+
+.rental-layout-toggle-section {
+    background: #f6f7f7;
+}
+
+.rental-layout-toggle-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.rental-toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+
+.rental-toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.rental-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .3s;
+    border-radius: 26px;
+}
+
+.rental-toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .3s;
+    border-radius: 50%;
+}
+
+.rental-toggle-switch input:checked + .rental-toggle-slider {
+    background-color: #2271b1;
+}
+
+.rental-toggle-switch input:checked + .rental-toggle-slider:before {
+    transform: translateX(24px);
+}
+
+.rental-toggle-label {
+    font-weight: 500;
+    color: #1d2327;
+}
+
+/* ==========================================================================
+   Main Content Layout
+   ========================================================================== */
+
+.rental-layout-main-content {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 20px;
+}
+
+@media screen and (max-width: 1200px) {
+    .rental-layout-main-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================================================
+   JSON Editor
+   ========================================================================== */
+
+.rental-json-editor-wrapper {
+    margin-bottom: 15px;
+}
+
+.rental-json-editor {
+    width: 100%;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 12px;
+    border: 1px solid #8c8f94;
+    border-radius: 4px;
+    background: #f0f0f1;
+    resize: vertical;
+    min-height: 400px;
+    tab-size: 2;
+}
+
+.rental-json-editor:focus {
+    border-color: #2271b1;
+    box-shadow: 0 0 0 1px #2271b1;
+    outline: none;
+    background: #fff;
+}
+
+.rental-json-editor.has-error {
+    border-color: #d63638;
+    background: #fcf0f1;
+}
+
+.rental-json-editor.is-valid {
+    border-color: #00a32a;
+    background: #f0f6f0;
+}
+
+/* ==========================================================================
+   Editor Actions
+   ========================================================================== */
+
+.rental-editor-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.rental-editor-actions .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.rental-editor-actions .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+/* ==========================================================================
+   Validation Status
+   ========================================================================== */
+
+.rental-validation-status {
+    margin-top: 15px;
+    padding: 10px 15px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rental-validation-status.is-valid {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.rental-validation-status.is-error {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.rental-validation-status.is-warning {
+    background: #fff3cd;
+    border: 1px solid #ffeeba;
+    color: #856404;
+}
+
+.rental-validation-status .status-icon .dashicons {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+/* ==========================================================================
+   Import/Export Section
+   ========================================================================== */
+
+.rental-import-export-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.rental-import-group {
+    display: inline-block;
+}
+
+.rental-import-group .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   Fields Reference
+   ========================================================================== */
+
+.rental-fields-reference {
+    max-height: calc(100vh - 300px);
+    overflow-y: auto;
+}
+
+.rental-fields-accordion {
+    margin-top: 10px;
+}
+
+.rental-field-group {
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    overflow: hidden;
+}
+
+.rental-field-group-toggle {
+    width: 100%;
+    padding: 10px 12px;
+    background: #f6f7f7;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    font-size: 13px;
+    color: #1d2327;
+    transition: background 0.2s;
+}
+
+.rental-field-group-toggle:hover {
+    background: #eeeff0;
+}
+
+.rental-field-group-toggle .dashicons {
+    transition: transform 0.2s;
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+}
+
+.rental-field-group.is-open .rental-field-group-toggle .dashicons {
+    transform: rotate(90deg);
+}
+
+.rental-field-group-toggle .field-count {
+    margin-left: auto;
+    color: #646970;
+    font-weight: normal;
+    font-size: 12px;
+}
+
+.rental-field-group-content {
+    display: none;
+    padding: 10px;
+    background: #fff;
+    border-top: 1px solid #dcdcde;
+}
+
+.rental-field-group.is-open .rental-field-group-content {
+    display: block;
+}
+
+.rental-field-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.rental-field-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.rental-field-item:hover {
+    background: #f0f6fc;
+}
+
+.rental-field-item .field-id {
+    background: #e6e6e6;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 11px;
+    flex-shrink: 0;
+}
+
+.rental-field-item .field-label {
+    color: #646970;
+    flex-grow: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.rental-field-item .field-required {
+    color: #d63638;
+    font-weight: bold;
+}
+
+.rental-field-item .rental-copy-field-id {
+    padding: 2px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+    color: #2271b1;
+}
+
+.rental-field-item:hover .rental-copy-field-id {
+    opacity: 1;
+}
+
+.rental-field-item .rental-copy-field-id:hover {
+    color: #135e96;
+}
+
+.rental-field-item .rental-copy-field-id .dashicons {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+}
+
+/* ==========================================================================
+   JSON Documentation
+   ========================================================================== */
+
+.rental-json-docs .rental-docs-content {
+    font-size: 13px;
+}
+
+.rental-json-docs h4 {
+    margin: 15px 0 8px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.rental-json-docs h4:first-child {
+    margin-top: 0;
+}
+
+.rental-json-docs ul {
+    margin: 8px 0 8px 20px;
+}
+
+.rental-json-docs li {
+    margin-bottom: 5px;
+}
+
+.rental-code-block {
+    background: #1d2327;
+    color: #50fa7b;
+    padding: 12px;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 10px 0;
+}
+
+.rental-json-docs code {
+    background: #e6e6e6;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+/* ==========================================================================
+   Messages
+   ========================================================================== */
+
+#rental-layout-messages {
+    margin-bottom: 15px;
+}
+
+#rental-layout-messages .notice {
+    margin: 0 0 10px 0;
+}
+
+/* ==========================================================================
+   Modal
+   ========================================================================== */
+
+.rental-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rental-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.rental-modal-content {
+    position: relative;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    max-width: 450px;
+    width: 90%;
+}
+
+.rental-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    border-bottom: 1px solid #dcdcde;
+}
+
+.rental-modal-header h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.rental-modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    color: #646970;
+    padding: 0;
+}
+
+.rental-modal-close:hover {
+    color: #d63638;
+}
+
+.rental-modal-body {
+    padding: 20px;
+}
+
+.rental-modal-body p {
+    margin: 0;
+}
+
+.rental-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 15px 20px;
+    border-top: 1px solid #dcdcde;
+    background: #f6f7f7;
+}
+
+/* ==========================================================================
+   Loading State
+   ========================================================================== */
+
+.rental-loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.rental-loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rental-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #2271b1;
+    border-radius: 50%;
+    animation: rental-spin 1s linear infinite;
+}
+
+@keyframes rental-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   Button Enhancements
+   ========================================================================== */
+
+.button .dashicons {
+    vertical-align: middle;
+    margin-top: -2px;
+}
+
+.button-link-delete {
+    color: #d63638 !important;
+}
+
+.button-link-delete:hover {
+    color: #a41e1e !important;
+    background: none !important;
+}
+
+/* ==========================================================================
+   Copy Feedback
+   ========================================================================== */
+
+.rental-copy-feedback {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1d2327;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 13px;
+    z-index: 100000;
+    animation: rental-fade-in 0.2s ease-out;
+}
+
+@keyframes rental-fade-in {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* ==========================================================================
+   Disabled Notice
+   ========================================================================== */
+
+.rental-layout-disabled-notice {
+    display: flex;
+    gap: 20px;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-left: 4px solid #dba617;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+.rental-notice-icon {
+    flex-shrink: 0;
+}
+
+.rental-notice-icon .dashicons {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    color: #dba617;
+}
+
+.rental-notice-content h2 {
+    margin: 0 0 15px 0;
+    font-size: 1.3em;
+    color: #1d2327;
+}
+
+.rental-notice-content > p {
+    margin: 0 0 15px 0;
+    color: #646970;
+}
+
+.rental-requirements-list {
+    margin: 0 0 20px 0;
+    padding: 0;
+    list-style: none;
+}
+
+.rental-requirements-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    background: #f6f7f7;
+    border-radius: 4px;
+    border-left: 3px solid #dcdcde;
+}
+
+.rental-requirements-list li.requirement-met {
+    background: #edfaef;
+    border-left-color: #00a32a;
+}
+
+.rental-requirements-list li.requirement-unmet {
+    background: #fcf0f1;
+    border-left-color: #d63638;
+}
+
+.rental-requirements-list .dashicons {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+.rental-requirements-list .requirement-met .dashicons {
+    color: #00a32a;
+}
+
+.rental-requirements-list .requirement-unmet .dashicons {
+    color: #d63638;
+}
+
+.rental-requirements-list .requirement-label {
+    flex-grow: 1;
+    font-weight: 500;
+}
+
+.rental-requirements-list .requirement-status {
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.rental-notice-action .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.rental-notice-action .button .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+/* ==========================================================================
+   Tab Navigation
+   ========================================================================== */
+
+.rental-layout-tabs {
+    margin: 20px 0 0 0;
+    border-bottom: 1px solid #c3c4c7;
+}
+
+.rental-layout-tabs .nav-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 15px;
+}
+
+.rental-layout-tabs .nav-tab .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+.rental-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 3px;
+    margin-left: 5px;
+}
+
+.rental-badge-coming-soon {
+    background: #dba617;
+    color: #fff;
+}
+
+/* ==========================================================================
+   Tab Content
+   ========================================================================== */
+
+.rental-tab-content {
+    display: none;
+    padding-top: 20px;
+}
+
+.rental-tab-content.rental-tab-active {
+    display: block;
+}
+
+.rental-section-description {
+    margin: 0 0 20px 0;
+    color: #646970;
+    font-size: 13px;
+}
+
+/* ==========================================================================
+   Processing Indicator
+   ========================================================================== */
+
+.rental-processing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 15px;
+    padding: 8px 12px;
+    background: #f0f6fc;
+    border: 1px solid #c5d9ed;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #2271b1;
+}
+
+.rental-processing-indicator .spinner {
+    float: none;
+    margin: 0;
+}
+
+.rental-processing-indicator .processing-text {
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   Visual Builder Placeholder
+   ========================================================================== */
+
+.rental-visual-builder-placeholder {
+    text-align: center;
+    padding: 60px 40px;
+    background: #fff;
+    border: 2px dashed #c3c4c7;
+    border-radius: 8px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.rental-placeholder-icon {
+    margin-bottom: 20px;
+}
+
+.rental-placeholder-icon .dashicons {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+    color: #c3c4c7;
+}
+
+.rental-visual-builder-placeholder h2 {
+    margin: 0 0 15px 0;
+    color: #1d2327;
+}
+
+.rental-visual-builder-placeholder > p {
+    color: #646970;
+    line-height: 1.6;
+    max-width: 500px;
+    margin: 0 auto 20px;
+}
+
+.rental-placeholder-features {
+    margin-bottom: 10px !important;
+}
+
+.rental-placeholder-features-list {
+    display: inline-block;
+    text-align: left;
+    margin: 0 0 20px 0;
+    padding: 0;
+    list-style: none;
+}
+
+.rental-placeholder-features-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    color: #646970;
+}
+
+.rental-placeholder-features-list .dashicons {
+    color: #2271b1;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+.rental-placeholder-note {
+    font-size: 12px;
+    color: #8c8f94;
+    font-style: italic;
+}
+
+/* ==========================================================================
+   Mandatory Field Badge
+   ========================================================================== */
+
+.rental-field-mandatory {
+    background: #fff8e5;
+}
+
+.field-mandatory-badge {
+    color: #dba617;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   Checkout Layout Link Button (for settings page)
+   ========================================================================== */
+
+.rental-checkout-layout-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #f0f6fc;
+    border: 1px solid #c5d9ed;
+    border-radius: 4px;
+    color: #2271b1;
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.2s;
+}
+
+.rental-checkout-layout-link:hover {
+    background: #e5f1fa;
+    border-color: #2271b1;
+    color: #135e96;
+}
+
+.rental-checkout-layout-link .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+/* =========================================
+   Refresh Dynamic Fields Button
+   ========================================= */
+
+.rental-refresh-fields-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+#rental-refresh-dynamic-fields {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#rental-refresh-dynamic-fields .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+#rental-refresh-dynamic-fields.refreshing .dashicons {
+    animation: rental-spin 1s linear infinite;
+}
+
+@keyframes rental-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.rental-refresh-status {
+    font-size: 13px;
+    color: #646970;
+}
+
+.rental-refresh-status.success {
+    color: #00a32a;
+}
+
+.rental-refresh-status.error {
+    color: #d63638;
+}
+
+/* =========================================
+   Hidden Visual & Dependency Badges
+   ========================================= */
+
+.rental-field-item .field-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: 600;
+    border-radius: 3px;
+    margin-left: 4px;
+    text-transform: uppercase;
+}
+
+.rental-field-item .field-badge-hidden {
+    background: #f0f0f0;
+    color: #666;
+}
+
+.rental-field-item .field-badge-dynamic {
+    background: #e7f3ff;
+    color: #0073aa;
+}
+
+/* Dynamic field group highlight */
+.rental-field-group[data-group-id="rental_dynamic"] .rental-field-group-toggle {
+    background: linear-gradient(to right, #f0f6fc, #fff);
+}
+
+.rental-field-group[data-group-id="rental_dynamic"] .field-count {
+    background: #2271b1;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 11px;
+}
+
+/* =========================================
+   No Fields Message
+   ========================================= */
+
+.rental-no-fields {
+    padding: 12px;
+    color: #646970;
+    font-style: italic;
+    text-align: center;
+    background: #f9f9f9;
+    border-radius: 4px;
+}
+
+/* =========================================
+   Reload Button
+   ========================================= */
+
+#rental-reload-layout {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+#rental-reload-layout .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+/* =========================================
+   Field Badge - Required Indicator
+   ========================================= */
+
+.rental-field-item .field-mandatory-badge {
+    color: #d63638;
+    font-weight: bold;
+    margin-left: 4px;
+}
+
+/* =========================================
+   Field Badge - API Source
+   ========================================= */
+
+.rental-field-item .field-badge-dynamic {
+    background: #e7f3ff;
+    color: #0073aa;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: 600;
+    border-radius: 3px;
+    margin-left: 4px;
+    text-transform: uppercase;
+}
+
+/* =========================================
+   Templates Tab
+   ========================================= */
+
+.rental-templates-container {
+    margin-top: 20px;
+}
+
+.rental-templates-header {
+    margin-bottom: 20px;
+}
+
+.rental-templates-header h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+/* Template Save Form */
+.rental-template-save-form .rental-form-row {
+    margin-bottom: 15px;
+}
+
+.rental-template-save-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.rental-template-save-form label .required {
+    color: #d63638;
+}
+
+.rental-form-actions {
+    margin-top: 15px;
+}
+
+/* Templates List */
+.rental-templates-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.rental-template-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.rental-template-item:hover {
+    background: #fff;
+    border-color: #2271b1;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.rental-template-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.rental-template-name {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.rental-template-description {
+    margin: 0 0 8px 0;
+    font-size: 12px;
+    color: #646970;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rental-template-meta {
+    display: flex;
+    gap: 15px;
+    font-size: 11px;
+    color: #8c8f94;
+}
+
+.rental-template-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.rental-template-meta .dashicons {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+}
+
+.rental-template-actions {
+    display: flex;
+    gap: 5px;
+    flex-shrink: 0;
+    margin-left: 20px;
+}
+
+.rental-template-actions .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    min-height: 30px;
+}
+
+.rental-template-actions .button .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+.rental-template-actions .rental-template-apply {
+    background: #2271b1;
+    border-color: #2271b1;
+    color: #fff;
+}
+
+.rental-template-actions .rental-template-apply:hover {
+    background: #135e96;
+    border-color: #135e96;
+}
+
+.rental-template-actions .rental-template-delete:hover {
+    color: #d63638;
+    border-color: #d63638;
+}
+
+/* Templates Empty State */
+.rental-templates-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: #646970;
+}
+
+.rental-templates-empty .dashicons {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 15px;
+    color: #c3c4c7;
+}
+
+.rental-templates-empty p {
+    margin: 0 0 5px 0;
+}
+
+/* Templates Loading */
+.rental-templates-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    color: #646970;
+}
+
+/* Templates Limit Notice */
+.rental-templates-limit-notice {
+    font-size: 11px;
+    font-weight: normal;
+    color: #888;
+    margin-left: 5px;
+}
+
+/* Templates Count Badge */
+#rental-templates-count {
+    margin-left: 10px;
+    background: #2271b1;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+#rental-templates-count:empty {
+    display: none;
+}
+
+/* Templates Messages */
+.rental-templates-messages {
+    margin-bottom: 15px;
+}
+
+.rental-templates-messages .notice {
+    margin: 0 0 10px 0;
+}
+
+/* Templates List Header */
+.rental-templates-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.rental-templates-list-header h3 {
+    margin: 0;
+}
+
+/* Template JSON Actions */
+.rental-template-json-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+/* Template JSON Status */
+.rental-json-status {
+    margin-top: 8px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.rental-json-status.valid {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.rental-json-status.invalid {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Template Save Button Loading */
+.rental-template-save-form .button-loading {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.rental-template-save-form .button-loading .spinner {
+    margin: 0;
+}
+
+/* Template Item Loading State */
+.rental-template-item.is-loading {
+    opacity: 0.7;
+    pointer-events: none;
+    position: relative;
+}
+
+.rental-template-loading {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+}
+
+.rental-template-loading .spinner {
+    float: none;
+    margin: 0;
+}
+
+/* Template Item - Position relative for loading overlay */
+.rental-template-item {
+    position: relative;
+}
+
+/* Refresh Button */
+#rental-refresh-templates.updating-message {
+    opacity: 0.7;
+}
+
+#rental-refresh-templates .dashicons {
+    transition: transform 0.3s ease;
+}
+
+#rental-refresh-templates.updating-message .dashicons {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Template JSON Textarea */
+#rental-template-json {
+    font-family: Consolas, Monaco, 'Andale Mono', monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    tab-size: 2;
+    resize: vertical;
+    min-height: 200px;
+}
+
+/* Form Actions Spacing */
+.rental-template-save-form .rental-form-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 15px;
+}
+
+/* Wide Modal */
+.rental-modal-wide .rental-modal-content {
+    max-width: 600px;
+}
+
+/* Large Modal for Template Preview */
+.rental-modal-large .rental-modal-content {
+    max-width: 900px;
+    width: 90%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.rental-modal-large .rental-modal-body {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.rental-preview-meta {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 15px;
+}
+
+.rental-preview-meta p {
+    margin: 0 0 5px 0;
+    font-size: 13px;
+    color: #646970;
+}
+
+.rental-preview-json-wrapper {
+    flex: 1;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.rental-preview-json {
+    flex: 1;
+    min-height: 400px;
+    max-height: 50vh;
+    font-family: Consolas, Monaco, 'Andale Mono', monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 15px;
+    background: #f6f7f7;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    resize: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.rental-modal-large .rental-modal-footer {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.rental-modal-large .rental-modal-footer .rental-preview-apply {
+    min-width: 150px;
+}
+
+/* Info status style */
+.rental-json-status.info {
+    background: #e7f3fe;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+.rental-modal .rental-form-row {
+    margin-bottom: 15px;
+}
+
+.rental-modal .rental-form-row label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.rental-modal .rental-form-row label .required {
+    color: #d63638;
+}
+
+.rental-modal .rental-form-row input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.rental-modal .rental-form-row .description {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #646970;
+}
+
+/* ==========================================================================
+   Thank You Message Tab
+   ========================================================================== */
+
+.rental-thank-you-container {
+    margin-top: 20px;
+}
+
+.rental-thank-you-header {
+    margin-bottom: 20px;
+}
+
+.rental-thank-you-header h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.rental-thank-you-editor-wrapper {
+    margin-bottom: 20px;
+}
+
+.rental-thank-you-editor-wrapper .wp-editor-area {
+    min-height: 200px;
+}
+
+/* Preview styling */
+.rentopian-thank-you-preview {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-left: 4px solid #28a745;
+    padding: 20px 25px;
+    border-radius: 4px;
+}
+
+.rentopian-thank-you-preview p {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.rentopian-thank-you-preview p:last-child {
+    margin-bottom: 0;
+}
+
+/* Save status indicator */
+.rental-save-status {
+    display: inline-block;
+    margin-left: 15px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.rental-save-status.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.rental-save-status.error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.rental-save-status.saving {
+    background: #fff3cd;
+    color: #856404;
+}
+
+/* Tips Section */
+.rental-tips-section {
+    margin-top: 30px;
+}
+
+.rental-tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.rental-tip-card {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+}
+
+.rental-tip-card .dashicons {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+    color: #007cba;
+    margin-bottom: 10px;
+}
+
+.rental-tip-card h4 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.rental-tip-card p {
+    margin: 0;
+    font-size: 13px;
+    color: #646970;
+    line-height: 1.5;
+}
+
+/* ======================================================
+   Review Order Display Settings
+   ====================================================== */
+.rental-review-display-section {
+    margin-top: 24px;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #e2e4e7;
+    border-radius: 4px;
+}
+
+.rental-review-display-checkboxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 10px 24px;
+    margin-top: 12px;
+}
+
+.rental-review-display-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.rental-review-display-checkbox:hover {
+    background-color: #f0f0f1;
+}
+
+.rental-review-display-checkbox input[type="checkbox"] {
+    margin: 0;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+.rental-inline-status {
+    display: inline-block;
+    margin-left: 12px;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+/* ==========================================================================
+   CONSISTENT SAVE BUTTON LOADING STATE
+   Used across all Checkout Layout Builder tabs
+   ========================================================================== */
+.rental-btn-saving {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.7;
+}
+.rental-btn-saving .dashicons {
+    visibility: hidden;
+}
+.rental-btn-saving::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: rental-btn-spin 0.6s linear infinite;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    margin-top: -8px;
+}
+.rental-btn-saving.button-secondary::before,
+.rental-btn-saving.button:not(.button-primary)::before {
+    border-color: rgba(0,0,0,0.15);
+    border-top-color: #2271b1;
+}
+@keyframes rental-btn-spin {
+    to { transform: rotate(360deg); }
+}

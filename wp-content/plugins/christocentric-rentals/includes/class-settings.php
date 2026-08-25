@@ -232,50 +232,14 @@ final class CCR_Settings
                         <th scope="row"><label for="ccr_whatsapp"><?php esc_html_e('WhatsApp number or link', 'christocentric-rentals'); ?></label></th>
                         <td>
                             <input type="text" class="regular-text" id="ccr_whatsapp" name="ccr_whatsapp" value="<?php echo esc_attr((string) get_option('ccr_whatsapp', self::DEFAULT_WHATSAPP)); ?>" placeholder="233532670582">
-                            <p class="description"><?php esc_html_e('Used by the green chat button. Paste a full WhatsApp link (https://wa.me/c/233532670582) or digits with country code (233532670582).', 'christocentric-rentals'); ?></p>
+                            <p class="description"><?php esc_html_e('Used by the green chat button. Paste a full WhatsApp link (https://wa.me/233532670582) or digits with country code (233532670582).', 'christocentric-rentals'); ?></p>
                         </td>
                     </tr>
                 </table>
                 <h2 class="title"><?php esc_html_e('Rental holds & defaults', 'christocentric-rentals'); ?></h2>
                 <table class="form-table" role="presentation">
-                    <tr>
-                        <th scope="row"><label for="ccr_rentopian_api_key"><?php esc_html_e('Rentopian API key (optional)', 'christocentric-rentals'); ?></label></th>
-                        <td>
-                            <input type="password" class="regular-text" id="ccr_rentopian_api_key" name="ccr_rentopian_api_key" value="<?php echo esc_attr(get_option('ccr_rentopian_api_key', '')); ?>" autocomplete="off">
-                            <p class="description"><?php esc_html_e('From Rentopian → Settings → Company Details → API key. Leave empty to skip all Rentopian sync.', 'christocentric-rentals'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><label for="ccr_rentopian_base_url"><?php esc_html_e('Rentopian base URL', 'christocentric-rentals'); ?></label></th>
-                        <td><input type="url" class="regular-text" id="ccr_rentopian_base_url" name="ccr_rentopian_base_url" value="<?php echo esc_attr(get_option('ccr_rentopian_base_url', class_exists('CCR_Rentopian_Sync') ? CCR_Rentopian_Sync::default_base_url() : 'https://account.rentopian.com/api/v1')); ?>"></td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><label for="ccr_rentopian_website"><?php esc_html_e('Rentopian website domain', 'christocentric-rentals'); ?></label></th>
-                        <td>
-                            <input type="url" class="regular-text" id="ccr_rentopian_website" name="ccr_rentopian_website" value="<?php echo esc_attr(get_option('ccr_rentopian_website', class_exists('CCR_Rentopian_Sync') ? CCR_Rentopian_Sync::website_domain() : 'https://christocentricrentals.com')); ?>">
-                            <p class="description"><?php esc_html_e('Must match the Website URL used when the API key was created in Rentopian (usually the live site).', 'christocentric-rentals'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Catalog: Rentopian → this shop', 'christocentric-rentals'); ?></th>
-                        <td>
-                            <label>
-                                <input type="hidden" name="ccr_rentopian_pull_products" value="no">
-                                <input type="checkbox" name="ccr_rentopian_pull_products" value="yes" <?php checked(get_option('ccr_rentopian_pull_products', 'yes'), 'yes'); ?>>
-                                <?php esc_html_e('Pull products (matched by Rentopian ID or SKU; never deletes existing products)', 'christocentric-rentals'); ?>
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Catalog: this shop → Rentopian', 'christocentric-rentals'); ?></th>
-                        <td>
-                            <label>
-                                <input type="hidden" name="ccr_rentopian_push_products" value="no">
-                                <input type="checkbox" name="ccr_rentopian_push_products" value="yes" <?php checked(get_option('ccr_rentopian_push_products', 'no'), 'yes'); ?>>
-                                <?php esc_html_e('Push products to Rentopian (leave off — Rentopian is the catalog)', 'christocentric-rentals'); ?>
-                            </label>
-                        </td>
-                    </tr>
+                    <input type="hidden" name="ccr_rentopian_pull_products" value="no">
+                    <input type="hidden" name="ccr_rentopian_push_products" value="no">
                     <tr>
                         <th scope="row"><label for="ccr_pickup_cash_hold_hours"><?php esc_html_e('Pickup-cash stock hold (hours)', 'christocentric-rentals'); ?></label></th>
                         <td><input type="number" min="1" id="ccr_pickup_cash_hold_hours" name="ccr_pickup_cash_hold_hours" value="<?php echo esc_attr(get_option('ccr_pickup_cash_hold_hours', 72)); ?>"></td>
@@ -511,76 +475,9 @@ final class CCR_Settings
                 <?php submit_button(); ?>
             </form>
 
-            <?php
-            $rentopianLog = class_exists('CCR_Rentopian_Catalog') ? CCR_Rentopian_Catalog::last_log() : [];
-            ?>
             <div class="card" style="max-width:820px;padding:12px 16px;margin:16px 0">
-                <h2 style="margin-top:0"><?php esc_html_e('Rentopian catalog sync', 'christocentric-rentals'); ?></h2>
-                <p><?php esc_html_e('Rentopian’s API does not send prices. We imported your Inventory Export PDF (292 items, rental rates + quantities). After upload, click Apply saved rates & descriptions.', 'christocentric-rentals'); ?></p>
-                <div>
-                    <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="display:inline-block;margin-right:8px">
-                        <input type="hidden" name="action" value="ccr_rentopian_pull">
-                        <?php wp_nonce_field('ccr_rentopian_pull'); ?>
-                        <?php submit_button(__('Pull catalog from Rentopian', 'christocentric-rentals'), 'secondary', 'submit', false); ?>
-                    </form>
-                    <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="display:inline-block">
-                        <input type="hidden" name="action" value="ccr_rentopian_push">
-                        <?php wp_nonce_field('ccr_rentopian_push'); ?>
-                        <?php submit_button(__('Push catalog to Rentopian', 'christocentric-rentals'), 'secondary', 'submit', false); ?>
-                    </form>
-                </div>
-                <?php
-                $catalogCounts = class_exists('CCR_Rentopian_Catalog') ? CCR_Rentopian_Catalog::catalog_counts() : ['local' => 0, 'rentopian' => 0];
-                ?>
-                <p class="description" style="margin-top:12px">
-                    <?php echo esc_html(sprintf(
-                        /* translators: 1: rentopian count 2: local count */
-                        __('On this shop now: %1$d Rentopian products, %2$d local-only products.', 'christocentric-rentals'),
-                        (int) $catalogCounts['rentopian'],
-                        (int) $catalogCounts['local']
-                    )); ?>
-                </p>
-                <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="margin-top:8px" onsubmit="return confirm('Move local-only products to Trash? Rentopian items stay.');">
-                    <input type="hidden" name="action" value="ccr_rentopian_keep_only">
-                    <?php wp_nonce_field('ccr_rentopian_keep_only'); ?>
-                    <label>
-                        <input type="checkbox" name="ccr_confirm_keep_rentopian" value="1" required>
-                        <?php esc_html_e('I understand this trashes products that did not come from Rentopian. They can be restored from Trash.', 'christocentric-rentals'); ?>
-                    </label>
-                    <p>
-                        <?php submit_button(__('Keep Rentopian catalog only', 'christocentric-rentals'), 'delete', 'submit', false); ?>
-                    </p>
-                </form>
-                <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="margin-top:8px">
-                    <input type="hidden" name="action" value="ccr_rentopian_apply_fallback">
-                    <?php wp_nonce_field('ccr_rentopian_apply_fallback'); ?>
-                    <p class="description"><?php esc_html_e('Sets daily rates from the Rentopian PDF, fills descriptions when we have them, and attaches photos from Media plus the product-images folder in this plugin (~129 shots from the old shop).', 'christocentric-rentals'); ?></p>
-                    <?php submit_button(__('Apply saved rates & descriptions', 'christocentric-rentals'), 'primary', 'submit', false); ?>
-                </form>
-                <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="margin-top:8px">
-                    <input type="hidden" name="action" value="ccr_apply_folder_photos">
-                    <input type="hidden" name="ccr_reset_folder_photos" value="1">
-                    <?php wp_nonce_field('ccr_apply_folder_photos'); ?>
-                    <p class="description"><?php esc_html_e('Uploads photos from public_html/Products Images onto matching products. Name the first photo main.png (or main.jpg) inside that product’s folder. 00000 is optional. Runs in small batches so Hostinger does not time out. Keep the tab open until it finishes.', 'christocentric-rentals'); ?></p>
-                    <?php submit_button(__('Attach photos from Products Images', 'christocentric-rentals'), 'primary', 'submit', false); ?>
-                </form>
-                <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="margin-top:8px">
-                    <input type="hidden" name="action" value="ccr_rentopian_categorize">
-                    <?php wp_nonce_field('ccr_rentopian_categorize'); ?>
-                    <p class="description"><?php esc_html_e('Puts Rentopian items into Cameras, Lenses, Lighting, Audio, Gimbals, and the other shop categories from the product name.', 'christocentric-rentals'); ?></p>
-                    <?php submit_button(__('Categorize Rentopian products', 'christocentric-rentals'), 'secondary', 'submit', false); ?>
-                </form>
-                <?php if ($rentopianLog !== []) : ?>
-                    <p class="description">
-                        <?php echo esc_html(sprintf(
-                            /* translators: 1: action 2: datetime 3: message */
-                            __('Last %1$s: %2$s — %3$s', 'christocentric-rentals'),
-                            (string) ($rentopianLog['action'] ?? ''),
-                            (string) ($rentopianLog['at'] ?? ''),
-                            (string) ($rentopianLog['result']['message'] ?? '')
-                        )); ?>
-                    </p>
-                <?php endif; ?>
+                <h2 style="margin-top:0"><?php esc_html_e('Rentopian', 'christocentric-rentals'); ?></h2>
+                <p><?php esc_html_e('The official Rentopian Sync plugin now owns the product catalog and website bookings. Use the Rentopian Sync menu to import products. Do not use our old Pull / Push / Apply catalog buttons.', 'christocentric-rentals'); ?></p>
             </div>
 
             <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="margin-top:8px">
@@ -747,7 +644,7 @@ final class CCR_Settings
     }
 
     public const CONTACT_EMAIL = 'christocentricrentals@gmail.com';
-    public const DEFAULT_WHATSAPP = 'https://wa.me/c/233532670582';
+    public const DEFAULT_WHATSAPP = 'https://wa.me/233532670582';
 
     public static function whatsapp_url(): string
     {

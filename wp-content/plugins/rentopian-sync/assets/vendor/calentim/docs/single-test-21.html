@@ -1,0 +1,113 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+        <title>
+            calentim - Date Range Picker
+        </title>
+
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700" rel="stylesheet" />
+        <link href="../build/css/calentim.min.css" rel="stylesheet" />
+        <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <script src="../build/vendor/jquery.min.js"></script>
+        <script src="../build/vendor/moment.min.js"></script>
+        <script src="../build/vendor/jquery.hammer.js"></script>
+        <script src="../build/js/calentim.min.js"></script>
+        <style>
+            html {
+                background: #00c2d5;
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+                width: 100%;
+            }
+            body {
+                width: 1000px !important;
+                text-align: center;
+                flex-basis: 1000px;
+                flex-shrink: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div
+            class="time-slot"
+            data-meetingtime="30"
+            data-begintime="13:00"
+            data-endtime="13:30"
+            data-startdate="2020-01-28 13:00:00"
+        >
+            Click me
+        </div>
+        <div class="time-picker-box time-picker-container">
+            <label for="meeting_time" class="location-form-group__label">&nbsp;</label>
+            <input
+                class="form-control datetimepicker"
+                placeholder="&nbsp;"
+                id="meeting-time-picker"
+                data-modules='["inline", "timepicker"]'
+                name="meeting_time"
+                type="text"
+            />
+        </div>
+
+        <script>
+            $(function() {
+                let $selector = $(".datetimepicker");
+
+                $selector.each(function() {
+                    moment.locale("en-gb");
+                    let modules = $(this).data("modules") || [];
+                    let options = {
+                        singleDate: true,
+                        calendarCount: 1,
+                        minuteSteps: 15,
+                        hourFormat: 24,
+                        autoCloseOnSelect: false,
+                        inline: true,
+                        showHeader: false,
+                        showButtons: false,
+                        startEmpty: false,
+                        showCalendars: false,
+                        format: "HH:mm"
+                    };
+                    $(this).calentim(options);
+                });
+
+                $(".time-slot").click(function(e) {
+                    e.preventDefault();
+
+                    let $timePicker = $("#meeting-time-picker");
+                    let calentim = $timePicker.data("calentim");
+                    let beginTimeArr = $(this)
+                        .data("begintime")
+                        .split(":");
+                    let endTimeArr = $(this)
+                        .data("endtime")
+                        .split(":");
+                    calentim.config.limitTimeForDay = function(day) {
+                        return {
+                            start: {
+                                hour: parseInt(beginTimeArr[0]),
+                                minute: parseInt(beginTimeArr[1]),
+                                ampm: null
+                            },
+                            end: {
+                                hour: parseInt(endTimeArr[0]),
+                                minute: parseInt(endTimeArr[1]),
+                                ampm: null
+                            }
+                        };
+                    };
+                    calentim.config.startDate = moment("2020-03-10 13:00:00");
+                    calentim.config.minuteSteps = 10;
+                    calentim.updateTimePickerDisplay();
+                });
+            });
+        </script>
+    </body>
+</html>

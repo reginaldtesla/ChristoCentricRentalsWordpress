@@ -1,0 +1,51 @@
+/*
+ * Product options.
+ *
+ * Every rule that styles an option selector, the cart Options column, or the
+ * choice hint lives here. Moved out of the global stylesheet so the module owns
+ * its own presentation, the way includes/sets/assets does.
+ */
+
+/* Product page: the selector holder the renderer fills. */
+.rental-product-options p {
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.rental-product-options select {
+    margin-bottom: .3rem;
+    width: 100%;
+    padding: 6px 8px;
+}
+
+/* Options are unavailable until the structure has painted. */
+.rental-product-options.is-loading {
+    opacity: .55;
+}
+
+/* Names the selects still showing the placeholder, and why the button is locked. */
+.rental-product-options .rental-product-options-hint,
+.rental-product-options .rental-product-options-error {
+    margin: 8px 0 0;
+    padding: 8px 12px;
+    border-left: 3px solid #d63638;
+    background: #fcf0f1;
+    color: #8a1f23;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+/*
+ * Our own lock state. Deliberately NOT `.disabled`: WooCommerce owns that class
+ * on a variable product and keys its own guard off it, so styling or toggling
+ * it here would speak for WooCommerce.
+ */
+.single_add_to_cart_button.rental-options-locked {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+/* Shop loop caption. */
+.product-caption .product-options {
+    font-size: .8rem;
+}

@@ -55,7 +55,7 @@ function ccr_whatsapp_chat_url(): string
 
     $raw = trim((string) get_option('ccr_whatsapp', ''));
     if ($raw === '') {
-        $raw = 'https://wa.me/c/233532670582';
+        $raw = 'https://wa.me/233532670582';
     }
     if (preg_match('#^https?://#i', $raw)) {
         return $raw;

@@ -1,0 +1,62 @@
+    .calentim-container.calentim-rtl {
+        .calentim-prev,
+        .calentim-next,
+        .calentim-header-separator {
+            transform: rotateY(180deg);
+        }
+
+        .calentim-header-start,
+        .calentim-header-end {
+            margin-right: 0;
+            margin-left: 10px;
+
+            .calentim-header-start-day,
+            .calentim-header-end-day {
+                float: right !important;
+                margin-right: 0 !important;
+                margin-left: 10px;
+            }
+
+            .calentim-header-start-date,
+            .calentim-header-end-date {
+                display: block !important;
+            }
+
+            .calentim-header-start-date,
+            .calentim-header-start-weekday,
+            .calentim-header-end-date,
+            .calentim-header-end-weekday {
+                text-align: right !important;
+            }
+        }
+
+        .calentim-calendar {
+            border-left: 1px solid $calentim-container-border-color;
+            border-right: 0px solid transparent !important;
+        }
+
+        .calentim-calendar:last-child {
+            border-left: 0px solid transparent;
+        }
+
+        .calentim-timepicker-start {
+            border-left: 1px solid $calentim-container-border-color;
+            border-right: 0px solid transparent !important;
+        }
+
+        .calentim-timepicker {
+            direction: ltr;
+        }
+
+        .calentim-day {
+            &.calentim-hovered-last,
+            &.calentim-selected.calentim-end {
+                border-radius: 6px 0 0 6px !important;
+            }
+
+            &.calentim-hovered-first,
+            &.calentim-selected.calentim-start {
+                border-radius: 0 6px 6px 0 !important;
+            }
+        }
+    }

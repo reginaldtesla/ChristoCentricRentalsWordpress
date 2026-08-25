@@ -15,15 +15,7 @@ final class CCR_Rentopian_Catalog
 
     public static function init(): void
     {
-        add_action(self::CRON, [self::class, 'pull']);
-        add_action('admin_post_ccr_rentopian_pull', [self::class, 'handle_pull']);
-        add_action('admin_post_ccr_rentopian_push', [self::class, 'handle_push']);
-        add_action('admin_post_ccr_rentopian_keep_only', [self::class, 'handle_keep_only']);
-        add_action('admin_post_ccr_rentopian_categorize', [self::class, 'handle_categorize']);
-        add_action('admin_post_ccr_rentopian_apply_fallback', [self::class, 'handle_apply_fallback']);
-        add_action('admin_post_ccr_apply_folder_photos', [self::class, 'handle_apply_folder_photos']);
-        add_action('woocommerce_update_product', [self::class, 'maybe_push_product'], 40, 1);
-        add_action('init', [self::class, 'maybe_schedule']);
+        add_action('init', [self::class, 'unschedule']);
     }
 
     public static function maybe_schedule(): void

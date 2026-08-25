@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Christocentric Rentals
  * Description: 24-hour camera & gear rentals — availability, pay-on-pickup, Paystack, SMTP, and optional Rentopian sync.
- * Version: 1.9.21
+ * Version: 1.9.22
  * Author: Christocentric Rentals
  * Requires at least: 6.4
  * Requires PHP: 8.1
@@ -11,7 +11,7 @@
 
 defined('ABSPATH') || exit;
 
-define('CCR_VERSION', '1.9.21');
+define('CCR_VERSION', '1.9.22');
 define('CCR_PLUGIN_FILE', __FILE__);
 define('CCR_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('CCR_PLUGIN_URL', plugin_dir_url(__FILE__));
@@ -141,7 +141,7 @@ final class Christocentric_Rentals
         add_option('ccr_smtp_encryption', 'tls');
         add_option('ccr_smtp_auth', 'yes');
         add_option('ccr_google_enabled', 'no');
-        add_option('ccr_whatsapp', 'https://wa.me/c/233532670582');
+        add_option('ccr_whatsapp', 'https://wa.me/233532670582');
         update_option('woocommerce_enable_myaccount_registration', 'yes');
 
         CCR_Newsletter::install();

@@ -1,0 +1,222 @@
+/**
+ * Background Data Sync — admin panel styling.
+ *
+ * The panel chrome, form rows and buttons come from the shared admin
+ * stylesheet (`rntp-sync-panel`, `rental-form-group`, `btn`), so this file
+ * only adds what a progress panel needs: the stage bars, the run counters
+ * and the report-recipient row.
+ *
+ * Scoped under .rental-ds-panel so nothing here can leak into the rest of
+ * the settings screen.
+ */
+
+.rental-ds-panel {
+    /* Rentopian brand accent. Status colours stay semantic (green done,
+       red failed, amber canceled) so the panel is still readable at a
+       glance; only the neutral chrome carries the brand. */
+    --rental-brand: #4f5467;
+}
+
+.rental-ds-panel .rental-ds-last-run {
+    float: right;
+    font-size: 13px;
+    color: #50575e;
+    line-height: 40px;
+}
+
+/* ── Controls ─────────────────────────────────────────────── */
+
+.rental-ds-panel .rental-ds-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.rental-ds-panel .btn .dashicons {
+    font-size: 17px;
+    line-height: 1;
+}
+
+/* Spinner on the primary button while a run is live. */
+.rental-ds-panel .btn.is-busy .dashicons-update {
+    animation: rental-ds-spin 1.4s linear infinite;
+}
+
+@keyframes rental-ds-spin {
+    100% { transform: rotate(360deg); }
+}
+
+/* ── Report recipients ────────────────────────────────────── */
+
+/* The panel stylesheet stretches every text input to the full row, which
+   leaves a lone email field spanning the whole panel. */
+.rental-ds-panel .rental-ds-report input[type="text"] {
+    display: inline-block;
+    width: 100%;
+    max-width: 320px;
+    padding: 4px 8px;
+    line-height: 22px;
+    font-size: 13px;
+    border: solid 1px #a4a6b0;
+    border-radius: 4px;
+}
+
+.rental-ds-panel .rental-ds-report select {
+    width: 100%;
+    max-width: 320px;
+    margin-bottom: 8px;
+    padding: 4px 8px;
+    line-height: 22px;
+    border: solid 1px #a4a6b0;
+    border-radius: 4px;
+}
+
+.rental-ds-panel .rental-ds-report .btn {
+    margin: 8px 0 0;
+    display: block;
+}
+
+.rental-ds-panel .rental-ds-report .rntp-sync-field {
+    width: 340px;
+}
+
+#rental_data_sync_report_status {
+    margin: 10px 0 0;
+    font-size: 12px;
+}
+
+#rental_data_sync_report_status:empty {
+    display: none;
+}
+
+/* ── Status ───────────────────────────────────────────────── */
+
+.rental-ds-status {
+    margin: 12px 0;
+    padding: 12px 14px;
+    background: #f6f7f7;
+    border: 1px solid #dcdcde;
+    border-radius: 3px;
+}
+
+.rental-ds-status.is-idle     { border-left: 3px solid #8c8f94; }
+.rental-ds-status.is-running  { border-left: 3px solid var(--rental-brand, #4f5467); }
+.rental-ds-status.is-done     { border-left: 3px solid #00a32a; }
+.rental-ds-status.is-failed   { border-left: 3px solid #d63638; }
+.rental-ds-status.is-canceled { border-left: 3px solid #dba617; }
+
+.rental-ds-stage {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.rental-ds-stage + .rental-ds-stage {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed #dcdcde;
+}
+
+.rental-ds-stage-name {
+    font-weight: 600;
+    min-width: 74px;
+}
+
+.rental-ds-state {
+    text-transform: capitalize;
+}
+
+.rental-ds-muted {
+    color: #646970;
+    font-size: 12px;
+}
+
+.rental-ds-error {
+    color: #d63638;
+}
+
+/* ── Progress bar ─────────────────────────────────────────── */
+
+.rental-ds-bar {
+    flex: 1 1 180px;
+    height: 8px;
+    min-width: 140px;
+    background: #dcdcde;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.rental-ds-bar span {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--rental-brand, #4f5467);
+    transition: width .4s ease;
+}
+
+.rental-ds-stage.is-done .rental-ds-bar span { background: #00a32a; }
+
+.rental-ds-pct {
+    min-width: 38px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+    color: #50575e;
+}
+
+/* ── Diagnosis banner ─────────────────────────────────────── */
+
+.rental-ds-hints {
+    margin: 4px 0 0;
+    padding-left: 18px;
+    list-style: disc;
+}
+
+.rental-ds-hints li {
+    margin: 2px 0;
+}
+
+/* ── Status badges ────────────────────────────────────────── */
+
+.rental-ds-badge {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+    background: #f0f0f1;
+    color: #50575e;
+}
+
+.rental-ds-badge.is-completed  { background: #edfaef; color: #007017; }
+.rental-ds-badge.is-failed     { background: #fcf0f1; color: #b32d2e; }
+.rental-ds-badge.is-canceled   { background: #fcf9e8; color: #8a6116; }
+.rental-ds-badge.is-processing,
+.rental-ds-badge.is-created    { background: #eef4fb; color: #1d5b91; }
+
+/* ── Stats ────────────────────────────────────────────────── */
+
+.rental-ds-stats {
+    margin: 10px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.rental-ds-stats li {
+    margin: 0;
+    padding: 2px 8px;
+    background: #fff;
+    border: 1px solid #dcdcde;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+/* ── Link to the full log ─────────────────────────────────── */
+
+.rental-ds-panel .rental-ds-open-log {
+    margin: 14px 0 0;
+}

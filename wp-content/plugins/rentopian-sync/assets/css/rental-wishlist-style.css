@@ -1,0 +1,128 @@
+/*--------------------------------------------------------------
+Rentopian Sync Styles
+Author: Rentopian
+Website: https://rentopian.com
+Copyright 2019, Rentopian Inc. All Rights Reserved.
+----------------------------------------------------------------*/
+
+.rental-wishlist-box-warpper {
+    width: 40rem;
+    padding: 2rem;
+    box-shadow: rgba(56, 86, 122, 0.1) 0 6px 16px 1px;
+}
+.rental-wishlist-box {
+    width: 100%;
+}
+.rental-wishlist-form-row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    /* margin-top: 1rem; */
+}
+.rental-wishlist-box .rental-wishlist-form-row:last-child {
+    justify-content: center;
+    margin-top: 2rem;
+}
+.rental-wishlist-form-col {
+    /* width: 45%; */
+    margin-top: .5rem;
+}
+.rental-wishlist-box-warpper h3 {
+    margin: 0;
+}
+/*
+.rental-wishlist-box .btn {
+    padding: 10px 30px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    overflow: hidden;
+    border-radius: 4px;
+    transition: all .2s ease-in;
+    box-shadow: 2px 2px 14px 4px rgba(193,205,227,.5);
+    border: none;
+    cursor: pointer;
+    width: 9rem;
+    position: relative;
+}*/
+
+.rental-wishlist-box .btn.btn-success {
+    border-color: #00b45b;
+    background: #00c363;
+    color: #fff;
+}
+
+.rental-wishlist-box .btn.btn-success.active,.btn.btn-success:active,.btn.btn-success:active:focus,.btn.btn-success:hover, .btn.btn-success:focus {
+    border-color: #009a4e;
+    background: #00b45b;
+    color: #f2f2f2
+}
+
+.rental-wishlist-box .dashicons {
+    position: absolute;
+    left: 1.9rem;
+    top: 0.8rem;
+}
+
+#rntp-wish-errors ul {
+    display: none;
+    padding: 1rem;
+    background: #ffa5a5;
+    color: #a20000;
+    border-radius: .3rem;
+    margin-bottom: 2rem;
+    list-style: disc !important;
+}
+#rntp-wish-errors ul li {
+    /* list-style: disc !important; */
+    width: 100%;
+    text-align: left;
+}
+
+#rntp-wish-success {
+    display: none;
+    padding: 1.5rem 1.5rem 1.5rem 3rem;
+    background: #00b45b;
+    color: #ffffff;
+    border-radius: .3rem;
+    margin-bottom: 2rem;
+    font-weight: bold;
+}
+
+.rental-wishlist-form-row #rntp-wish-submit {
+    margin: 0 auto;
+}
+
+/* .rental-flex-direction-column {
+    flex-direction: column !important;
+} */
+
+.rental-flex-direction-row {
+    flex-direction: row !important;
+}
+
+
+/*---------- 7. Mobile Overrides ----------*/
+
+@media (max-width: 768px) {
+    .rental-wishlist-box-warpper {
+        width: 95%;
+        margin: 0 auto;
+    }
+    .rental-wishlist-form-row {
+        flex-direction: column !important;
+        margin-top: 0;
+    }
+    .rental-flex-direction-row {
+        flex-direction: column !important;
+    }
+    .rental-wishlist-form-col, .rental-wishlist-form-row textarea {
+        width: 100%;
+        margin-top: 1rem;
+    }
+    .rental-wishlist-box .rental-wishlist-form-row:last-child {
+        align-items: center;
+    }
+}

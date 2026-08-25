@@ -1,0 +1,28 @@
+/* style.scss */
+
+@import "calentim-variables.scss";
+@import "calentim-desktop.scss";
+@import "calentim-hovers.scss";
+@import "calentim-mobile.scss";
+@import "calentim-mobile-inline.scss";
+@import "calentim-helpers.scss";
+@import "calentim-rtl.scss";
+
+@media screen\0 {
+    .calentim-dayofweek,
+    .calentim-day,
+    .calentim-disabled {
+        width: calc((100% / 7) – 2px) !important;
+        padding: 2px !important;
+    }
+    .calentim-input-vertical-range .calentim-left {
+        flex: 1;
+    }
+    .calentim-input-vertical-range .calentim-ranges {
+        flex: 1;
+    }
+    .calentim-input-vertical-range .calentim-range {
+        flex: 0 1 auto !important;
+        line-height: 1em !important;
+    }
+}

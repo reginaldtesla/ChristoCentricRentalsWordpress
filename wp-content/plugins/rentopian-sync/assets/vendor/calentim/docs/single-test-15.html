@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <title>Calentim - Date Time Range Picker</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700"
+      rel="stylesheet"
+    />
+    <link href="../build/css/calentim.min.css" rel="stylesheet" />
+    <link
+      href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <script src="../build/vendor/jquery.min.js"></script>
+    <script src="../build/vendor/moment.min.js"></script>
+    <script src="../build/vendor/jquery.hammer.js"></script>
+    <script src="../build/js/calentim.min.js"></script>
+  </head>
+  <body>
+    <div class="cal-field-wrapper">
+      <div class="cal-field half cal-dates">
+        <div class="cal-date-field">
+          <input
+            type="text"
+            id="pickdate"
+            autocomplete="off"
+            name="pickup_date"
+            placeholder="From"
+            value=""
+          />
+        </div>
+        <div class="cal-date-field">
+          <input
+            type="text"
+            id="dropdate"
+            autocomplete="off"
+            name="dropoff_date"
+            placeholder="To"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      var format = "[<span class='cal_week_date'>]D[</span>][&nbsp;][<span>]MMM[</span>]['][&nbsp;][<span>]YY[</span>][&nbsp;][<span class='cal_week_day'>]ddd[</span>]";
+      var userLanguage = "en";
+      if (userLanguage == "") {
+        userLanguage = "navigator.language || navigator.userLanguage";
+      }
+      moment.locale(userLanguage);
+      var pickDate = $("#pickdate").val();
+      var dropDate = $("#dropdate").val();
+      if (pickDate != "") {
+        $(".cal_date_open").html(moment(pickDate).format(format));
+      }
+      if (dropDate != "") {
+        $(".cal_date_close").html(moment(dropDate).format(format));
+      }
+      var startDate = null, endDate = null, startInstance, endInstance;
+      var fillInputs = function() {
+        if (startDate)
+          startInstance.$elem.val(
+            startDate.locale("en").format(startInstance.config.format)
+          );
+        if (endDate)
+          endInstance.$elem.val(
+            endDate.locale("en").format(endInstance.config.format)
+          );
+      };
+      var beforeShow = function(instance) {
+        if (startDate) {
+          startInstance.config.startDate = startDate.clone();
+          endInstance.config.startDate = startDate.clone();
+        }
+        if (endDate) {
+          startInstance.config.endDate = endDate.clone();
+          endInstance.config.endDate = endDate.clone();
+        }
+        fillInputs();
+        instance.updateHeader();
+        instance.reDrawCells();
+        instance.updateTimePickerDisplay();
+        $(".calentim-header-start-day")
+          .addClass("startlabel")
+          .attr("data-label", "Pickup date");
+      };
+
+      var calendar_count = "2";
+
+      $("#pickdate").calentim({
+        startDate: $("#pickdate").val(),
+        endDate: $("#dropdate").val(),
+        showHeader: false,
+        //arrowOn: "left",
+        locale: userLanguage,
+        minDate: moment(),
+        enableKeyboard: false,
+        oneCalendarWidth: 250,
+        calendarCount: calendar_count,
+        showTimePickers: false,
+        hideOutOfRange: true,
+        format: "YYYY-MM-DD",
+        startEmpty: true,
+        showFooter: false,
+        oninit: function(instance) {
+          startInstance = instance;
+          if (!instance.config.startEmpty && instance.config.startDate) {
+            instance.$elem.val(
+              instance.config.startDate
+                .locale("en")
+                .format(instance.config.format)
+            );
+            startDate = instance.config.startDate.clone();
+          }
+        },
+        onfirstselect: function(instance, start) {
+          startDate = start.clone();
+          //endDate = null;
+          startInstance.globals.startSelected = false;
+          startInstance.hideDropdown();
+          endInstance.showDropdown();
+          endInstance.setDisplayDate(start.clone());
+          endInstance.config.minDate = startDate.clone();
+          endInstance.config.startDate = startDate.clone();
+          endInstance.config.endDate = null;
+          endInstance.globals.startSelected = true;
+          endInstance.globals.endSelected = false;
+          endInstance.globals.firstValueSelected = true;
+          if (endDate && startDate.isAfter(endDate)) {
+            endInstance.config.endDate = endDate.clone();
+          }
+          fillInputs();
+          endInstance.updateHeader();
+          endInstance.reDrawCells();
+          endInstance.updateTimePickerDisplay();
+          $(".cal_date_open").html(
+            startDate.locale(userLanguage).format(format)
+          );
+          $(".cal_date_open")
+            .removeClass("cal-date-yes")
+            .prop("disabled", false);
+          $(".calentim-header-end-day")
+            .addClass("endlabel")
+            .attr("data-label", "Drop-off date");
+        },
+        onbeforehide: function(calentim) {
+          $(".cal_date_open")
+            .removeClass("cal-date-yes")
+            .prop("disabled", false);
+          $(".cal_date_close")
+            .removeClass("cal-date-yes")
+            .prop("disabled", false);
+        },
+        onaftershow: beforeShow
+      });
+
+      $("#dropdate").calentim({
+        startDate: $("#pickdate").val(),
+        endDate: $("#dropdate").val(),
+        showHeader: false,
+        //arrowOn: "right",
+        locale: userLanguage,
+        enableKeyboard: false,
+        oneCalendarWidth: 250,
+        autoCloseOnSelect: "On",
+        calendarCount: calendar_count,
+        minDate: moment(),
+        hideOutOfRange: true,
+        showTimePickers: false,
+        format: "YYYY-MM-DD",
+        startEmpty: true,
+        showFooter: false,
+        oninit: function(instance) {
+          endInstance = instance;
+          if (!instance.config.startEmpty && instance.config.endDate) {
+            instance.$elem.val(
+              instance.config.endDate
+                .locale("en")
+                .format(instance.config.format)
+            );
+            endDate = instance.config.endDate.clone();
+            endInstance.globals.startSelected = true;
+            endInstance.globals.endSelected = false;
+          }
+        },
+        onaftermonthchange: function(instance, month) {
+          $(".calentim-header-start-day")
+            .addClass("startlabel")
+            .attr("data-label", "Pickup date");
+          $(".calentim-header-end-day")
+            .addClass("endlabel")
+            .attr("data-label", "Drop-off date");
+        },
+        onbeforehide: function(calentim) {
+          $(".cal_date_open")
+            .removeClass("cal-date-yes")
+            .prop("disabled", false);
+          $(".cal_date_close")
+            .removeClass("cal-date-yes")
+            .prop("disabled", false);
+        },
+        onaftershow: beforeShow,
+        onafterselect: function(instance, start, end) {
+          startDate = start.clone();
+          endDate = end.clone();
+          endInstance.hideDropdown();
+          startInstance.config.endDate = endDate.clone();
+          startInstance.globals.firstValueSelected = true;
+          fillInputs();
+          endInstance.globals.startSelected = true;
+          endInstance.globals.endSelected = false;
+          $(".cal_date_open").html(
+            startDate.locale(userLanguage).format(format)
+          );
+          $(".cal_date_close").html(
+            endDate.locale(userLanguage).format(format)
+          );
+        }
+      });
+
+    </script>
+  </body>
+</html>

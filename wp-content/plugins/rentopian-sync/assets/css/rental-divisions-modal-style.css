@@ -1,0 +1,130 @@
+.rental-location-btn_close {
+    color: #aaaaaa;
+    font-size: 20px;
+    text-decoration: none;
+    padding: 10px;
+    position: absolute;
+    right: 7px;
+    top: 0;
+}
+
+.rental-location-btn_close:hover {
+    color: #919191;
+}
+
+.rental-location-modal:before {
+    content: "";
+    display: none;
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+}
+
+.rental-location-modal.opened:before {
+    display: block;
+}
+
+.rental-location-modal.opened .rental-location-modal_dialog {
+    /* transform: translate(0, 0); */
+    transform: translate(-50%, 0);
+    top: 10%;
+}
+
+.rental-location-modal_dialog {
+    background: #fefefe;
+    border: #333333 solid 0;
+    border-radius: 5px;
+    /* margin-left: -300px; */
+    text-align: center;
+    position: fixed;
+    left: 50%;
+    top: -100%;
+    z-index: 11;
+    /* width: 600px; */
+    max-width: 100%;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    transform: translate(-50%, -500%);
+    transition: transform 0.3s ease-out;
+}
+
+.rental-location-modal_body {
+    padding: 20px;
+}
+
+.rental-location-modal_header,
+.rental-location-modal_footer {
+    padding: 10px 20px;
+}
+
+.rental-location-modal_header {
+    border-bottom: #444 solid 1px;
+    color: #fff;
+    background: #222;
+}
+
+.rental-location-modal_header h2 {
+    font-size: 20px;
+    color: #fff;
+}
+
+.rental-location-desc {
+    font-size: 1.2em;
+}
+
+.rental-location-list {
+    padding: 0;
+    list-style: none;
+    display: flex
+}
+
+.rental-location-list li {
+    padding: 30px !important;
+    box-shadow: 0 2px 40px 0 rgba(17, 16, 21, 0.1);
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+a.rental-location-address{color:#333}
+
+.rental-location-list li.rental-selected-location {
+    border: 1px solid #333;
+}
+.rental-location-list h4, .rental-location-list p{color:#333}
+.rental-location-list a{
+    line-height: 30px;
+    text-decoration: none;
+}
+
+.rental-location-list a.rental-location-address{
+    color:#333;
+    border-bottom: dotted 1px #999;
+}
+
+.rental-location-list a.rental-location-select-btn {
+    text-decoration: none;
+    padding: 6px 15px;
+    background: #333;
+    color: #fff;
+    border-radius: 5px;
+    margin-top: 50px;
+    display: block;
+    height: 40px;
+
+}
+
+.location-picker{display: flex;align-items: center; font-weight: bold}
+.location-picker svg{width: 20px;height: 20px; margin-right:5px}
+.location-picker a:hover{color:inherit; opacity: .9}
+
+.rental-location-list a.rental-location-select-btn.rental-selected-location {
+    cursor: not-allowed;
+    background: #888;
+}
+
+.rental-location-modal .rental-location-warning {
+    color: #ff8000;
+}

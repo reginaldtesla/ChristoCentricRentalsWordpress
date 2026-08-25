@@ -1,0 +1,125 @@
+/**
+ * Variables
+ */
+
+ $calentim-font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+ $calentim-container-background: #15202B !default;
+ $calentim-container-border-color: lighten($calentim-container-background, 3%) !default;
+ $calentim-container-border: 1px solid $calentim-container-border-color !default;
+ $calentim-mobile-overlay-color: rgba(0, 0, 0, 0.4) !default;
+
+ // header part
+ $calentim-header-background: $calentim-container-background !default;
+ $calentim-header-big-day-number-text: #1885FC !default;
+ $calentim-header-month-year-text: #eee !default;
+ $calentim-header-dayname-text: #eee !default;
+ $calentim-header-separator-color: #21293A !default;
+ $calentim-header-bottom-border: 1px solid $calentim-container-border-color;
+
+ // calendar part
+ $calentim-calendar-header-background: $calentim-container-background !default;
+ $calentim-calendar-header-text: #eee !default;
+ $calentim-calendar-header-arrow-color: #eee !default;
+ $calentim-calendar-header-hover-arrow-shadow: #ddd !default;
+ $calentim-calendar-header-hover-text: #eee !default;
+ $calentim-calendar-header-bottom-border: 1px solid $calentim-container-border-color !default;
+ $calentim-calendar-weekdays-background: $calentim-container-background !default;
+ $calentim-calendar-weekdays-text: #eee !default;
+ $calentim-calendar-days-background: $calentim-container-background !default;
+ $calentim-calendar-days-border: 0px solid transparent !default;
+ $calentim-calendar-days-text: #ddf !default;
+ $calentim-calendar-days-today-text:  deeppink !default;
+ $calentim-calendar-weeks-background: lighten($calentim-container-background, 15%) !default;
+ $calentim-calendar-weeks-border: 1px solid $calentim-container-border-color !default;
+ $calentim-calendar-weeks-border-width: 0 1px 0 0 !default;
+ $calentim-calendar-weeks-text: #eef !default;
+ $calentim-calendar-days-selected-background: #1783FF !default;
+ $calentim-calendar-days-selected-text: #fff !default;
+ $calentim-calendar-days-hover-background: #21293A !default;
+ $calentim-calendar-days-hover-text: #fff !default;
+ $calentim-calendar-days-selected-first-last-background: #0666CD !default;
+ $calentim-calendar-days-selected-first-last-text: #fff !default;
+ $calentim-calendar-days-disabled-background: lighten($calentim-container-background, 5%) !default;
+ $calentim-calendar-days-disabled-text: lighten($calentim-container-background, 20%) !default;
+ $calentim-calendar-days-selected-disabled-background: $calentim-calendar-days-selected-background !default;
+ $calentim-calendar-days-selected-disabled-text: $calentim-calendar-days-selected-text !default;
+ $calentim-calendar-days-selected-disabled-transparency: 0.5 !default;
+ $calentim-calendar-days-weekend-background: $calentim-container-background !default;
+ $calentim-calendar-days-weekend-text: lighten($calentim-container-background, 66%) !default;
+ $calentim-calendar-days-not-in-month-background: $calentim-container-background !default;
+ $calentim-calendar-days-not-in-month-text: lighten($calentim-container-background, 40%) !default;
+
+ // timepickers part
+ $calentim-timepickers-background: lighten($calentim-container-background, 5%) !default;
+ $calentim-timepickers-picker-background: $calentim-container-background !default;
+ $calentim-timepickers-picker-border: $calentim-container-border !default;
+ $calentim-timepickers-picker-text: #eee !default;
+ $calentim-timepickers-picker-secondary-text: #eee !default;
+
+ $calentim-timepickers-buttons-text: lighten($calentim-container-background, 40%) !default;
+ $calentim-timepickers-buttons-border: $calentim-container-border !default;
+ $calentim-timepickers-buttons-background: lighten($calentim-container-background, 10%) !default;
+
+ $calentim-timepickers-buttons-hover-text: #fff !default;
+ $calentim-timepickers-buttons-hover-border: 1px solid lighten($calentim-container-border-color, 10%) !default;
+ $calentim-timepickers-buttons-hover-background: darken(#1783FF, 15%) !default;
+
+ $calentim-timepickers-separator-color: #eee !default;
+ $calentim-timepickers-ampm-button-background: $calentim-timepickers-buttons-background !default;
+ $calentim-timepickers-ampm-button-text: $calentim-timepickers-buttons-text !default;
+ $calentim-timepickers-ampm-button-border: $calentim-timepickers-buttons-border !default;
+
+ $calentim-timepickers-ampm-button-active-background: #1783FF !default;
+ $calentim-timepickers-ampm-button-active-text: #fff !default;
+ $calentim-timepickers-ampm-button-active-border: $calentim-container-border !default;
+
+ // ranges part
+ $calentim-ranges-title-icon-color: #eee !default;
+ $calentim-ranges-title-icon-text: #eee !default;
+ $calentim-horizontal-ranges-background: $calentim-container-background !default;
+ $calentim-horizontal-ranges-range-text: #1783FF !default;
+ $calentim-horizontal-ranges-range-hover-text: #eee !default;
+ $calentim-horizontal-ranges-range-active-text: deeppink !default;
+ $calentim-vertical-ranges-background: darken($calentim-container-background, 5%) !default;
+ $calentim-vertical-ranges-button-background: $calentim-container-background !default;
+ $calentim-vertical-ranges-button-border: $calentim-container-border !default;
+ $calentim-vertical-ranges-button-text: #eee !default;
+ $calentim-vertical-ranges-button-hover-background: darken($calentim-container-background, 2%) !default;
+ $calentim-vertical-ranges-button-hover-border:$calentim-container-border !default;
+ $calentim-vertical-ranges-button-hover-text: #eee !default;
+ $calentim-vertical-ranges-selected-button-background: #1885FC !default;
+ $calentim-vertical-ranges-selected-button-border: 1px solid $calentim-vertical-ranges-selected-button-background !default;
+ $calentim-vertical-ranges-selected-button-text: #fff !default;
+
+ // footer part
+ $calentim-footer-background: #000 !default;
+ $calentim-apply-button-background: #1783FF !default;
+ $calentim-apply-button-border: none !default;
+ $calentim-apply-button-text: #fff !default;
+ $calentim-apply-button-hover-background: darken(#0666CD, 5%) !default;
+ $calentim-apply-button-hover-border: $calentim-apply-button-border !default;
+ $calentim-apply-button-hover-text: #fff !default;
+ $calentim-apply-button-disabled-background: #334 !default;
+ $calentim-apply-button-disabled-border: $calentim-apply-button-border !default;
+ $calentim-apply-button-disabled-text: gray !default;
+ $calentim-cancel-button-background: #21293A !default;
+ $calentim-cancel-button-hover-background: #334 !default;
+ $calentim-cancel-button-border: 1px solid transparent !default;
+ $calentim-cancel-button-hover-border: 1px solid transparent !default;
+ $calentim-cancel-button-text: gray !default;
+ $calentim-cancel-button-hover-text: gray !default;
+
+ // year/month selector part
+ $calentim-year-month-selector-arrows-background: #11192a !default;
+ $calentim-year-month-selector-arrows-text: #0666CD !default;
+ $calentim-year-month-selector-buttons-background: #000 !default;
+ $calentim-year-month-selector-buttons-border: $calentim-container-border !default;
+ $calentim-year-month-selector-buttons-text: #eee !default;
+ $calentim-year-month-selector-buttons-active-background: #0666CD !default;
+ $calentim-year-month-selector-buttons-active-border: $calentim-container-border !default;
+ $calentim-year-month-selector-buttons-active-text: #fff !default;
+ $calentim-year-month-selector-buttons-hover-background: #1783FF !default;
+ $calentim-year-month-selector-buttons-hover-text: #fff !default;
+ $calentim-year-month-selector-buttons-disabled-background: #000 !default;
+ $calentim-year-month-selector-buttons-disabled-border: $calentim-container-border !default;
+ $calentim-year-month-selector-buttons-disabled-text: #000 !default;

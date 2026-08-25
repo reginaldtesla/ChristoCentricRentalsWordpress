@@ -1,0 +1,144 @@
+/**
+ * Unified synchronization log — admin panel styling.
+ *
+ * The panel, table and pagination come from the shared admin stylesheet
+ * (`rntp-sync-panel`, `rental-log-table`, `rental-pagination`), so this file
+ * only adds what a log of runs needs on top: column widths, the stacked
+ * second line inside a cell, status badges and the expanded run detail.
+ */
+
+/* ── Table ────────────────────────────────────────────────── */
+
+#rental_sync_log_table > thead > tr > th:nth-of-type(1) { width: 16%; }
+#rental_sync_log_table > thead > tr > th:nth-of-type(2) { width: 16%; }
+#rental_sync_log_table > thead > tr > th:nth-of-type(3) { width: 12%; }
+#rental_sync_log_table > thead > tr > th:nth-of-type(4) { width: 17%; }
+#rental_sync_log_table > thead > tr > th:nth-of-type(5) { width: 8%; }
+#rental_sync_log_table > thead > tr > th:nth-of-type(6) { width: 15%; }
+#rental_sync_log_table > thead > tr > th:nth-of-type(7) { width: 16%; }
+
+#rental_sync_log_table code {
+    background: none;
+    padding: 0;
+    font-size: 12px;
+}
+
+/* The quieter second line a cell carries: the file sync id under the data
+   one, the mode under the type, the finish time under the start. */
+.rental-sl-sub {
+    display: block;
+    margin-top: 2px;
+    color: #767b85;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+#rental_sync_log_panel .rental-sl-actions {
+    white-space: normal;
+}
+
+#rental_sync_log_panel .rental-sl-actions .btn {
+    margin: 2px;
+}
+
+#rental_sync_log_panel .rental-sl-intro {
+    margin: 0 0 14px;
+    color: #50575e;
+    max-width: 820px;
+}
+
+#rental_sync_log_panel .panel-heading .btn {
+    float: right;
+}
+
+#rental_sync_log_panel .rental-sl-notice {
+    margin: 0 0 14px;
+}
+
+/* ── Status badges ────────────────────────────────────────── */
+
+.rental-sl-badge {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+    background: #f0f0f1;
+    color: #50575e;
+}
+
+.rental-sl-badge.is-completed  { background: #edfaef; color: #007017; }
+.rental-sl-badge.is-failed     { background: #fcf0f1; color: #b32d2e; }
+.rental-sl-badge.is-canceled   { background: #fcf9e8; color: #8a6116; }
+.rental-sl-badge.is-processing,
+.rental-sl-badge.is-created    { background: #eef4fb; color: #1d5b91; }
+
+.rental-sl-muted {
+    color: #646970;
+}
+
+.rental-sl-error {
+    color: #d63638;
+}
+
+/* ── Run detail ───────────────────────────────────────────── */
+
+#rental_sync_log_table > tbody > tr.rental-sl-detail-row > td {
+    background: #f9fafb;
+    text-align: left;
+    padding: 15px;
+}
+
+.rental-sl-detail-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.rental-sl-section + .rental-sl-section {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px dashed #e3e8f1;
+}
+
+.rental-sl-section h4 {
+    margin: 0 0 8px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+    color: #4f5467;
+}
+
+.rental-sl-section p {
+    margin: 0 0 8px;
+    font-size: 12px;
+}
+
+.rental-sl-entries {
+    max-height: 320px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 10px 12px;
+    background: #fff;
+    border: 1px solid #e3e8f1;
+    border-radius: 4px;
+    font-family: Consolas, Monaco, monospace;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.rental-sl-entries li {
+    margin: 0 0 2px;
+    word-break: break-word;
+}
+
+.rental-sl-entries li.level-error   { color: #d63638; }
+.rental-sl-entries li.level-warning { color: #996800; }
+.rental-sl-entries li.level-notice  { color: #4f5467; }
+
+.rental-sl-channel {
+    color: #767b85;
+}

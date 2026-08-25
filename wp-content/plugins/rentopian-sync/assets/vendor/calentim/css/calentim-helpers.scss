@@ -1,0 +1,179 @@
+.calentim-open {
+    overflow: hidden;
+}
+
+.calentim-overlay {
+    z-index: 9998;
+    display: none;
+    background: $calentim-mobile-overlay-color;
+    position: fixed;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.calentim-no-anim {
+    transition: all 0s ease !important;
+}
+
+.calentim-popup {
+    position: absolute;
+    display: none;
+    top: 0;
+    left: 0;
+}
+
+.calentim-box-arrow-top {
+    width: 22px;
+    height: 22px;
+    z-index: 12;
+    margin-left: 0;
+    position: absolute;
+    top: 0px;
+    &:after,
+    &:before {
+        bottom: calc(100% - 6px);
+        left: 27px;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+    &:after {
+        border-color: transparent;
+        border-bottom-color: $calentim-header-background;
+        border-width: 10px;
+        margin-left: -10px;
+    }
+    &:before {
+        border-color: transparent;
+        border-bottom-color: $calentim-container-border-color;
+        border-width: 11px;
+        margin-left: -11px;
+    }
+}
+
+.calentim-box-arrow-bottom {
+    width: 22px;
+    height: 22px;
+    z-index: 12;
+    margin-left: 0;
+    position: absolute;
+    bottom: 0px;
+    &:after,
+    &:before {
+        bottom: -15px;
+        left: 27px;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+    &:after {
+        border-color: transparent;
+        border-top-color: $calentim-header-background;
+        border-width: 11px;
+        margin-left: -11px;
+    }
+    &:before {
+        border-color: transparent;
+        border-top-color: $calentim-container-border-color;
+        border-width: 10px;
+        margin-left: -10px;
+    }
+}
+
+.calentim-box-arrow-left {
+    width: 21px;
+    height: 21px;
+    z-index: 12;
+    margin-top: -10px;
+    position: absolute;
+    left: 0px;
+    &:after,
+    &:before {
+        border: 0px solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+    &:after {
+        border-color: transparent;
+        border-right-color: $calentim-header-background;
+        border-width: 12px;
+        left: -18px;
+        top: 29px;
+    }
+    &:before {
+        border-color: transparent;
+        border-right-color: $calentim-container-border-color;
+        border-width: 14px;
+        left: -22px;
+        top: 27px;
+    }
+}
+
+.calentim-box-arrow-right {
+    width: 22px;
+    height: 22px;
+    z-index: 12;
+    margin-top: -11px;
+    position: absolute;
+    right: 0px;
+    &:after,
+    &:before {
+        right: -15px;
+        top: 27px;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+    &:after {
+        border-color: transparent;
+        border-left-color: $calentim-header-background;
+        border-width: 12px;
+        margin-left: -12px;
+        right: -17px;
+        top: 30px;
+    }
+    &:before {
+        border-color: transparent;
+        border-left-color: $calentim-container-border-color;
+        border-width: 12px;
+        margin-left: -10px;
+        right: -19px;
+        top: 30px;
+    }
+}
+
+.calentim-no-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.calentim-no-scroll::-moz-scrollbar {
+    display: none;
+}
+
+.calentim-no-scroll::-o-scrollbar {
+    display: none;
+}
+
+.calentim-no-scroll::-google-ms-scrollbar {
+    display: none;
+}
+
+.calentim-no-scroll::-khtml-scrollbar {
+    display: none;
+}

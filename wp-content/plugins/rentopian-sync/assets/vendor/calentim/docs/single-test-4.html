@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html style="position:  absolute; top: 0; bottom:0; left: 0; right: 0;">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        Calentim - Datetime Range Picker
+    </title>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700" rel="stylesheet" />
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="../build/css/calentim.min.css" rel="stylesheet" />
+    <script src="../build/vendor/jquery.min.js"></script>
+    <script src="../build/vendor/moment.min.js"></script>
+    <script src="../build/vendor/jquery.hammer.js"></script>
+    <script src="../build/js/calentim.min.js"></script>
+</head>
+
+<body style="background:#00c2d5; display: flex; height: 100vh; width: 100vw; align-items: center; justify-content: center; padding: 0; margin: 0; box-sizing: border-box;">
+
+    <div>
+        Start Date:
+        <input type="text" id="calentim-ex-6-5-start" x-value="08/14/2018 10:08 AM"/> End Date:
+        <input type="text" id="calentim-ex-6-5-end" x-value="08/23/2018 6:14 PM"/>
+    </div>
+
+    <script type="text/javascript">
+        var startDate, endDate, startInstance, endInstance;
+        var fillInputs = function () {
+            if (startDate) startInstance.$elem.val(startDate.locale(startInstance.config.locale).format(startInstance.config.format));
+            if (endDate) endInstance.$elem.val(endDate.locale(endInstance.config.locale).format(endInstance.config.format));
+        };
+        var beforeShow = function (instance) {
+            if (startDate) {
+                startInstance.config.startDate = startDate.clone();
+                endInstance.config.startDate = startDate.clone();
+            }
+            if (endDate) {
+                startInstance.config.endDate = endDate.clone();
+                endInstance.config.endDate = endDate.clone();
+            }
+            fillInputs();
+            instance.updateHeader();
+            instance.reDrawCells();
+            instance.updateTimePickerDisplay();
+        };
+        $("#calentim-ex-6-5-start").calentim({
+            startEmpty: $("#calentim-ex-6-5-start").val() === "",
+            startDate: $("#calentim-ex-6-5-start").val(),
+            endDate: $("#calentim-ex-6-5-end").val(),
+            enableKeyboard: false,
+            oninit: function (instance) {
+                startInstance = instance;
+                if (!instance.config.startEmpty && instance.config.startDate) {
+                    instance.$elem.val(instance.config.startDate.locale(instance.config.locale).format(instance.config.format));
+                    startDate = instance.config.startDate.clone();
+                }
+            },
+            onaftershow: beforeShow,
+            ontimechange: function (instance, start, end) {
+                if(start) startDate = start.clone();
+                if(end) endDate = end.clone();
+                fillInputs();
+            },
+            onfirstselect: function (instance, start) {
+                startDate = start.clone();
+                endDate = null;
+                startInstance.globals.startSelected = false;
+                startInstance.hideDropdown();
+                endInstance.showDropdown();
+                endInstance.setDisplayDate(start.clone());
+                endInstance.config.minDate = startDate.clone();
+                endInstance.config.startDate = startDate.clone();
+                endInstance.config.endDate = null;
+                endInstance.globals.startSelected = true;
+                endInstance.globals.endSelected = false;
+                endInstance.globals.firstValueSelected = true;
+                if (endDate && startDate.isAfter(endDate)) {
+                    endInstance.config.endDate = endDate.clone();
+                }
+                fillInputs();
+                endInstance.updateHeader();
+                endInstance.reDrawCells();
+                endInstance.updateTimePickerDisplay();
+            }
+        });
+        $("#calentim-ex-6-5-end").calentim({
+            startEmpty: $("#calentim-ex-6-5-end").val() === "",
+            startDate: $("#calentim-ex-6-5-start").val(),
+            endDate: $("#calentim-ex-6-5-end").val(),
+            enableKeyboard: false,
+            autoCloseOnSelect: true,
+            oninit: function (instance) {
+                endInstance = instance;
+                if (!instance.config.startEmpty && instance.config.endDate) {
+                    instance.$elem.val(instance.config.endDate.locale(instance.config.locale).format(instance.config.format));
+                    endDate = instance.config.endDate.clone();
+                }
+            },
+            onaftershow: beforeShow,
+            ontimechange: function (instance, start, end) {
+                if(start) startDate = start.clone();
+                if(end) endDate = end.clone();
+                fillInputs();
+            },
+            onafterselect: function (instance, start, end) {
+                startDate = start.clone();
+                endDate = end.clone();
+                endInstance.hideDropdown();
+                startInstance.config.endDate = endDate.clone();
+                startInstance.globals.firstValueSelected = true;
+                fillInputs();
+                endInstance.globals.startSelected = true;
+                endInstance.globals.endSelected = false;
+            }
+        });
+    </script>
+
+</body>
+
+</html>

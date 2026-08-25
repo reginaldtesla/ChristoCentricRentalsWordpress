@@ -1,0 +1,68 @@
+/* Hidden by default */
+#rental-plugin-search-popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    overflow: auto;
+}
+#rental-plugin-search-popup.open {
+    display: block;
+}
+/* overlay */
+#rental-plugin-search-popup .rental-plugin-popup-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+/* inner container */
+#rental-plugin-search-popup .rental-plugin-popup-inner {
+    position: relative;
+    max-width: 500px;
+    margin: 80px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 4px;
+    z-index: 10000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+/* close button */
+#rental-plugin-search-popup .rental-plugin-popup-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+}
+/* form */
+#rental-plugin-search-popup .rental-plugin-search-form {
+    display: flex;
+    gap: 8px;
+    margin-top: 30px;
+}
+#rental-plugin-search-popup .rental-plugin-search-input {
+    flex: 1;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+#rental-plugin-search-popup .rental-plugin-search-submit {
+    font-size: 16px;
+    border: none;
+    background: #161615;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#rental-plugin-search-popup .rental-plugin-search-submit:hover {
+    background: #005177;
+}

@@ -1,0 +1,302 @@
+{
+  "version": "1.3.9",
+  "description": "Wishlist-style checkout layout - 2 column responsive grid with rental components",
+  "container_class": "rentopian-checkout-form",
+  "sections": [
+    {
+      "id": "special_terms_top",
+      "title": "",
+      "class": "rentopian-special-terms-top",
+      "show_title": false,
+      "show_description": false,
+      "comment": "Special terms shown at top (if placement setting is 'special_terms_on_top')",
+      "rows": [
+        {
+          "id": "row_special_terms_top",
+          "columns": [
+            {
+              "width": 12,
+              "field": "rental_special_terms",
+              "active": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "billing_section",
+      "title": "Billing Information",
+      "description": "Please enter your billing details and event information.",
+      "class": "rentopian-billing-section",
+      "show_title": true,
+      "show_description": true,
+      "rows": [
+        {
+          "id": "row_name",
+          "columns": [
+            {
+              "width": 6,
+              "field": "billing_first_name",
+              "active": 1
+            },
+            {
+              "width": 6,
+              "field": "billing_last_name",
+              "active": 1
+            }
+          ]
+        },
+        {
+          "id": "row_contact",
+          "columns": [
+            {
+              "width": 6,
+              "field": "billing_phone",
+              "active": 1
+            },
+            {
+              "width": 6,
+              "field": "billing_email",
+              "active": 1
+            }
+          ]
+        },
+        {
+          "id": "row_date_venue",
+          "comment": "Date of Service (includes multi-day toggle) + Venue/Address",
+          "columns": [
+            {
+              "width": 6,
+              "field": "rental_date_form_modern",
+              "active": 1
+            },
+            {
+              "width": 6,
+              "field": "billing_address_1",
+              "active": 1
+            }
+          ]
+        },
+        {
+          "id": "row_custom_checkboxes",
+          "comment": "Outdoor checkbox - dynamic field from Rentopian",
+          "columns": [
+            {
+              "width": 6,
+              "field": "rental_custom_outdoor",
+              "active": 1
+            }
+          ]
+        },
+        {
+          "id": "row_time_windows",
+          "comment": "2 Hour Delivery Window + 2 Hour Strike Window",
+          "columns": [
+            {
+              "width": 6,
+              "field": "delivery_time_selections_id",
+              "active": 1
+            },
+            {
+              "width": 6,
+              "field": "pickup_time_selections_id",
+              "active": 1
+            }
+          ]
+        },
+        {
+          "id": "row_flexible_with_time",
+          "comment": "Flexible with time checkboxes",
+          "columns": [
+            {
+              "width": 6,
+              "field": "rental_custom_flexible-with-time-delivery",
+              "active": 1
+            },
+            {
+              "width": 6,
+              "field": "rental_custom_flexible-with-time-strike",
+              "active": 1
+            }
+          ]
+        },
+        {
+          "id": "row_event_type",
+          "columns": [
+            {
+              "width": 12,
+              "field": "rental_event_type",
+              "active": 1
+            }
+          ]
+        },
+        {
+          "id": "row_referral",
+          "columns": [
+            {
+              "width": 12,
+              "field": "rental_referral_source",
+              "active": 1
+            }
+          ]
+        },
+        {
+          "id": "row_how_to_help",
+          "columns": [
+            {
+              "width": 12,
+              "field": "rental_custom_how-can-we-help-you",
+              "active": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rental_components_section",
+      "title": "",
+      "class": "rentopian-rental-components-section",
+      "show_title": false,
+      "show_description": false,
+      "rows": [
+        {
+          "id": "row_pickup_address",
+          "comment": "Different pickup address fields",
+          "columns": [
+            {
+              "width": 12,
+              "field": "rental_different_pickup_address",
+              "active": 1
+            }
+          ]
+        },
+        {
+          "id": "row_damage_waiver",
+          "comment": "Damage waiver component",
+          "columns": [
+            {
+              "width": 12,
+              "field": "rental_damage_waiver",
+              "active": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hidden_billing_fields",
+      "title": "",
+      "class": "rentopian-hidden-fields-section",
+      "show_title": false,
+      "show_description": false,
+      "comment": "Hidden fields for Google Places autocomplete",
+      "rows": [
+        {
+          "id": "row_hidden_address",
+          "columns": [
+            {
+              "width": 4,
+              "field": "billing_city",
+              "active": 1,
+              "hidden_visual": 1
+            },
+            {
+              "width": 4,
+              "field": "billing_state",
+              "active": 1,
+              "hidden_visual": 1
+            },
+            {
+              "width": 4,
+              "field": "billing_postcode",
+              "active": 1,
+              "hidden_visual": 1
+            }
+          ]
+        },
+        {
+          "id": "row_hidden_country",
+          "columns": [
+            {
+              "width": 12,
+              "field": "billing_country",
+              "active": 1,
+              "hidden_visual": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shipping_section",
+      "title": "Shipping Information",
+      "description": "",
+      "class": "rentopian-shipping-section",
+      "show_title": true,
+      "show_description": false,
+      "rows": [
+        {
+          "id": "row_ship_different",
+          "columns": [
+            {
+              "width": 12,
+              "field": "ship_to_different_address",
+              "active": 1
+            }
+          ]
+        },
+        {
+          "id": "row_shipping_name",
+          "columns": [
+            {
+              "width": 6,
+              "field": "shipping_first_name",
+              "active": 1,
+              "depends_on": "ship_to_different_address"
+            },
+            {
+              "width": 6,
+              "field": "shipping_last_name",
+              "active": 1,
+              "depends_on": "ship_to_different_address"
+            }
+          ]
+        },
+        {
+          "id": "row_shipping_address",
+          "columns": [
+            {
+              "width": 12,
+              "field": "shipping_address_1",
+              "active": 1,
+              "depends_on": "ship_to_different_address"
+            }
+          ]
+        },
+        {
+          "id": "row_shipping_city_state",
+          "columns": [
+            {
+              "width": 4,
+              "field": "shipping_city",
+              "active": 1,
+              "depends_on": "ship_to_different_address"
+            },
+            {
+              "width": 4,
+              "field": "shipping_state",
+              "active": 1,
+              "depends_on": "ship_to_different_address"
+            },
+            {
+              "width": 4,
+              "field": "shipping_postcode",
+              "active": 1,
+              "depends_on": "ship_to_different_address"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

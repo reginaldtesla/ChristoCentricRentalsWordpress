@@ -1,0 +1,86 @@
+/* Container */
+.crc-related-products {
+    max-width: 1270px;
+    margin: 100px auto;
+    padding: 0 20px;
+}
+.crc-related-products h2 {
+    font-size: 36px;
+    line-height: 1.32;
+    margin: 0 0 43px;
+    text-align: center;
+}
+
+/* Carousel items */
+.crc-item {
+    text-align: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.crc-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
+}
+.crc-title {
+    font-size: 1em;
+    margin: 0 0 5px;
+    color: #333;
+}
+.crc-price {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.crc-add-to-cart {
+    display: inline-block;
+    margin-top: 5px;
+}
+
+/* Override Owl nav arrows (optional) */
+.owl-nav button.owl-prev,
+.owl-nav button.owl-next {
+    background: transparent;
+    border: none;
+    font-size: 1.5em;
+    color: #333;
+}
+.owl-dots .owl-dot span {
+    background: #ccc;
+}
+.owl-dots .owl-dot.active span {
+    background: #666;
+}
+
+.crc-next, .crc-prev {
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    transition: all .3s ease;
+}
+.crc-next {
+    right: -2.5rem;
+}
+.crc-next:hover {
+    color: black;
+}
+
+.crc-prev {
+    left: -2.5rem;
+}
+.crc-prev:hover {
+    color: black;
+}
+
+.owl-nav button {
+    box-shadow: none !important;
+}
+
+.crc-related-products .owl-carousel .owl-nav.disabled {
+	display: inline-block !important;
+}
+
+.related, .recent-viewed {
+    display: none !important;
+}

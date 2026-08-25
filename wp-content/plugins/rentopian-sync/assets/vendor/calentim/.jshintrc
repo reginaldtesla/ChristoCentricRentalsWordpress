@@ -1,0 +1,9 @@
+{
+	"globals": {"moment": true},
+	"jquery": true,
+	"-W032": true,
+	"undef": false,
+	"eqeqeq": false,
+    "camelcase": false,
+    "curly": false
+}

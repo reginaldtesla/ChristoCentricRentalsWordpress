@@ -70,6 +70,10 @@ final class CCR_Rentopian_Sync
             return;
         }
 
+        if (defined('RENTOPIAN_SYNC_VERSION')) {
+            return;
+        }
+
         self::push_order($order);
     }
 

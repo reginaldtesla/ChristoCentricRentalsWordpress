@@ -1,0 +1,2394 @@
+<!DOCTYPE  html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        Calentim - Date Time Range Picker
+    </title>
+    <link href="includes/bootstrap.min.css" rel="stylesheet" />
+    <link href="includes/prism.css" rel="stylesheet" />
+    <link href="includes/toc.css" rel="stylesheet" />
+    <link href="includes/pace.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto|PT+Sans" rel="stylesheet" />
+    <link href="../build/css/calentim.min.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <script>
+        window.paceOptions = {
+            ajax: false,
+            restartOnRequestAfter: false,
+        };
+    </script>
+    <script src="includes/scripts.min.js"></script>
+</head>
+
+<body>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-2381659-8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-2381659-8');
+    </script>
+
+    <div class="all-container">
+        <nav class="navbar navbar-default navbar-fixed-top isontop">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                        aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">
+                        <i class='fa fa-calendar'></i>&nbsp;Calentim</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="active">
+                            <a href="#features">Features</a>
+                        </li>
+                        <li>
+                            <a href="#how-to-use-it">How to use</a>
+                        </li>
+                        <li>
+                            <a href="#properties">Properties</a>
+                        </li>
+                        <li>
+                            <a href="#configuration">Configuration</a>
+                        </li>
+                        <li>
+                            <a href="#available-events">Events</a>
+                        </li>
+                        <li>
+                            <a href="#methods">Methods</a>
+                        </li>
+                        <li>
+                            <a href="#examples">Examples</a>
+                        </li>
+                        <li>
+                            <a href="#themes">Themes</a>
+                        </li>
+                        <li>
+                            <a href="#changelog">Changelog</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+            <!--/.container-fluid -->
+        </nav>
+        <div class="jumbotron">
+            <div class="container">
+                <div class='row'>
+                    <div class='col-md-6'>
+                        <h1>You can customize and control everything.</h1>
+                        <p>
+                            <b>Calentim</b> is a Date/Time Range Picker plugin, built using jQuery and moment.js libraries.
+                            You can use it as a date time range picker, as a date picker, or as a time picker. You can show
+                            it inline, or use as a dropdown for any element.</p>
+                            <p class="lead buynow">
+                                <a class="btn btn-buynow btn-lg" href="https://codecanyon.net/item/calentim-date-time-range-picker/20099228?ref=tpaksu" target="_blank" role="button">Get it from CodeCanyon</a>
+                              </p>
+                    </div>
+                    <div class='col-md-6 example-container'>
+                        <input type="text" id="calentim-header" />
+                        <script type="text/javascript">$("#calentim-header").calentim({ inline: true });</script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="visible-md visible-lg hidden-sm toc-container" id="scrollspy"></div>
+                <div class="col-md-9 col-sm-12 col-md-offset-3 contents" id="contents">
+                    <h2 id="features">Features</h2>
+<div class="doc-feature-container">
+  <div class="doc-feature"><div><img src='includes/compressed/rangepicker.png' /></div><div><b>Date Time Range Picker</b><p>It&#39;s a range picker, with time!</p></div></div>
+  <div class="doc-feature"><div><img src='includes/compressed/predefined.png' /></div><div><b>Predefined Ranges</b><p>You can use default ranges, or define your own!</p></div></div>
+  <div class="doc-feature"><div><img src='includes/compressed/singledate.png' /></div><div><b>Single Date Time Selection Support</b><p>It can also be used as a single date time picker!</p></div></div>
+  <div class="doc-feature"><div><img src='includes/compressed/customizable.png' /></div><div><b>Customizable</b><p>You can modify all the picker&#39;s behaviour like hiding some part, disabling some feature etc.</p></div></div>
+  <div class="doc-feature"><div><img src='includes/compressed/quickswitch.png' /></div><div><b>Quick Switching</b><p>Supports fast month and year navigation!</p></div></div>
+  <div class="doc-feature"><div><img src='includes/compressed/inline.png' /></div><div><b>Inline Support</b><p>If you don&#39;t like dropdowns, you can convert your input to an inline calendar!</p></div></div>
+  <div class="doc-feature"><div><img src='includes/compressed/mobileready.png' /></div><div><b>Mobile Ready</b><p>It renders beautifully on mobile devices</p></div></div>
+  <div class="doc-feature"><div><img src='includes/compressed/landscape.png' /></div><div><b>Portrait/Landscape Support</b><p>Also has a different landscape layout</p></div></div>
+  <div class="doc-feature"><div><img src='includes/compressed/touch.png' /></div><div><b>Touch Slide Support</b><p>You can slide between months!</p></div></div>
+  <div class="doc-feature"><div><img src='includes/compressed/languages.png' /></div><div><b>109 Languages</b><p>We support <strong>them</strong> all!<br>(What moment.js supports :P)</p></div></div>
+  <div class="doc-feature"><div><img src="includes/compressed/sass.png"></div><div><b>Sass Support</b><p>You can re-design completely using SASS.</p></div></div>
+  <div class="doc-feature"><div><img src="includes/icons/grunt.svg"></div><div><b>Grunt Tasks</b><p>Yes, it&#39;s the automation era.</p></div></div>
+</div>
+<div class='icon-attribution'>Icons (except Sass and Grunt logo) made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+<h2 id="how-to-use-it">How to use it</h2>
+<p>The main files of this plugin are <code>calentim.min.js</code> and <code>calentim.min.css</code>, which are generated by compiling and minifying <code>calentim.js</code> and <code>calentim.css</code>. The plugin relies on <strong>jQuery</strong> and <strong>moment.js</strong> libraries, also needs to be included before including <code>calentim.min.js</code>.</p>
+<p>The font used on this plugin is <strong>Roboto</strong>, and the icons are provided by <strong>Font Awesome</strong> which are included remotely from their CDN&#39;s. You can change it anyway you want.</p>
+<p>The example configuration which can be found in the base index file is:</p>
+<pre><code class="lang-html">&lt;link href=&quot;https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700&quot; rel=&quot;stylesheet&quot;/&gt;
+&lt;link href=&quot;http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css&quot; rel=&quot;stylesheet&quot;/&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;window.jQuery || document.write(&#39;&lt;script src=&quot;js/jquery-2.1.4.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;\/script&gt;&#39;);
+&lt;/script&gt;
+&lt;!-- .calentim includes --&gt;
+&lt;link href=&quot;build/css/calentim.min.css&quot; rel=&quot;stylesheet&quot;/&gt;
+&lt;script src=&quot;build/js/moment.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;build/js/calentim.min.js&quot;&gt;&lt;/script&gt;
+&lt;!-- .end calentim includes --&gt;
+</code></pre>
+<p>Then, to attach a Calentim object to an element you desire, use this:</p>
+<pre><code class="lang-javascript">$(&quot;.calentim&quot;).calentim();
+</code></pre>
+<p>You can customize your plugin with options you provide to the initializing function,</p>
+<pre><code class="lang-javascript">$(&quot;.calentim&quot;).calentim({inline: true, startOnMonday: true});
+</code></pre>
+<p>or the element&#39;s <code>data-plugin-options</code> property.</p>
+<pre><code class="lang-html">&lt;input class=&quot;calentim&quot; data-plugin-options=&#39;{&quot;calendarCount&quot;:1,&quot;showHeader&quot;:true,&quot;showFooter&quot;:true}&#39;
+name=&quot;calendar-input&quot; type=&quot;text&quot; value=&quot;08.08.2017 12:43 - 08.09.2017 13:11&quot;/&gt;
+</code></pre>
+<p>Once initalized, you can access the calentim object like this:</p>
+<pre><code class="lang-javascript">var calentim = $(&quot;.calentim:eq(3)&quot;).data(&quot;calentim&quot;);
+calentim.config.startDate = new Date();
+calentim.reDrawCalendars();
+</code></pre>
+<h2 id="properties">Properties</h2>
+<p>Once you&#39;ve got the <code>calentim</code> instance object, you can access these properties:</p>
+<ul>
+<li><code>elem</code> [DOM node object]: The HTML dom node which the instance is created on.</li>
+<li><code>$elem</code> [jQuery Object]: jQuery object of the dom node. Equals to <code>$(calentim.elem)</code></li>
+</ul>
+<p><br><br></p>
+<blockquote>
+<p>Please <strong>Note</strong> that if you&#39;ve chosen a different target element, <strong>you will be accessing the initiator element</strong> by calling <code>calentim.$elem</code>. Your actual target element would be <code>calentim.config.target</code>.
+<br><br>
+For example,</p>
+</blockquote>
+<pre><code class="lang-javascript">    var calentim = $(&quot;#elem1&quot;).calentim();
+    // calentim.elem will be equal to document.getElementById(&quot;elem1&quot;) or $(&quot;#elem1&quot;).get(0);
+    // calentim.$elem will be equal to $(&quot;#elem1&quot;);
+</code></pre>
+<p><br><br></p>
+<ul>
+<li><code>config</code> [JS Object]: The instance&#39;s configuration object. Consists of merging default values and user defined settings. The details of it is explained in the <em>Options</em> section.</li>
+</ul>
+<p><br><br>
+These properties are also defined, but not recommended to tinker on.</p>
+<ul>
+<li><code>container</code> [jQuery Object]: This refers to the outermost container element of the instance dropdown or inline instance and the input itself.</li>
+<li><code>header</code> [jQuery Object]: This refers to the header part of the plugin.</li>
+<li><code>footer</code> [jQuery Object]: This refers to the footer part, - not the mobile buttons part - the ranges part of the plugin.</li>
+<li><code>input</code> [jQuery Object]: This refers to the first child of the container, which contains everything except the input which is calentim instantiated on.</li>
+</ul>
+<h2 id="configuration">Configuration</h2>
+<p>These are the options you can set with the javascript plugin initialization object, or with the <code>data-plugin-options</code> html attribute on the input element, or within the events by directly modifying the <code>calentim.config</code> object.
+<br><br></p>
+<ul>
+<li><code>startDate</code> [moment object|javascript Date Object|string]: the selected start date, initially today is selected if not defined inside the input&#39;s value, or any of the initialization configuration methods.
+<br><br></li>
+<li><code>endDate</code> [moment object|javascript Date Object|string]: the selected end date, initially today is selected if not defined inside the input&#39;s value, or any of the initialization configuration methods.
+<br><br></li>
+<li><code>format</code> [string]: the default format for showing in input, defaults to short date format of locale, for all possible inputs, look here: <a href="https://momentjs.com/docs/#/displaying/format/">https://momentjs.com/docs/#/displaying/format/</a> default: &#39;L LT&#39;
+<br><br></li>
+<li><p><code>hourFormat</code> [number]: the format for the time pickers. Can be 12 or 24, if set anything else, will revert to default 24. default &#39;24&#39;</p>
+<p>  <strong>Note</strong>: Be careful when setting this option, you might need to pick a suitable format for the <code>format</code> variable too. For example, you might set 12 hour calendar with <strong>L HH:mm</strong> format, and then receive 24 hour data on your backend.
+<br><br></p>
+</li>
+<li><code>dontPrefixHours</code> [boolean]: If the 12 hour format is selected, you can set this to true to get one digit hours without the &quot;0&quot; prefix. Default: false
+<br><br></li>
+<li><code>minuteSteps</code> [number]: the minute steps you want to show on your minute picker, for example, if you set 15 as the step, you&#39;ll get 0, 15, 30 and 45 in your minute picker. Default: <code>1</code>
+<br><br></li>
+<li><code>dateSeparator</code> [string]: if not used as a single date picker, this will be the seperator, default <strong>&quot; - &quot;</strong>.
+<br><br></li>
+<li><code>calendarCount</code> [integer]: how many calendars will be shown in the plugin screen, default 2
+<br><br></li>
+<li><code>inline</code> [boolean]: display as an inline input replacement instead of input dropdown. default: false
+<br><br></li>
+<li><code>minDate</code> [moment object|javascript Date Object|string|null]: minimum selectable date, default null (no minimum)
+<br><br></li>
+<li><code>maxDate</code> [moment object|javascript Date Object|string|null]: maximum selectable date, default null (no maximum)
+<br><br></li>
+<li><code>showHeader</code> [boolean]: visibility of the part which displays the selected start and end dates, default true
+<br><br></li>
+<li><code>showFooter</code> [boolean]: visibility of the part which contains user defined ranges, default true
+<br><br></li>
+<li><code>showButtons</code> [boolean]: whether the input should display the apply and cancel buttons in dropdown, default false
+<br><br></li>
+<li><code>startEmpty</code> [boolean]: whether the input should remain empty until user makes a selection, default false
+<br><br></li>
+<li><code>hideOutOfRange</code> [boolean]: when used with minDate and/or maxDate, the navigation arrows will be hidden on the available first and last months to prevent further navigation. default false
+<br><br></li>
+<li><code>enableKeyboard</code> [boolean]: enable this if you want to add keyboard support to the calendar. The keys are:<ul>
+<li><kbd>UP</kbd>              : Go to same weekday on the previous week</li>
+<li><kbd>DOWN</kbd>            : Go to same weekday on the next week</li>
+<li><kbd>LEFT</kbd>            : Go to the previous day</li>
+<li><kbd>RIGHT</kbd>           : Go to the next day</li>
+<li><kbd>PG UP</kbd>           : Go to the previous month</li>
+<li><kbd>PG DOWN</kbd>         : Go to the next month</li>
+<li><kbd>SHIFT + PG UP</kbd>   : Go to the previous year</li>
+<li><kbd>SHIFT + PG DOWN</kbd> : Go to the next year
+<br><br></li>
+</ul>
+</li>
+<li><code>startOnMonday</code> [boolean]: false, // if you want to start the calendars on Monday, set this to true. Note that if the locale already starts on Monday, this setting will be ignored.
+<br><br></li>
+<li><code>container</code> [string]: the selector of the dropdowns container, default &quot;body&quot;
+<br><br></li>
+<li><code>oneCalendarWidth</code> [integer]: the width of one calendar, if two calendars are shown, the input width will be 2 * this setting. default 230
+<br><br></li>
+<li><code>showOn</code> [&quot;bottom&quot;|&quot;top&quot;|&quot;left&quot;|&quot;right&quot;|&quot;center&quot;]: dropdown placement position relative to input element, will be adjusted to the viewport, default &quot;bottom&quot;
+<br><br></li>
+<li><code>arrowOn</code> [&quot;bottom&quot;|&quot;top&quot;|&quot;left&quot;|&quot;right&quot;|&quot;center&quot;]: arrow position relative to dropdown element, will be adjusted to the viewport, default &quot;left&quot;
+<br><br></li>
+<li><code>autoAlign</code> [boolean]: enables dropdown auto placement change when the dropdown is not fully visible on the viewport. Default &quot;true&quot;
+<br><br></li>
+<li><code>locale</code> [string]: moment locale setting, for more information: <a href="https://momentjs.com/docs/#/i18n/changing-locale/">https://momentjs.com/docs/#/i18n/changing-locale/</a>, and for a list of available locales: <a href="https://momentjs.com/">https://momentjs.com/</a> (bottom of the page)
+<br><br></li>
+<li><code>singleDate</code> [boolean]: if you want a single date picker, set this to true, default false
+<br><br></li>
+<li><code>target</code>: [jquery object] the element to update after selection, if it&#39;s null, the element that is instantiated on will be updated. default null
+<br><br></li>
+<li><p><code>ranges</code>: [array] predefined ranges range objects array, which each will create a button in the footer, and when the user clicks, it&#39;ll automatically will be applied. One range is defined like below:</p>
+<ul>
+<li><code>title</code> [string]: the label which will appear on the button,</li>
+<li><code>startDate</code> [moment object|javascript Date Object|string]: the first date of the range,</li>
+<li><code>endDate</code> [moment object|javascript Date Object|string]: the last date of the range,
+<br><br></li>
+</ul>
+</li>
+<li><code>rangeLabel</code> [string] : The title displayed in the defined ranges list section, default &quot;Ranges: &quot;
+<br><br></li>
+<li><code>cancelLabel</code> [string]: The cancel button label, default &quot;Cancel&quot;
+<br><br></li>
+<li><code>applyLabel</code> [string]: The apply button label,  default &quot;Apply&quot;
+<br><br></li>
+<li><code>enableMonthSwitcher</code> [boolean]: Enables the month switcher when clicking on month names. Default: true
+<br><br></li>
+<li><code>monthSwitcherFormat</code> [boolean]: Changes the month name display format on the month switcher. Default: &quot;MMMM&quot;
+<br><br></li>
+<li><code>enableYearSwitcher</code> [boolean]: Enables the year switcher when clicking on years. Default: true
+<br><br></li>
+<li><code>numericMonthSwitcher</code> [boolean]: If set to true, shows month numbers instead of month names in month selector. Default: false
+<br><br></li>
+<li><code>monthSwitcherFormat</code> [string]: Changes the format of the month name displayed on the month selector. Default: &quot;MMMM&quot; (long month name format)
+<br><br></li>
+<li><code>showWeekNumbers</code> [string]: Shows week numbers on the left of the calendars. Default: false
+<br><br></li>
+<li><code>autoCloseOnSelect</code> [boolean]: On instances that are not displayed inline, this setting is used to automatically close the dropdown when a selection is made.
+<br><br></li>
+<li><code>disableDays</code> [function]: Enables day based disabling filters, input value is the current day to be processed. Example:<pre><code class="lang-javascript">{
+  disableDays: function(day){
+     return day.isSame(moment(&quot;17/05/2017&quot;)); // will return true on that day and the day will be disabled.
+  }
+}
+</code></pre>
+<br><br></li>
+<li><code>disabledRanges</code> [object array]: Enables user to disable specific ranges from selection. Can be used with <code>continuous</code> option to preserve continuity. Object structure:<pre><code class="lang-javascript"> [{ start: [moment object], end: [moment object]}, ..]
+</code></pre>
+<br><br></li>
+<li><code>continuous</code> [boolean]: Adds a check if the selected range continues any disabled days. Reverts the selection to it&#39;s original state when the user tries to select a range which contains a disabled date.
+<br><br></li>
+<li><code>limitTimeForDay</code> [function]: Limits the time selection based on the day parameter, input value is the current day to be processed. Example:<pre><code class="lang-javascript">{
+    limitTimeForDay: function (day) {
+        if (day.isoWeekday() === 6 || day.isoWeekday() === 7) {
+            return { start: { hour: 8, minute: 15, ampm: null }, end: { hour: 18, minute: 21, ampm: null } };
+        } else {
+            return { start: { hour: 9, minute: 30, ampm: null }, end: { hour: 16, minute: 45, ampm: null } };
+        }
+    }
+}
+</code></pre>
+This limits the time selection to 8:15 and 18:21 if the day is on weekends, if it&#39;s not, it limits the selection to 9:30 to 16:45. You can see a working example in the examples section.
+<br><br></li>
+<li><code>rangeOrientation</code> [string]: Sets the range view to &quot;vertical&quot; or &quot;horizontal&quot; which renders the range part on the right or on the bottom of the calendar. Default: &quot;horizontal&quot;
+<br><br></li>
+<li><code>verticalRangeWidth</code> [string]: Sets the vertical range view panel width in pixels. Default: 150</li>
+</ul>
+<h2 id="available-events">Available Events</h2>
+<ul>
+<li><p><code>onbeforeselect</code> [function]: event which is triggered before selecting the end date ( a range selection is completed). The return value decides whether the selection will happen. Returning <em>false</em> will prevent the input to update.</p>
+<p>  <strong>Prototype:</strong></p>
+<pre><code class="lang-javascript">      onbeforeselect: function(calentim, startDate, endDate){
+          // calentim: calentim object instance
+          // startDate: moment.js instance
+          // endDate: moment.js instance
+          return true; // false prevents update
+      }
+</code></pre>
+<p><br><br></p>
+</li>
+<li><p><code>onafterselect</code> [function]:  event which is triggered after selecting the end date ( the input value changed )</p>
+<p>  <strong>Prototype:</strong></p>
+<pre><code class="lang-javascript">      onafterselect: function(calentim, startDate, endDate){
+          // calentim: calentim object instance
+          // startDate: moment.js instance
+          // endDate: moment.js instance
+      }
+</code></pre>
+<p><br><br></p>
+</li>
+<li><p><code>onbeforeshow</code> [function]:  event which is triggered before showing the dropdown</p>
+<p>  <strong>Prototype:</strong></p>
+<pre><code class="lang-javascript">      onbeforeshow: function(calentim){
+          // calentim: calentim object instance
+      }
+</code></pre>
+<p><br><br></p>
+</li>
+<li><p><code>onbeforehide</code> [function]:  event which is triggered before hiding the dropdown</p>
+<p>  <strong>Prototype:</strong></p>
+<pre><code class="lang-javascript">      onbeforehide: function(calentim){
+          // calentim: calentim object instance
+      }
+</code></pre>
+<p><br><br></p>
+</li>
+<li><p><code>onaftershow</code> [function]:  event which is triggered after showing the dropdown</p>
+<p>  <strong>Prototype:</strong></p>
+<pre><code class="lang-javascript">      onaftershow: function(calentim){
+          // calentim: calentim object instance
+      }
+</code></pre>
+<p><br><br></p>
+</li>
+<li><p><code>onafterhide</code> [function]:  event which is triggered after hiding the dropdown</p>
+<p>  <strong>Prototype:</strong></p>
+<pre><code class="lang-javascript">      onafterhide: function(calentim){
+          // calentim: calentim object instance
+      }
+</code></pre>
+<p><br><br></p>
+</li>
+<li><p><code>onfirstselect</code> [function]:  event which is triggered after selecting the first date of ranges</p>
+<p>  <strong>Prototype:</strong></p>
+<pre><code class="lang-javascript">      onfirstselect: function(calentim, startDate){
+          // calentim: calentim object instance
+          // startDate: moment.js instance
+      }
+</code></pre>
+<p><br><br></p>
+</li>
+<li><p><code>onrangeselect</code> [function]:  event which is triggered after selecting a range from the defined range links</p>
+<p>  <strong>Prototype:</strong></p>
+<pre><code class="lang-javascript">      onrangeselect: function(calentim, range){
+          // calentim: calentim object instance
+          // range: selected range definition
+      }
+</code></pre>
+<p><br><br></p>
+</li>
+<li><p><code>onbeforemonthchange</code> [function]:  event which fires before changing the first calendar month of multiple calendars, or the month of a single calendar. The return value decides whether the month switch will take place.</p>
+<p>  <strong>Prototype:</strong></p>
+<pre><code class="lang-javascript">      onbeforemonthchange: function(calentim, month, direction){
+          // calentim: calentim object instance
+          // month : moment.js object of first day of the month selected on the **first** calendar
+          // direction: &quot;next&quot; or &quot;prev&quot;, shows the month change direction. if `month.month()` is 4,
+          // and direction is &quot;prev&quot;, next month will be 3.
+          return true; // false disables switching
+      }
+</code></pre>
+<p><br><br></p>
+</li>
+<li><p><code>onaftermonthchange</code> [function]:  event which fires after changing the first calendar month of multiple calendars, or the month of a single calendar</p>
+<p>  <strong>Prototype:</strong></p>
+<pre><code class="lang-javascript">      onaftermonthchange: function(calentim, month){
+          // calentim: calentim object instance
+          // month : moment.js object of first day of the month selected on the first calendar
+      }
+</code></pre>
+<p><br><br></p>
+</li>
+<li><p><code>onafteryearchange</code> [function]:  event which fires after changing the first calendar year of multiple calendars, or the year of a single calendar</p>
+<p>  <strong>Prototype:</strong></p>
+<pre><code class="lang-javascript">      onafteryearchange: function(calentim, year){
+          // calentim: calentim object instance
+          // year : moment.js object of first day of the year selected on the first calendar
+      }
+</code></pre>
+</li>
+<li><p><code>ondraw</code> [function]:  event which fires after redraws in calendar</p>
+<p>  <strong>Prototype:</strong></p>
+<pre><code class="lang-javascript">  onredraw: function(calentim){
+    // calentim: calentim object instance
+  }
+</code></pre>
+<p><br><br></p>
+</li>
+<li><p><code>oninit</code> [function]:  event which fires after instance initialization</p>
+<p>  <strong>Prototype:</strong></p>
+<pre><code class="lang-javascript">  oninit: function(calentim){
+    // calentim: calentim object instance
+  }
+</code></pre>
+<p><br><br></p>
+</li>
+<li><p><code>onBeforeInit</code> [function]:  event which fires before instance initialization</p>
+<p>  <strong>Prototype:</strong></p>
+<pre><code class="lang-javascript">  onBeforeInit: function(calentim){
+    // calentim: calentim object instance
+  }
+</code></pre>
+<p><br><br></p>
+</li>
+<li><p><code>ondestroy</code> [function]:  event which fires after instance destruction</p>
+<p>  <strong>Prototype:</strong></p>
+<pre><code class="lang-javascript">  ondestroy: function(calentim){
+    // calentim: calentim object instance
+  }
+</code></pre>
+<p><br><br></p>
+</li>
+<li><p><code>onBeforeDestroy</code> [function]:  event which fires before instance destruction, if you return <code>false</code> to this functino, it cancels the destruction.</p>
+<p>  <strong>Prototype:</strong></p>
+<pre><code class="lang-javascript">  onBeforeDestroy: function(calentim){
+    // calentim: calentim object instance
+    return true;
+  }
+</code></pre>
+<p><br><br></p>
+</li>
+<li><p><code>ontimechange</code> [function]:  event which fires after timepicker value changes</p>
+<p>  <strong>Prototype:</strong></p>
+<pre><code class="lang-javascript">  ontimechange: function(calentim, startDate, endDate){
+    // calentim: calentim object instance
+    // startDate: the start date moment object
+    // endDate: the end date moment object
+  }
+</code></pre>
+<p><br><br></p>
+</li>
+</ul>
+<h2 id="methods">Methods</h2>
+<ul>
+<li><p><code>validateDates</code> [function]: Validates the <em>startDate</em>, <em>endDate</em>, <em>minDate</em>, <em>maxDate</em> parameters of the instance configuration, by the means of <strong>parsability</strong> and <strong>order</strong>, and defaults to today&#39;s date for <em>startDate</em> and <em>endDate</em>, and to null for <em>maxDate</em> and <em>minDate</em>.</p>
+</li>
+<li><p><code>fetchInputs</code> [function]: Retrieves the date(s) from the instance holder input and validates them before putting it to it&#39;s configuration.</p>
+</li>
+<li><p><code>updateInput</code> [function]: Updates the instance holder input with the instance values and configuration.</p>
+</li>
+<li><p><code>drawNextMonth</code> [function]: Triggers the instance show the next month after the first calendar month as the first calendar.</p>
+</li>
+<li><p><code>drawPrevMonth</code> [function]: Triggers the instance show the previous month before the first calendar month as the first calendar.</p>
+</li>
+<li><p><code>reDrawCalendars</code> [function]: Triggers a complete restructuring of the instance. Drawing the container first, then the header, then the calendars, then the footer.</p>
+</li>
+<li><p><code>reDrawCells</code> [function]: Only modifies the calendar&#39;s related parts with the configuration variables. Doesn&#39;t entirely build the instance again like <code>reDrawCalendars</code> method does.</p>
+</li>
+<li><p><code>setViewport</code> [function]: On dropdown instances, if the dropdown falls outside of the viewport (when shown, not scrolled) this function decides and calculates it&#39;s new position opposed to its configuration. For example, if the dropdown position is set to <code>bottom</code> and it falls below the page bottom edge, this method makes it appear as it was set to <code>top</code> for once.</p>
+</li>
+<li><p><code>showDropdown</code> [function]: On dropdown and mobile instances, if the dropdown is not visible, this method triggers the show method.</p>
+</li>
+<li><p><code>hideDropdown</code> [function]: On dropdown and mobile instances, if the dropdown is visible, this method hides it.</p>
+</li>
+<li><p><code>setStart</code> [function]: Sets the start date and time of the input.</p>
+</li>
+<li><p><code>setEnd</code>  [function]: Sets the end date and time of the input.</p>
+</li>
+<li><p><code>setMinDate</code> [function]: Sets the minimum selectable date of the input. Time portion is ignored.</p>
+</li>
+<li><p><code>setMaxDate</code> [function]: Sets the maximum selectable date of the input. Time portion is ignored.</p>
+</li>
+<li><p><code>setDisplayDate</code> [function] : Sets the displayed month and year, day and time are ignored.</p>
+</li>
+</ul>
+<pre><code class="lang-javascript">     var instance = $(&quot;.calentim&quot;).data(&quot;calentim&quot;);
+
+     // using moment object
+     instance.setStart(moment());
+
+     // using javascript Date object
+     instance.setStart(new Date());
+
+     // using ISO and RFC standardized date strings
+     instance.setStart(&quot;2017-11-27T13:07:04+00:00&quot;); // ISO 8601 and RFC 3339
+     instance.setStart(&quot;Mon, 27 Nov 2017 13:07:04 +0000&quot;); // RFC 822, 1035, 1123, 2822
+     instance.setStart(&quot;Monday, 27-Nov-17 13:07:04 UTC&quot;); // RFC 2822
+
+     // using unix timestamp
+     instance.setStart(1511788024);
+
+     // using custom formatted date time string
+     instance.setStart(moment(&quot;16:06 27.11.2017&quot;,&quot;HH:mm dd.MM.YYYY&quot;));
+
+</code></pre>
+<h2 id="examples">Examples</h2>
+<div id='examples-toc'></div>
+
+<h3 id="default-range-picker">Default Range Picker</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm"></p>
+<p><input type="text" id="calentim-ex-1" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-1").calentim();</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">      &lt;input type=&quot;text&quot; id=&quot;calentim-ex-1&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">      &lt;script type=&quot;text/javascript&quot;&gt;
+          $(&quot;#calentim-ex-1&quot;).calentim();
+      &lt;/script&gt;
+</code></pre>
+<h3 id="dropdown-positioning-auto-alignment-enabled-">Dropdown Positioning (Auto Alignment Enabled)</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm"></p>
+<p><input type="text" id="calentim-ex-1-1" /></p>
+<p><input type="text" id="calentim-ex-1-2" /></p>
+<p><input type="text" id="calentim-ex-1-3" /></p>
+<p><input type="text" id="calentim-ex-1-4" />
+</div></p>
+<script type="text/javascript">
+$("#calentim-ex-1-1").calentim({showOn:"top",autoAlign:true});
+$("#calentim-ex-1-2").calentim({showOn:"left",autoAlign:true});
+$("#calentim-ex-1-3").calentim({showOn:"right",autoAlign:true});
+$("#calentim-ex-1-4").calentim({showOn:"bottom",autoAlign:true});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">      &lt;input type=&quot;text&quot; id=&quot;calentim-ex-1-1&quot; /&gt;
+    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-1-2&quot; /&gt;
+    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-1-3&quot; /&gt;
+    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-1-4&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">      &lt;script type=&quot;text/javascript&quot;&gt;
+          $(&quot;#calentim-ex-1-1&quot;).calentim({showOn:&quot;top&quot;,autoAlign:true});
+          $(&quot;#calentim-ex-1-2&quot;).calentim({showOn:&quot;left&quot;,autoAlign:true});
+          $(&quot;#calentim-ex-1-3&quot;).calentim({showOn:&quot;right&quot;,autoAlign:true});
+          $(&quot;#calentim-ex-1-4&quot;).calentim({showOn:&quot;bottom&quot;,autoAlign:true});
+      &lt;/script&gt;
+</code></pre>
+<h3 id="dropdown-positioning-auto-alignment-disabled-">Dropdown Positioning (Auto Alignment Disabled)</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm"></p>
+<p><input type="text" id="calentim-ex-1-5" /></p>
+<p><input type="text" id="calentim-ex-1-6" /></p>
+<p><input type="text" id="calentim-ex-1-7" /></p>
+<p><input type="text" id="calentim-ex-1-8" />
+</div></p>
+<script type="text/javascript">
+$("#calentim-ex-1-5").calentim({showOn:"top",autoAlign:false});
+$("#calentim-ex-1-6").calentim({showOn:"left",autoAlign:false});
+$("#calentim-ex-1-7").calentim({showOn:"right",autoAlign:false});
+$("#calentim-ex-1-8").calentim({showOn:"bottom",autoAlign:false});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">      &lt;input type=&quot;text&quot; id=&quot;calentim-ex-1-5&quot; /&gt;
+    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-1-6&quot; /&gt;
+    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-1-7&quot; /&gt;
+    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-1-8&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">      &lt;script type=&quot;text/javascript&quot;&gt;
+          $(&quot;#calentim-ex-1-5&quot;).calentim({showOn:&quot;top&quot;,autoAlign:false});
+          $(&quot;#calentim-ex-1-6&quot;).calentim({showOn:&quot;left&quot;,autoAlign:false});
+          $(&quot;#calentim-ex-1-7&quot;).calentim({showOn:&quot;right&quot;,autoAlign:false});
+          $(&quot;#calentim-ex-1-8&quot;).calentim({showOn:&quot;bottom&quot;,autoAlign:false});
+      &lt;/script&gt;
+</code></pre>
+<h3 id="arrow-positioning">Arrow Positioning</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm"><input type="text" class="vhide"><input type="text" id="calentim-ex-t-r" value="06/21/2017" /><input type="text" id="calentim-ex-t-c" value="06/21/2017" /><input type="text" id="calentim-ex-t-l" value="06/21/2017" /><input type="text" class="vhide"><br><br><input type="text" id="calentim-ex-l-t" value="06/21/2017" /><input type="text" class="vhide"><input type="text" class="vhide"><input type="text" class="vhide"><input type="text" id="calentim-ex-r-t" value="06/21/2017" /><br><br><input type="text" id="calentim-ex-l-c" value="06/21/2017" /><input type="text" class="vhide"><input type="text" id="calentim-ex-c-c" value="06/21/2017" /><input type="text" class="vhide"><input type="text" id="calentim-ex-r-c" value="06/21/2017" /><br><br><input type="text" id="calentim-ex-l-b" value="06/21/2017" /><input type="text" class="vhide"><input type="text" class="vhide"><input type="text" class="vhide"><input type="text" id="calentim-ex-r-b" value="06/21/2017" /><br><br><input type="text" class="vhide"><input type="text" id="calentim-ex-b-r" value="06/21/2017" /><input type="text" id="calentim-ex-b-c" value="06/21/2017" /><input type="text" id="calentim-ex-b-l" value="06/21/2017" /><input type="text" class="vhide"><br><br>
+</div></p>
+<script type="text/javascript">
+$("#calentim-ex-t-r").calentim({ showOn: "top", arrowOn: "right" }); $("#calentim-ex-t-c").calentim({ showOn: "top", arrowOn: "center" }); $("#calentim-ex-t-l").calentim({ showOn: "top", arrowOn: "left" }); $("#calentim-ex-l-c").calentim({ showOn: "left", arrowOn: "center" }); $("#calentim-ex-l-t").calentim({ showOn: "left", arrowOn: "top" }); $("#calentim-ex-l-b").calentim({ showOn: "left", arrowOn: "bottom" }); $("#calentim-ex-c-c").calentim({ showOn: "center", arrowOn: "center" }); $("#calentim-ex-r-c").calentim({ showOn: "right", arrowOn: "center" }); $("#calentim-ex-r-t").calentim({ showOn: "right", arrowOn: "top" }); $("#calentim-ex-r-b").calentim({ showOn: "right", arrowOn: "bottom" }); $("#calentim-ex-b-r").calentim({ showOn: "bottom", arrowOn: "right" }); $("#calentim-ex-b-c").calentim({ showOn: "bottom", arrowOn: "center" }); $("#calentim-ex-b-l").calentim({ showOn: "bottom", arrowOn: "left" });
+</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">    &lt;style&gt; .vhide{ visibility:hidden; } &lt;/style&gt;
+    &lt;input type=&quot;text&quot; class=&quot;vhide&quot;&gt;&lt;input type=&quot;text&quot; id=&quot;calentim-ex-t-r&quot; value=&quot;06/21/2017&quot; /&gt;&lt;input type=&quot;text&quot; id=&quot;calentim-ex-t-c&quot; value=&quot;06/21/2017&quot; /&gt;&lt;input type=&quot;text&quot; id=&quot;calentim-ex-t-l&quot; value=&quot;06/21/2017&quot; /&gt;&lt;input type=&quot;text&quot; class=&quot;vhide&quot;&gt;&lt;br&gt;&lt;br&gt;
+    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-l-t&quot; value=&quot;06/21/2017&quot; /&gt;&lt;input type=&quot;text&quot; class=&quot;vhide&quot;&gt;&lt;input type=&quot;text&quot; class=&quot;vhide&quot;&gt;&lt;input type=&quot;text&quot; class=&quot;vhide&quot;&gt;&lt;input type=&quot;text&quot; id=&quot;calentim-ex-r-t&quot; value=&quot;06/21/2017&quot; /&gt;&lt;br&gt;&lt;br&gt;
+    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-l-c&quot; value=&quot;06/21/2017&quot; /&gt;&lt;input type=&quot;text&quot; class=&quot;vhide&quot;&gt;&lt;input type=&quot;text&quot; id=&quot;calentim-ex-c-c&quot; value=&quot;06/21/2017&quot; /&gt;&lt;input type=&quot;text&quot; class=&quot;vhide&quot;&gt;&lt;input type=&quot;text&quot; id=&quot;calentim-ex-r-c&quot; value=&quot;06/21/2017&quot; /&gt;&lt;br&gt;&lt;br&gt;
+    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-l-b&quot; value=&quot;06/21/2017&quot; /&gt;&lt;input type=&quot;text&quot; class=&quot;vhide&quot;&gt;&lt;input type=&quot;text&quot; class=&quot;vhide&quot;&gt;&lt;input type=&quot;text&quot; class=&quot;vhide&quot;&gt;&lt;input type=&quot;text&quot; id=&quot;calentim-ex-r-b&quot; value=&quot;06/21/2017&quot; /&gt;&lt;br&gt;&lt;br&gt;
+    &lt;input type=&quot;text&quot; class=&quot;vhide&quot;&gt;&lt;input type=&quot;text&quot; id=&quot;calentim-ex-b-r&quot; value=&quot;06/21/2017&quot; /&gt;&lt;input type=&quot;text&quot; id=&quot;calentim-ex-b-c&quot; value=&quot;06/21/2017&quot; /&gt;&lt;input type=&quot;text&quot; id=&quot;calentim-ex-b-l&quot; value=&quot;06/21/2017&quot; /&gt;&lt;input type=&quot;text&quot; class=&quot;vhide&quot;&gt;&lt;br&gt;&lt;br&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">  &lt;script type=&quot;text/javascript&quot;&gt;
+    $(&quot;#calentim-ex-t-r&quot;).calentim({
+        showOn: &quot;top&quot;,
+        arrowOn: &quot;right&quot;
+    });
+    $(&quot;#calentim-ex-t-c&quot;).calentim({
+        showOn: &quot;top&quot;,
+        arrowOn: &quot;center&quot;
+    });
+    $(&quot;#calentim-ex-t-l&quot;).calentim({
+        showOn: &quot;top&quot;,
+        arrowOn: &quot;left&quot;
+    });
+    $(&quot;#calentim-ex-l-c&quot;).calentim({
+        showOn: &quot;left&quot;,
+        arrowOn: &quot;center&quot;
+    });
+    $(&quot;#calentim-ex-l-t&quot;).calentim({
+        showOn: &quot;left&quot;,
+        arrowOn: &quot;top&quot;
+    });
+    $(&quot;#calentim-ex-l-b&quot;).calentim({
+        showOn: &quot;left&quot;,
+        arrowOn: &quot;bottom&quot;
+    });
+    $(&quot;#calentim-ex-c-c&quot;).calentim({
+        showOn: &quot;center&quot;,
+        arrowOn: &quot;center&quot;
+    });
+    $(&quot;#calentim-ex-r-c&quot;).calentim({
+        showOn: &quot;right&quot;,
+        arrowOn: &quot;center&quot;
+    });
+    $(&quot;#calentim-ex-r-t&quot;).calentim({
+        showOn: &quot;right&quot;,
+        arrowOn: &quot;top&quot;
+    });
+    $(&quot;#calentim-ex-r-b&quot;).calentim({
+        showOn: &quot;right&quot;,
+        arrowOn: &quot;bottom&quot;
+    });
+
+    $(&quot;#calentim-ex-b-r&quot;).calentim({
+        showOn: &quot;bottom&quot;,
+        arrowOn: &quot;right&quot;
+    });
+    $(&quot;#calentim-ex-b-c&quot;).calentim({
+        showOn: &quot;bottom&quot;,
+        arrowOn: &quot;center&quot;
+    });
+    $(&quot;#calentim-ex-b-l&quot;).calentim({
+        showOn: &quot;bottom&quot;,
+        arrowOn: &quot;left&quot;
+    });
+  &lt;/script&gt;
+</code></pre>
+<h3 id="hiding-the-header">Hiding the header</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm"></p>
+<p><input type="text" id="calentim-ex-2" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-2").calentim({showHeader: false});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">      &lt;input type=&quot;text&quot; id=&quot;calentim-ex-2&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">      &lt;script type=&quot;text/javascript&quot;&gt;
+          $(&quot;#calentim-ex-2&quot;).calentim({showHeader: false});
+      &lt;/script&gt;
+</code></pre>
+<h3 id="hiding-the-footer">Hiding the footer</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm"></p>
+<p><input type="text" id="calentim-ex-3" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-3").calentim({showFooter: false});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">      &lt;input type=&quot;text&quot; id=&quot;calentim-ex-3&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">      &lt;script type=&quot;text/javascript&quot;&gt;
+          $(&quot;#calentim-ex-3&quot;).calentim({showFooter: false});
+      &lt;/script&gt;
+</code></pre>
+<h3 id="hiding-calendars">Hiding calendars</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm"></p>
+<p><input type="text" id="calentim-ex-3-3" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-3-3").calentim({showCalendars: false, format: "hh:mm A"});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">      &lt;input type=&quot;text&quot; id=&quot;calentim-ex-3-3&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">      &lt;script type=&quot;text/javascript&quot;&gt;
+          $(&quot;#calentim-ex-3-3&quot;).calentim({
+        showCalendars: false,
+        format: &quot;hh:mm A&quot;
+      });
+      &lt;/script&gt;
+</code></pre>
+<h3 id="hiding-time-pickers">Hiding time pickers</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm"></p>
+<p><input type="text" id="calentim-ex-3-4" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-3-4").calentim({showTimePickers: false, format: "L"});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">      &lt;input type=&quot;text&quot; id=&quot;calentim-ex-3-4&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">      &lt;script type=&quot;text/javascript&quot;&gt;
+          $(&quot;#calentim-ex-3-4&quot;).calentim({showTimePickers: false, format: &quot;L&quot;});
+      &lt;/script&gt;
+</code></pre>
+<h3 id="empty-on-initialization">Empty on initialization</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-5-1" placeholder="Select a Date" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-5-1").calentim({startEmpty: true});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">      &lt;input type=&quot;text&quot; id=&quot;calentim-ex-5-1&quot; placeholder=&quot;Select a Date&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">      &lt;script type=&quot;text/javascript&quot;&gt;
+          $(&quot;#calentim-ex-5-1&quot;).calentim({startEmpty: true});
+      &lt;/script&gt;
+</code></pre>
+<h3 id="showing-dropdown-apply-cancel-buttons">Showing dropdown apply/cancel buttons</h3>
+<hr>
+<p>This will only work with dropdown desktop view, inline views don&#39;t support cancel and apply buttons. Mobile modal view already has them.
+<br>
+Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-5-3" placeholder="Select a Date" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-5-3").calentim({showButtons: true});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">      &lt;input type=&quot;text&quot; id=&quot;calentim-ex-5-3&quot; placeholder=&quot;Select a Date&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">      &lt;script type=&quot;text/javascript&quot;&gt;
+          $(&quot;#calentim-ex-5-1&quot;).calentim({showButtons: true});
+      &lt;/script&gt;
+</code></pre>
+<h3 id="changing-hour-format">Changing hour format</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm"></p>
+<p><input type="text" id="calentim-ex-3-1" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-3-1").calentim({format: "DD/MM/YYYY HH:mm", hourFormat: 24});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-3-1&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">    &lt;script type=&quot;text/javascript&quot;&gt;
+      $(&quot;#calentim-ex-3-1&quot;).calentim({
+        format: &quot;DD/MM/YYYY HH:mm&quot;,
+        hourFormat: 24
+      });
+    &lt;/script&gt;
+</code></pre>
+<h3 id="changing-minute-steps">Changing minute steps</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm"></p>
+<p><input type="text" id="calentim-ex-3-2" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-3-2").calentim({minuteSteps: 15});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-3-2&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">    &lt;script type=&quot;text/javascript&quot;&gt;
+      $(&quot;#calentim-ex-3-2&quot;).calentim({
+        minuteSteps: 15
+      });
+    &lt;/script&gt;
+</code></pre>
+<h3 id="changing-timepicker-arrow-directions">Changing Timepicker arrow directions</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm"></p>
+<p><input type="text" id="calentim-ex-3-5" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-3-5").calentim({reverseTimepickerArrows: true});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-3-5&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">    &lt;script type=&quot;text/javascript&quot;&gt;
+      $(&quot;#calentim-ex-3-5&quot;).calentim({
+        reverseTimepickerArrows: true
+      });
+    &lt;/script&gt;
+</code></pre>
+<h3 id="changing-calendar-count">Changing calendar count</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm"></p>
+<p><input type="text" id="calentim-ex-4" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-4").calentim({calendarCount: 3});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">      &lt;input type=&quot;text&quot; id=&quot;calentim-ex-4&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">      &lt;script type=&quot;text/javascript&quot;&gt;
+          $(&quot;#calentim-ex-4&quot;).calentim({calendarCount: 3});
+      &lt;/script&gt;
+</code></pre>
+<h3 id="inline-calendar">Inline calendar</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-5" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-5").calentim({inline: true});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">      &lt;input type=&quot;text&quot; id=&quot;calentim-ex-5&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">      &lt;script type=&quot;text/javascript&quot;&gt;
+          $(&quot;#calentim-ex-5&quot;).calentim({inline: true});
+      &lt;/script&gt;
+</code></pre>
+<h3 id="inline-time-picker">Inline time picker</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-5-2" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-5-2").calentim({
+  inline: true,
+  showCalendars: false,
+  format: "hh:mm A"
+});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">      &lt;input type=&quot;text&quot; id=&quot;calentim-ex-5-2&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">      &lt;script type=&quot;text/javascript&quot;&gt;
+          $(&quot;#calentim-ex-5-2&quot;).calentim({
+            inline: true,
+            showCalendars: false,
+            format: &quot;hh:mm A&quot;
+          });
+      &lt;/script&gt;
+</code></pre>
+<h3 id="single-date-time-picker">Single date time picker</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-6" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-6").calentim({singleDate: true});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">      &lt;input type=&quot;text&quot; id=&quot;calentim-ex-6&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">      &lt;script type=&quot;text/javascript&quot;&gt;
+          $(&quot;#calentim-ex-6&quot;).calentim({singleDate: true});
+      &lt;/script&gt;
+</code></pre>
+<h3 id="range-single-switch">Range/Single switch</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><label for='single-calentim-mod'><input type='radio' value="single"  id='single-calentim-mod' name="calentim-type-selector" class='calentim-type-selector'>&nbsp;Single Date</label></p>
+<p><label for='multi-calentim-mod'><input type='radio' value="multi"  id='multi-calentim-mod' name="calentim-type-selector" class='calentim-type-selector' checked>&nbsp;Multiple Dates</label></p>
+<p><input type="text" id="calentim-ex-6-4" />
+</div></p>
+<script type="text/javascript">
+  $("#calentim-ex-6-4").calentim();
+  $(".calentim-type-selector").click(function(){
+    $("#calentim-ex-6-4").data("calentim").container.remove();
+    $("#calentim-ex-6-4").calentim({
+      singleDate: $("input[name='calentim-type-selector']:checked").val() == "single" ? true : false
+    });
+  });
+</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">&lt;label for=&#39;single-calentim-mod&#39;&gt;
+  &lt;input type=&#39;radio&#39; value=&quot;single&quot;  id=&#39;single-calentim-mod&#39; name=&quot;calentim-type-selector&quot;
+    class=&#39;calentim-type-selector&#39;&gt;
+    &amp;nbsp;Single Date
+  &lt;/label&gt;
+&lt;label for=&#39;multi-calentim-mod&#39;&gt;
+  &lt;input type=&#39;radio&#39; value=&quot;multi&quot;  id=&#39;multi-calentim-mod&#39; name=&quot;calentim-type-selector&quot;
+    class=&#39;calentim-type-selector&#39; checked&gt;
+  &amp;nbsp;Multiple Dates
+&lt;/label&gt;
+    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-6-4&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">  &lt;script type=&quot;text/javascript&quot;&gt;
+  $(&quot;#calentim-ex-6-4&quot;).calentim();
+  $(&quot;.calentim-type-selector&quot;).click(function(){
+    $(&quot;#calentim-ex-6-4&quot;).data(&quot;calentim&quot;).destroy();
+    $(&quot;#calentim-ex-6-4&quot;).calentim({
+      singleDate: $(&quot;input[name=&#39;calentim-type-selector&#39;]:checked&quot;).val() == &quot;single&quot; ? true : false
+    });
+  });
+  &lt;/script&gt;
+</code></pre>
+<h3 id="linked-single-date-pickers">Linked Single Date Pickers</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><div style='display: flex;'>
+  <div>Start Date: <input type="text" id="calentim-ex-6-5-start" /></div>
+  <div style='margin-left:20px;'>End Date:  <input type="text" id="calentim-ex-6-5-end" /></div>
+</div>
+</div></p>
+<script type="text/javascript">
+    var startDate, endDate, startInstance, endInstance;
+    var fillInputs = function () {
+        if (startDate) startInstance.$elem.val(startDate.locale(startInstance.config.locale).format(startInstance.config.format));
+        if (endDate) endInstance.$elem.val(endDate.locale(endInstance.config.locale).format(endInstance.config.format));
+    };
+    var beforeShow = function (instance) {
+        if (startDate) {
+            startInstance.config.startDate = startDate.clone();
+            endInstance.config.startDate = startDate.clone();
+        }
+        if (endDate) {
+            startInstance.config.endDate = endDate.clone();
+            endInstance.config.endDate = endDate.clone();
+        }
+        fillInputs();
+        instance.updateHeader();
+        instance.reDrawCells();
+        instance.updateTimePickerDisplay();
+    };
+    $("#calentim-ex-6-5-start").calentim({
+        startEmpty: $("#calentim-ex-6-5-start").val() === "",
+        startDate: $("#calentim-ex-6-5-start").val(),
+        endDate: $("#calentim-ex-6-5-end").val(),
+        enableKeyboard: false,
+        oninit: function (instance) {
+            startInstance = instance;
+            if (!instance.config.startEmpty && instance.config.startDate) {
+                instance.$elem.val(instance.config.startDate.locale(instance.config.locale).format(instance.config.format));
+                startDate = instance.config.startDate.clone();
+            }
+        },
+        onaftershow: beforeShow,
+        ontimechange: function (instance, start, end) {
+            if(start) startDate = start.clone();
+            if(end) endDate = end.clone();
+            fillInputs();
+        },
+        onfirstselect: function (instance, start) {
+            startDate = start.clone();
+            endDate = null;
+            startInstance.globals.startSelected = false;
+            startInstance.hideDropdown();
+            endInstance.showDropdown();
+            endInstance.setDisplayDate(start.clone());
+            endInstance.config.minDate = startDate.clone();
+            endInstance.config.startDate = startDate.clone();
+            endInstance.config.endDate = null;
+            endInstance.globals.startSelected = true;
+            endInstance.globals.endSelected = false;
+            endInstance.globals.firstValueSelected = true;
+            if (endDate && startDate.isAfter(endDate)) {
+                endInstance.config.endDate = endDate.clone();
+            }
+            fillInputs();
+            endInstance.updateHeader();
+            endInstance.reDrawCells();
+            endInstance.updateTimePickerDisplay();
+        }
+    });
+    $("#calentim-ex-6-5-end").calentim({
+        startEmpty: $("#calentim-ex-6-5-end").val() === "",
+        startDate: $("#calentim-ex-6-5-start").val(),
+        endDate: $("#calentim-ex-6-5-end").val(),
+        enableKeyboard: false,
+        autoCloseOnSelect: true,
+        oninit: function (instance) {
+            endInstance = instance;
+            if (!instance.config.startEmpty && instance.config.endDate) {
+                instance.$elem.val(instance.config.endDate.locale(instance.config.locale).format(instance.config.format));
+                endDate = instance.config.endDate.clone();
+            }
+        },
+        onaftershow: beforeShow,
+        ontimechange: function (instance, start, end) {
+            if(start) startDate = start.clone();
+            if(end) endDate = end.clone();
+            fillInputs();
+        },
+        onafterselect: function (instance, start, end) {
+            startDate = start.clone();
+            endDate = end.clone();
+            endInstance.hideDropdown();
+            startInstance.config.endDate = endDate.clone();
+            startInstance.globals.firstValueSelected = true;
+            fillInputs();
+            endInstance.globals.startSelected = true;
+            endInstance.globals.endSelected = false;
+        }
+    });
+</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">  &lt;div style=&#39;display: flex;&#39;&gt;
+    &lt;div&gt;Start Date: &lt;input type=&quot;text&quot; id=&quot;calentim-ex-6-5-start&quot; /&gt;&lt;/div&gt;
+    &lt;div style=&#39;margin-left:20px;&#39;&gt;End Date:  &lt;input type=&quot;text&quot; id=&quot;calentim-ex-6-5-end&quot; /&gt;&lt;/div&gt;
+  &lt;/div&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">  &lt;script type=&quot;text/javascript&quot;&gt;
+    var startDate, endDate, startInstance, endInstance;
+    var fillInputs = function () {
+        if (startDate) startInstance.$elem.val(startDate.locale(startInstance.config.locale).format(startInstance.config.format));
+        if (endDate) endInstance.$elem.val(endDate.locale(endInstance.config.locale).format(endInstance.config.format));
+    };
+    var beforeShow = function (instance) {
+        if (startDate) {
+            startInstance.config.startDate = startDate.clone();
+            endInstance.config.startDate = startDate.clone();
+        }
+        if (endDate) {
+            startInstance.config.endDate = endDate.clone();
+            endInstance.config.endDate = endDate.clone();
+        }
+        fillInputs();
+        instance.updateHeader();
+        instance.reDrawCells();
+        instance.updateTimePickerDisplay();
+    };
+    $(&quot;#calentim-ex-6-5-start&quot;).calentim({
+        startEmpty: $(&quot;#calentim-ex-6-5-start&quot;).val() === &quot;&quot;,
+        startDate: $(&quot;#calentim-ex-6-5-start&quot;).val(),
+        endDate: $(&quot;#calentim-ex-6-5-end&quot;).val(),
+        enableKeyboard: false,
+        oninit: function (instance) {
+            startInstance = instance;
+            if (!instance.config.startEmpty &amp;&amp; instance.config.startDate) {
+                instance.$elem.val(instance.config.startDate.locale(instance.config.locale).format(instance.config.format));
+                startDate = instance.config.startDate.clone();
+            }
+        },
+        onaftershow: beforeShow,
+        ontimechange: function (instance, start, end) {
+            if(start) startDate = start.clone();
+            if(end) endDate = end.clone();
+            fillInputs();
+        },
+        onfirstselect: function (instance, start) {
+            startDate = start.clone();
+            endDate = null;
+            startInstance.globals.startSelected = false;
+            startInstance.hideDropdown();
+            endInstance.showDropdown();
+            endInstance.setDisplayDate(start.clone());
+            endInstance.config.minDate = startDate.clone();
+            endInstance.config.startDate = startDate.clone();
+            endInstance.config.endDate = null;
+            endInstance.globals.startSelected = true;
+            endInstance.globals.endSelected = false;
+            endInstance.globals.firstValueSelected = true;
+            if (endDate &amp;&amp; startDate.isAfter(endDate)) {
+                endInstance.config.endDate = endDate.clone();
+            }
+            fillInputs();
+            endInstance.updateHeader();
+            endInstance.reDrawCells();
+            endInstance.updateTimePickerDisplay();
+        }
+    });
+    $(&quot;#calentim-ex-6-5-end&quot;).calentim({
+        startEmpty: $(&quot;#calentim-ex-6-5-end&quot;).val() === &quot;&quot;,
+        startDate: $(&quot;#calentim-ex-6-5-start&quot;).val(),
+        endDate: $(&quot;#calentim-ex-6-5-end&quot;).val(),
+        enableKeyboard: false,
+        autoCloseOnSelect: true,
+        oninit: function (instance) {
+            endInstance = instance;
+            if (!instance.config.startEmpty &amp;&amp; instance.config.endDate) {
+                instance.$elem.val(instance.config.endDate.locale(instance.config.locale).format(instance.config.format));
+                endDate = instance.config.endDate.clone();
+            }
+        },
+        onaftershow: beforeShow,
+        ontimechange: function (instance, start, end) {
+            if(start) startDate = start.clone();
+            if(end) endDate = end.clone();
+            fillInputs();
+        },
+        onafterselect: function (instance, start, end) {
+            startDate = start.clone();
+            endDate = end.clone();
+            endInstance.hideDropdown();
+            startInstance.config.endDate = endDate.clone();
+            startInstance.globals.firstValueSelected = true;
+            fillInputs();
+            endInstance.globals.startSelected = true;
+            endInstance.globals.endSelected = false;
+        }
+    });
+&lt;/script&gt;
+</code></pre>
+<h3 id="minimal-single-date-time-picker">Minimal Single date time picker</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-6-2" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-6-2").calentim({singleDate: true, calendarCount: 1, showHeader: false, showFooter: false,autoCloseOnSelect: true});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-6-2&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">    &lt;script type=&quot;text/javascript&quot;&gt;
+      $(&quot;#calentim-ex-6-2&quot;).calentim({
+        singleDate: true,
+        calendarCount: 1,
+        showHeader: false,
+        showFooter: false,
+        autoCloseOnSelect: true
+      });
+    &lt;/script&gt;
+</code></pre>
+<h3 id="limiting-time-based-on-day">Limiting time based on day</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-6-7" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-6-7").calentim({
+    limitTimeForDay: function (day) {
+        if (day.isoWeekday() === 6 || day.isoWeekday() === 7) {
+            return { start: { hour: 8, minute: 15, ampm: null }, end: { hour: 18, minute: 21, ampm: null } };
+        } else {
+            return { start: { hour: 9, minute: 30, ampm: null }, end: { hour: 16, minute: 45, ampm: null } };
+        }
+    }
+});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-6-7&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">    &lt;script type=&quot;text/javascript&quot;&gt;
+      $(&quot;#calentim-ex-6-7&quot;).calentim({
+        limitTimeForDay: function (day) {
+          if (day.isoWeekday() === 6 || day.isoWeekday() === 7) {
+            return { start: { hour: 8, minute: 15, ampm: null }, end: { hour: 18, minute: 21, ampm: null } };
+          } else {
+            return { start: { hour: 9, minute: 30, ampm: null }, end: { hour: 16, minute: 45, ampm: null } };
+          }
+        }
+      });
+    &lt;/script&gt;
+</code></pre>
+<h3 id="limiting-time-based-on-day-12-h-formatted-">Limiting time based on day (12-h formatted)</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-6-7-1" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-6-7-1").calentim({
+    limitTimeForDay: function (day) {
+        if (day.isoWeekday() === 6 || day.isoWeekday() === 7) {
+            return { start: { hour: 8, minute: 15, ampm: "am" }, end: { hour: 6, minute: 21, ampm: "pm" } };
+        } else {
+            return { start: { hour: 9, minute: 30, ampm: "am" }, end: { hour: 4, minute: 45, ampm: "pm" } };
+        }
+    }
+});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-6-7-1&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">    &lt;script type=&quot;text/javascript&quot;&gt;
+      $(&quot;#calentim-ex-6-7-1&quot;).calentim({
+        limitTimeForDay: function (day) {
+          if (day.isoWeekday() === 6 || day.isoWeekday() === 7) {
+            return { start: { hour: 8, minute: 15, ampm: &quot;am&quot; }, end: { hour: 6, minute: 21, ampm: &quot;pm&quot; } };
+          } else {
+            return { start: { hour: 9, minute: 30, ampm: &quot;pm&quot; }, end: { hour: 4, minute: 45, ampm: &quot;pm&quot; } };
+          }
+        }
+      });
+    &lt;/script&gt;
+</code></pre>
+<h3 id="limiting-time-based-on-day-multiple-time-ranges-">Limiting time based on day (multiple time ranges)</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-6-7-2" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-6-7-2").calentim({
+    hourFormat: 24,
+    limitTimeForDay: function (day) {
+      if (day.isoWeekday() === 6 || day.isoWeekday() === 7) {
+        return { start: { hour: 9, minute: 0, ampm: null }, end: { hour: 12, minute: 30, ampm: null } };
+      } else {
+        return [
+          { start: { hour: 9, minute: 0, ampm: null }, end: { hour: 12, minute: 30, ampm: null } },
+          { start: { hour: 13, minute: 30, ampm: null }, end: { hour: 18, minute: 00, ampm: null } }
+        ];
+      }
+    }
+});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-6-7-2&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">    &lt;script type=&quot;text/javascript&quot;&gt;
+      $(&quot;#calentim-ex-6-7-2&quot;).calentim({
+        hourFormat: 24,
+        limitTimeForDay: function (day) {
+          if (day.isoWeekday() === 6 || day.isoWeekday() === 7) {
+            return { start: { hour: 9, minute: 0, ampm: null }, end: { hour: 12, minute: 30, ampm: null } };
+          } else {
+            return [
+              { start: { hour: 9, minute: 0, ampm: null }, end: { hour: 12, minute: 30, ampm: null } },
+              { start: { hour: 13, minute: 30, ampm: null }, end: { hour: 18, minute: 00, ampm: null } }
+            ];
+          }
+        }
+      });
+    &lt;/script&gt;
+</code></pre>
+<h3 id="ranges-on-the-right">Ranges on the Right</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-6-6-1" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-6-6-1").calentim({rangeOrientation: "vertical"});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-6-6-1&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">    &lt;script type=&quot;text/javascript&quot;&gt;
+      $(&quot;#calentim-ex-6-6-1&quot;).calentim({
+        rangeOrientation: &quot;vertical&quot;
+      });
+    &lt;/script&gt;
+</code></pre>
+<h3 id="ranges-on-the-right-with-buttons">Ranges on the Right with Buttons</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-6-6-2" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-6-6-2").calentim({rangeOrientation: "vertical", showButtons: true});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-6-6-2&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">    &lt;script type=&quot;text/javascript&quot;&gt;
+      $(&quot;#calentim-ex-6-6-2&quot;).calentim({
+        rangeOrientation: &quot;vertical&quot;,
+        showButtons: true
+      });
+    &lt;/script&gt;
+</code></pre>
+<h3 id="ranges-on-the-right-inline-">Ranges on the Right (inline)</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-6-6-3" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-6-6-3").calentim({inline: true, rangeOrientation: "vertical"});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-6-6-3&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">    &lt;script type=&quot;text/javascript&quot;&gt;
+      $(&quot;#calentim-ex-6-6-3&quot;).calentim({
+        inline: true,
+        rangeOrientation: &quot;vertical&quot;
+      });
+    &lt;/script&gt;
+</code></pre>
+<h3 id="showing-week-numbers">Showing week numbers</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-6-6-4" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-6-6-4").calentim({showWeekNumbers: true});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-6-6-4&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">    &lt;script type=&quot;text/javascript&quot;&gt;
+      $(&quot;#calentim-ex-6-6-4&quot;).calentim({
+        showWeekNumbers: true
+      });
+    &lt;/script&gt;
+</code></pre>
+<h3 id="auto-close-on-select">Auto Close on Select</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-6-1" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-6-1").calentim({autoCloseOnSelect: true});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">  &lt;input type=&quot;text&quot; id=&quot;calentim-ex-6-1&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">  &lt;script type=&quot;text/javascript&quot;&gt;
+    $(&quot;#calentim-ex-6-1&quot;).calentim({autoCloseOnSelect: true});
+  &lt;/script&gt;
+</code></pre>
+<h3 id="defining-min-max-dates">Defining Min/Max Dates</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-6-3" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-6-3").calentim({
+  minDate: moment().subtract(1, "weeks").startOf("week"),
+  maxDate: moment().add(1, "weeks").endOf("week")
+});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">  &lt;input type=&quot;text&quot; id=&quot;calentim-ex-6-3&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">  &lt;script type=&quot;text/javascript&quot;&gt;
+    $(&quot;#calentim-ex-6-3&quot;).calentim({
+      minDate: moment().subtract(1, &quot;weeks&quot;).startOf(&quot;week&quot;),
+      maxDate: moment().add(1, &quot;weeks&quot;).endOf(&quot;week&quot;)
+    });
+  &lt;/script&gt;
+</code></pre>
+<h3 id="defining-custom-ranges">Defining custom ranges</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-7" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-7").calentim({ranges: [
+{
+title: "Next Week",
+startDate: moment().add(1,"weeks").startOf("week"),
+endDate: moment().add(1,"weeks").endOf("week")
+},
+{
+title: "Today",
+startDate: moment(),
+endDate: moment()
+},
+{
+title: "Yesterday",
+startDate: moment().subtract(1,"days"),
+endDate: moment().subtract(1,"days")
+},
+{
+title: "Last 7 days",
+startDate: moment().subtract(7,"days"),
+endDate: moment().subtract(1,"days")
+},
+{
+title: "Last 30 days",
+startDate: moment().subtract(30,"days"),
+endDate: moment().subtract(1,"days")
+},
+{
+title: "This month",
+startDate: moment().startOf("month"),
+endDate: moment().endOf("month")
+},
+{
+title: "Last month",
+startDate: moment().subtract(1,"months").startOf("month"),
+endDate: moment().subtract(1,"months").endOf("month")
+}
+]});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">      &lt;input type=&quot;text&quot; id=&quot;calentim-ex-7&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">      &lt;script type=&quot;text/javascript&quot;&gt;
+          $(&quot;#calentim-ex-7&quot;).calentim({ranges: [
+              {
+                  title: &quot;Next Week&quot;,
+                  startDate: moment().add(1,&quot;weeks&quot;).startOf(&quot;week&quot;),
+                  endDate: moment().add(1,&quot;weeks&quot;).endOf(&quot;week&quot;)
+              },
+              {
+                  title: &quot;Today&quot;,
+                  startDate: moment(),
+                  endDate: moment()
+              },
+              {
+                  title: &quot;Yesterday&quot;,
+                  startDate: moment().subtract(1,&quot;days&quot;),
+                  endDate: moment().subtract(1,&quot;days&quot;)
+              },
+              {
+                  title: &quot;Last 7 days&quot;,
+                  startDate: moment().subtract(7,&quot;days&quot;),
+                  endDate: moment().subtract(1,&quot;days&quot;)
+              },
+              {
+                  title: &quot;Last 30 days&quot;,
+                  startDate: moment().subtract(30,&quot;days&quot;),
+                  endDate: moment().subtract(1,&quot;days&quot;)
+              },
+              {
+                  title: &quot;This month&quot;,
+                  startDate: moment().startOf(&quot;month&quot;),
+                  endDate: moment().endOf(&quot;month&quot;)
+              },
+              {
+                  title: &quot;Last month&quot;,
+                  startDate: moment().subtract(1,&quot;months&quot;).startOf(&quot;month&quot;),
+                  endDate: moment().subtract(1,&quot;months&quot;).endOf(&quot;month&quot;)
+              }
+          ]});
+      &lt;/script&gt;
+</code></pre>
+<h3 id="custom-events">Custom events</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-8" /></p>
+<p><div class="calentimlabel"></div>
+</div></p>
+<script type="text/javascript">$("#calentim-ex-8").calentim({
+onafterselect: function(calentim, startDate, endDate) {
+calentim.$elem.closest(".well").find(".calentimlabel").text("You have chosen between " + startDate.format('LLLL') + " and " + endDate.format('LLLL'));
+}
+});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">      &lt;input type=&quot;text&quot; id=&quot;calentim-ex-8&quot; /&gt;
+      &lt;div class=&quot;calentimlabel&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">      &lt;script type=&quot;text/javascript&quot;&gt;
+          $(&quot;#calentim-ex-8&quot;).calentim({
+              onafterselect: function(calentim, startDate, endDate) {
+                 calentim.$elem.closest(&quot;.well&quot;).find(&quot;.calentimlabel&quot;)
+                .text(&quot;You have chosen between &quot; + startDate.format(&#39;LLLL&#39;) + &quot; and &quot; + endDate.format(&#39;LLLL&#39;));
+              }
+          });
+      &lt;/script&gt;
+</code></pre>
+<h3 id="hotel-booking-system">Hotel Booking System</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"><input type="text" id="calentim-ex-9-1" /></div></p>
+<script type="text/javascript">$("#calentim-ex-9-1").calentim({isHotelBooking: true, disabledRanges: [{start: moment(), end: moment().add(2, "days")}], continuous: true, minSelectedDays: 1, startEmpty: true});</script>
+
+<p>HTML:</p>
+<pre><code class="lang-html">&lt;input type=&quot;text&quot; id=&quot;calentim-ex-9-1&quot; /&gt;
+</code></pre>
+<p>JavaScript:</p>
+<pre><code class="lang-javascript">    &lt;script type=&quot;text/javascript&quot;&gt;
+        $(&quot;#calentim-ex-9-1&quot;).calentim({
+      isHotelBooking: true,
+      continuous: true,
+      startEmpty: true,
+      minSelectedDays: 1,
+      disabledRanges: [
+        {
+          start: moment(),
+          end: moment().add(2, &quot;days&quot;)
+        }
+      ]
+    });
+    &lt;/script&gt;
+</code></pre>
+<h3 id="change-first-day-of-week">Change first day of week</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-9" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-9").calentim({startOnMonday: true});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">      &lt;input type=&quot;text&quot; id=&quot;calentim-ex-9&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">      &lt;script type=&quot;text/javascript&quot;&gt;
+          $(&quot;#calentim-ex-9&quot;).calentim({startOnMonday: true});
+      &lt;/script&gt;
+</code></pre>
+<h3 id="changing-locale">Changing locale</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-10" />
+</div></p>
+<script type="text/javascript">var userLanguage = navigator.language || navigator.userLanguage;if(userLanguage == "en") userLanguage = "fr";$("#calentim-ex-10").calentim({locale: userLanguage });</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">      &lt;input type=&quot;text&quot; id=&quot;calentim-ex-10&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">      &lt;script type=&quot;text/javascript&quot;&gt;
+          var userLanguage = navigator.language || navigator.userLanguage;
+          if(userLanguage == &quot;en&quot;) userLanguage = &quot;fr&quot;;
+          $(&quot;#calentim-ex-10&quot;).calentim({locale: userLanguage });
+      &lt;/script&gt;
+</code></pre>
+<h3 id="changing-locale-inline-">Changing locale (inline)</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-10-2" />
+</div></p>
+<script type="text/javascript">var userLanguage = navigator.language || navigator.userLanguage;if(userLanguage == "en") userLanguage = "fr";$("#calentim-ex-10-2").calentim({locale: userLanguage, inline: true });</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">      &lt;input type=&quot;text&quot; id=&quot;calentim-ex-10-2&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">      &lt;script type=&quot;text/javascript&quot;&gt;
+          var userLanguage = navigator.language || navigator.userLanguage;
+          if(userLanguage == &quot;en&quot;) userLanguage = &quot;fr&quot;;
+          $(&quot;#calentim-ex-10-2&quot;).calentim({locale: userLanguage, inline: true });
+      &lt;/script&gt;
+</code></pre>
+<h3 id="changing-locale-non-latin-">Changing locale (non-latin)</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-10-3" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-10-3").calentim({locale: "ar", inline: true });</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">      &lt;input type=&quot;text&quot; id=&quot;calentim-ex-10-3&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">      &lt;script type=&quot;text/javascript&quot;&gt;
+          $(&quot;#calentim-ex-10-3&quot;).calentim({locale: &quot;ar&quot;, inline: true });
+      &lt;/script&gt;
+</code></pre>
+<h3 id="rtl-support">RTL Support</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" dir="rtl" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-10-4" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-10-4").calentim({locale: "ar", isRTL: true, arrowOn: "right" });</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">      &lt;div dir=&quot;rtl&quot;&gt;
+        &lt;input type=&quot;text&quot; id=&quot;calentim-ex-10-4&quot; /&gt;
+      &lt;/div&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">      &lt;script type=&quot;text/javascript&quot;&gt;
+          $(&quot;#calentim-ex-10-4&quot;).calentim({locale: &quot;ar&quot;, isRTL: true, arrowOn: &quot;right&quot; });
+      &lt;/script&gt;
+</code></pre>
+<h3 id="week-select-mode">Week Select Mode</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-10-1" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-10-1").calentim({
+        onfirstselect: function(elem,start){
+            elem.config.startDate = moment(start).startOf("week");
+            elem.config.endDate = moment(start).endOf("week");
+            elem.globals.endSelected = true;
+            elem.globals.startSelected = false;
+            elem.globals.hoverDate = null;
+            elem.input.find( ".calentim-apply" ).removeAttr( "disabled" );
+            elem.updateInput();
+        }
+      });</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-10-1&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">    &lt;script type=&quot;text/javascript&quot;&gt;
+      $(&quot;#calentim-ex-10&quot;).calentim({
+        onfirstselect: function(elem,start){
+            elem.config.startDate = moment(start).startOf(&quot;week&quot;);
+            elem.config.endDate = moment(start).endOf(&quot;week&quot;);
+            elem.globals.endSelected = true;
+            elem.globals.startSelected = false;
+            elem.globals.hoverDate = null;
+            elem.container.find( &quot;.calentim-apply&quot; ).removeAttr( &quot;disabled&quot; );
+            elem.updateInput();
+        }
+      });
+    &lt;/script&gt;
+</code></pre>
+<h3 id="custom-target-element">Custom target element</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-11-target" /></p>
+<p><button id="calentim-ex-11">Open calentim</button>
+</div></p>
+<script type="text/javascript">$("#calentim-ex-11").calentim({target: $("#calentim-ex-11-target")});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-11-target&quot; /&gt;
+    &lt;button id=&quot;calentim-ex-11&quot;&gt;Open calentim&lt;/button&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">      &lt;script type=&quot;text/javascript&quot;&gt;
+          $(&quot;#calentim-ex-11&quot;).calentim({target: $(&quot;#calentim-ex-11-target&quot;)});
+      &lt;/script&gt;
+</code></pre>
+<h3 id="custom-disabled-ranges-with-callback-">Custom disabled ranges (with callback)</h3>
+<hr>
+<p><strong>Note:</strong> This task would only fill the input on Wednesdays, because the only valid (selectable) dates are Wednesdays on the calendar. If the start day or end day isn&#39;t selectable, the plugin will revert itself to <code>startEmpty</code> state when initialized.
+Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-13" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-13").calentim({disableDays: function(day){return day.day() == 3 ? false : true}});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-13&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">    &lt;script type=&quot;text/javascript&quot;&gt;
+      $(&quot;#calentim-ex-13&quot;).calentim({
+        disableDays: function(day){
+          return day.day() != 3;
+        }
+      });
+    &lt;/script&gt;
+</code></pre>
+<h3 id="custom-disabled-ranges-with-array-">Custom disabled ranges (with array)</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-13-2" value="03/19/2017 12:00 AM - 03/20/2017 12:00 AM" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-13-2").calentim({
+  disabledRanges: [
+    {
+      "start": moment("10/03/2017","DD/MM/YYYY"),
+      "end": moment("18/03/2017", "DD/MM/YYYY")
+    },
+    {
+      "start": moment("01/04/2017","DD/MM/YYYY"),
+      "end": moment("05/04/2017", "DD/MM/YYYY")
+    },
+    {
+      "start": moment("11/04/2017","DD/MM/YYYY"),
+      "end": moment("15/04/2017", "DD/MM/YYYY")
+    }
+  ]
+});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-13-2&quot; value=&quot;03/19/2017 12:00 AM - 03/20/2017 12:00 AM&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">    &lt;script type=&quot;text/javascript&quot;&gt;
+      $(&quot;#calentim-ex-13-2&quot;).calentim({
+        disabledRanges: [
+          {
+            &quot;start&quot;: moment(&quot;10/03/2017&quot;,&quot;DD/MM/YYYY&quot;),
+            &quot;end&quot;: moment(&quot;18/03/2017&quot;, &quot;DD/MM/YYYY&quot;)
+          },
+          {
+            &quot;start&quot;: moment(&quot;01/04/2017&quot;,&quot;DD/MM/YYYY&quot;),
+            &quot;end&quot;: moment(&quot;05/04/2017&quot;, &quot;DD/MM/YYYY&quot;)
+          },
+          {
+            &quot;start&quot;: moment(&quot;11/04/2017&quot;,&quot;DD/MM/YYYY&quot;),
+            &quot;end&quot;: moment(&quot;15/04/2017&quot;, &quot;DD/MM/YYYY&quot;)
+          }
+        ]
+      });
+    &lt;/script&gt;
+</code></pre>
+<h3 id="custom-disabled-ranges-preserve-continuousity-">Custom disabled ranges (preserve continuousity)</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><input type="text" id="calentim-ex-13-3" value="03/19/2017 12:00 AM - 03/20/2017 12:00 AM" />
+</div></p>
+<script type="text/javascript">$("#calentim-ex-13-3").calentim({
+  continuous: true,
+  disabledRanges: [
+    {
+      start: moment("10/03/2017","DD/MM/YYYY"),
+      end: moment("18/03/2017", "DD/MM/YYYY")
+    },
+    {
+      "start": moment("01/04/2017","DD/MM/YYYY"),
+      "end": moment("05/04/2017", "DD/MM/YYYY")
+    },
+    {
+      "start": moment("11/04/2017","DD/MM/YYYY"),
+      "end": moment("15/04/2017", "DD/MM/YYYY")
+    }
+  ]
+});</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-13-3&quot; value=&quot;03/19/2017 12:00 AM - 03/20/2017 12:00 AM&quot; /&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">    &lt;script type=&quot;text/javascript&quot;&gt;
+      $(&quot;#calentim-ex-13-3&quot;).calentim({
+        continuous: true,
+        disabledRanges: [
+          {
+            start: moment(&quot;10/03/2017&quot;,&quot;DD/MM/YYYY&quot;),
+            end: moment(&quot;18/03/2017&quot;, &quot;DD/MM/YYYY&quot;)
+          },
+          {
+            &quot;start&quot;: moment(&quot;01/04/2017&quot;,&quot;DD/MM/YYYY&quot;),
+            &quot;end&quot;: moment(&quot;05/04/2017&quot;, &quot;DD/MM/YYYY&quot;)
+          },
+          {
+            &quot;start&quot;: moment(&quot;11/04/2017&quot;,&quot;DD/MM/YYYY&quot;),
+            &quot;end&quot;: moment(&quot;15/04/2017&quot;, &quot;DD/MM/YYYY&quot;)
+          }
+        ]
+      });
+    &lt;/script&gt;
+</code></pre>
+<h3 id="disable-only-start-dates">Disable only start dates</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"><input type="text" id="calentim-ex-13-5" value="03/19/2017 - 03/20/2017" /></div></p>
+<script type="text/javascript">$("#calentim-ex-13-5").calentim({
+  disableOnlyStart: true,
+  disabledRanges: [
+    {
+      start: moment("10/03/2017","DD/MM/YYYY"),
+      end: moment("18/03/2017", "DD/MM/YYYY")
+    },
+    {
+      "start": moment("01/04/2017","DD/MM/YYYY"),
+      "end": moment("05/04/2017", "DD/MM/YYYY")
+    },
+    {
+      "start": moment("11/04/2017","DD/MM/YYYY"),
+      "end": moment("15/04/2017", "DD/MM/YYYY")
+    }
+  ]
+});</script>
+
+<p>HTML:</p>
+<pre><code class="lang-html">&lt;input type=&quot;text&quot; id=&quot;calentim-ex-13-5&quot; value=&quot;03/19/2017 - 03/20/2017&quot; /&gt;
+</code></pre>
+<p>JavaScript:</p>
+<pre><code class="lang-javascript">  &lt;script type=&quot;text/javascript&quot;&gt;
+    $(&quot;#calentim-ex-13-5&quot;).calentim({
+      disableOnlyStart: true,
+      disabledRanges: [
+        {
+          &quot;start&quot;: moment(&quot;10/03/2017&quot;,&quot;DD/MM/YYYY&quot;),
+          &quot;end&quot;: moment(&quot;18/03/2017&quot;, &quot;DD/MM/YYYY&quot;)
+        },
+        {
+          &quot;start&quot;: moment(&quot;01/04/2017&quot;,&quot;DD/MM/YYYY&quot;),
+          &quot;end&quot;: moment(&quot;05/04/2017&quot;, &quot;DD/MM/YYYY&quot;)
+        },
+        {
+          &quot;start&quot;: moment(&quot;11/04/2017&quot;,&quot;DD/MM/YYYY&quot;),
+          &quot;end&quot;: moment(&quot;15/04/2017&quot;, &quot;DD/MM/YYYY&quot;)
+        }
+      ]
+    });
+  &lt;/script&gt;
+</code></pre>
+<h3 id="disable-only-end-dates">Disable only end dates</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"><input type="text" id="calentim-ex-13-6" value="03/19/2017 - 03/20/2017" /></div></p>
+<script type="text/javascript">$("#calentim-ex-13-6").calentim({
+  disableOnlyEnd: true,
+  disabledRanges: [
+    {
+      start: moment("10/03/2017","DD/MM/YYYY"),
+      end: moment("18/03/2017", "DD/MM/YYYY")
+    },
+    {
+      "start": moment("01/04/2017","DD/MM/YYYY"),
+      "end": moment("05/04/2017", "DD/MM/YYYY")
+    },
+    {
+      "start": moment("11/04/2017","DD/MM/YYYY"),
+      "end": moment("15/04/2017", "DD/MM/YYYY")
+    }
+  ]
+});</script>
+
+<p>HTML:</p>
+<pre><code class="lang-html">&lt;input type=&quot;text&quot; id=&quot;calentim-ex-13-6&quot; value=&quot;03/19/2017 - 03/20/2017&quot; /&gt;
+</code></pre>
+<p>JavaScript:</p>
+<pre><code class="lang-javascript">  &lt;script type=&quot;text/javascript&quot;&gt;
+    $(&quot;#calentim-ex-13-6&quot;).calentim({
+      disableOnlyEnd: true,
+      disabledRanges: [
+        {
+          &quot;start&quot;: moment(&quot;10/03/2017&quot;,&quot;DD/MM/YYYY&quot;),
+          &quot;end&quot;: moment(&quot;18/03/2017&quot;, &quot;DD/MM/YYYY&quot;)
+        },
+        {
+          &quot;start&quot;: moment(&quot;01/04/2017&quot;,&quot;DD/MM/YYYY&quot;),
+          &quot;end&quot;: moment(&quot;05/04/2017&quot;, &quot;DD/MM/YYYY&quot;)
+        },
+        {
+          &quot;start&quot;: moment(&quot;11/04/2017&quot;,&quot;DD/MM/YYYY&quot;),
+          &quot;end&quot;: moment(&quot;15/04/2017&quot;, &quot;DD/MM/YYYY&quot;)
+        }
+      ]
+    });
+  &lt;/script&gt;
+</code></pre>
+<h3 id="show-hide-with-triggers">Show &amp; Hide with triggers</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"><input type="text" id="calentim-ex-13-1" /><button class="calentim-show">Show Instance</button><button class="calentim-hide">Hide Instance</button></div></p>
+<script type="text/javascript">$("#calentim-ex-13-1").calentim();
+$(".calentim-show").on("click",function(e){var calentim = $("#calentim-ex-13-1").data("calentim");calentim.showDropdown(e);});
+$(".calentim-hide").on("click",function(e){var calentim = $("#calentim-ex-13-1").data("calentim");calentim.hideDropdown(e);});
+</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">    &lt;input type=&quot;text&quot; id=&quot;calentim-ex-13-1&quot; /&gt;
+    &lt;button class=&quot;calentim-show&quot;&gt;Show Instance&lt;/button&gt;
+    &lt;button class=&quot;calentim-hide&quot;&gt;Hide Instance&lt;/button&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">    &lt;script type=&quot;text/javascript&quot;&gt;
+      $(&quot;#calentim-ex-13-1&quot;).calentim();
+      $(&quot;.calentim-show&quot;).on(&quot;click&quot;,function(e){
+        var calentim = $(&quot;#calentim-ex-13-1&quot;).data(&quot;calentim&quot;);
+        calentim.showDropdown(e);
+      });
+      $(&quot;.calentim-hide&quot;).on(&quot;click&quot;,function(e){
+        var calentim = $(&quot;#calentim-ex-13-1&quot;).data(&quot;calentim&quot;);
+        calentim.hideDropdown(e);
+      });
+    &lt;/script&gt;
+</code></pre>
+<h3 id="using-inside-a-modal">Using inside a modal</h3>
+<hr>
+<p>Preview:</p>
+<p><div class="well well-sm" style="overflow: auto;"></p>
+<p><div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></p>
+<p><div class="modal-dialog" role="document"></p>
+<p><div class="modal-content"></p>
+<p><div class="modal-body"></p>
+<p><input type="text" id="calentim-ex-12" />
+</div></p>
+<p><div class="modal-footer"></p>
+<p><button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Button trigger modal --></p>
+<p><button type="button" class="btn btn-primary" onclick="$('#myModal').modal('show');" >
+Launch demo modal
+</button>
+</div></p>
+<script type="text/javascript">$("#calentim-ex-12").calentim();</script>
+
+<p>  HTML:</p>
+<pre><code class="lang-html">    &lt;!-- Modal --&gt;
+    &lt;div class=&quot;modal fade&quot; id=&quot;myModal&quot; tabindex=&quot;-1&quot; role=&quot;dialog&quot; aria-labelledby=&quot;myModalLabel&quot;&gt;
+      &lt;div class=&quot;modal-dialog&quot; role=&quot;document&quot;&gt;
+        &lt;div class=&quot;modal-content&quot;&gt;
+          &lt;div class=&quot;modal-body&quot;&gt;
+            &lt;input type=&quot;text&quot; id=&quot;calentim-ex-12&quot; /&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;modal-footer&quot;&gt;
+            &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; data-dismiss=&quot;modal&quot;&gt;Close&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;!-- Button trigger modal --&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; onclick=&quot;$(&#39;#myModal&#39;).modal(&#39;show&#39;);&quot; &gt;
+          Launch demo modal
+    &lt;/button&gt;
+</code></pre>
+<p>  JavaScript:</p>
+<pre><code class="lang-javascript">      &lt;script type=&quot;text/javascript&quot;&gt;
+          $(&quot;#calentim-ex-12&quot;).calentim();
+      &lt;/script&gt;
+</code></pre>
+<h2 id="themes">Themes</h2>
+<p>  There are 4 ready to use themes included in this package. You can include any theme by just switching the css file you&#39;ve loaded inside your HTML file:</p>
+<h3 id="default-theme-current-a-href-single-test-inline-html-target-_blank-demo-a-">Default theme (Current) <a href="single-test-inline.html" target="_blank">Demo</a></h3>
+<pre><code class="lang-html">  &lt;link href=&quot;build/css/calentim.min.css&quot; rel=&quot;stylesheet&quot;/&gt;
+</code></pre>
+<p>  <img src='includes/compressed/theme-default.png' /></p>
+<h3 id="alternative-theme-a-href-single-test-alt-html-target-_blank-demo-a-">Alternative theme <a href="single-test-alt.html" target="_blank">Demo</a></h3>
+<pre><code class="lang-html">  &lt;link href=&quot;build/css/calentim-alt.min.css&quot; rel=&quot;stylesheet&quot;/&gt;
+</code></pre>
+<p>  <img src='includes/compressed/theme-alt.png' /></p>
+<h3 id="dark-theme-a-href-single-test-dark-html-target-_blank-demo-a-">Dark theme <a href="single-test-dark.html" target="_blank">Demo</a></h3>
+<pre><code class="lang-html">  &lt;link href=&quot;build/css/calentim-dark.min.css&quot; rel=&quot;stylesheet&quot;/&gt;
+</code></pre>
+<p>  <img src='includes/compressed/theme-dark.png' /></p>
+<h3 id="dark-alternative-theme-a-href-single-test-dark-alt-html-target-_blank-demo-a-">Dark Alternative theme <a href="single-test-dark-alt.html" target="_blank">Demo</a></h3>
+<pre><code class="lang-html">  &lt;link href=&quot;build/css/calentim-dark-alt.min.css&quot; rel=&quot;stylesheet&quot;/&gt;
+</code></pre>
+<p>  <img src='includes/compressed/theme-dark-alt.png' /></p>
+<h3 id="creating-your-own-theme">Creating your own theme</h3>
+<p>  You can create and use your theme by modifying and building any of the SCSS files included within the package <code>/css</code> folder. To add your own theme without touching the others, you need to copy 2 files and modify the Grunt configuration file.</p>
+<ul>
+<li>First, create <code>calentim-variables-[your theme slug].scss</code> by copying any one of the <code>calentim-variables-*.scss</code> files, whichever is more close to your design.</li>
+<li>Then create <code>calentim-[your theme slug].scss</code> by copying the <code>calentim.scss</code> file, and modify the first import to load your <code>calentim-variables-[your theme slug].scss</code> file.</li>
+<li><p>Open <code>Gruntfile.js</code> at the root of the package, add</p>
+<pre><code class="lang-javascript">&#39;build/css/calentim-[your theme name].min.css&#39;: &#39;css/calentim-[your theme name].scss&#39;
+</code></pre>
+<p>to the <code>sass.dist.files</code> array to get it built and minified, and add <code>build/css/calentim-[your-theme-name].min.css</code> file to the <code>postcss.files</code> array to get it enhanced to be crossbrowser compatible.</p>
+<p>After that, when you run <code>grunt min</code>, you&#39;ll get your <code>build/css/calentim-[your theme slug].min.css</code> file built and ready to use in your applications. When developing the theme, you can use <code>grunt watcher</code> to get a live reload server running and utilizing single-test.html file, you can live edit your theme variables. Just don&#39;t forget to update the linked stylesheet in the single test to your modified one.</p>
+</li>
+</ul>
+<h2 id="important-notes">Important Notes</h2>
+<ul>
+<li><p>I left the <em>calentim</em> object fully accessible to the inner variables, so you can alter the object&#39;s config in any event. For example, you can alter the max date of the calendar after first selection like this (limiting the user to select max 7 days of the first selection):</p>
+<pre><code class="lang-javascript">  onfirstselect: function(calentim, startDate){
+      calentim.config.maxDate = startDate.clone().add(7,&quot;days&quot;);
+  },
+  onafterselect: function(calentim, startDate, endDate){
+      calentim.config.maxDate = null;
+  }
+</code></pre>
+<p>  or another example, disabling previous date selection:</p>
+<pre><code class="lang-javascript">  onfirstselect: function(calentim, startDate){
+      calentim.config.minDate = startDate.clone();
+  },
+  onafterselect: function(calentim, startDate, endDate){
+      calentim.config.minDate = null;
+  }
+</code></pre>
+</li>
+<li><p>The <strong>cloning</strong> is very important when <em>adding</em> or <em>subtracting</em>, because they modify the reference element too! As you can see in the above examples, the <em>startDate</em> and the <em>endDate</em> elements are cloned when defining the <em>maxDate</em> and <em>minDate</em> values. If you don&#39;t want to modify the <em>startDate</em> or <em>endDate</em> intentionally, use cloning.</p>
+</li>
+<li><p><strike>Mobile only supports modal like interface. Dropdowns and inline options currently don&#39;t work on mobile phones.</strike> Added inline support on mobile devices on version 1.1.2.</p>
+</li>
+<li><p>Only one event can be bound using the initialize config object. Multiple events are not supported.</p>
+</li>
+</ul>
+<h2 id="changelog">Changelog</h2>
+<ul>
+<li><h4 id="v1-0-0">v1.0.0</h4>
+<ul>
+<li>Released initial version.</li>
+</ul>
+</li>
+<li><h4 id="v1-0-1">v1.0.1</h4>
+<ul>
+<li>fixed minute step overflow error on last step range</li>
+<li>fixed ineffective initial value on <code>startEmpty: true</code> setting</li>
+<li>fixed parameterless hideDropdown call bug in firefox</li>
+<li>fixed multiple instance closing issues</li>
+<li>added option to remove time picker</li>
+<li>added infinite scroll on timepickers</li>
+</ul>
+</li>
+<li><h4 id="v1-0-2">v1.0.2</h4>
+<ul>
+<li>fixed target element confusion when different target option is specified</li>
+<li>added <code>showCalendars</code> option to disable date selection (only time picker)</li>
+</ul>
+</li>
+<li><h4 id="v1-1-0">v1.1.0</h4>
+<ul>
+<li>fixed an issue about time pickers setting the wrong value on first click</li>
+<li>fixed autoCloseOnSelect on singleDate version / mobile views</li>
+<li>changed code to make clicking on disabled days select start/end date</li>
+<li>added some transition delays to make it smoother</li>
+<li>added keyboard navigation (<code>enableKeyboard</code> option)<ul>
+<li>up: previous week</li>
+<li>down: next week</li>
+<li>left: previous day</li>
+<li>right: next day</li>
+<li>space: select day</li>
+<li>pageup: previous month</li>
+<li>pagedown next month</li>
+<li>shift + pageup: previous year</li>
+<li>shift + pagedown: next year</li>
+</ul>
+</li>
+<li>added easy year switch buttons on year list</li>
+<li>fixed startEmpty cell selected classes</li>
+<li>added destroy method and some extra tests</li>
+<li>fix custom target element reading in fetchInputs method</li>
+</ul>
+</li>
+<li><h4 id="v1-1-1">v1.1.1</h4>
+<ul>
+<li>fixed the month change problem which is caused by a reset when validating dates.</li>
+</ul>
+</li>
+<li><h4 id="v1-1-2">v1.1.2</h4>
+<ul>
+<li>fixed the problem about showing the initial month when the selected date is in a different month.</li>
+<li>added inline view support on mobile devices</li>
+<li>fixed startEmpty behaviour when clicking the cancel button on mobile</li>
+</ul>
+</li>
+<li><h4 id="v1-1-3">v1.1.3</h4>
+<ul>
+<li>added showButtons property for not automatically updating the input, default false</li>
+<li>added tests for showButtons property</li>
+<li>added time changes to onbeforechange and onafterchange event</li>
+<li>fixed range selection on instances with startEmpty: true defined</li>
+<li>fixed hovering bug after month change when first date is selected</li>
+</ul>
+</li>
+<li><h4 id="v1-1-4">v1.1.4</h4>
+<ul>
+<li>fixed button disabled state with startEmpty and showButtons are both active</li>
+<li>reapplied deleted locale setting</li>
+<li>innerWidth function was called on javascript object, not jQuery object, fixed.</li>
+<li>buttons now don&#39;t submit forms.</li>
+</ul>
+</li>
+<li><h4 id="v1-1-5">v1.1.5</h4>
+<ul>
+<li>configuration objects attached to prototype converted to independent objects</li>
+<li>startEmpty property clears input on initialization</li>
+<li>added jshint javascript linter to gruntfile</li>
+<li>some optimizations</li>
+<li>moved event bubbling in one method</li>
+<li>added &quot;left&quot; &quot;right&quot; display options (&quot;showOn&quot; option, default &quot;bottom&quot;)</li>
+<li>added auto positioning enable/disable flag (&quot;autoAlign&quot; option, default &quot;true&quot;)</li>
+<li>added position recalculation on window scroll and resize events</li>
+<li>fixed hour:minute scrolling issue</li>
+<li>fixed css issue about month selector in small calendars</li>
+<li>fixed locale error on month selector</li>
+<li>added adjustment for font-size in month selector page</li>
+</ul>
+</li>
+<li><h4 id="v1-1-6">v1.1.6</h4>
+<ul>
+<li>Repeating day issue caused by daylight saving time activation fixed.</li>
+</ul>
+</li>
+<li><h4 id="v1-1-7">v1.1.7</h4>
+<ul>
+<li>fixed header display bug on startEmpty</li>
+<li>converted moment instances to unix timestamps on reDrawCells method</li>
+<li>added first and last hover classes (border radius effect)</li>
+<li>removed autoprefixer and added postcss plugin for browser compatible CSS</li>
+<li>fixed visibility issues</li>
+<li>Added <code>calentim-not-in-month</code> class for the days that don&#39;t belong to that month</li>
+<li>Replaced moment&#39;s <code>.startOf(&quot;day&quot;)</code> to <code>middleOfDay()</code> extension function to minimize DST change bugs.</li>
+<li>switched from grunt-jasmine to karma test runner</li>
+</ul>
+</li>
+<li><h4 id="v1-1-8">v1.1.8</h4>
+<ul>
+<li>added next day selection demo to linked single time pickers example</li>
+<li>fixed ESC key hiding inline calendars bug.</li>
+<li>added backup and restore time pickers method to keep time values intact on month changes</li>
+</ul>
+</li>
+<li><h4 id="v1-1-9">v1.1.9</h4>
+<ul>
+<li>fixed display bug on header (start week of day showed day number instead of name)</li>
+<li>improved linked single date picker example</li>
+</ul>
+</li>
+<li><h4 id="v1-2-0">v1.2.0</h4>
+<ul>
+<li>updated jQuery library in demos and readme to v3.1.2</li>
+<li>updated getDimensions method to more paint and memory friendly version</li>
+<li>added setStart, setEnd, setMinDate, setMaxDate and setDisplayDate methods</li>
+<li>added istanbul test code coverage tools</li>
+<li>added start and end date validation regarding minimum and maximum allowed dates</li>
+<li>added <code>reverseTimepickerArrows</code> option to reverse the actions of time picker arrows</li>
+</ul>
+</li>
+<li><h4 id="v1-2-1">v1.2.1</h4>
+<ul>
+<li>changed prev and next hour/minute displays regarding to reverseTimePickerArrows setting.</li>
+<li>fixed 12h display bug on showing dropdown in 24h format</li>
+<li>fixed dropdown positioning on inner scrolling container other than window</li>
+</ul>
+</li>
+<li><h4 id="v1-2-2">v1.2.2</h4>
+<ul>
+<li>fixed calendar header locale bug</li>
+<li>fixed startOnMonday dismissing the 1st day row when its on sunday</li>
+</ul>
+</li>
+<li><h4 id="v1-2-3">v1.2.3</h4>
+<ul>
+<li>added predefined events to hideDropdown and showDropdown to prevent var undefined exception.</li>
+<li>updated example about linked date pickers</li>
+<li>implemented ontimechange event</li>
+<li>added month name format on monthselector</li>
+<li>added week numbers on calendars</li>
+</ul>
+</li>
+<li><h4 id="v1-2-4">v1.2.4</h4>
+<ul>
+<li>Added right side range list panel settings</li>
+<li>Updated documentation</li>
+<li>added smart positioning on top/bottom dropdowns</li>
+<li>added selected range indicators</li>
+<li>massive performance upgrade</li>
+<li>added arrowOn parameter which moves the arrow to the desired position.</li>
+<li>improved positioning on viewport edges</li>
+<li>added center/center display option</li>
+</ul>
+</li>
+<li><h4 id="v1-2-5">v1.2.5</h4>
+<ul>
+<li>added onaftermonthchange and onafteryearchange to month and year selectors</li>
+<li>added calentim-disabled-range class on mindate/maxdate effective days</li>
+<li>added day clones instead of real ones as attributes of events</li>
+<li>fixed mobile button bug on month change</li>
+<li>fixed autocloseonselect not updating input on mobile</li>
+<li>fixed time up/down buttons</li>
+</ul>
+</li>
+<li><h4 id="v1-2-6">v1.2.6</h4>
+<ul>
+<li>documentation fixes</li>
+<li>removed firing onafterselect running after a time change</li>
+<li>separated time picker update code to let start or end date update their designated inputs separately</li>
+<li>added null controls to variables passed to events by cloning</li>
+<li>updated linked single date pickers example on documentation</li>
+<li>added onBeforeInit, onBeforeDestroy and ondestroy event</li>
+<li>fixed mobile modal resizing height issue</li>
+</ul>
+</li>
+<li><h4 id="v1-2-7">v1.2.7</h4>
+<ul>
+<li>added timepicker time limiting feature</li>
+<li>updated documentation</li>
+</ul>
+</li>
+<li><h4 id="v1-2-8">v1.2.8</h4>
+<ul>
+<li>added fix for IOS devices hover on first click feature/bug</li>
+</ul>
+</li>
+<li><h4 id="v1-2-9">v1.2.9</h4>
+<ul>
+<li>fix for timepicker up/down buttons activating wrong instances</li>
+</ul>
+</li>
+<li><h4 id="v1-2-10">v1.2.10</h4>
+<ul>
+<li>fix for timepicker hour up down buttons working with minuteSteps variable</li>
+</ul>
+</li>
+<li><h4 id="v1-2-11">v1.2.11</h4>
+<ul>
+<li>fix range selection ignores time</li>
+</ul>
+</li>
+<li><h4 id="v1-2-12">v1.2.12</h4>
+<ul>
+<li>new feature: hiding arrows before minDate and after maxDate</li>
+<li>fix for timepicker update on range selections</li>
+<li>css fix for Edge browser</li>
+</ul>
+</li>
+<li><h4 id="v1-2-13">v1.2.13</h4>
+<ul>
+<li>some styling fixes about height change on inline calendar month switches</li>
+</ul>
+</li>
+<li><h4 id="v1-3-0">v1.3.0</h4>
+<ul>
+<li>added hotel style booking feature for ranges</li>
+<li>added disableOnlyStart and disableOnlyEnd parameters</li>
+<li>selections not in month should have not-in-month class</li>
+<li>added minSelectedDays parameter to prevent users to select less than defined days</li>
+<li>added enableSwipe configuration parameter to enable/disable calendar swipe left/right to switch months, default enabled</li>
+<li>added configurations for icons in the plugin</li>
+<li>added auto close after range selection</li>
+<li>added DOBCalendar option to act as a date-of-birth selector</li>
+<li>added onCancel event to verify cancellation</li>
+<li>fix for wrong week start regarding to locale on Safari</li>
+</ul>
+</li>
+<li><h4 id="v1-3-1">v1.3.1</h4>
+<ul>
+<li>more localization on calendar numerals</li>
+<li>added keyboard support for time pickers</li>
+<li>added RTL support</li>
+<li>fixed isDisabled method resetting the time to middle of the day</li>
+</ul>
+</li>
+<li><h4 id="v1-3-2">v1.3.2</h4>
+<ul>
+<li>fixed hotel mode selection clear bug on dropdown open</li>
+<li>fixed IE9 &amp; Edge right side range display</li>
+<li>added examples for disableOnlyStart and disableOnlyEnd options</li>
+<li>added examples for hotel style booking feature</li>
+</ul>
+</li>
+<li><h4 id="v1-3-3">v1.3.3</h4>
+<ul>
+<li>added &quot;!default&quot; for scss variables to enable overrides</li>
+<li>fixed range continuity check preventing date selection in single date mode</li>
+<li>added tests to package</li>
+<li>added date checks and needed conversions on initialization</li>
+<li>fixed single date selection on ranges</li>
+</ul>
+</li>
+<li><h4 id="v1-3-4">v1.3.4</h4>
+<ul>
+<li>prevented timepicker to change the day when overflow occurs</li>
+<li>fixed missing onCancel event handler</li>
+<li>changed checkMobile method to only use media queries, not browser agent strings</li>
+<li>added setting for mobile/desktop view threshold (mobileBreakpoint)</li>
+<li>added calendar close feature on mobile backdrop click</li>
+<li>fixed swipe month switch ignoring hideOutOfRange setting</li>
+<li>fixed tests differing between mobile and desktop view</li>
+</ul>
+</li>
+<li><h4 id="v1-3-5">v1.3.5</h4>
+<ul>
+<li>added support for multiple disabled time ranges</li>
+<li>removed time change modifying dates</li>
+<li>added example for multiple disabled time ranges</li>
+</ul>
+</li>
+<li><h4 id="v1-3-6">v1.3.6</h4>
+<ul>
+<li>fix for timepickers only view resetting to today&#39;s date on dropdown show event</li>
+<li>fix discontinuous selection mode when there are disabled ranges</li>
+</ul>
+</li>
+<li><h4 id="v1-3-7">v1.3.7</h4>
+<ul>
+<li>fix uninitialized disable cache bug</li>
+<li>fixed hideOutOfRange not affecting month and year selectors</li>
+<li>fix displaying current year in year selector</li>
+<li>improved theming support and created 3 themes besides the standard theme (dark, alt &amp; dark-alt)</li>
+<li>added <code>dontPrefixHours</code> variable to prevent 12-hour format hour padding with zero</li>
+</ul>
+</li>
+</ul>
+<h2 id="copyright-licenses">Copyright &amp; Licenses</h2>
+<ul>
+<li><p><em>Calentim</em> Date/Time Range Picker<br>
+ Copyright (c) Taha PAKSU <a href="http://www.tahapaksu.com">http://www.tahapaksu.com</a><br>
+ All rights reserved.<br></p>
+</li>
+<li><p>Based on <em>jQuery — New Wave JavaScript</em> <a href="http://www.jquery.org">http://www.jquery.org</a><br>
+ Copyright (c) JS Foundation and other contributors, <a href="https://js.foundation/">https://js.foundation/</a><br>
+ Released under <a href="https://jquery.org/license/">jQuery License</a><br>
+ All rights reserved.<br></p>
+</li>
+</ul>
+<ul>
+<li><p>Based on <em>Moment.js</em> <a href="http://www.momentjs.com">http://www.momentjs.com</a><br>
+ Copyright (c) JS Foundation and other contributors<br>
+ Moment.js is freely distributable under the terms of the <a href="https://github.com/moment/moment/blob/develop/LICENSE">MIT license</a>.<br>
+ All rights reserved.<br></p>
+</li>
+<li><p>Includes <em>hammer.js</em> <a href="http://hammerjs.github.io">http://hammerjs.github.io</a><br>
+ Copyright (C) 2011-2014 by Jorik Tangelder (Eight Media)<br>
+ hammer.js is freely distributable under the terms of the <a href="https://github.com/hammerjs/hammer.js/blob/master/LICENSE.md">MIT license</a>.<br>
+ All rights reserved.<br></p>
+</li>
+</ul>
+
+                </div>
+            </div>
+        </div>
+        <footer class="container-fluid text-center">Taha Paksu © <span class='cpyear'></span>, All Rights Reserved</footer>
+        <button class="scroll-to-top">
+            <i class="fa fa-arrow-up"></i>
+        </button>
+    </div>
+
+    <script type="text/javascript">
+        $(".cpyear").text(moment().year());
+        if ((window.innerWidth <= 800 && window.innerHeight <= 600) || (window.innerWidth <= 600 && window.innerHeight <= 800)) {
+            $("img").addClass("img-responsive");
+        } else {
+            tocbot.init({
+                tocSelector: '#scrollspy',
+                contentSelector: '#contents',
+                headingSelector: 'h2',
+                collapseDepth: 0,
+                fixedSidebarOffset: $(".navbar").outerHeight() + $(".all-container .jumbotron").outerHeight() - 90,
+                positionFixedClass: "affix",
+                positionFixedSelector: "#scrollspy",
+            });
+        }
+
+        $(".doc-feature").wrapInner("<div class='doc-feature-box'></div>");
+
+        $("h2:first").addClass("first-header");
+        $('body').scrollspy({
+            target: '.navbar',
+            offset: 50
+        });
+
+        $(window).on("scroll", function () {
+            if ($(window).scrollTop() < 10) {
+                $(".navbar-default").addClass("isontop");
+                $(".scroll-to-top").addClass("hidden");
+            } else {
+                $(".navbar-default").removeClass("isontop");
+                $(".scroll-to-top").removeClass("hidden");
+            }
+        });
+
+        $(this).trigger("scroll");
+
+
+        var navMain = $(".navbar-collapse"); // avoid dependency on #id
+        // "a:not([data-toggle])" - to avoid issues caused
+        // when you have dropdown inside navbar
+        navMain.on("click", "a:not([data-toggle])", null, function () {
+            navMain.collapse('hide');
+        });
+
+        $("#examples").nextUntil("h2").wrapAll("<div id='examples-container'></div>");
+
+        $("#examples-container").find("h3[id]").each(function () {
+            $("#examples-toc").append("<a href='#" + $(this).attr("id") + "'>" + $(this).text() + "</a>");
+        });
+
+        $(".scroll-to-top").click(function () {
+            $("html, body").animate({
+                scrollTop: 0,
+
+            }, "slow", "swing");
+        });
+
+        $("#examples-toc a[href^='#']").click(function () {
+            var hash = $(this).attr("href");
+            if (window.location.hash != hash) {
+                $("html, body").animate({ scrollTop: $(hash).offset().top + $("#navbar").outerHeight() }, 'fast', 'swing', function () {
+                    window.location.hash = hash;
+                });
+            }
+        });
+
+
+    </script>
+</body>
+
+</html>

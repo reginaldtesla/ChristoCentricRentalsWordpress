@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html style="position:  absolute; top: 0; bottom:0; left: 0; right: 0;">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        Calentim - Datetime Range Picker
+    </title>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700" rel="stylesheet" />
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="../build/css/calentim.min.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="style2.css">
+    <script src="../build/vendor/jquery.min.js"></script>
+    <script src="../build/vendor/moment.min.js"></script>
+    <script src="../build/vendor/jquery.hammer.js"></script>
+    <script src="../build/js/calentim.min.js"></script>
+</head>
+
+<body style="background: #f5f5f5;">
+    <div class="container-fluid d-flex flex-column" style="max-height: 100vh">
+        <div class="row" style="display: block; flex: 0; width: 100%;">
+            <header class="topbar">
+                <div class="container">
+                    <div class="row">
+                        <!-- social icon-->
+                        <div class="col-sm-12">
+                            <ul class="social-network">
+                                <li>
+                                    <a class="waves-effect waves-dark" href="#">
+                                        <i class="fa fa-facebook"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="waves-effect waves-dark" href="#">
+                                        <i class="fa fa-twitter"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="waves-effect waves-dark" href="#">
+                                        <i class="fa fa-linkedin"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="waves-effect waves-dark" href="#">
+                                        <i class="fa fa-pinterest"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="waves-effect waves-dark" href="#">
+                                        <i class="fa fa-google-plus"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </header>
+            <nav class="navbar navbar-expand-lg navbar-dark mx-background-top-linear">
+                <div class="container">
+                    <a class="navbar-brand" href="index.html" style="text-transform: uppercase;"> LACODEID.COM</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+
+                        <ul class="navbar-nav ml-auto">
+
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#">Home
+                                    <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">About</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Fruits</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Sea food</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Vegetables</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Blog</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="row" style="padding: 20px; overflow-y: scroll; flex: 1 1 auto; position: relative;" id="scroller">
+            <div class="col-md-6" style="padding: 0px">
+                <div class="col-md-12">
+                    <form role="form" style="padding: 10px; background: white; border-radius: 5px; display: block; margin-bottom: 10px;">
+                        <br style="clear:both">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile Number" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" type="textarea" id="message" placeholder="Message" maxlength="140" rows="7"></textarea>
+                            <span class="help-block">
+                                <p id="characterLeft" class="help-block ">You have reached the limit</p>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-12">
+                    <form role="form" style="padding: 10px; background: white; border-radius: 5px; display: block; margin-bottom: 10px;">
+                        <br style="clear:both">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile Number" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="calentim-ex-1" name="subject" placeholder="DateTime" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" type="textarea" id="message" placeholder="Message" maxlength="140" rows="7"></textarea>
+                            <span class="help-block">
+                                <p id="characterLeft" class="help-block ">You have reached the limit</p>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-12">
+                    <form role="form" style="padding: 10px; background: white; border-radius: 5px; display: block; margin-bottom: 10px;">
+                        <br style="clear:both">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile Number" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" type="textarea" id="message" placeholder="Message" maxlength="140" rows="7"></textarea>
+                            <span class="help-block">
+                                <p id="characterLeft" class="help-block ">You have reached the limit</p>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding: 0;margin-left: -15px;">
+                <div class="col-md-12">
+                    <form role="form" style="padding: 10px; background: white; border-radius: 5px; display: block; margin-bottom: 10px;">
+                        <br style="clear:both">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile Number" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" type="textarea" id="message" placeholder="Message" maxlength="140" rows="7"></textarea>
+                            <span class="help-block">
+                                <p id="characterLeft" class="help-block ">You have reached the limit</p>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-12">
+                    <form role="form" style="padding: 10px; background: white; border-radius: 5px; display: block; margin-bottom: 10px;">
+                        <br style="clear:both">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile Number" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" type="textarea" id="message" placeholder="Message" maxlength="140" rows="7"></textarea>
+                            <span class="help-block">
+                                <p id="characterLeft" class="help-block ">You have reached the limit</p>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-12">
+                    <form role="form" style="padding: 10px; background: white; border-radius: 5px; display: block; margin-bottom: 10px;">
+                        <br style="clear:both">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile Number" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" type="textarea" id="message" placeholder="Message" maxlength="140" rows="7"></textarea>
+                            <span class="help-block">
+                                <p id="characterLeft" class="help-block ">You have reached the limit</p>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            //THE ONE NEXT TO THIS LINE OF CODE IS CALENTIM
+			$("#calentim-ex-1").calentim({
+                startOnMonday: true,
+                ontimechange: function(i,s,e){
+                    console.log("time changed", s.inspect(), e.inspect());
+                },
+                showWeekNumbers: true,
+                rangeOrientation: "vertical",
+                showButtons: true
+			});
+        </script>
+</body>
+
+</html>

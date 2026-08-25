@@ -1,0 +1,351 @@
+{
+    "version": "1.0.0",
+    "description": "Wishlist-style checkout layout with explicit required/optional field control",
+    "container_class": "rentopian-checkout-form",
+    "sections": [
+        {
+            "id": "billing_section",
+            "title": "Billing Information",
+            "description": "Please enter your billing details and event information.",
+            "class": "rentopian-billing-section",
+            "show_title": true,
+            "show_description": true,
+            "rows": [
+                {
+                    "id": "row_name",
+                    "columns": [
+                        {
+                            "width": 6,
+                            "field": "billing_first_name",
+                            "active": 1,
+                            "required": true
+                        },
+                        {
+                            "width": 6,
+                            "field": "billing_last_name",
+                            "active": 1,
+                            "required": true
+                        }
+                    ]
+                },
+                {
+                    "id": "row_contact",
+                    "columns": [
+                        {
+                            "width": 6,
+                            "field": "billing_phone",
+                            "active": 1,
+                            "required": true
+                        },
+                        {
+                            "width": 6,
+                            "field": "billing_email",
+                            "active": 1,
+                            "required": true
+                        }
+                    ]
+                },
+                {
+                    "id": "row_date_venue",
+                    "comment": "Date of Service (includes multi-day toggle) + Venue/Address",
+                    "columns": [
+                        {
+                            "width": 6,
+                            "field": "rental_date_form_modern",
+                            "active": 1,
+                            "required": true
+                        },
+                        {
+                            "width": 6,
+                            "field": "billing_address_1",
+                            "active": 1,
+                            "required": true
+                        }
+                    ]
+                },
+                {
+                    "id": "row_custom_checkboxes",
+                    "comment": "Outdoor checkbox - dynamic field from Rentopian",
+                    "columns": [
+                        {
+                            "width": 6,
+                            "field": "rental_custom_outdoor",
+                            "active": 1,
+                            "required": false
+                        }
+                    ]
+                },
+                {
+                    "id": "row_time_windows",
+                    "comment": "2 Hour Delivery Window + 2 Hour Strike Window",
+                    "columns": [
+                        {
+                            "width": 6,
+                            "field": "delivery_time_selections_id",
+                            "active": 1,
+                            "required": true
+                        },
+                        {
+                            "width": 6,
+                            "field": "pickup_time_selections_id",
+                            "active": 1,
+                            "required": true
+                        }
+                    ]
+                },
+                {
+                    "id": "row_flexible_with_time",
+                    "comment": "Flexible with time checkboxes",
+                    "columns": [
+                        {
+                            "width": 6,
+                            "field": "rental_custom_flexible-with-time-delivery",
+                            "active": 1,
+                            "required": false
+                        },
+                        {
+                            "width": 6,
+                            "field": "rental_custom_flexible-with-time-strike",
+                            "active": 1,
+                            "required": false
+                        }
+                    ]
+                },
+                {
+                    "id": "row_event_type",
+                    "columns": [
+                        {
+                            "width": 12,
+                            "field": "rental_event_type",
+                            "active": 1,
+                            "required": false
+                        }
+                    ]
+                },
+                {
+                    "id": "row_referral",
+                    "columns": [
+                        {
+                            "width": 12,
+                            "field": "rental_referral_source",
+                            "active": 1,
+                            "required": true
+                        }
+                    ]
+                },
+                {
+                    "id": "row_how_to_help",
+                    "columns": [
+                        {
+                            "width": 12,
+                            "field": "rental_custom_how-can-we-help-you",
+                            "active": 1,
+                            "required": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "rental_components_section",
+            "title": "",
+            "class": "rentopian-rental-components-section",
+            "show_title": false,
+            "show_description": false,
+            "rows": [
+                {
+                    "id": "row_pickup_address",
+                    "comment": "Different pickup address fields",
+                    "columns": [
+                        {
+                            "width": 12,
+                            "field": "rental_different_pickup_address",
+                            "active": 1,
+                            "required": false
+                        }
+                    ]
+                },
+                {
+                    "id": "row_damage_waiver",
+                    "comment": "Damage waiver component",
+                    "columns": [
+                        {
+                            "width": 12,
+                            "field": "rental_damage_waiver",
+                            "active": 1,
+                            "required": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "hidden_billing_fields",
+            "title": "",
+            "class": "rentopian-hidden-fields-section",
+            "show_title": false,
+            "show_description": false,
+            "comment": "Hidden fields for Google Places autocomplete",
+            "rows": [
+                {
+                    "id": "row_hidden_address",
+                    "columns": [
+                        {
+                            "width": 4,
+                            "field": "billing_city",
+                            "active": 1,
+                            "hidden_visual": 1,
+                            "required": true
+                        },
+                        {
+                            "width": 4,
+                            "field": "billing_state",
+                            "active": 1,
+                            "hidden_visual": 1,
+                            "required": false
+                        },
+                        {
+                            "width": 4,
+                            "field": "billing_postcode",
+                            "active": 1,
+                            "hidden_visual": 1,
+                            "required": false
+                        }
+                    ]
+                },
+                {
+                    "id": "row_hidden_country",
+                    "columns": [
+                        {
+                            "width": 12,
+                            "field": "billing_country",
+                            "active": 1,
+                            "hidden_visual": 1,
+                            "required": true
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "shipping_section",
+            "title": "Shipping Information",
+            "description": "",
+            "class": "rentopian-shipping-section",
+            "show_title": true,
+            "show_description": false,
+            "rows": [
+                {
+                    "id": "row_ship_different",
+                    "columns": [
+                        {
+                            "width": 12,
+                            "field": "ship_to_different_address",
+                            "active": 1,
+                            "required": false
+                        }
+                    ]
+                },
+                {
+                    "id": "row_shipping_name",
+                    "columns": [
+                        {
+                            "width": 6,
+                            "field": "shipping_first_name",
+                            "active": 1,
+                            "depends_on": "ship_to_different_address",
+                            "required": true
+                        },
+                        {
+                            "width": 6,
+                            "field": "shipping_last_name",
+                            "active": 1,
+                            "depends_on": "ship_to_different_address",
+                            "required": true
+                        }
+                    ]
+                },
+                {
+                    "id": "row_shipping_address",
+                    "columns": [
+                        {
+                            "width": 12,
+                            "field": "shipping_address_1",
+                            "active": 1,
+                            "depends_on": "ship_to_different_address",
+                            "required": true
+                        }
+                    ]
+                },
+                {
+                    "id": "row_shipping_city_state",
+                    "columns": [
+                        {
+                            "width": 4,
+                            "field": "shipping_city",
+                            "active": 1,
+                            "depends_on": "ship_to_different_address",
+                            "required": false
+                        },
+                        {
+                            "width": 4,
+                            "field": "shipping_state",
+                            "active": 1,
+                            "depends_on": "ship_to_different_address",
+                            "required": false
+                        },
+                        {
+                            "width": 4,
+                            "field": "shipping_postcode",
+                            "active": 1,
+                            "depends_on": "ship_to_different_address",
+                            "required": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "photo_upload",
+            "title": "",
+            "class": "rentopian-photo-upload",
+            "show_title": false,
+            "show_description": false,
+            "comment": "Photo upload is optional by default. Set required: true to enforce.",
+            "rows": [
+                {
+                    "id": "row_photo_upload",
+                    "columns": [
+                        {
+                            "width": 12,
+                            "field": "rental_photo_upload",
+                            "active": 1,
+                            "required": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "special_terms",
+            "title": "",
+            "class": "rentopian-special-terms",
+            "show_title": false,
+            "show_description": false,
+            "comment": "",
+            "rows": [
+                {
+                    "id": "row_special_terms",
+                    "columns": [
+                        {
+                            "width": 12,
+                            "field": "rental_special_terms",
+                            "active": 1,
+                            "required": false
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

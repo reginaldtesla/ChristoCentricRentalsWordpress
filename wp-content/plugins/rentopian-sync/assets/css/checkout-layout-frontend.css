@@ -1,0 +1,1314 @@
+/**
+ * Rentopian Checkout Layout - Frontend Styles
+ * 
+ * 12-column grid system for custom checkout field arrangement.
+ * Uses high specificity and !important to override WooCommerce themes.
+ * 
+ * @package Rentopian_Sync
+ * @subpackage Checkout_Layout
+ * @since 1.3.1
+ */
+
+/* ==========================================================================
+   CRITICAL: Container & Grid System - High Specificity Overrides
+   ========================================================================== */
+
+#rentopian-checkout-form.rentopian-checkout-form {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    display: block !important;
+}
+
+#rentopian-checkout-form.rentopian-checkout-form *,
+#rentopian-checkout-form.rentopian-checkout-form *::before,
+#rentopian-checkout-form.rentopian-checkout-form *::after {
+    box-sizing: border-box !important;
+}
+
+#rentopian-checkout-form .rentopian-section {
+    margin-bottom: 30px !important;
+    width: 100% !important;
+    display: block !important;
+    clear: both !important;
+}
+/* Collapse sections that have no visible content inside */
+#rentopian-checkout-form .rentopian-section:empty,
+#rentopian-checkout-form .rentopian-section:not(:has(.rentopian-row)) {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: none !important;
+}
+/* Remove extra bottom margin from last section */
+#rentopian-checkout-form .rentopian-section:last-child {
+    margin-bottom: 0 !important;
+}
+/* Rows with only hidden-visual children should collapse */
+#rentopian-checkout-form .rentopian-row:not(:has(.rentopian-col:not(.rentopian-hidden-visual-wrapper))) {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}
+/* Columns that are inactive: display:none leaves no gap */
+#rentopian-checkout-form .rentopian-col[style*="display: none"],
+#rentopian-checkout-form .rentopian-col[style*="display:none"] {
+    margin: 0 !important;
+    padding: 0 !important;
+    flex: 0 0 0 !important;
+    max-width: 0 !important;
+}
+
+#rentopian-checkout-form .rentopian-section-title {
+    font-size: 1.3em !important;
+    font-weight: 600 !important;
+    margin-bottom: 10px !important;
+    padding-bottom: 10px !important;
+    border-bottom: 1px solid #e5e5e5 !important;
+}
+
+#rentopian-checkout-form .rentopian-section-description {
+    color: #666 !important;
+    font-size: 0.9em !important;
+    margin-bottom: 15px !important;
+}
+
+/* ==========================================================================
+   CRITICAL: Row - Flexbox container with !important overrides
+   ========================================================================== */
+
+#rentopian-checkout-form .rentopian-row {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-flex-wrap: wrap !important;
+    -ms-flex-wrap: wrap !important;
+    flex-wrap: wrap !important;
+    margin-left: -10px !important;
+    margin-right: -10px !important;
+    width: calc(100% + 20px) !important;
+    clear: both !important;
+}
+
+/* Clear floats that may interfere */
+#rentopian-checkout-form .rentopian-row::before,
+#rentopian-checkout-form .rentopian-row::after {
+    content: "" !important;
+    display: table !important;
+    clear: both !important;
+}
+
+/* ==========================================================================
+   CRITICAL: Column base styles with forced flex behavior
+   ========================================================================== */
+
+#rentopian-checkout-form .rentopian-col {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    margin-bottom: 15px !important;
+    box-sizing: border-box !important;
+    float: none !important;
+    position: relative !important;
+}
+
+/* ==========================================================================
+   CRITICAL: 12-Column Grid Widths with !important
+   ========================================================================== */
+
+#rentopian-checkout-form .rentopian-col.rentopian-col-1 { 
+    width: 8.333333% !important; 
+    -webkit-flex: 0 0 8.333333% !important;
+    -ms-flex: 0 0 8.333333% !important;
+    flex: 0 0 8.333333% !important;
+    max-width: 8.333333% !important;
+}
+#rentopian-checkout-form .rentopian-col.rentopian-col-2 { 
+    width: 16.666667% !important; 
+    -webkit-flex: 0 0 16.666667% !important;
+    -ms-flex: 0 0 16.666667% !important;
+    flex: 0 0 16.666667% !important;
+    max-width: 16.666667% !important;
+}
+#rentopian-checkout-form .rentopian-col.rentopian-col-3 { 
+    width: 25% !important; 
+    -webkit-flex: 0 0 25% !important;
+    -ms-flex: 0 0 25% !important;
+    flex: 0 0 25% !important;
+    max-width: 25% !important;
+}
+#rentopian-checkout-form .rentopian-col.rentopian-col-4 { 
+    width: 33.333333% !important; 
+    -webkit-flex: 0 0 33.333333% !important;
+    -ms-flex: 0 0 33.333333% !important;
+    flex: 0 0 33.333333% !important;
+    max-width: 33.333333% !important;
+}
+#rentopian-checkout-form .rentopian-col.rentopian-col-5 { 
+    width: 41.666667% !important; 
+    -webkit-flex: 0 0 41.666667% !important;
+    -ms-flex: 0 0 41.666667% !important;
+    flex: 0 0 41.666667% !important;
+    max-width: 41.666667% !important;
+}
+#rentopian-checkout-form .rentopian-col.rentopian-col-6 { 
+    width: 50% !important; 
+    -webkit-flex: 0 0 50% !important;
+    -ms-flex: 0 0 50% !important;
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+}
+#rentopian-checkout-form .rentopian-col.rentopian-col-7 { 
+    width: 58.333333% !important; 
+    -webkit-flex: 0 0 58.333333% !important;
+    -ms-flex: 0 0 58.333333% !important;
+    flex: 0 0 58.333333% !important;
+    max-width: 58.333333% !important;
+}
+#rentopian-checkout-form .rentopian-col.rentopian-col-8 { 
+    width: 66.666667% !important; 
+    -webkit-flex: 0 0 66.666667% !important;
+    -ms-flex: 0 0 66.666667% !important;
+    flex: 0 0 66.666667% !important;
+    max-width: 66.666667% !important;
+}
+#rentopian-checkout-form .rentopian-col.rentopian-col-9 { 
+    width: 75% !important; 
+    -webkit-flex: 0 0 75% !important;
+    -ms-flex: 0 0 75% !important;
+    flex: 0 0 75% !important;
+    max-width: 75% !important;
+}
+#rentopian-checkout-form .rentopian-col.rentopian-col-10 { 
+    width: 83.333333% !important; 
+    -webkit-flex: 0 0 83.333333% !important;
+    -ms-flex: 0 0 83.333333% !important;
+    flex: 0 0 83.333333% !important;
+    max-width: 83.333333% !important;
+}
+#rentopian-checkout-form .rentopian-col.rentopian-col-11 { 
+    width: 91.666667% !important; 
+    -webkit-flex: 0 0 91.666667% !important;
+    -ms-flex: 0 0 91.666667% !important;
+    flex: 0 0 91.666667% !important;
+    max-width: 91.666667% !important;
+}
+#rentopian-checkout-form .rentopian-col.rentopian-col-12 { 
+    width: 100% !important; 
+    -webkit-flex: 0 0 100% !important;
+    -ms-flex: 0 0 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+}
+
+/* ==========================================================================
+   Field Visibility States
+   ========================================================================== */
+
+/* Hidden Visual - Fields that are hidden but remain in DOM */
+#rentopian-checkout-form .rentopian-col.rentopian-hidden-visual-wrapper {
+    position: absolute !important;
+    left: -9999px !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
+    flex: 0 0 0 !important;
+    max-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Dependency Hidden - Fields hidden via JavaScript */
+#rentopian-checkout-form .rentopian-col.rentopian-field-dependency-hidden {
+    display: none !important;
+}
+
+/* ==========================================================================
+   Form Field Styling - Override ALL WooCommerce defaults
+   ========================================================================== */
+
+/* Override WooCommerce form-row widths completely */
+#rentopian-checkout-form .rentopian-col .form-row,
+#rentopian-checkout-form .rentopian-col p.form-row,
+#rentopian-checkout-form .rentopian-col .woocommerce-input-wrapper {
+    margin: 0 0 5px 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    float: none !important;
+    clear: none !important;
+    display: block !important;
+}
+
+/* Override ALL WC form-row width classes */
+#rentopian-checkout-form .rentopian-col .form-row-first,
+#rentopian-checkout-form .rentopian-col .form-row-last,
+#rentopian-checkout-form .rentopian-col .form-row-wide {
+    width: 100% !important;
+    float: none !important;
+    padding: 0 !important;
+    margin: 0 0 5px 0 !important;
+}
+
+#rentopian-checkout-form .rentopian-col .form-row input,
+#rentopian-checkout-form .rentopian-col .form-row select,
+#rentopian-checkout-form .rentopian-col .form-row textarea {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Label styling */
+#rentopian-checkout-form .rentopian-col label {
+    display: block !important;
+    margin-bottom: 5px !important;
+    font-weight: 500 !important;
+}
+
+#rentopian-checkout-form .rentopian-col label .required {
+    color: #e2401c !important;
+}
+
+/* Input styling */
+#rentopian-checkout-form .rentopian-col input[type="text"],
+#rentopian-checkout-form .rentopian-col input[type="email"],
+#rentopian-checkout-form .rentopian-col input[type="tel"],
+#rentopian-checkout-form .rentopian-col input[type="number"],
+#rentopian-checkout-form .rentopian-col input[type="url"],
+#rentopian-checkout-form .rentopian-col input[type="date"],
+#rentopian-checkout-form .rentopian-col input[type="time"],
+#rentopian-checkout-form .rentopian-col select,
+#rentopian-checkout-form .rentopian-col textarea {
+    width: 100% !important;
+    padding: 10px 12px !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    font-size: 14px !important;
+    box-sizing: border-box !important;
+}
+
+#rentopian-checkout-form .rentopian-col input:focus,
+#rentopian-checkout-form .rentopian-col select:focus,
+#rentopian-checkout-form .rentopian-col textarea:focus {
+    border-color: #007cba !important;
+    outline: none !important;
+    box-shadow: 0 0 0 1px #007cba !important;
+}
+
+/* Checkbox styling */
+#rentopian-checkout-form .rentopian-col input[type="checkbox"] {
+    width: auto !important;
+    margin-right: 8px !important;
+}
+
+/* ==========================================================================
+   Component Containers
+   ========================================================================== */
+
+#rentopian-checkout-form .rentopian-col .rntp-start-date-block {
+    width: 100% !important;
+}
+
+#rentopian-checkout-form .rentopian-col .rental-payment-tips-wrapper {
+    width: 100% !important;
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
+@media screen and (max-width: 768px) {
+    #rentopian-checkout-form .rentopian-col,
+    #rentopian-checkout-form .rentopian-col.rentopian-col-1,
+    #rentopian-checkout-form .rentopian-col.rentopian-col-2,
+    #rentopian-checkout-form .rentopian-col.rentopian-col-3,
+    #rentopian-checkout-form .rentopian-col.rentopian-col-4,
+    #rentopian-checkout-form .rentopian-col.rentopian-col-5,
+    #rentopian-checkout-form .rentopian-col.rentopian-col-6,
+    #rentopian-checkout-form .rentopian-col.rentopian-col-7,
+    #rentopian-checkout-form .rentopian-col.rentopian-col-8,
+    #rentopian-checkout-form .rentopian-col.rentopian-col-9,
+    #rentopian-checkout-form .rentopian-col.rentopian-col-10,
+    #rentopian-checkout-form .rentopian-col.rentopian-col-11,
+    #rentopian-checkout-form .rentopian-col.rentopian-col-12 {
+        width: 100% !important;
+        -webkit-flex: 0 0 100% !important;
+        -ms-flex: 0 0 100% !important;
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+    
+    #rentopian-checkout-form .rentopian-row {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+    }
+    
+    #rentopian-checkout-form .rentopian-col {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+
+/* ==========================================================================
+   WooCommerce Checkout Integration - Hide default fields
+   ========================================================================== */
+
+body.rentopian-modern-checkout .woocommerce-billing-fields__field-wrapper,
+body.rentopian-modern-checkout .woocommerce-shipping-fields__field-wrapper {
+    display: none !important;
+}
+
+body.rentopian-modern-checkout .woocommerce-shipping-fields h3#ship-to-different-address {
+    display: none !important;
+}
+
+/* Ensure our form appears correctly */
+#rentopian-checkout-form.rentopian-checkout-form {
+    margin-bottom: 30px !important;
+}
+
+/* ==========================================================================
+   Error Notifications - Show on top of checkout form
+   ========================================================================== */
+
+body.rentopian-modern-checkout .rntp-notification {
+    margin-bottom: 20px !important;
+    position: relative !important;
+    z-index: 100 !important;
+}
+
+body.rentopian-modern-checkout #customer_details > .rntp-notification {
+    margin-bottom: 20px !important;
+}
+
+/* Position error notifications before our checkout form */
+body.rentopian-modern-checkout .rntp-notification--error {
+    margin-top: 0 !important;
+}
+
+/* ==========================================================================
+   Modern Date Form Component - Full Width Fix
+   ========================================================================== */
+
+#rentopian-checkout-form #rental_date_form_modern,
+#rentopian-checkout-form .rntp-rental-form-modern {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+}
+
+#rentopian-checkout-form #rental_date_form_modern .rntp-form-wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+}
+
+/* Date form internal fields - make them responsive */
+#rentopian-checkout-form #rental_date_form_modern .rntp-start-date-block,
+#rentopian-checkout-form #rental_date_form_modern .rntp-end-date-block {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin-bottom: 15px !important;
+}
+
+/* Multi-day toggle - full width */
+#rentopian-checkout-form #rental_date_form_modern .rntp-multi-day-toggle {
+    width: 100% !important;
+    padding: 0 !important;
+    margin-bottom: 15px !important;
+}
+
+/* ==========================================================================
+   Pickup Address Container
+   ========================================================================== */
+
+#rentopian-checkout-form #rental_address_container {
+    width: 100% !important;
+    margin-top: 15px !important;
+}
+
+#rentopian-checkout-form #rental_pick_up_address_fields {
+    margin-top: 15px !important;
+    padding: 15px !important;
+    background: #f8f8f8 !important;
+    border-radius: 4px !important;
+}
+
+/* ==========================================================================
+   Damage Waiver Component
+   ========================================================================== */
+
+#rentopian-checkout-form #damage_waiver {
+    width: 100% !important;
+    margin-top: 15px !important;
+}
+
+#rentopian-checkout-form #damage_waiver h3 {
+    margin-bottom: 15px !important;
+}
+
+#rentopian-checkout-form .radio-toolbar {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+}
+
+#rentopian-checkout-form .radio-toolbar .rntp-radio {
+    display: none !important;
+}
+
+#rentopian-checkout-form .radio-toolbar .rntp-label {
+    display: inline-block !important;
+    padding: 10px 20px !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+}
+
+#rentopian-checkout-form .radio-toolbar .rntp-radio:checked + .rntp-label {
+    background: #2271b1 !important;
+    border-color: #2271b1 !important;
+    color: #fff !important;
+}
+
+/* ==========================================================================
+   Dynamic Field Wrappers
+   ========================================================================== */
+
+#rentopian-checkout-form .rentopian-dynamic-field-wrapper {
+    width: 100% !important;
+}
+
+#rentopian-checkout-form .rentopian-dynamic-field-wrapper .form-row {
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Checkbox fields in dynamic wrappers */
+#rentopian-checkout-form .rentopian-dynamic-field-wrapper label.checkbox {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+/* ==========================================================================
+   Error States
+   ========================================================================== */
+
+#rentopian-checkout-form .rentopian-col .woocommerce-invalid input,
+#rentopian-checkout-form .rentopian-col .woocommerce-invalid select,
+#rentopian-checkout-form .rentopian-col .woocommerce-invalid textarea {
+    border-color: #e2401c !important;
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+    #rentopian-checkout-form .rentopian-hidden-visual-wrapper {
+        display: none !important;
+    }
+}
+
+/* ==========================================================================
+   Modern Checkout Dates - Migrated from rntp-styles.css
+   ========================================================================== */
+
+#rental_date_form_modern {
+    font-size: inherit;
+}
+
+#rental_date_form_modern .rntp-form-wrapper {
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    display: block !important;
+}
+
+/* Remove the extra side padding that the old horizontal form uses */
+#rental_date_form_modern .rntp-start-date-block,
+#rental_date_form_modern .rntp-end-date-block,
+#rental_date_form_modern .rntp-zipcode-block,
+#rental_date_form_modern .rntp-address-block {
+    padding: 0 !important;
+}
+
+/* Use the same vertical spacing as other .form-row elements */
+#rental_date_form_modern .form-row {
+    margin: 0 0 20px 0;
+}
+
+/* Labels – closer to theme checkout labels than the old uppercase style */
+#rental_date_form_modern label {
+    text-transform: none;
+    font-weight: 400;
+    font-size: 14px;
+    margin: 0 0 5px;
+}
+
+/* Override dashed-underline inputs from .rntp-rental-form for this block only */
+#rental_date_form_modern .rntp-form-wrapper input[type="text"],
+#rental_date_form_modern .rntp-form-wrapper input[type="date"],
+#rental_date_form_modern .rntp-form-wrapper select.rntp-date,
+#rental_date_form_modern .rntp-form-wrapper input[type="time"] {
+    border: 1px solid #d5d5d5;
+    border-radius: 2px;
+    padding: 0.618em 1em;
+    margin: 0;
+    box-shadow: none;
+    background: #fff;
+}
+
+/* Full-width inputs inside their column grid */
+#rental_date_form_modern .woocommerce-input-wrapper input.input-text,
+#rental_date_form_modern .woocommerce-input-wrapper select {
+    width: 100% !important;
+}
+
+/* Error highlighting consistent with the rest of the checkout */
+#rental_date_form_modern .error-input {
+    border-color: #ef4043 !important;
+}
+
+#rental_date_form_modern input#rental_start_date, 
+#rental_date_form_modern input#rental_end_date {
+    height: inherit !important;
+    border-radius: 5px;
+}
+
+#rental_date_form_modern input#rental_start_date:focus,  
+#rental_date_form_modern input#rental_end_date:focus {
+    color: var(--rentpro-color-form-focus-text);
+    border-color: var(--rentpro-color-form-focus-border);
+    background-color: var(--rentpro-color-form-focus-background);
+    box-shadow: var(--rentpro-color-form-focus-shadow);
+}
+
+/* ==========================================================================
+   Multi Day Event Toggle
+   ========================================================================== */
+
+/* Multi-day checkbox container */
+.rntp-multi-day-toggle {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    padding: 0.75rem 0;
+}
+
+/* Checkbox label styling */
+.rntp-multi-day-toggle label.checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+/* Checkbox input styling */
+.rntp-multi-day-toggle input[type="checkbox"] {
+    margin-right: 0.5rem;
+    cursor: pointer;
+    width: auto;
+    height: auto;
+}
+
+/* Checkbox label text */
+.rntp-multi-day-toggle label span {
+    user-select: none;
+}
+
+/* Ensure end date field respects conditional display */
+.rntp-end-date-conditional {
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* When end date field is being hidden */
+.rntp-end-date-conditional[style*="display: none"] {
+    opacity: 0;
+}
+
+/* Force hide when style attribute contains display:none - handles jQuery hide() */
+#rental_end_date_field[style*="display: none"],
+#rental_end_date_field[style*="display:none"] {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+    .rntp-multi-day-toggle {
+        padding: 0.5rem 0;
+    }
+    
+    .rntp-multi-day-toggle label.checkbox {
+        font-size: 0.95rem;
+    }
+}
+
+/* Ensure proper spacing in the form wrapper */
+.rntp-form-wrapper .rntp-multi-day-toggle + .rntp-end-date-block {
+    margin-top: 0;
+}
+
+/* Focus state for accessibility */
+.rntp-multi-day-toggle input[type="checkbox"]:focus {
+    outline: 2px solid #2271b1;
+    outline-offset: 2px;
+}
+
+/* Hover state for better UX */
+.rntp-multi-day-toggle label.checkbox:hover {
+    opacity: 0.8;
+}
+
+/* Disabled state (if needed in future) */
+.rntp-multi-day-toggle input[type="checkbox"]:disabled + span {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Integration with existing form row classes */
+.rntp-form-wrapper .form-row.rntp-multi-day-toggle {
+    width: 100%;
+    clear: both;
+}
+
+/* Ensure checkbox doesn't break layout on different themes */
+.rntp-multi-day-toggle .woocommerce-form__input-checkbox {
+    position: relative;
+    margin: 0 0.5rem 0 0;
+    vertical-align: middle;
+}
+
+/* Animation for smooth show/hide */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+/* Apply animations when showing/hiding */
+.rntp-end-date-conditional.sliding-down {
+    animation: slideDown 0.3s ease-in-out;
+}
+
+.rntp-end-date-conditional.sliding-up {
+    animation: slideUp 0.3s ease-in-out;
+}
+
+#rental_start_date_field {
+    margin-bottom: 0 !important;
+}
+
+#rental_multi_day_field {
+    padding-top: .2rem !important;
+    margin-bottom: 0 !important;
+}
+
+/* ==========================================================================
+   Rental Dates Summary Updates
+   ========================================================================== */
+
+#rntp-rental-dates-summary-wrapper .rental-dates-summary {
+    transition: opacity 0.15s ease-in-out;
+}
+
+#rntp-rental-dates-summary-wrapper .rental-dates-summary.updating {
+    opacity: 0.5;
+}
+
+/* ==========================================================================
+   Event Start Time Component
+   ========================================================================== */
+
+#rentopian-checkout-form .rental-start-time {
+    width: 100% !important;
+}
+
+#rentopian-checkout-form .rental-start-time input {
+    cursor: pointer;
+}
+
+/* Empty spacer for layout purposes */
+.rentopian-empty-spacer {
+    min-height: 1px;
+    visibility: hidden;
+}
+
+/* Special Terms Styling */
+.rental-special-terms {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-left: 4px solid var(--rntp-primary-color, #9c7e5c);
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.rental-special-terms h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.1em;
+    color: var(--rntp-primary-color, #9c7e5c);
+}
+
+.rental-special-terms p {
+    margin: 0 0 10px 0;
+}
+
+.rental-special-terms p:last-child {
+    margin-bottom: 0;
+}
+
+/* Top special terms section */
+.rentopian-special-terms-top {
+    margin-bottom: 0;
+}
+
+.rentopian-special-terms-top .rentopian-row {
+    margin-bottom: 0;
+}
+
+/* ==========================================================================
+   LOADING OVERLAY - Shows during checkout submission
+   ========================================================================== */
+
+.rentopian-checkout-loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rentopian-loading-content {
+    text-align: center;
+    padding: 40px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    max-width: 300px;
+}
+
+.rentopian-loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #e9ecef;
+    border-top: 4px solid #6c757d;
+    border-radius: 50%;
+    animation: rentopian-spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes rentopian-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.rentopian-loading-text {
+    font-size: 16px;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+/* Disable scrolling when loading */
+body.rentopian-checkout-processing {
+    overflow: hidden !important;
+}
+
+/* ==========================================================================
+   SHIPPING LOADING INDICATOR - Spinner shown while delivery recalculates
+   ========================================================================== */
+
+.rentopian-shipping-loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.85);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    pointer-events: none;
+}
+
+.rentopian-shipping-loading-overlay.is-active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.rentopian-shipping-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #e9ecef;
+    border-top: 2px solid #6c757d;
+    border-radius: 50%;
+    animation: rentopian-spin 0.8s linear infinite;
+    flex-shrink: 0;
+}
+
+.rentopian-shipping-loading-text {
+    font-size: 13px;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   ERROR FIELD HIGHLIGHTING - Red borders on validation errors
+   ========================================================================== */
+
+/* Error state for input fields */
+#rentopian-checkout-form input.rentopian-field-error,
+#rentopian-checkout-form select.rentopian-field-error,
+#rentopian-checkout-form textarea.rentopian-field-error,
+.rentopian-checkout-form input.rentopian-field-error,
+.rentopian-checkout-form select.rentopian-field-error,
+.rentopian-checkout-form textarea.rentopian-field-error {
+    border-color: #dc3545 !important;
+    background-color: #fff8f8 !important;
+}
+
+/* Error state for wrapper/container */
+#rentopian-checkout-form .form-row.rentopian-field-error,
+#rentopian-checkout-form .rentopian-col.rentopian-field-error,
+.rentopian-checkout-form .form-row.rentopian-field-error,
+.rentopian-checkout-form .rentopian-col.rentopian-field-error {
+    /* Label highlighting */
+}
+
+#rentopian-checkout-form .rentopian-field-error label,
+.rentopian-checkout-form .rentopian-field-error label {
+    color: #dc3545 !important;
+}
+
+/* Select2 error state */
+#rentopian-checkout-form .select2-container.rentopian-field-error .select2-selection,
+.rentopian-checkout-form .select2-container.rentopian-field-error .select2-selection {
+    border-color: #dc3545 !important;
+}
+
+/* Checkbox error state */
+#rentopian-checkout-form .rentopian-checkbox-wrapper.rentopian-field-error,
+.rentopian-checkout-form .rentopian-checkbox-wrapper.rentopian-field-error {
+    background-color: #fff8f8 !important;
+    border: 1px solid #dc3545 !important;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+/* Focus state override for error fields */
+#rentopian-checkout-form input.rentopian-field-error:focus,
+#rentopian-checkout-form select.rentopian-field-error:focus,
+#rentopian-checkout-form textarea.rentopian-field-error:focus {
+    border-color: #dc3545 !important;
+    outline: none !important;
+}
+
+/* ==========================================================================
+   PERSISTENT ERROR NOTICES - Don't auto-dismiss
+   ========================================================================== */
+
+/* Error notice container */
+.rentopian-error-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+/* WooCommerce error notice - ensure visibility */
+.woocommerce-error,
+.woocommerce-NoticeGroup-checkout .woocommerce-error {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative;
+    background-color: #f8d7da !important;
+    border: 1px solid #f5c6cb !important;
+    border-left: 4px solid #dc3545 !important;
+    color: #721c24 !important;
+    padding: 15px 40px 15px 20px !important;
+    margin-bottom: 20px !important;
+    border-radius: 4px !important;
+    list-style: none !important;
+}
+
+.woocommerce-error li {
+    list-style: none !important;
+    margin-bottom: 8px;
+    padding-left: 0 !important;
+    text-indent: 1.5rem;
+}
+
+.woocommerce-error li:last-child {
+    margin-bottom: 0;
+}
+
+/* No icon before error items - clean style */
+
+/* Close button for error notices */
+.rentopian-error-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    line-height: 1;
+    color: #721c24;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+
+.rentopian-error-close:hover {
+    background-color: rgba(114, 28, 36, 0.1);
+}
+
+.rentopian-error-close:focus {
+    outline: 2px solid #dc3545;
+    outline-offset: 2px;
+}
+
+/* Animation removed - keeping simple red border only */
+/* No shake animation - cleaner UX */
+
+/* ==========================================================================
+   ERROR NOTICE RESPONSIVE
+   ========================================================================== */
+
+@media screen and (max-width: 768px) {
+    .rentopian-loading-content {
+        padding: 30px 20px;
+        max-width: 250px;
+    }
+
+    .rentopian-loading-spinner {
+        width: 40px;
+        height: 40px;
+    }
+
+    .rentopian-loading-text {
+        font-size: 14px;
+    }
+
+    .rentopian-error-close {
+        top: 5px;
+        right: 5px;
+        font-size: 20px;
+        width: 25px;
+        height: 25px;
+    }
+
+    .woocommerce-error {
+        padding: 12px 35px 12px 15px !important;
+        font-size: 14px;
+    }
+}
+
+/* ==========================================================================
+   CLICK-TO-SCROLL ERROR ITEMS
+   ========================================================================== */
+
+/* Make error list items clickable */
+.rentopian-error-clickable {
+    cursor: pointer;
+    transition: background-color 0.2s ease, padding-left 0.2s ease;
+    padding: 5px 0;
+    border-radius: 3px;
+}
+
+.rentopian-error-clickable:hover {
+    background-color: rgba(220, 53, 69, 0.15);
+    padding-left: 10px;
+}
+
+/* Underline on hover to indicate clickability */
+.rentopian-error-clickable:hover {
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   FIELD FLASH ANIMATION - When scrolling to a field (subtle highlight)
+   ========================================================================== */
+
+@keyframes rentopian-field-flash {
+    0%, 100% {
+        background-color: transparent;
+    }
+    50% {
+        background-color: rgba(220, 53, 69, 0.1);
+    }
+}
+
+/* Flash effect when scrolling to field - subtle background flash */
+input.rentopian-field-flash,
+select.rentopian-field-flash,
+textarea.rentopian-field-flash,
+.rentopian-field-flash input,
+.rentopian-field-flash select,
+.rentopian-field-flash textarea {
+    animation: rentopian-field-flash 1s ease-in-out 2;
+}
+
+/* Select2 flash support */
+.rentopian-field-flash .select2-container .select2-selection {
+    animation: rentopian-field-flash 1s ease-in-out 2;
+}
+
+/* ==========================================================================
+   ADDITIONAL FIELD ERROR STATES
+   ========================================================================== */
+
+/* Ensure WooCommerce native field wrappers also get error styling */
+.woocommerce-invalid input,
+.woocommerce-invalid select,
+.woocommerce-invalid textarea,
+.woocommerce-invalid-required-field input,
+.woocommerce-invalid-required-field select,
+.woocommerce-invalid-required-field textarea {
+    border-color: #dc3545 !important;
+}
+
+/* Enhanced error wrapper styling */
+.rentopian-error-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.rentopian-error-wrapper .woocommerce-error {
+    margin-bottom: 0;
+}
+
+/* Ensure error notice is always on top */
+.woocommerce-NoticeGroup-checkout {
+    z-index: 100;
+    position: relative;
+}
+
+/* Better label error styling - simple red color, no icon */
+#rentopian-checkout-form .rentopian-field-error > label,
+.rentopian-checkout-form .rentopian-field-error > label,
+.rentopian-field-error label {
+    color: #dc3545 !important;
+}
+
+/* Checkbox/radio error state */
+.rentopian-field-error input[type="checkbox"],
+.rentopian-field-error input[type="radio"] {
+    outline: 2px solid #dc3545;
+    outline-offset: 2px;
+}
+
+/* ==========================================================================
+   CRITICAL: Error Message Styling - RED Color
+   ========================================================================== */
+
+/* Error notice container */
+.woocommerce-error,
+.woocommerce-NoticeGroup-checkout .woocommerce-error,
+.rentopian-error-wrapper .woocommerce-error {
+    background-color: #fff2f2 !important;
+    border: 1px solid #dc3545 !important;
+    border-left: 4px solid #dc3545 !important;
+    padding: 15px 20px !important;
+    margin-bottom: 20px !important;
+    border-radius: 4px !important;
+}
+
+/* Error list items - UL/LI without bullets (no discs) */
+.woocommerce-error li,
+.rentopian-error-wrapper .woocommerce-error li,
+.woocommerce-NoticeGroup-checkout .woocommerce-error li {
+    color: #dc3545 !important;
+    font-weight: 500 !important;
+    padding: 5px 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+    margin-left: 0 !important;
+}
+
+/* Clickable error items */
+.rentopian-error-clickable {
+    color: #dc3545 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+}
+
+.rentopian-error-clickable:hover {
+    color: #a71d2a !important;
+    text-decoration: underline !important;
+}
+
+/* Error close button */
+.rentopian-error-close {
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    background: none !important;
+    border: none !important;
+    font-size: 24px !important;
+    color: #dc3545 !important;
+    cursor: pointer !important;
+    line-height: 1 !important;
+    padding: 0 !important;
+    opacity: 0.7 !important;
+}
+
+.rentopian-error-close:hover {
+    opacity: 1 !important;
+}
+
+.rentopian-error-wrapper {
+    position: relative !important;
+}
+
+/* ==========================================================================
+   CRITICAL: Required Asterisk Styling - RED Color
+   ========================================================================== */
+
+/* Red asterisk for required fields. Force VISIBLE (not just colored) */
+#rentopian-checkout-form .rentopian-col label .required,
+#rentopian-checkout-form .rentopian-col label abbr.required,
+#rentopian-checkout-form .rentopian-col label abbr[title="required"],
+#rentopian-checkout-form label .required,
+#rentopian-checkout-form label abbr.required,
+.rentopian-checkout-form label .required,
+.rentopian-checkout-form label abbr.required,
+body.rentopian-modern-checkout .rentopian-col label .required,
+body.rentopian-modern-checkout .rentopian-col label abbr.required,
+body.rentopian-modern-checkout .form-row label .required,
+body.rentopian-modern-checkout .form-row label abbr.required,
+body.woocommerce-checkout #rentopian-checkout-form label .required,
+body.woocommerce-checkout #rentopian-checkout-form label abbr.required,
+.form-row label .required,
+.form-row label abbr.required {
+    display: inline !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    width: auto !important;
+    height: auto !important;
+    clip: auto !important;
+    position: static !important;
+    text-indent: 0 !important;
+    color: #dc3545 !important;
+    -webkit-text-fill-color: #dc3545 !important;
+    text-decoration: none !important;
+    border-bottom: none !important;
+    font-weight: bold !important;
+}
+
+/* WooCommerce default abbr styling override */
+#rentopian-checkout-form label abbr,
+.rentopian-checkout-form label abbr,
+.form-row label abbr {
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
+
+/* Specific styling for billing_address_1 (Street Address) */
+#billing_address_1_field label .required,
+#billing_address_1_field label abbr.required,
+.rentopian-col[data-field-id="billing_address_1"] label .required {
+    color: #dc3545 !important;
+}
+
+/* Error field input styling - red border */
+.rentopian-field-error input,
+.rentopian-field-error select,
+.rentopian-field-error textarea,
+#rentopian-checkout-form .rentopian-field-error input,
+#rentopian-checkout-form .rentopian-field-error select,
+#rentopian-checkout-form .rentopian-field-error textarea {
+    border-color: #dc3545 !important;
+}
+
+/* Select2 error state */
+.rentopian-field-error .select2-container .select2-selection,
+.rentopian-field-error .select2-container--default .select2-selection--single {
+    border-color: #dc3545 !important;
+}
+
+/* Dynamic field wrapper error state */
+.rentopian-dynamic-field-wrapper .rentopian-field-error,
+.rentopian-dynamic-field-wrapper input.rentopian-field-error,
+.rentopian-dynamic-field-wrapper select.rentopian-field-error,
+.rentopian-dynamic-field-wrapper textarea.rentopian-field-error {
+    border-color: #dc3545 !important;
+}
+
+.rentopian-dynamic-field-wrapper .rentopian-field-error label,
+.rentopian-dynamic-field-wrapper .form-row.rentopian-field-error label {
+    color: #dc3545 !important;
+}
+
+/* ==========================================================================
+   MARKETING SECTION (checkout right column)
+   ========================================================================== */
+.rentopian-marketing-section {
+    margin-bottom: 20px;
+    text-align: center;
+}
+.rentopian-marketing-banner {
+    margin-bottom: 15px;
+}
+.rentopian-marketing-banner-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+.rentopian-marketing-content {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+}
+.rentopian-marketing-content p {
+    margin-bottom: 10px;
+}
+.rentopian-marketing-content a {
+    color: inherit;
+    text-decoration: underline;
+}

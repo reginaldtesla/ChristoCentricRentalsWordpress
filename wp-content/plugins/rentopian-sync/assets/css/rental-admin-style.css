@@ -1,0 +1,1203 @@
+/*--------------------------------------------------------------
+Rentopian Sync Admin Styles
+Author: Rentopian
+Website: https://rentopian.com
+Copyright 2019, Rentopian Inc. All Rights Reserved.
+----------------------------------------------------------------*/
+
+
+/*-- =========== TABLE OF CONTENTS: =============
+1. General
+2. Modal
+3. Loader
+4. Form Elements
+5. Table
+6. Log Section
+7. Inline Help
+8. Panel Block
+9. Button
+================================================= */
+
+/*---------- 1. General ----------*/
+h1, h2, h3, h4{
+    font-family: 'Proxima Nova', sans-serif;
+    font-weight: 700;
+}
+
+h4{
+    font-size:1.2em;
+}
+
+.clear-both, .clearfix{
+    clear: both;
+}
+
+
+.rental-error-message {
+    color: #ee363a;
+}
+
+#rental_delete_runtime_log {
+    float: right;
+}
+#rental_api_key{
+    width: 250px;
+    display: inline-block;
+}
+
+#rental_save_api_key.btn{
+    display:inline-block;
+    padding:6px 8px 6px 6px;
+    position: relative;
+    top:-2px;
+}
+
+.rental-notice {
+    padding: 10px 30px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+.rental-notice.rental-notice-success {
+    border-color: #dff8eb;
+    background: #dff8eb;
+    color: #00c363;
+}
+
+.rental-notice.rental-notice-danger {
+    border-color: #ffe7ed;
+    background: #ffe7ed;
+    color: #f04e51
+}
+
+/*----------- 2. Modal -----------*/
+
+.rental-modal {
+    display: none;
+    position: fixed;
+    z-index: 100001;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.rental-modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+    min-height: 100px;
+}
+
+.rental-modal-content > h3{
+    margin:0;
+}
+
+.rental-modal-footer {
+    text-align: center;
+}
+
+.rental-modal-cancel {
+    margin-right: 15px;
+}
+
+/*---------- 3. Loader -----------*/
+
+.rental-loader-border {
+    height: 10px;
+    border: 1px solid #23282d;
+    border-radius: 7px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.rental-loader-progress {
+    width: 0;
+    height: 10px;
+    background: #2cd429 linear-gradient(to right, #2cd429 0%, #f5f91e 50%, #ff5858 100%);
+}
+
+.rental-loader-percent {
+    float: right;
+}
+
+.rental-loading-finish{
+    background: #4f5467;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    box-shadow: none;
+    margin-top: 10px;
+    width: 70px;
+}
+
+/*---------- 4. Form Elements ----------*/
+
+input[type="text"].rntp-input{
+    border:solid 1px #a4a6b0;
+    padding:4px 8px;
+    box-shadow: none;
+    line-height: 22px;
+    border-radius: 4px;
+}
+
+.rental-label {
+    width: 225px;
+    float:left;
+    font-weight: 500;
+    font-size:1.2em;
+    line-height: 1.6em;
+    margin-top: 2px;
+}
+
+.rental-form-group {
+    margin: 15px;
+    clear: both;
+    border-bottom: solid 1px #eee;
+    padding-bottom: 15px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.rental-form-group textarea {
+    height: 100px;
+    max-width: 100%;
+    width:350px;
+    resize: horizontal;
+    border: 1px solid #a4a6b0;
+    box-shadow:none;
+    border-radius:4px;
+}
+
+
+.rntp-sync-form-title{
+    float:left;
+    width:250px;
+}
+
+.rntp-sync-form-title > h4{
+    margin:0;
+}
+
+.rntp-sync-field{
+    float:left;
+    width:350px;
+}
+.rntp-sync-field.tier-field{
+    width:450px;
+}
+
+#rental_save_settings{
+    margin-left:15px;
+}
+
+/* slider, checkbox, radio & switch */
+
+.rntp-checkbox {
+    line-height: 20px;
+    margin: 0;
+    float: left;
+    width: 100%
+}
+
+.rntp-checkbox label{
+    padding-left: 30px;
+    font-weight: 400;
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 0
+}
+
+.rntp-checkbox label input{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+    z-index: 3;
+    margin: 0;
+    cursor: pointer
+}
+
+.rntp-checkbox label input:checked+span:after {
+    transform: scale(1);
+    fill: #fff
+}
+
+.rntp-checkbox label input:disabled+span {
+    opacity: .5
+}
+
+.rntp-checkbox label span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px
+}
+
+.rntp-checkbox label span:before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #e3e8f1;
+    background: transparent;
+    content: " "
+}
+
+.rntp-checkbox label span:after {
+    position: absolute;
+    z-index: 2;
+    color: #4f5467;
+    transform: scale(0);
+    transition: -webkit-transform .2s cubic-bezier(.8,-.33,.2,1.33);
+    transition: transform .2s cubic-bezier(.8,-.33,.2,1.33),-webkit-transform .2s cubic-bezier(.8,-.33,.2,1.33)
+}
+
+.rntp-checkbox.inline {
+    display: inline-block;
+    margin-right: 20px;
+    float: none;
+    width: auto
+}
+
+.rntp-checkbox.inline:last-child {
+    margin-right: 0
+}
+
+
+.rntp-checkbox input[type=checkbox]+span:after {
+    content: ""
+}
+
+.rntp-checkbox input[type=checkbox]:checked+span:after {
+    display: inline-block;
+    transform: rotate(45deg);
+    height: 12px;
+    width: 6px;
+    border-bottom: 2px solid #fff;
+    border-right: 2px solid #fff;
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 1px
+}
+
+.rntp-checkbox input[type=checkbox]:checked+span:before {
+    background: #00a6ff!important;
+    border: none
+}
+
+.rntp-checkbox label span:after {
+    font-size: 14px;
+    text-align: center;
+    line-height: 20px;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    display: block;
+    top: 3px
+}
+
+.rntp-checkbox label span:before {
+    border-radius: 4px;
+    border-color: #a4a6b0
+}
+
+/*-- Radio input --*/
+.rntp-radio {
+    margin: 0.5rem;
+}
+.rntp-radio.inline{display:inline-block;}
+.rntp-radio input[type=radio] {
+    position: absolute;
+    opacity: 0;
+}
+.rntp-radio input[type=radio] + .radio-label:before {
+    content: "";
+    background: #f4f4f4;
+    border-radius: 100%;
+    border: 1px solid #b4b4b4;
+    display: inline-block;
+    width: 1.4em;
+    height: 1.4em;
+    position: relative;
+    top: -0.2em;
+    margin-right: 1em;
+    vertical-align: top;
+    cursor: pointer;
+    text-align: center;
+    transition: all 250ms ease;
+}
+.rntp-radio input[type=radio]:checked + .radio-label:before {
+    background-color: #00c363;
+    box-shadow: inset 0 0 0 4px #f4f4f4;
+}
+.rntp-radio input[type=radio]:focus + .radio-label:before {
+    outline: none;
+    border-color: #00c363;
+}
+.rntp-radio input[type=radio]:disabled + .radio-label:before {
+    box-shadow: inset 0 0 0 4px #f4f4f4;
+    border-color: #b4b4b4;
+    background: #b4b4b4;
+}
+.rntp-radio input[type=radio] + .radio-label:empty:before {
+    margin-right: 0;
+}
+
+
+/*---------- 5. Table ----------*/
+
+.rental-log-table {
+    table-layout: fixed;
+    word-wrap: break-word;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 18px;
+    border-collapse: collapse;
+}
+
+.rental-log-table svg.icon {
+    padding: 2px;
+    vertical-align: middle;
+    margin: 0;
+    float: none
+}
+
+.rental-log-table .btn {
+    margin-left: 5px
+}
+
+.rental-log-table .btn:first-child {
+    margin-left: 0
+}
+
+.rental-log-table .btn.btn-success {
+    background: green;
+    color: #fff
+}
+
+.rental-log-table tr td,.rental-log-table tr th {
+    line-height: 20px;
+    padding: 10px 15px;
+    vertical-align: middle
+}
+
+.rental-log-table>thead>tr>th {
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #fff;
+    border-bottom: none;
+    background: #4f5467;
+    border-right: 1px solid #666
+}
+
+.rental-log-table>thead:first-child>tr:first-child>th:first-child {
+    border-top-left-radius: 4px
+}
+
+.rental-log-table>thead:first-child>tr:first-child>th:last-child {
+    border-top-right-radius: 4px
+}
+
+.rental-log-table>tbody>tr:last-child>td {
+    border-bottom: 0
+}
+
+.rental-log-table.table-striped>tbody>tr:nth-of-type(odd) {
+    background: #f4f6f7
+}
+
+.rental-log-table.table-bordered {
+    border: 1px solid #e3e8f1
+}
+
+.rental-log-table.table-bordered>tbody>tr>td {
+    border: 0;
+    border-bottom: 1px solid #e3e8f1;
+    border-right: 1px solid #e3e8f1
+}
+
+.rental-log-table.table-bordered>tbody>tr>td:last-child {
+    border-right: 0
+}
+
+.rental-log-table.table-bordered>tbody>tr:last-child>td {
+    border-bottom: 0
+}
+
+.rental-log-table.table-hover>tbody>tr .btn-details,.rental-log-table.table-hover>tbody>tr .btn-edit,.rental-log-table.table-hover>tbody>tr .btn-remove {
+    color: #000;
+    background: #f6f8fa
+}
+
+.rental-log-table.table-hover>tbody>tr:hover {
+    background-color: #edf1f5
+}
+
+.rental-log-table.table-hover>tbody>tr:hover>td {
+    background: inherit
+}
+
+.rental-log-table .btn {
+    -webkit-box-shadow: none;
+    box-shadow: none
+}
+
+.rental-log-table {
+    width: 100%;
+    text-align: center;
+}
+
+.rental-log-table > thead > tr > th:nth-of-type(1) {
+    width: 7%;
+}
+
+.rental-log-table > thead > tr > th:nth-of-type(2) {
+    width: 30%;
+}
+
+.rental-log-table > thead > tr > th:nth-of-type(3) {
+    width: 6%;
+}
+
+.rental-log-table > thead > tr > th:nth-of-type(4) {
+    width: 38%;
+}
+
+.rental-log-table > thead > tr > th:nth-of-type(5) {
+    width: 15%;
+}
+
+#rental_orders_log_table > thead > tr > th:nth-of-type(1) {
+    width: 9%;
+}
+
+#rental_orders_log_table > thead > tr > th:nth-of-type(2) {
+    width: 7%;
+}
+
+#rental_orders_log_table > thead > tr > th:nth-of-type(3) {
+    width: 56%;
+}
+
+#rental_orders_log_table > thead > tr > th:nth-of-type(4) {
+    width: 16%;
+}
+
+#rental_orders_log_table > thead > tr > th:nth-of-type(5) {
+    width: 13%;
+}
+
+.rental-pagination {
+    text-align: center;
+    background: #f4f6f7;
+    padding:10px;
+    margin-top:20px;
+}
+
+.rental-pagination a {
+    color: black;
+    /*float: left;*/
+    padding: 6px 12px;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.rental-pagination a.active {
+    background-color: #4f5467;
+    color: white;
+}
+
+.rental-pagination a:hover:not(.active) {background-color: #ddd;}
+
+
+/*----- 6. Log Section -----*/
+
+.rental-sync-log li{
+    border-bottom: solid 1px #edf1f5;
+    padding:15px;
+}
+
+.rental-log-title > h4 {
+    display: inline;
+    font-weight: 500;
+}
+
+.rental-log-details {
+    margin-top: 20px;
+}
+
+.rental-log-details > p {
+    padding: 5px 10px;
+    background: #00a6ff;
+    color:#fff;
+    border-radius: 4px;
+    display: inline-block;
+
+}
+
+/*----- 7. Inline Help ----- */
+.rntp-help-block{
+    width:40% !important;
+    float:right;
+}
+
+.rntp-help-block-content {
+    background: #f4f6f7;
+    padding: 20px;
+    border-radius: 4px;
+    font-size: 1.1em;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.7em;
+}
+
+
+/*----- 8. Panel Block ----- */
+
+.rntp-sync-panel {
+    margin-bottom: 18px;
+    border-radius: 4px;
+}
+
+.panel-body {
+    padding: 15px;
+}
+
+.panel-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 15px
+}
+
+.panel-heading {
+    padding: 15px;
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px
+}
+
+.panel-heading > h3{
+    margin:0;
+    display: inline-block;
+}
+
+.panel-footer {
+    padding: 10px 15px;
+    background-color: #fff;
+    border-top: 2px dotted #4f5467;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.panel-default {
+    border-color: #ddd
+}
+
+.panel-default>.panel-heading {
+    color: #444;
+    /*background-color: #f5f5f5;*/
+    border-color: #ddd
+}
+
+.panel-default>.panel-heading+.panel-collapse>.panel-body {
+    border-top-color: #ddd
+}
+
+
+.rntp-sync-panel,.rntp-sync-panel>.panel-body,.rntp-sync-panel>.panel-footer,.rntp-sync-panel>.panel-heading {
+
+}
+
+.rntp-sync-panel>.panel-heading {
+    padding: 10px 15px;
+    line-height: 40px
+}
+
+.rntp-sync-panel>.panel-heading .panel-title {
+    float: left;
+    line-height: 40px;
+    font-size: 14px;
+    font-weight: 600;
+    width: auto
+}
+
+.rntp-sync-panel>.panel-heading .panel-title span {
+    float: left;
+    margin-right: 10px;
+    line-height: 40px
+}
+
+.rntp-sync-panel>.panel-heading .panel-title span[class^=icon-] {
+    font-size: 20px
+}
+
+.rntp-sync-panel>.panel-heading .panel-title span.fa {
+    font-size: 14px
+}
+
+.rntp-sync-panel>.panel-footer {
+    padding: 10px 15px;
+    line-height: 40px
+}
+
+.rntp-sync-panel .panel-elements {
+    float: left;
+    margin-left: -5px
+}
+
+.rntp-sync-panel .panel-elements .btn {
+    float: left
+}
+
+.rntp-sync-panel .panel-elements .form-group,.rntp-sync-panel .panel-elements .input-group {
+    margin-bottom: 0
+}
+
+.rntp-sync-panel .panel-elements.pull-right {
+    margin-left: 0;
+    margin-right: -5px
+}
+
+.rntp-sync-panel .panel-elements.panel-elements-cp {
+    margin-left: 0
+}
+
+.rntp-sync-panel .panel-elements.panel-elements-cp.pull-right {
+    margin-right: 0
+}
+
+.rntp-sync-panel .panel-collapse {
+    float: left;
+    width: 100%
+}
+
+.rntp-sync-panel.panel-default,.rntp-sync-panel.panel-default .panel-footer,.rntp-sync-panel.panel-default .panel-heading {
+    border-color: #e3e8f1
+}
+
+.rntp-sync-panel.panel-rntp-toggled>div:not(.panel-heading) {
+    display: none
+}
+
+.rntp-sync-panel.panel-expanded {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1050;
+    border: 0;
+    border-radius: 0
+}
+
+.rntp-sync-panel-group .panel>.panel-heading {
+    padding: 5px 15px
+}
+
+.rntp-sync-panel-group .panel>.panel-heading .panel-elements {
+    margin-left: -10px
+}
+
+.rntp-sync-panel-group .panel>.panel-heading .panel-elements.pull-right {
+    margin-right: -10px
+}
+
+
+/*----- 9. Button -----*/
+
+.btn {
+    padding: 10px 30px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    overflow: hidden;
+    border-radius: 4px;
+    -webkit-transition: all .2s ease-in;
+    transition: all .2s ease-in;
+    -webkit-box-shadow: 2px 2px 14px 4px rgba(193,205,227,.5);
+    box-shadow: 2px 2px 14px 4px rgba(193,205,227,.5);
+    border: none;
+    cursor: pointer;
+}
+
+.btn.btn-danger {
+    border-color: #ef4043;
+    background: #f04e51;
+    color: #fff;
+}
+
+.btn.btn-inline-success {
+    border-color: #dff8eb;
+    background: #dff8eb;
+    color: #00c363
+}
+
+.btn.btn-inline-success.active,.btn.btn-inline-success:active,.btn.btn-inline-success:active:focus,.btn.btn-inline-success:hover {
+    border-color: #caf3de;
+    background: #d2f5e3;
+    color: #00aa56
+}
+
+.btn.btn-inline-success:focus {
+    border-color: #caf3de;
+    background: #d2f5e3;
+    color: #00c363
+}
+
+.btn.btn-inline-success.btn-clean {
+    background: transparent;
+    color: #dff8eb;
+    border: 2px solid #dff8eb;
+    padding: 8px 28px;
+    -webkit-box-shadow: none;
+    box-shadow: none
+}
+
+.btn.btn-inline-success.btn-clean:active,.btn.btn-inline-success.btn-clean:active:focus,.btn.btn-inline-success.btn-clean:hover {
+    color: #00c363;
+    background: #dff8eb;
+    border-color: #dff8eb
+}
+
+.btn.btn-inline-warning.btn-rounded {
+    border-radius: 20px
+}
+
+.btn.btn-inline-danger {
+    border-color: #ffe7ed;
+    background: #ffe7ed;
+    color: #f04e51
+}
+
+.btn.btn-inline-danger.active,.btn.btn-inline-danger:active,.btn.btn-inline-danger:active:focus,.btn.btn-inline-danger:hover {
+    border-color: #ffcdda;
+    background: #ffd8e2;
+    color: #ee363a
+}
+
+.btn.btn-inline-danger:focus {
+    border-color: #ffcdda;
+    background: #ffd8e2;
+    color: #f04e51
+}
+
+.btn.btn-inline-danger.btn-clean {
+    background: transparent;
+    color: #ffe7ed;
+    border: 2px solid #ffe7ed;
+    padding: 8px 28px;
+    -webkit-box-shadow: none;
+    box-shadow: none
+}
+
+.btn.btn-inline-danger.btn-clean:active,.btn.btn-inline-danger.btn-clean:active:focus,.btn.btn-inline-danger.btn-clean:hover {
+    color: #f04e51;
+    background: #ffe7ed;
+    border-color: #ffe7ed
+}
+
+.btn.btn-inline-danger.btn-rounded {
+    border-radius: 20px
+}
+
+.btn.btn-inline-danger,.btn.btn-inline-default,.btn.btn-inline-info,.btn.btn-inline-primary,.btn.btn-inline-success,.btn.btn-inline-warning {
+    box-shadow: none;
+    padding: 10px 15px;
+    font-size: 13px
+}
+
+.btn.btn-icon-fixed span {
+    position: relative;
+    left: -6px;
+    top: -1px;
+    vertical-align: middle;
+}
+
+.btn.btn-sm {
+    padding: 6px 15px
+}
+
+.btn.btn-sm.btn-icon {
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    padding: 0
+}
+
+.btn.btn-icon {
+    padding-left: 0;
+    padding-right: 0;
+    width: 58px
+}
+
+
+.btn.btn-success {
+    border-color: #00b45b;
+    background: #00c363;
+    color: #fff;
+}
+
+.btn.btn-success.btn-clean {
+    background: transparent;
+    color: #00c363;
+    border: 2px solid #00c363;
+    padding: 8px 28px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.btn.btn-success.active,.btn.btn-success:active,.btn.btn-success:active:focus,.btn.btn-success:hover, .btn.btn-success:focus {
+    border-color: #009a4e;
+    background: #00b45b;
+    color: #f2f2f2
+}
+
+.rental-btn-details, .rental-btn-delete {
+    float: right;
+    margin-left:6px;
+}
+
+.rental-btn-try-again {
+    color: #f04e51;
+    cursor: pointer;
+}
+
+.rntp-documentation-link{
+    float: right;
+    text-decoration: none;
+    background: #fc6223;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 2px;
+
+}
+
+.rntp-documentation-link:focus, .rntp-documentation-link:hover, .rntp-documentation-link:active{
+    color:#fff !important;
+    opacity:0.9;
+    text-decoration: none;
+}
+
+#rental_tiers th {
+    width: 25%;
+    text-transform: none;
+}
+.rental-delete-tier{line-height: 1 !important;}
+
+.rntp-sync-panel input[type="text"],
+.rntp-sync-panel input[type="number"],
+.rntp-sync-panel textarea{
+    border-radius: .25rem;
+    display: block;
+    width: 100%;
+    padding: .75rem 1rem;
+    line-height: 1.25;
+    font-size: .8rem;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    box-shadow: 0 3px 20px 0 rgba(113,106,202,.11);
+}
+
+#rental_tiers input[type="text"],
+#rental_tiers input[type="number"]{
+    width:100%;
+}
+
+#rental_tiers.rental-log-table.table-bordered>tbody>tr:last-child>td{
+    border-bottom:1px solid #e3e8f1;
+}
+/*****************************************/
+.rental-tabs{
+    display:flex;
+    flex-direction:column;
+    width:100%;
+}
+
+.rental-tabs__list {
+
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+}
+
+.rental-tabs__list a {
+    color: #fff;
+    padding: 15px;
+}
+
+.rental-tabs__list > li {
+    color: #fff;
+    cursor: pointer;
+    flex-grow: 1;
+    padding: 20px 15px;
+    font-size: 1.125rem;
+    background: #4f5467;
+    margin: 0 5px -1px 0;
+    position: relative;
+}
+
+.rental-tabs__list > li:last-child{
+    margin-right: 0;
+}
+
+.rental-tabs__list > li.active {
+    background: #fff;
+    /*border: solid 1px #4f5467;*/
+    border-bottom: none;
+}
+
+.rental-tabs__list > li.active a{
+    color: #4f5467;
+    font-weight: bold;
+}
+.rental-inner-title{
+    /* margin: 30px 15px 30px 15px; */
+    margin: 30px 0 30px 0;
+    border-bottom: solid 2px #000;
+}
+
+
+.rental-tabs__tab-content {
+    display:flex;
+    background-color: #fff;
+}
+
+.rental-tab {
+    padding:15px;
+    width:100%;
+}
+.settings-panel-footer{
+    background-color: #4f546724 !important;
+    /* background-color: #4f5467; */
+    border-top: none;
+    padding-left: 30px !important;
+    padding-right: 30px;
+}
+
+.settings-panel-footer .submit{padding:.5em 0}
+.settings-panel-footer .btn{box-shadow:2px 2px 14px 4px rgba(0,0,0,.1)}
+.rntp-sync-panel.panel-default{background: #fff}
+input[type="checkbox"]:disabled:checked::before{display:none}
+.rental-hide {
+    display: none !important;
+}
+.rental-show {
+    display: block !important;
+}
+.rental-disapper {
+    opacity: 0;
+    cursor: default;
+}
+.rental-danger {
+    border: 1px solid #f04e51 !important;
+    overflow: hidden;
+    border-radius: .2rem;
+}
+.rental-error-msg {
+    color: #f04e51;
+    display: inline-block;
+}
+#rntp-log-settings {
+    background: white;
+    padding: 1rem;
+    margin: 0;
+}
+#rntp-log-settings .panel-heading {
+    border-bottom: 1px solid #e3e8f1;
+}
+.log-settings-footer {
+    margin-bottom: 2rem;
+}
+.ajax-alert {
+    padding: 1rem;
+    font-size: 1rem;
+    background: white;
+    border-radius: .3rem;
+    position: absolute;
+    right: 2rem;
+    top: 20rem;
+    box-shadow: 0 0 10px 8px #ccc;
+    display: none;
+}
+.ajax-alert.success strong {
+    color: green;
+}
+.ajax-alert.danger strong {
+    color: red;
+}
+
+/* #rntp-allow-both-options {
+    padding-left: 2rem;
+    padding-top: .5rem;
+} */
+
+.sync-options {
+    margin-top: 15px;
+}
+
+.sync-options p {
+    margin: 0 0 10px;
+    font-weight: 600;
+}
+
+.sync-radio {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.sync-radio input[type="radio"] {
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+#rental_sync.disabled, #rental_resync.disabled {
+    opacity: .5;
+}
+
+@media screen and (max-width: 768px){
+    .rntp-sync-form-title,
+    .rntp-help-block{float:none; width:100% !important;}
+    .rntp-sync-field{
+        width: 320px;
+        float: none;
+    }
+
+    .rntp-sync-field .rntp-checkbox {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .rental-tab {
+        padding:0;
+    }
+
+    .rntp-help-block-content{
+        margin:12px 0 0 0;
+        padding:10px;
+        font-size:.9em;
+        line-height: 1.4em;
+        text-align: left;
+    }
+    .rental-label{float:none;}
+    .rental-tabs__list > li{margin:0; border-radius:0; padding:15px; font-size:1rem}
+
+    .rntp-sync-panel input[type="text"]{
+        width: 100%;
+        margin-top: 5px;
+    }
+    #rental_save_api_key.btn{top: 0;
+        margin-top: 10px;
+        width: 100%;}
+
+    .rntp-documentation-link{clear: both;
+        width: auto;
+        display: block;
+        text-align: center;
+        margin-top: 10px;
+        float:none;
+    }
+}
+
+.processing-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.processing-modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.rental-pagination a.active {
+    font-weight: bold;
+    color: #0073aa;
+}
+
+.rental-pagination a {
+    padding: 5px 10px;
+    margin: 0 5px;
+    text-decoration: none;
+    background-color: #f1f1f1;
+    color: #333;
+    border-radius: 3px;
+}
+
+.rental-pagination a:hover {
+    background-color: #0073aa;
+    color: #fff;
+}
+
+.rental-pagination a.last, .rental-pagination a.first {
+    font-size: larger;
+}
+
+#rental_sync_background {
+    margin-bottom: .5rem;
+}
+
+form.rental-settings-section-form {
+    /* border: 1px solid #4f546724; */
+    border-bottom-left-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+}
+
+.section-wrapper {
+    /* border: 1px solid #ccc; */
+    padding-left: 15px;
+    padding-right: 15px;
+    /* border-bottom-left-radius: .5rem;
+    border-bottom-right-radius: .5rem; */
+    margin-top: .5rem;
+}
+
+.rental-section-status--error {
+    display: block;
+    margin-top: .5rem;
+    color: red;
+    font-weight: bold;
+    padding-left: .5rem;
+}
+.rental-section-status--success {
+    display: block;
+    margin-top: .5rem;
+    color: rgb(0, 202, 0);
+    font-weight: bold;
+    padding-left: .5rem;
+}

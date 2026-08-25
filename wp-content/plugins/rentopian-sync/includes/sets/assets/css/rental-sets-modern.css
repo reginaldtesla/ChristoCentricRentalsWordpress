@@ -1,0 +1,1201 @@
+/*--------------------------------------------------------------
+Sets Module — Modern Front-End Styles
+Author: Rentopian
+Website: https://rentopian.com
+Copyright 2023, Rentopian Inc. All Rights Reserved.
+
+Modern set product page: section-based configurator with dropdowns,
+quantity steppers and multi-select cards. Every selector lives under
+.rental-sets-modern so dropping a stylesheet in the wrong order
+cannot leak rules into the rest of the page.
+
+Theme retheming. Override any of the CSS variables on the
+.rental-sets-modern scope (or :root) to recolour / restyle without
+touching this file.
+--------------------------------------------------------------*/
+
+.rental-sets-modern {
+    /*--------------------------------------------------------------
+    1. CSS variables (theme retheming surface)
+    --------------------------------------------------------------*/
+    --rntp-accent: #2563eb;
+    --rntp-accent-hover: #1d4ed8;
+    --rntp-accent-soft: rgba(37, 99, 235, 0.08);
+    --rntp-text: #111827;
+    --rntp-text-muted: #6b7280;
+    --rntp-border: #e5e7eb;
+    --rntp-border-strong: #d1d5db;
+    --rntp-bg: #ffffff;
+    --rntp-bg-soft: #f9fafb;
+    --rntp-error: #dc2626;
+    --rntp-error-soft: rgba(220, 38, 38, 0.08);
+    --rntp-success: #15803d;
+    --rntp-success-soft: rgba(21, 128, 61, 0.08);
+    --rntp-radius: 8px;
+    --rntp-radius-sm: 4px;
+    --rntp-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --rntp-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --rntp-spacing-xs: 4px;
+    --rntp-spacing-sm: 8px;
+    --rntp-spacing-md: 16px;
+    --rntp-spacing-lg: 24px;
+    --rntp-font-size-sm: 0.875rem;
+    --rntp-font-size-base: 1rem;
+    --rntp-font-size-lg: 1.125rem;
+    --rntp-font-size-xl: 1.25rem;
+    --rntp-transition: 150ms ease-in-out;
+
+    display: block;
+    margin: 0 0 var(--rntp-spacing-lg);
+    color: var(--rntp-text);
+    font-size: var(--rntp-font-size-base);
+    line-height: 1.5;
+}
+
+/*--------------------------------------------------------------
+2. Edit-mode banner
+--------------------------------------------------------------*/
+.rental-sets-modern .rntp-edit-banner {
+    margin: 0 0 var(--rntp-spacing-md);
+    padding: var(--rntp-spacing-sm) var(--rntp-spacing-md);
+    background: var(--rntp-success-soft);
+    border-left: 3px solid var(--rntp-success);
+    border-radius: var(--rntp-radius-sm);
+    color: var(--rntp-success);
+    font-size: var(--rntp-font-size-sm);
+}
+
+/*--------------------------------------------------------------
+3. Top-level errors rollup
+--------------------------------------------------------------*/
+.rental-sets-modern .rntp-errors {
+    margin: 0 0 var(--rntp-spacing-md);
+    padding: var(--rntp-spacing-sm) var(--rntp-spacing-md);
+    background: var(--rntp-error-soft);
+    border-left: 3px solid var(--rntp-error);
+    border-radius: var(--rntp-radius-sm);
+    color: var(--rntp-error);
+}
+
+.rental-sets-modern .rntp-errors-list {
+    margin: 0;
+    padding: 0 0 0 1.25em;
+    list-style: disc;
+}
+
+.rental-sets-modern .rntp-errors-list li {
+    margin: var(--rntp-spacing-xs) 0;
+    font-size: var(--rntp-font-size-sm);
+}
+
+/*--------------------------------------------------------------
+4. Section frame (shared by all four section types)
+--------------------------------------------------------------*/
+.rental-sets-modern .rntp-section {
+    margin: 0 0 var(--rntp-spacing-md);
+    padding: var(--rntp-spacing-md);
+    background: var(--rntp-bg);
+    border: 1px solid var(--rntp-border);
+    border-radius: var(--rntp-radius);
+    box-shadow: var(--rntp-shadow);
+    transition: border-color var(--rntp-transition), box-shadow var(--rntp-transition);
+}
+
+.rental-sets-modern .rntp-section[data-has-error="1"] {
+    border-color: var(--rntp-error);
+    box-shadow: 0 0 0 1px var(--rntp-error-soft);
+}
+
+.rental-sets-modern .rntp-section-header {
+    margin: 0 0 var(--rntp-spacing-sm);
+}
+
+/* Title-bar row: [title (flex, ellipsis)] [(i) info] [badge].
+ * Single non-wrapping row so the required/optional badge is anchored at
+ * the SAME horizontal position on every card. */
+.rental-sets-modern .rntp-section-titlebar {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: var(--rntp-spacing-sm);
+}
+
+/* A long title is clipped to one line with an ellipsis instead of
+ * wrapping. Full title is always reachable: natively via `title=""`
+ * (hover tooltip), and the JS adds `.rntp-title--truncated` + the (i)
+ * affordance only when the text actually overflows. `min-width:0` is
+ * required for a flex child to allow ellipsis. */
+.rental-sets-modern .rntp-section-title {
+    margin: 0;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: var(--rntp-font-size-lg);
+    font-weight: 600;
+    color: var(--rntp-text);
+}
+
+/* (i) info affordance — hidden until JS detects truncation. */
+.rental-sets-modern .rntp-title-info {
+    flex: 0 0 auto;
+    display: none;
+    width: 16px;
+    height: 16px;
+    color: var(--rntp-text-muted);
+    cursor: help;
+}
+.rental-sets-modern .rntp-title-info svg {
+    display: block;
+    width: 16px;
+    height: 16px;
+}
+.rental-sets-modern .rntp-section-title.rntp-title--truncated ~ .rntp-title-info {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Required/optional badges sit last in the title-bar, never shrinking,
+ * so they line up vertically across all cards. */
+.rental-sets-modern .rntp-section-titlebar .rntp-required-badge,
+.rental-sets-modern .rntp-section-titlebar .rntp-optional-badge {
+    flex: 0 0 auto;
+}
+
+.rental-sets-modern .rntp-required-marker {
+    color: var(--rntp-error);
+    margin-left: 2px;
+}
+
+.rental-sets-modern .rntp-required-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    background: var(--rntp-bg-soft);
+    border: 1px solid var(--rntp-border);
+    border-radius: 999px;
+    color: var(--rntp-text-muted);
+    font-size: var(--rntp-font-size-sm);
+    font-weight: 500;
+}
+
+.rental-sets-modern .rntp-section-description {
+    margin: var(--rntp-spacing-xs) 0 0;
+    color: var(--rntp-text-muted);
+    font-size: var(--rntp-font-size-sm);
+}
+
+.rental-sets-modern .rntp-section-bounds {
+    margin: var(--rntp-spacing-xs) 0 0;
+    color: var(--rntp-text-muted);
+    font-size: var(--rntp-font-size-sm);
+}
+
+.rental-sets-modern .rntp-running-total {
+    color: var(--rntp-accent);
+    font-weight: 500;
+    margin-left: 4px;
+}
+
+/*--------------------------------------------------------------
+5. Inline error message under a section
+--------------------------------------------------------------*/
+.rental-sets-modern .rntp-section-error {
+    margin: var(--rntp-spacing-sm) 0 0;
+    padding: var(--rntp-spacing-xs) 0;
+    color: var(--rntp-error);
+    font-size: var(--rntp-font-size-sm);
+}
+
+/*--------------------------------------------------------------
+6. Fixed-item card
+--------------------------------------------------------------*/
+.rental-sets-modern .rntp-fixed-card {
+    display: flex;
+    align-items: center;
+    gap: var(--rntp-spacing-md);
+    padding: var(--rntp-spacing-sm);
+    background: var(--rntp-bg-soft);
+    border-radius: var(--rntp-radius-sm);
+}
+
+.rental-sets-modern .rntp-fixed-card-image {
+    flex: 0 0 auto;
+    width: 64px;
+    height: 64px;
+    border-radius: var(--rntp-radius-sm);
+    overflow: hidden;
+    background: var(--rntp-bg);
+}
+
+.rental-sets-modern .rntp-fixed-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.rental-sets-modern .rntp-fixed-card-body {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.rental-sets-modern .rntp-fixed-card-name {
+    color: var(--rntp-text);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.rental-sets-modern .rntp-fixed-card-name:hover {
+    color: var(--rntp-accent);
+    text-decoration: underline;
+}
+
+.rental-sets-modern .rntp-fixed-card-qty {
+    color: var(--rntp-text-muted);
+    font-size: var(--rntp-font-size-sm);
+}
+
+/*--------------------------------------------------------------
+7. <select> control (dropdown + dropdown-qty)
+--------------------------------------------------------------*/
+.rental-sets-modern .rntp-section-select {
+    display: block;
+    width: 100%;
+    min-height: 40px;
+    /* Right padding leaves room for the chevron we paint via
+       background-image; otherwise the longest option labels would slide
+       under the arrow. */
+    padding: var(--rntp-spacing-sm) calc(var(--rntp-spacing-md) + 24px) var(--rntp-spacing-sm) var(--rntp-spacing-md);
+    /* Custom chevron via inline SVG. We strip the native UA picker
+       (themes / WooCommerce already set appearance: none on many
+       <select> elements, which leaves ours bare-edged) and re-add a
+       chevron consistently across browsers. */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: var(--rntp-bg);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'><path d='M1 1.5L6 6.5L11 1.5' stroke='%236b7280' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right var(--rntp-spacing-md) center;
+    background-size: 12px 8px;
+    border: 1px solid var(--rntp-border-strong);
+    border-radius: var(--rntp-radius-sm);
+    color: var(--rntp-text);
+    font-size: var(--rntp-font-size-base);
+    line-height: 1.4;
+    transition: border-color var(--rntp-transition), box-shadow var(--rntp-transition);
+}
+
+/* Hide the legacy IE/Edge picker dropdown image overlap. */
+.rental-sets-modern .rntp-section-select::-ms-expand {
+    display: none;
+}
+
+.rental-sets-modern .rntp-section-select:focus {
+    outline: none;
+    border-color: var(--rntp-accent);
+    box-shadow: 0 0 0 3px var(--rntp-accent-soft);
+}
+
+.rental-sets-modern .rntp-section[data-has-error="1"] .rntp-section-select {
+    border-color: var(--rntp-error);
+}
+
+/*--------------------------------------------------------------
+7a. Selected-price element
+--------------------------------------------------------------*/
+/* Sits immediately under a section / addon <select> and shows the
+   currently-chosen option's price in WC-standard HTML format. The
+   PHP partial emits the initial state via wc_price(); the JS
+   formatter (formatWcPriceHtml) rebuilds the same DOM on every
+   change so the customer always sees the live price.
+
+   Visual: small leading label in muted grey, then the price bolded
+   in accent colour. Hidden by default; revealed by JS when a
+   priced option is selected. */
+.rental-sets-modern .rntp-selected-price {
+    display: flex;
+    align-items: baseline;
+    gap: var(--rntp-spacing-sm);
+    margin-top: var(--rntp-spacing-sm);
+    font-size: var(--rntp-font-size-sm);
+}
+
+.rental-sets-modern .rntp-selected-price[hidden] {
+    display: none;
+}
+
+.rental-sets-modern .rntp-selected-price-label {
+    color: var(--rntp-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 0.75rem;
+}
+
+.rental-sets-modern .rntp-selected-price-amount {
+    font-weight: 700;
+    color: var(--rntp-text);
+    font-size: var(--rntp-font-size-base);
+}
+
+/* WC's price markup nested inside our amount span: don't fight the
+   default amount font sizing — let it inherit our 700 weight. */
+.rental-sets-modern .rntp-selected-price-amount .woocommerce-Price-amount,
+.rental-sets-modern .rntp-selected-price-amount .woocommerce-Price-currencySymbol {
+    font-weight: inherit;
+    color: inherit;
+}
+
+/*--------------------------------------------------------------
+7b. Addons block (rendered under a section's parent item)
+--------------------------------------------------------------*/
+.rental-sets-modern .rntp-addons {
+    margin: var(--rntp-spacing-md) 0 0;
+    padding: var(--rntp-spacing-md);
+    background: var(--rntp-bg-soft);
+    border: 1px dashed var(--rntp-border);
+    border-radius: var(--rntp-radius-sm);
+}
+
+.rental-sets-modern .rntp-addons-heading {
+    margin: 0 0 var(--rntp-spacing-sm);
+    font-size: var(--rntp-font-size-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--rntp-text-muted);
+}
+
+.rental-sets-modern .rntp-addon-card {
+    display: flex;
+    align-items: center;
+    gap: var(--rntp-spacing-md);
+    padding: var(--rntp-spacing-sm) 0;
+    border-bottom: 1px solid var(--rntp-border);
+}
+
+.rental-sets-modern .rntp-addon-card:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+.rental-sets-modern .rntp-addon-image {
+    flex: 0 0 64px;
+    max-width: 64px;
+}
+
+.rental-sets-modern .rntp-addon-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--rntp-radius-sm);
+}
+
+.rental-sets-modern .rntp-addon-body {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--rntp-spacing-xs);
+}
+
+/* Addon title-bar — mirrors the section title-bar so the addon's
+ * Included/Optional badge sits in the same right-hand spot on every
+ * addon card (#3 consistency). Name truncates; badge never shrinks. */
+.rental-sets-modern .rntp-addon-titlebar {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: var(--rntp-spacing-sm);
+}
+.rental-sets-modern .rntp-addon-titlebar .rntp-required-badge,
+.rental-sets-modern .rntp-addon-titlebar .rntp-optional-badge {
+    flex: 0 0 auto;
+}
+
+.rental-sets-modern .rntp-addon-name {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 600;
+    /* Override the lg size the shared .rntp-section-title class applies —
+     * addon names sit one level down, so they read at the base size. */
+    font-size: var(--rntp-font-size-base);
+    color: var(--rntp-text);
+}
+
+/* Separated price + qty for non-variant ("Included") addons — the price
+ * is its own element (like the item-card price), NOT stuck to the badge. */
+.rental-sets-modern .rntp-addon-meta {
+    display: flex;
+    align-items: baseline;
+    gap: var(--rntp-spacing-sm);
+}
+.rental-sets-modern .rntp-addon-price {
+    font-weight: 700;
+    color: var(--rntp-text);
+}
+.rental-sets-modern .rntp-addon-qty {
+    color: var(--rntp-text-muted);
+    font-size: var(--rntp-font-size-sm);
+}
+
+.rental-sets-modern .rntp-addon-label {
+    font-size: var(--rntp-font-size-sm);
+    color: var(--rntp-text-muted);
+}
+
+.rental-sets-modern .rntp-addon-select {
+    /* Inherit the chevron + appearance reset from rntp-section-select.
+       Repeat the rules instead of stacking selectors so the addon
+       select stays visually consistent even when a theme dequeues
+       only the section-select rules. */
+    display: block;
+    width: 100%;
+    min-height: 36px;
+    padding: 6px calc(var(--rntp-spacing-md) + 24px) 6px var(--rntp-spacing-sm);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: var(--rntp-bg);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'><path d='M1 1.5L6 6.5L11 1.5' stroke='%236b7280' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right var(--rntp-spacing-sm) center;
+    background-size: 12px 8px;
+    border: 1px solid var(--rntp-border-strong);
+    border-radius: var(--rntp-radius-sm);
+    color: var(--rntp-text);
+    font-size: var(--rntp-font-size-sm);
+    line-height: 1.4;
+}
+
+.rental-sets-modern .rntp-addon-select:focus {
+    outline: none;
+    border-color: var(--rntp-accent);
+    box-shadow: 0 0 0 3px var(--rntp-accent-soft);
+}
+
+.rental-sets-modern .rntp-addon-select::-ms-expand {
+    display: none;
+}
+
+.rental-sets-modern .rntp-addon-included-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px var(--rntp-spacing-sm);
+    background: var(--rntp-success-soft);
+    color: var(--rntp-success);
+    border-radius: var(--rntp-radius-sm);
+    font-size: var(--rntp-font-size-sm);
+    font-weight: 500;
+    width: max-content;
+}
+
+/*--------------------------------------------------------------
+8. Dropdown + quantity stepper row
+   Shared wrapper for every dropdown-style item: plain dropdown
+   ([shell] [external link]) and dropdown-with-qty ([shell]
+   [external link] [stepper]). Both wrap so the stepper drops to its
+   own row on narrow screens (see responsive rules below).
+--------------------------------------------------------------*/
+.rental-sets-modern .rntp-dropdown-row,
+.rental-sets-modern .rntp-dropdown-qty-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: var(--rntp-spacing-sm);
+}
+
+.rental-sets-modern .rntp-dropdown-row .rntp-cs,
+.rental-sets-modern .rntp-dropdown-qty-row .rntp-cs,
+.rental-sets-modern .rntp-dropdown-qty-row .rntp-section-select {
+    /* basis 0 so the shell grows to fill but never forces the external-link
+       icon or stepper to wrap on desktop — keeps [shell] [icon] [stepper]
+       on one row for simple, selectable and grouped items alike. */
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+/*--------------------------------------------------------------
+9. Quantity stepper (used in dropdown-qty + multi-select cards)
+--------------------------------------------------------------*/
+
+.rental-sets-modern .rntp-stepper {
+    display: inline-flex;
+    align-items: stretch;
+    gap: 4px;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    padding-top: 6.5px;
+    border-radius: 0;
+    overflow: visible;
+}
+
+.rental-sets-modern .rntp-stepper-btn {
+    width: 32px;
+    height: 32px;
+    min-height: 32px;
+    padding: 0;
+    margin: 0;
+    background: var(--rntp-bg, #fff);
+    border: 1px solid var(--rntp-border-strong, #cbd5e1);
+    border-radius: 4px;
+    color: var(--rntp-text, #1f2937);
+    font-size: 1rem;
+    line-height: 1;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.rental-sets-modern .rntp-stepper-btn:hover:not(:disabled) {
+    background: var(--rntp-bg-soft, #f3f4f6);
+    border-color: var(--rntp-text-muted);
+}
+
+.rental-sets-modern .rntp-stepper-btn:focus-visible {
+    outline: 2px solid var(--rntp-accent, #2563eb);
+    outline-offset: 1px;
+}
+
+.rental-sets-modern .rntp-stepper-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.rental-sets-modern .rntp-stepper-input {
+    width: 44px;
+    height: 32px;
+    min-height: 32px;
+    padding: 0;
+    margin: 0;
+    background: var(--rntp-bg, #fff);
+    border: 1px solid var(--rntp-border-strong, #cbd5e1);
+    border-radius: 4px;
+    color: var(--rntp-text, #1f2937);
+    font-size: 0.95rem;
+    text-align: center;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.rental-sets-modern .rntp-stepper-input::-webkit-outer-spin-button,
+.rental-sets-modern .rntp-stepper-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.rental-sets-modern .rntp-stepper-input:focus-visible {
+    outline: 2px solid var(--rntp-accent, #2563eb);
+    outline-offset: 1px;
+}
+
+/*--------------------------------------------------------------
+10. Multi-select grid + cards
+--------------------------------------------------------------*/
+.rental-sets-modern .rntp-multi-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--rntp-spacing-md);
+}
+
+.rental-sets-modern .rntp-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--rntp-spacing-md);
+    background: var(--rntp-bg);
+    border: 1px solid var(--rntp-border);
+    border-radius: var(--rntp-radius-sm);
+    transition: border-color var(--rntp-transition), box-shadow var(--rntp-transition);
+}
+
+.rental-sets-modern .rntp-card[data-selected="1"] {
+    border-color: var(--rntp-accent);
+    box-shadow: 0 0 0 1px var(--rntp-accent-soft);
+}
+
+.rental-sets-modern .rntp-card:hover {
+    box-shadow: var(--rntp-shadow-hover);
+}
+
+.rental-sets-modern .rntp-card-image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    margin-bottom: var(--rntp-spacing-sm);
+    border-radius: var(--rntp-radius-sm);
+    overflow: hidden;
+    background: var(--rntp-bg-soft);
+}
+
+.rental-sets-modern .rntp-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.rental-sets-modern .rntp-card-body {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--rntp-spacing-xs);
+    margin-bottom: var(--rntp-spacing-sm);
+}
+
+.rental-sets-modern .rntp-card-name {
+    color: var(--rntp-text);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.rental-sets-modern .rntp-card-name:hover {
+    color: var(--rntp-accent);
+}
+
+.rental-sets-modern .rntp-card-price {
+    color: var(--rntp-text-muted);
+    font-size: var(--rntp-font-size-sm);
+}
+
+/*--------------------------------------------------------------
+11. Hidden inputs host — never visible
+--------------------------------------------------------------*/
+.rental-sets-modern .rntp-hidden-inputs {
+    display: none;
+}
+
+/*--------------------------------------------------------------
+12. Order/cart-side meta affordances printed by Order_Display +
+    Cart_Display. They live OUTSIDE .rental-sets-modern but are
+    part of the same module's surface.
+--------------------------------------------------------------*/
+.rental-set-group-meta {
+    display: block;
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-top: 4px;
+}
+
+.rental-set-group-meta-admin {
+    margin: 6px 0;
+    color: #1f2937;
+    font-size: 0.875rem;
+}
+
+/*--------------------------------------------------------------
+13. Small-screen tweaks
+--------------------------------------------------------------*/
+@media (max-width: 640px) {
+    .rental-sets-modern .rntp-section {
+        padding: var(--rntp-spacing-sm) var(--rntp-spacing-md);
+    }
+
+    .rental-sets-modern .rntp-multi-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Narrow screens: the dropdown shell takes its own row; the
+       external-link icon and stepper wrap together onto the row beneath
+       it — they stay on the SAME row as each other at every breakpoint. */
+    .rental-sets-modern .rntp-dropdown-row .rntp-cs,
+    .rental-sets-modern .rntp-dropdown-qty-row .rntp-cs,
+    .rental-sets-modern .rntp-dropdown-qty-row .rntp-section-select {
+        flex: 1 1 100%;
+    }
+
+    .rental-sets-modern .rntp-dropdown-row .rntp-stepper,
+    .rental-sets-modern .rntp-dropdown-qty-row .rntp-stepper {
+        flex: 1 1 auto;
+    }
+
+    .rental-sets-modern .rntp-dropdown-row .rntp-stepper-input,
+    .rental-sets-modern .rntp-dropdown-qty-row .rntp-stepper-input {
+        flex: 1 1 auto;
+        width: auto;
+    }
+}
+
+/* ---------------------------------------------------------------- *
+ * Custom select shell (thumbnails + name + price + qty)
+ * Wraps every native <select.rntp-section-select>. The native select
+ * stays in the DOM as the form-bound value source; once JS adds the
+ * `.rntp-cs-active` class to the section we hide the native select
+ * and show the custom shell. Without JS, the native select stays
+ * visible — the customer can still pick.
+ * ---------------------------------------------------------------- */
+
+.rental-sets-modern .rntp-cs {
+    position: relative;
+    display: none;
+    width: 100%;
+}
+
+/* Native select-hide rule keys off the `.rntp-cs-bound` class JS adds to
+ * the select itself, so it works uniformly for section selects AND addon
+ * selects (any select wrapped by a `.rntp-cs` shell). */
+.rental-sets-modern select.rntp-cs-bound {
+    /* Keep the native select in the form but pull it out of layout. */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    border: 0;
+    pointer-events: none;
+}
+
+.rental-sets-modern .rntp-cs.rntp-cs-active {
+    display: block;
+}
+
+.rental-sets-modern .rntp-cs-trigger {
+    display: flex;
+    align-items: center;
+    gap: var(--rntp-spacing-sm);
+    width: 100%;
+    padding: var(--rntp-spacing-sm) var(--rntp-spacing-md);
+    background: var(--rntp-bg);
+    border: 1px solid var(--rntp-border-strong);
+    border-radius: var(--rntp-radius-sm);
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+    line-height: 1.3;
+    transition: border-color var(--rntp-transition), box-shadow var(--rntp-transition);
+}
+
+.rental-sets-modern .rntp-cs-trigger:hover {
+    border-color: var(--rntp-text-muted);
+}
+
+.rental-sets-modern .rntp-cs-trigger:focus-visible {
+    outline: none;
+    border-color: var(--rntp-accent);
+    box-shadow: 0 0 0 3px var(--rntp-accent-soft);
+}
+
+.rental-sets-modern .rntp-cs--open .rntp-cs-trigger {
+    border-color: var(--rntp-accent);
+    box-shadow: 0 0 0 3px var(--rntp-accent-soft);
+}
+
+.rental-sets-modern .rntp-cs-thumb {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    border-radius: var(--rntp-radius-sm);
+    background: var(--rntp-bg-soft);
+}
+
+.rental-sets-modern .rntp-cs-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.rental-sets-modern .rntp-thumb-placeholder {
+    display: block;
+    width: 100%;
+    height: 100%;
+    /* Subtle image-icon placeholder. Inline SVG keeps it dependency-free.
+     * Base fill uses the border token (same value as the old #e5e7eb). */
+    background:
+        var(--rntp-border)
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='1.5'><rect x='3' y='5' width='18' height='14' rx='2'/><circle cx='9' cy='10' r='1.5' fill='%239ca3af' stroke='none'/><path d='M3 17l5-5 4 4 3-3 6 6'/></svg>")
+        center / 60% no-repeat;
+}
+
+.rental-sets-modern .rntp-cs-label {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.rental-sets-modern .rntp-cs-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.rental-sets-modern .rntp-cs-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--rntp-font-size-sm);
+    color: var(--rntp-text-muted);
+}
+
+/* Price inside each option / trigger — bold + slightly emphasised so
+ * it reads clearly even when the title is truncated next to it (#5).
+ * The name (`.rntp-cs-name`) already ellipsises, so the price never
+ * gets pushed off; this just makes the number the visual anchor. */
+.rental-sets-modern .rntp-cs-price {
+    flex: 0 0 auto;
+    font-weight: 700;
+    color: var(--rntp-text);
+}
+
+.rental-sets-modern .rntp-cs-sep {
+    color: var(--rntp-border-strong);
+}
+
+.rental-sets-modern .rntp-cs-qty {
+    color: var(--rntp-text-muted);
+}
+
+.rental-sets-modern .rntp-cs-chevron {
+    flex: 0 0 auto;
+    color: var(--rntp-text-muted);
+    transition: transform var(--rntp-transition);
+}
+
+.rental-sets-modern .rntp-cs--open .rntp-cs-chevron {
+    transform: rotate(180deg);
+}
+
+.rental-sets-modern .rntp-cs-panel {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    z-index: 30;
+    max-height: 320px;
+    overflow-y: auto;
+    margin: 0;
+    padding: var(--rntp-spacing-xs) 0;
+    list-style: none;
+    background: var(--rntp-bg);
+    border: 1px solid var(--rntp-border-strong);
+    border-radius: var(--rntp-radius-sm);
+    box-shadow: var(--rntp-shadow-hover);
+}
+
+.rental-sets-modern .rntp-cs-option {
+    display: flex;
+    align-items: center;
+    gap: var(--rntp-spacing-sm);
+    padding: var(--rntp-spacing-sm) var(--rntp-spacing-md);
+    cursor: pointer;
+    line-height: 1.3;
+}
+
+.rental-sets-modern .rntp-cs-option:hover,
+.rental-sets-modern .rntp-cs-option:focus {
+    background: var(--rntp-bg-soft);
+}
+
+.rental-sets-modern .rntp-cs-option[aria-selected="true"] {
+    background: var(--rntp-accent-soft);
+}
+
+.rental-sets-modern .rntp-cs-option-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* ---------------------------------------------------------------- *
+ * Multi-select group: "Selected: X of Y" counter + per-card qty
+ * ---------------------------------------------------------------- */
+
+.rental-sets-modern .rntp-selected-count {
+    margin: var(--rntp-spacing-xs) 0 0;
+    font-size: var(--rntp-font-size-sm);
+    color: var(--rntp-text-muted);
+}
+
+.rental-sets-modern .rntp-selected-count [data-role="selected-count"] {
+    font-weight: 600;
+    color: var(--rntp-text);
+}
+
+.rental-sets-modern .rntp-card-qty {
+    display: inline-block;
+    margin-top: var(--rntp-spacing-xs);
+    padding: 2px 8px;
+    background: var(--rntp-bg-soft);
+    border-radius: 999px;
+    font-size: var(--rntp-font-size-sm);
+    color: var(--rntp-text-muted);
+    opacity: 0.6;
+    transition: opacity var(--rntp-transition), background var(--rntp-transition), color var(--rntp-transition);
+}
+
+.rental-sets-modern .rntp-card[data-selected="1"] .rntp-card-qty {
+    background: var(--rntp-accent-soft);
+    color: var(--rntp-accent);
+    opacity: 1;
+}
+
+/* ----------------------------------------------------------------
+ * Summary panel — rendered by views/partials/section-summary.php.
+ * Lives BELOW every section partial inside .rental-sets-modern.
+ * JS owns the live updates: refreshState() writes the numeric total
+ * + count into [data-role="summary-amount"] / [data-role="summary-count"].
+ * ---------------------------------------------------------------- */
+
+.rental-sets-modern .rntp-summary {
+    margin: var(--rntp-spacing-lg) 0 var(--rntp-spacing-sm);
+    padding: var(--rntp-spacing-md);
+    background: var(--rntp-bg-soft);
+    border: 1px solid var(--rntp-border);
+    border-radius: var(--rntp-radius);
+    display: flex;
+    flex-direction: column;
+    gap: var(--rntp-spacing-xs);
+}
+
+.rental-sets-modern .rntp-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--rntp-spacing-sm);
+}
+
+.rental-sets-modern .rntp-summary-label {
+    color: var(--rntp-text-muted);
+    font-size: var(--rntp-font-size-base);
+}
+
+.rental-sets-modern .rntp-summary-value {
+    font-variant-numeric: tabular-nums;
+    color: var(--rntp-text);
+}
+
+.rental-sets-modern .rntp-summary-row--total .rntp-summary-value {
+    font-weight: 700;
+    font-size: 1.15em;
+}
+
+.rental-sets-modern .rntp-summary-row--count .rntp-summary-value {
+    font-weight: 600;
+    font-size: 1em;
+}
+
+.rental-sets-modern .rntp-summary-currency {
+    margin-right: 1px;
+    opacity: 0.85;
+}
+
+/* ----------------------------------------------------------------
+ * No-Thanks opt-out + Optional badge (Pass 2)
+ * Renders for non-required sections: a "No Thanks, I don't need
+ * this" choice in dropdown shells and an "Optional" pill on the
+ * fixed-item section header.
+ * ---------------------------------------------------------------- */
+
+/* No-Thanks label */
+.rental-sets-modern .rntp-cs-option.rntp-cs-option--no-thanks .rntp-cs-name,
+.rental-sets-modern .rntp-cs.rntp-cs--no-thanks .rntp-cs-label .rntp-cs-name {
+    font-family: inherit;
+    font-size: var(--rntp-font-size-base);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--rntp-text-muted);
+}
+
+
+.rental-sets-modern .rntp-section--optional .rntp-section-header {
+    position: relative;
+}
+
+/* Subtle, muted "Optional" tag — shown on EVERY optional section
+ * (dropdown, dropdown-qty, multi-select, selectable, fixed item) so the
+ * required/optional signal reads the same everywhere. */
+.rental-sets-modern .rntp-optional-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    background: transparent;
+    color: var(--rntp-text-muted);
+    border: 1px solid var(--rntp-border);
+    border-radius: 999px;
+    font-size: var(--rntp-font-size-sm);
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+/* No-Thanks row: no thumb column. */
+.rental-sets-modern .rntp-cs-option.rntp-cs-option--no-thanks {
+    padding-left: calc(var(--rntp-spacing-md) + 40px + var(--rntp-spacing-md));
+}
+
+/* External-link icon inside a dropdown panel option — sits on the right
+ * edge of each option, faded by default, focus / hover lift the opacity.
+ * Click target is generous (28px square) for touch but the visual is
+ * just the SVG.
+ */
+.rental-sets-modern .rntp-cs-external-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    margin-left: auto;
+    color: var(--rntp-text-muted);
+    opacity: 0.65;
+    border-radius: var(--rntp-radius-sm);
+    text-decoration: none;
+    transition: opacity var(--rntp-transition), background var(--rntp-transition), color var(--rntp-transition);
+}
+
+.rental-sets-modern .rntp-cs-external-link:hover,
+.rental-sets-modern .rntp-cs-external-link:focus-visible {
+    color: var(--rntp-accent);
+    background: var(--rntp-accent-soft);
+    opacity: 1;
+    outline: none;
+}
+
+.rental-sets-modern .rntp-cs-external-icon,
+.rental-sets-modern .rntp-card-external-icon {
+    display: block;
+    pointer-events: none;
+}
+
+/* Make sure the option flexes name+meta to the LEFT and the link to
+ * the RIGHT. The shell options are display:flex by inherited styles;
+ * margin-left:auto on the link is what does the work.
+ */
+.rental-sets-modern .rntp-cs-option {
+    align-items: center;
+    gap: 8px;
+}
+
+/* Multi-select card: name row */
+.rental-sets-modern .rntp-card-name-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+}
+
+.rental-sets-modern .rntp-card-name-row .rntp-card-name {
+    min-width: 0;
+    word-break: break-word;
+    flex: 1 1 auto;
+}
+
+/* Multi-select card footer: [external link] [stepper] on one row at the
+ * card's bottom, mirroring the dropdown rows' [external link] [stepper]
+ * order so the affordance sits in a consistent position on every item. */
+.rental-sets-modern .rntp-card-footer {
+    display: flex;
+    align-items: center;
+    gap: var(--rntp-spacing-sm);
+}
+
+/* Smallest screens: the dropdown-row stacking is handled at 640px above;
+ * here we only enlarge the in-panel option icon for touch.
+ */
+@media (max-width: 480px) {
+    .rental-sets-modern .rntp-cs-external-link {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+/* ----------------------------------------------------------------
+ * Section-level external-link (Pass 2 follow-up, 2026-06-09)
+ * Sits inline next to the closed dropdown shell (selectables AND
+ * single-pick groups). Always points at the currently-picked
+ * option's permalink — JS updates `href` on every selection change.
+ *
+ * For dropdown_qty (single-pick groups with stepper), the row is
+ *     [shell] [external link] [stepper]
+ * For plain dropdown (selectables, single-pick groups w/o stepper),
+ * the row is
+ *     [shell] [external link]
+ * The visual matches the customer's reference (boxed icon between
+ * the dropdown and the +/- stepper).
+ * ---------------------------------------------------------------- */
+
+/* Boxed external-link icon — the visible affordance next to the closed
+ * dropdown shell (`.rntp-section-external-link`) and on multi-select card
+ * footers (`.rntp-card-external-link`). Same boxed visual everywhere so
+ * the icon reads identically across simple, selectable and grouped items. */
+.rental-sets-modern .rntp-section-external-link,
+.rental-sets-modern .rntp-card-external-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    flex: 0 0 auto;
+    align-self: center;
+    color: var(--rntp-text-muted);
+    background: var(--rntp-bg);
+    border: 1px solid var(--rntp-border-strong);
+    border-radius: var(--rntp-radius-sm);
+    text-decoration: none;
+    transition: background var(--rntp-transition), border-color var(--rntp-transition), color var(--rntp-transition);
+}
+
+.rental-sets-modern .rntp-section-external-link:hover,
+.rental-sets-modern .rntp-section-external-link:focus-visible,
+.rental-sets-modern .rntp-card-external-link:hover,
+.rental-sets-modern .rntp-card-external-link:focus-visible {
+    background: var(--rntp-accent-soft);
+    border-color: var(--rntp-accent);
+    color: var(--rntp-accent);
+    outline: none;
+}
+
+.rental-sets-modern .rntp-section-external-link[hidden] {
+    display: none !important;
+}
+
+/* ----------------------------------------------------------------
+ * Top total price 
+ * ---------------------------------------------------------------- */
+.entry-price-wrap .woocommerce-Price-amount {
+    font-size: 1.6em;
+    font-weight: 700;
+    line-height: 1.2;
+}
+.entry-price-wrap .woocommerce-Price-currencySymbol {
+    font-weight: 700;
+}
+
+/* ----------------------------------------------------------------
+ * Simple-item quantity 
+ * ---------------------------------------------------------------- */
+.rental-sets-modern .rntp-fixed-card-qty-row {
+    display: flex;
+    align-items: center;
+    gap: var(--rntp-spacing-sm);
+    margin-top: var(--rntp-spacing-xs);
+}
+
+.rental-sets-modern .rntp-fixed-card-qty-label {
+    color: var(--rntp-text-muted);
+    font-size: var(--rntp-font-size-sm);
+}
+
+/* Stepper in a disabled (No-Thanks) state — dim and block interaction. */
+.rental-sets-modern .rntp-stepper[data-disabled="1"] {
+    opacity: 0.4;
+    pointer-events: none;
+}
