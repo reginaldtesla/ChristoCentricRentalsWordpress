@@ -137,7 +137,7 @@ add_filter('woocommerce_gateway_description', static function (string $descripti
 
 add_action('wp_enqueue_scripts', static function (): void {
     $uri = get_template_directory_uri() . '/assets/build/';
-    $ver = '3.83';
+    $ver = '3.84';
 
     wp_dequeue_style('wc-blocks-style');
     wp_dequeue_style('wc-blocks-vendors-style');

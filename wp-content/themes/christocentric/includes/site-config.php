@@ -840,7 +840,7 @@ function ccr_kits_url(): string
  */
 function ccr_ensure_nav_categories(): void
 {
-    if (! taxonomy_exists('product_cat') || get_option('ccr_nav_categories_v2') === 'yes') {
+    if (! taxonomy_exists('product_cat')) {
         return;
     }
 
@@ -874,8 +874,6 @@ function ccr_ensure_nav_categories(): void
         }
         wp_insert_term($name, 'product_cat', ['slug' => $slug]);
     }
-
-    update_option('ccr_nav_categories_v2', 'yes');
 }
 
 /**
