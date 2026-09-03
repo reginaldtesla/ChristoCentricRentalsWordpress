@@ -22,3 +22,5 @@ error_log
 
 # Node (if theme uses Vite later)
 node_modules/
+wp-content/languages/
+.cursor/rules/
