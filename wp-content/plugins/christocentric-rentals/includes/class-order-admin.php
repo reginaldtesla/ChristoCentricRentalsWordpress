@@ -111,6 +111,8 @@ final class CCR_Order_Admin
         echo '<li>' . esc_html__('Mark each item returned below (calculates late penalties).', 'christocentric-rentals') . '</li>';
         echo '</ol>';
 
+        $orderHasRentopianDates = self::order_has_rentopian_dates($order);
+
         echo '<table class="widefat striped" style="font-size:12px"><thead><tr>';
         echo '<th>' . esc_html__('Item', 'christocentric-rentals') . '</th>';
         echo '<th>' . esc_html__('Return', 'christocentric-rentals') . '</th>';
@@ -125,6 +127,11 @@ final class CCR_Order_Admin
             }
             $start = (string) $item->get_meta('_ccr_rental_start');
             $end = (string) $item->get_meta('_ccr_rental_end');
+            if ($start === '' && $end === '' && $orderHasRentopianDates && class_exists('CCR_Rental_Due')) {
+                CCR_Rental_Due::hydrate_item_from_order($item, $order);
+                $start = (string) $item->get_meta('_ccr_rental_start');
+                $end = (string) $item->get_meta('_ccr_rental_end');
+            }
             if ($start === '' && $end === '') {
                 continue;
             }
@@ -205,6 +212,20 @@ final class CCR_Order_Admin
         echo '</p>';
     }
 
+    private static function order_has_rentopian_dates(WC_Order $order): bool
+    {
+        $start = (string) $order->get_meta('_rental_start_date');
+        $end = (string) $order->get_meta('_rental_end_date');
+        if ($start === '') {
+            $start = (string) get_post_meta($order->get_id(), '_rental_start_date', true);
+        }
+        if ($end === '') {
+            $end = (string) get_post_meta($order->get_id(), '_rental_end_date', true);
+        }
+
+        return $start !== '' || $end !== '';
+    }
+
     /**
      * @return list<string>
      */
@@ -217,10 +238,29 @@ final class CCR_Order_Admin
             }
             $start = (string) $item->get_meta('_ccr_rental_start');
             $end = (string) $item->get_meta('_ccr_rental_end');
+            if ($start === '' && class_exists('CCR_Rental_Due') && self::order_has_rentopian_dates($order)) {
+                CCR_Rental_Due::hydrate_item_from_order($item, $order);
+                $start = (string) $item->get_meta('_ccr_rental_start');
+                $end = (string) $item->get_meta('_ccr_rental_end');
+            }
             if ($start === '') {
                 continue;
             }
             $out[] = $start === $end ? $start : ($start . ' → ' . $end);
+        }
+
+        if ($out === [] && self::order_has_rentopian_dates($order)) {
+            $start = (string) $order->get_meta('_rental_start_date');
+            $end = (string) $order->get_meta('_rental_end_date');
+            if ($start === '') {
+                $start = (string) get_post_meta($order->get_id(), '_rental_start_date', true);
+            }
+            if ($end === '') {
+                $end = (string) get_post_meta($order->get_id(), '_rental_end_date', true);
+            }
+            if ($start !== '') {
+                $out[] = $end !== '' && $end !== $start ? ($start . ' → ' . $end) : $start;
+            }
         }
 
         return array_values(array_unique($out));

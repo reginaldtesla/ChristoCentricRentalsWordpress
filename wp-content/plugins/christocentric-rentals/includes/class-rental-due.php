@@ -26,18 +26,97 @@ final class CCR_Rental_Due
 
     public static function due_at(WC_Order_Item_Product $item): ?DateTimeImmutable
     {
+        $tz = wp_timezone();
         $end = (string) $item->get_meta('_ccr_rental_end');
+        $time = (string) $item->get_meta('_ccr_return_time');
+
+        if ($end === '') {
+            $order = $item->get_order();
+            if ($order instanceof WC_Order) {
+                self::hydrate_item_from_order($item, $order);
+                $end = (string) $item->get_meta('_ccr_rental_end');
+                $time = (string) $item->get_meta('_ccr_return_time');
+            }
+        }
+
         if ($end === '') {
             return null;
         }
-        $time = self::normalize_time((string) $item->get_meta('_ccr_return_time') ?: (string) get_option('ccr_default_return_time', '17:00'));
-        $tz = wp_timezone();
+
+        // Full datetime already (Rentopian-style) — use as-is.
+        if (preg_match('/\d{1,2}:\d{2}/', $end) && strtotime($end)) {
+            try {
+                return new DateTimeImmutable($end, $tz);
+            } catch (Exception $e) {
+                // Fall through to date + time.
+            }
+        }
+
+        $time = self::normalize_time($time !== '' ? $time : (string) get_option('ccr_default_return_time', '17:00'));
 
         try {
             return new DateTimeImmutable($end . ' ' . $time, $tz);
         } catch (Exception $e) {
             return null;
         }
+    }
+
+    /**
+     * Copy order-level Rentopian dates onto the line item when CCR meta is missing.
+     */
+    public static function hydrate_item_from_order(WC_Order_Item_Product $item, WC_Order $order): void
+    {
+        if ((string) $item->get_meta('_ccr_rental_end') !== '') {
+            return;
+        }
+
+        $rawStart = (string) $order->get_meta('_rental_start_date');
+        $rawEnd = (string) $order->get_meta('_rental_end_date');
+        if ($rawStart === '') {
+            $rawStart = (string) get_post_meta($order->get_id(), '_rental_start_date', true);
+        }
+        if ($rawEnd === '') {
+            $rawEnd = (string) get_post_meta($order->get_id(), '_rental_end_date', true);
+        }
+        if ($rawStart === '' && $rawEnd === '') {
+            return;
+        }
+
+        $start = self::split_datetime($rawStart !== '' ? $rawStart : $rawEnd);
+        $end = self::split_datetime($rawEnd !== '' ? $rawEnd : $rawStart);
+        if ($start === null || $end === null) {
+            return;
+        }
+
+        $item->update_meta_data('_ccr_rental_start', $start['date']);
+        $item->update_meta_data('_ccr_pickup_time', $start['time']);
+        $item->update_meta_data('_ccr_rental_end', $end['date']);
+        $item->update_meta_data('_ccr_return_time', $end['time']);
+
+        $startTs = strtotime($start['date'] . ' ' . $start['time']);
+        $endTs = strtotime($end['date'] . ' ' . $end['time']);
+        if ($startTs && $endTs && $endTs > $startTs) {
+            $days = max(1, (int) ceil(($endTs - $startTs) / DAY_IN_SECONDS));
+            $item->update_meta_data('_ccr_rental_days', $days);
+        }
+
+        $item->save();
+    }
+
+    /**
+     * @return array{date:string,time:string}|null
+     */
+    private static function split_datetime(string $raw): ?array
+    {
+        $ts = strtotime($raw);
+        if (! $ts) {
+            return null;
+        }
+
+        return [
+            'date' => wp_date('Y-m-d', $ts),
+            'time' => wp_date('H:i', $ts),
+        ];
     }
 
     public static function calculate_penalty(WC_Order_Item_Product $item, ?DateTimeImmutable $returnedAt = null): float
@@ -210,6 +289,8 @@ final class CCR_Rental_Due
 
     public static function mark_returned(WC_Order_Item_Product $item, WC_Order $order): float
     {
+        self::hydrate_item_from_order($item, $order);
+
         $now = new DateTimeImmutable('now', wp_timezone());
         $penalty = self::calculate_penalty($item, $now);
         $item->update_meta_data('_ccr_returned_at', $now->format('Y-m-d H:i:s'));

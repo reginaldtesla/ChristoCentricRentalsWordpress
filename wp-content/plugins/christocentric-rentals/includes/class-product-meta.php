@@ -109,6 +109,21 @@ final class CCR_Product_Meta
             'description' => __('ID from Rentopian after catalog sync. Used to match products both ways.', 'christocentric-rentals'),
         ]);
 
+        // Official Rentopian Sync meta — written by Synchronize, required for availability.
+        $productId = isset($GLOBALS['post']->ID) ? (int) $GLOBALS['post']->ID : 0;
+        $inventoryId = $productId ? (string) get_post_meta($productId, '_rental_inventory_id', true) : '';
+        $inventoryLabel = $inventoryId !== '' && (int) $inventoryId > 0
+            ? $inventoryId
+            : __('Missing — run Rentopian Sync', 'christocentric-rentals');
+
+        echo '<p class="form-field _rental_inventory_id_field">';
+        echo '<label>' . esc_html__('Rentopian inventory ID', 'christocentric-rentals') . '</label>';
+        echo '<span class="description" style="display:inline-block;padding-top:6px;">';
+        echo esc_html($inventoryLabel);
+        echo '</span><br/>';
+        echo '<span class="description">' . esc_html__('Written by Rentopian Sync (_rental_inventory_id). Without this, the storefront always says “not available.”', 'christocentric-rentals') . '</span>';
+        echo '</p>';
+
         echo '</div>';
     }
 

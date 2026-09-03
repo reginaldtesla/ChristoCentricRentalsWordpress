@@ -52,9 +52,9 @@ class Rental_Sets_Processor {
 
     public function __construct(
         Rental_Sets_Sync_Context $ctx,
-        Rental_Sets_Item_Builder $item_builder = null,
-        Rental_Sets_Sql_Builder $sql_builder = null,
-        Rental_Sets_Group_Builder $group_builder = null
+        ?Rental_Sets_Item_Builder $item_builder = null,
+        ?Rental_Sets_Sql_Builder $sql_builder = null,
+        ?Rental_Sets_Group_Builder $group_builder = null
     ) {
         $this->ctx           = $ctx;
         $this->item_builder  = $item_builder  ?: new Rental_Sets_Item_Builder();

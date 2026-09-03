@@ -5,6 +5,7 @@ defined('ABSPATH') || exit;
 require_once get_template_directory() . '/includes/site-config.php';
 require_once get_template_directory() . '/includes/account-helpers.php';
 require_once get_template_directory() . '/includes/acf-homepage.php';
+require_once get_template_directory() . '/includes/shop-search.php';
 
 add_action('after_setup_theme', static function (): void {
     add_theme_support('title-tag');
@@ -38,12 +39,6 @@ add_filter('get_site_icon_url', static function (string $url): string {
 
     return $url;
 });
-
-add_action('init', static function (): void {
-    if (function_exists('ccr_ensure_nav_categories')) {
-        ccr_ensure_nav_categories();
-    }
-}, 20);
 
 add_filter('woocommerce_enqueue_styles', '__return_empty_array');
 
@@ -137,7 +132,7 @@ add_filter('woocommerce_gateway_description', static function (string $descripti
 
 add_action('wp_enqueue_scripts', static function (): void {
     $uri = get_template_directory_uri() . '/assets/build/';
-    $ver = '3.84';
+    $ver = '3.96';
 
     wp_dequeue_style('wc-blocks-style');
     wp_dequeue_style('wc-blocks-vendors-style');

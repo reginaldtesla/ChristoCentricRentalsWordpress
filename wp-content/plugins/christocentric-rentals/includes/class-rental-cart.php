@@ -55,6 +55,12 @@ final class CCR_Rental_Cart
     {
         check_ajax_referer('ccr_quick_add', 'nonce');
 
+        if (function_exists('ccr_rentopian_defers_rental_flow') && ccr_rentopian_defers_rental_flow()) {
+            wp_send_json_error([
+                'message' => __('Open the product page to choose rental dates, then add to cart.', 'christocentric-rentals'),
+            ]);
+        }
+
         if (! function_exists('WC') || ! WC()->cart) {
             wp_send_json_error(['message' => __('Cart is not available.', 'christocentric-rentals')]);
         }
@@ -206,6 +212,10 @@ final class CCR_Rental_Cart
             return false;
         }
 
+        if (function_exists('ccr_rentopian_defers_rental_flow') && ccr_rentopian_defers_rental_flow()) {
+            return (bool) $passed;
+        }
+
         $return = sanitize_text_field(wp_unslash((string) ($_POST['ccr_return_time'] ?? $_REQUEST['ccr_return_time'] ?? '')));
         if ($return === '') {
             $return = (string) get_option('ccr_default_return_time', '17:00');
@@ -229,6 +239,10 @@ final class CCR_Rental_Cart
 
     public static function render_product_fields(): void
     {
+        if (function_exists('ccr_rentopian_defers_rental_flow') && ccr_rentopian_defers_rental_flow()) {
+            return;
+        }
+
         global $product;
 
         if (! $product instanceof WC_Product) {
@@ -314,6 +328,13 @@ final class CCR_Rental_Cart
     {
         $start = sanitize_text_field(wp_unslash($_POST['ccr_rental_start'] ?? '')); // phpcs:ignore
         $end = sanitize_text_field(wp_unslash($_POST['ccr_rental_end'] ?? '')); // phpcs:ignore
+
+        if (function_exists('ccr_rentopian_defers_rental_flow') && ccr_rentopian_defers_rental_flow()) {
+            if ($start === '' && $end === '') {
+                return $cartItemData;
+            }
+        }
+
         $pickup = self::normalize_time(sanitize_text_field(wp_unslash($_POST['ccr_pickup_time'] ?? get_option('ccr_default_pickup_time', '09:00')))); // phpcs:ignore
         $return = self::normalize_time(sanitize_text_field(wp_unslash($_POST['ccr_return_time'] ?? get_option('ccr_default_return_time', '17:00')))); // phpcs:ignore
 
@@ -368,6 +389,10 @@ final class CCR_Rental_Cart
 
     public static function adjust_cart_prices(WC_Cart $cart): void
     {
+        if (function_exists('ccr_rentopian_defers_rental_flow') && ccr_rentopian_defers_rental_flow()) {
+            return;
+        }
+
         foreach ($cart->get_cart() as $cartItem) {
             $product = $cartItem['data'];
             $days = (int) ($cartItem['ccr_rental_days'] ?? 1);
@@ -415,6 +440,10 @@ final class CCR_Rental_Cart
 
     public static function validate_cart_availability(): void
     {
+        if (function_exists('ccr_rentopian_defers_rental_flow') && ccr_rentopian_defers_rental_flow()) {
+            return;
+        }
+
         foreach (WC()->cart->get_cart() as $cartItem) {
             $return = (string) ($cartItem['ccr_return_time'] ?? '');
             if ($return !== '' && self::is_after_closing($return)) {
@@ -459,6 +488,10 @@ final class CCR_Rental_Cart
 
     public static function ajax_quote(): void
     {
+        if (function_exists('ccr_rentopian_defers_rental_flow') && ccr_rentopian_defers_rental_flow()) {
+            wp_send_json_error(['message' => __('Rentopian handles availability on this site.', 'christocentric-rentals')]);
+        }
+
         check_ajax_referer('ccr_rental_quote', 'nonce');
 
         $productId = absint($_POST['product_id'] ?? 0); // phpcs:ignore

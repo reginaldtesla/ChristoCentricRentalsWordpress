@@ -89,6 +89,17 @@
 .ccr-theme .ccr-nav-group.is-active .ccr-nav-group-title {
     color: #1e73be;
 }
+.ccr-theme .ccr-nav-group--link-only .ccr-nav-group-link {
+    padding-top: 0;
+    font-weight: 600;
+}
+.ccr-theme .ccr-nav-empty {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 0.5rem 0;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
 
 /* Categories accordion (mobile) */
 .ccr-theme .ccr-mobile-cats-trigger,
@@ -644,29 +655,205 @@
     margin: 1rem 0;
 }
 
+/* Hide stock Rentopian date bar — replaced by .ccr-rental-period */
+.ccr-theme.ccr-rentopian-rental-flow #rntp-form-holder,
+.ccr-theme.ccr-rentopian-rental-flow #rental_date_form {
+    display: none !important;
+}
+
+/* Christocentric rental period UI (feeds Rentopian cookies/API) */
+.ccr-theme .ccr-rental-period {
+    margin: 1rem 0 1.25rem;
+}
+
+.ccr-theme .ccr-rental-period-title {
+    margin: 0 0 0.75rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #9ca3af;
+}
+
+.ccr-theme .ccr-rental-period-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem 1rem;
+}
+
+@media (min-width: 480px) {
+    .ccr-theme .ccr-rental-period-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.ccr-theme .ccr-rental-period-label {
+    display: block;
+    margin: 0 0 0.35rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #9ca3af;
+}
+
+.ccr-theme .ccr-rental-period-control {
+    position: relative;
+}
+
+.ccr-theme .ccr-rental-period-input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #e7e0d6;
+    border-radius: 0.65rem;
+    background: #f7f3ee;
+    color: #1f2937;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
+    padding: 0.7rem 2.5rem 0.7rem 0.85rem;
+    appearance: none;
+}
+
+/* Native date/time icon sits next to our SVG — hide it. Custom icon opens the picker. */
+.ccr-theme .ccr-rental-period-input::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    width: 2.5rem;
+    height: 100%;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.ccr-theme .ccr-rental-period-input::-webkit-inner-spin-button,
+.ccr-theme .ccr-rental-period-input::-webkit-clear-button {
+    display: none;
+    -webkit-appearance: none;
+}
+
+.ccr-theme .ccr-rental-period-input:focus {
+    outline: none;
+    border-color: #c4b5a5;
+    box-shadow: 0 0 0 1px #c4b5a5;
+    background: #fff;
+}
+
+.ccr-theme .ccr-rental-period-icon {
+    pointer-events: none;
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6b7280;
+    display: inline-flex;
+    z-index: 1;
+}
+
+.ccr-theme .ccr-rental-period-hours {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0.85rem 0 0;
+    font-size: 0.8125rem;
+    color: #9ca3af;
+}
+
+.ccr-theme .ccr-rental-period-hours-icon {
+    display: inline-flex;
+    color: #9ca3af;
+}
+
+.ccr-theme .ccr-rental-period-status {
+    margin: 0.5rem 0 0;
+    min-height: 1.25rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+}
+
+.ccr-theme .ccr-rental-period-status.is-ok {
+    color: #15803d;
+}
+
+.ccr-theme .ccr-rental-period-status.is-error {
+    color: #b91c1c;
+}
+
+.ccr-theme .ccr-rental-period-status.is-muted {
+    color: #9ca3af;
+}
+
+.ccr-theme .ccr-rental-period.is-saving {
+    opacity: 0.85;
+}
+
+.ccr-theme .single-product .stock .rntp-out-of-stock,
+.ccr-theme .single-product .woocommerce-variation-availability .rntp-out-of-stock {
+    display: block;
+    margin: 0 0 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #991b1b;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+}
+
 .ccr-theme .single-product .cart {
     margin-top: 0;
 }
 
 .ccr-theme .single-product .cart .quantity {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0;
 }
 
 .ccr-theme .single-product .cart .quantity .qty {
     width: 6rem;
-    border: 1px solid #d1d5db;
-    border-radius: 0.25rem;
-    padding: 0.625rem 0.75rem;
-    font-size: 0.875rem;
-    color: #111827;
+    border: 1px solid #e7e0d6;
+    border-radius: 0.65rem;
+    background: #f7f3ee;
+    padding: 0.7rem 0.85rem;
+    font-size: 0.9375rem;
+    color: #1f2937;
 }
 
-.ccr-theme .single-product .cart label[for="quantity"] {
+.ccr-theme .single-product .cart .quantity .qty:focus {
+    outline: none;
+    border-color: #c4b5a5;
+    box-shadow: 0 0 0 1px #c4b5a5;
+    background: #fff;
+}
+
+.ccr-theme .single-product .ccr-product-quantity {
+    margin: 1rem 0 0.75rem;
+}
+
+.ccr-theme .single-product .ccr-product-quantity-label {
     display: block;
-    margin-bottom: 0.375rem;
-    font-size: 0.875rem;
+    margin: 0 0 0.35rem;
+    font-size: 0.6875rem;
     font-weight: 600;
-    color: #111827;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #9ca3af;
+}
+
+.ccr-theme .single-product .cart .quantity .screen-reader-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.ccr-theme .single-product .cart label[for="quantity"],
+.ccr-theme .single-product .cart label[for="ccr_product_qty"] {
+    display: none;
 }
 
 .ccr-theme .single-product .single_add_to_cart_button {
@@ -1101,7 +1288,7 @@
 .ccr-theme .ccr-welcome-notice {
     position: fixed;
     inset: 0;
-    z-index: 90;
+    z-index: 400;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1145,6 +1332,8 @@
     width: min(100%, 28rem);
     max-height: min(90vh, 44rem);
     overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     background: #fff;
     border-radius: 1rem;
     box-shadow:
@@ -1155,6 +1344,12 @@
     transition:
         transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
         opacity 0.45s ease;
+}
+
+.ccr-theme .ccr-welcome-notice__panel::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
 }
 
 .ccr-theme .ccr-welcome-notice.is-open .ccr-welcome-notice__panel {

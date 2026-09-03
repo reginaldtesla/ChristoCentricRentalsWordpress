@@ -69,12 +69,17 @@ $kitsView = ccr_is_kits_view();
                     <?php
                     $groupOpen = ! empty($group['active']);
                     ?>
-                    <li class="ccr-shop-group<?php echo $groupOpen ? ' is-active' : ''; ?>"<?php echo $groupOpen ? ' data-ccr-active-group="1"' : ''; ?>>
-                        <button type="button" class="ccr-shop-group-trigger" aria-expanded="false">
-                            <span><?php echo esc_html($group['label']); ?></span>
-                            <svg class="ccr-shop-caret" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
-                        </button>
-                        <ul class="ccr-shop-group-panel">
+                    <li class="ccr-shop-group<?php echo $groupOpen ? ' is-active' : ''; ?><?php echo ! empty($group['link_only']) ? ' ccr-shop-group--link-only' : ''; ?>"<?php echo $groupOpen ? ' data-ccr-active-group="1"' : ''; ?>>
+                        <?php if (! empty($group['link_only'])) : ?>
+                            <a href="<?php echo esc_url($group['url']); ?>" class="ccr-shop-item-link<?php echo ! empty($group['active']) ? ' is-active' : ''; ?>">
+                                <?php echo esc_html($group['label']); ?>
+                            </a>
+                        <?php else : ?>
+                            <button type="button" class="ccr-shop-group-trigger" aria-expanded="false">
+                                <span><?php echo esc_html($group['label']); ?></span>
+                                <svg class="ccr-shop-caret" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+                            </button>
+                            <ul class="ccr-shop-group-panel">
                             <?php foreach ($group['items'] as $item) : ?>
                                 <?php
                                 $hasChildren = ! empty($item['children']) && is_array($item['children']);
@@ -107,6 +112,7 @@ $kitsView = ccr_is_kits_view();
                                 </li>
                             <?php endforeach; ?>
                         </ul>
+                        <?php endif; ?>
                     </li>
                 <?php endforeach; ?>
             </ul>
@@ -117,6 +123,7 @@ $kitsView = ccr_is_kits_view();
             <?php endif; ?>
         </aside>
         <div class="ccr-shop-main" id="ccr-shop-products">
+            <?php do_action('woocommerce_before_shop_loop'); ?>
             <?php if (woocommerce_product_loop()) : ?>
                 <?php woocommerce_product_loop_start(); ?>
                 <?php while (have_posts()) : the_post(); ?>

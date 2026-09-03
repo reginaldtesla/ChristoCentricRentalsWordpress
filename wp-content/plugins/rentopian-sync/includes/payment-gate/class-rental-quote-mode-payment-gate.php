@@ -58,7 +58,7 @@ class Rental_Quote_Mode_Payment_Gate {
 	 *
 	 * @var string[]
 	 */
-	private static $offline_gateways = array( 'cod', 'cheque', 'bacs' );
+	private static $offline_gateways = array( 'cod', 'cheque', 'bacs', 'ccr_pickup_cash' );
 
 	/**
 	 * Wallet button toggles, keyed by the option each gateway stores its

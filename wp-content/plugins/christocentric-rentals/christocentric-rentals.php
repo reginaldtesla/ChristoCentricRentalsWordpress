@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Christocentric Rentals
  * Description: 24-hour camera & gear rentals — availability, pay-on-pickup, Paystack, SMTP, and optional Rentopian sync.
- * Version: 1.9.22
+ * Version: 1.9.35
  * Author: Christocentric Rentals
  * Requires at least: 6.4
  * Requires PHP: 8.1
@@ -11,7 +11,7 @@
 
 defined('ABSPATH') || exit;
 
-define('CCR_VERSION', '1.9.22');
+define('CCR_VERSION', '1.9.35');
 define('CCR_PLUGIN_FILE', __FILE__);
 define('CCR_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('CCR_PLUGIN_URL', plugin_dir_url(__FILE__));
@@ -19,6 +19,7 @@ define('CCR_PLUGIN_URL', plugin_dir_url(__FILE__));
 require_once CCR_PLUGIN_DIR . 'includes/class-rental-pricing.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-rental-availability.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-rentopian-sync.php';
+require_once CCR_PLUGIN_DIR . 'includes/class-rentopian-compat.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-rentopian-catalog.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-product-meta.php';
 require_once CCR_PLUGIN_DIR . 'includes/class-product-kits.php';
@@ -68,6 +69,7 @@ final class Christocentric_Rentals
         CCR_Product_Meta::init();
         CCR_Product_Kits::init();
         CCR_Rentopian_Sync::init();
+        CCR_Rentopian_Compat::init();
         CCR_Rentopian_Catalog::init();
         CCR_Contact_Form::init();
         CCR_Newsletter::init();

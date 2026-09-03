@@ -60,20 +60,30 @@ $categories_open = (function_exists('is_shop') && is_shop()) || is_tax('product_
     <div id="ccr-nav-cats-panel" class="ccr-nav-panel" data-ccr-nav-panel aria-hidden="true">
         <div class="container-site">
             <div class="ccr-nav-panel-grid">
+                <?php if ($nav_groups === []) : ?>
+                    <p class="ccr-nav-empty"><?php esc_html_e('No categories yet. Add them under Products → Categories in WordPress admin.', 'christocentric'); ?></p>
+                <?php else : ?>
                 <?php foreach ($nav_groups as $group) : ?>
-                    <div class="ccr-nav-group <?php echo ! empty($group['active']) ? 'is-active' : ''; ?>">
-                        <p class="ccr-nav-group-title"><?php echo esc_html($group['label']); ?></p>
-                        <ul class="ccr-nav-group-list">
-                            <?php foreach ($group['items'] as $item) : ?>
-                                <li>
-                                    <a href="<?php echo esc_url($item['url']); ?>" class="ccr-nav-item <?php echo ! empty($item['active']) ? 'is-active' : ''; ?>">
-                                        <?php echo esc_html($item['label']); ?>
-                                    </a>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
+                    <div class="ccr-nav-group <?php echo ! empty($group['active']) ? 'is-active' : ''; ?><?php echo ! empty($group['link_only']) ? ' ccr-nav-group--link-only' : ''; ?>">
+                        <?php if (! empty($group['link_only'])) : ?>
+                            <a href="<?php echo esc_url($group['url']); ?>" class="ccr-nav-item ccr-nav-group-link <?php echo ! empty($group['active']) ? 'is-active' : ''; ?>">
+                                <?php echo esc_html($group['label']); ?>
+                            </a>
+                        <?php else : ?>
+                            <p class="ccr-nav-group-title"><?php echo esc_html($group['label']); ?></p>
+                            <ul class="ccr-nav-group-list">
+                                <?php foreach ($group['items'] as $item) : ?>
+                                    <li>
+                                        <a href="<?php echo esc_url($item['url']); ?>" class="ccr-nav-item <?php echo ! empty($item['active']) ? 'is-active' : ''; ?>">
+                                            <?php echo esc_html($item['label']); ?>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
                     </div>
                 <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -91,21 +101,27 @@ $categories_open = (function_exists('is_shop') && is_shop()) || is_tax('product_
                 </button>
                 <div class="ccr-mobile-cats-panel" data-ccr-mobile-cats-panel hidden>
                     <?php foreach ($nav_groups as $group) : ?>
-                        <div class="ccr-mobile-group" data-ccr-mobile-group>
-                            <button type="button" class="ccr-mobile-group-trigger" data-ccr-mobile-group-trigger aria-expanded="false">
-                                <span><?php echo esc_html($group['label']); ?></span>
-                                <svg class="ccr-nav-caret" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
-                            </button>
-                            <ul class="ccr-mobile-group-list" data-ccr-mobile-group-list hidden>
-                                <?php foreach ($group['items'] as $item) : ?>
-                                    <li>
-                                        <a href="<?php echo esc_url($item['url']); ?>" class="block px-3 py-2 text-sm <?php echo ! empty($item['active']) ? 'font-medium text-primary' : 'text-gray-700'; ?>">
-                                            <?php echo esc_html($item['label']); ?>
-                                        </a>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
+                        <?php if (! empty($group['link_only'])) : ?>
+                            <a href="<?php echo esc_url($group['url']); ?>" class="block px-3 py-2 text-sm <?php echo ! empty($group['active']) ? 'font-medium text-primary' : 'text-gray-700'; ?>">
+                                <?php echo esc_html($group['label']); ?>
+                            </a>
+                        <?php else : ?>
+                            <div class="ccr-mobile-group" data-ccr-mobile-group>
+                                <button type="button" class="ccr-mobile-group-trigger" data-ccr-mobile-group-trigger aria-expanded="false">
+                                    <span><?php echo esc_html($group['label']); ?></span>
+                                    <svg class="ccr-nav-caret" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+                                </button>
+                                <ul class="ccr-mobile-group-list" data-ccr-mobile-group-list hidden>
+                                    <?php foreach ($group['items'] as $item) : ?>
+                                        <li>
+                                            <a href="<?php echo esc_url($item['url']); ?>" class="block px-3 py-2 text-sm <?php echo ! empty($item['active']) ? 'font-medium text-primary' : 'text-gray-700'; ?>">
+                                                <?php echo esc_html($item['label']); ?>
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                 </div>
             </div>

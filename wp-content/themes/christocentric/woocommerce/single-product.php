@@ -64,6 +64,7 @@ while (have_posts()) {
     $onSale = ccr_product_is_on_sale($product);
     $isKit = ccr_product_is_kit($product);
     $max_qty = max(1, $product->get_stock_quantity() ?: 1);
+    $rentopianFlow = function_exists('ccr_rentopian_defers_rental_flow') && ccr_rentopian_defers_rental_flow();
     ?>
     <div class="container-site py-6">
         <nav class="text-sm text-gray-500">
@@ -139,13 +140,23 @@ while (have_posts()) {
                     <p class="mt-2 text-sm text-primary"><?php esc_html_e('Rental kit — all items below are added together.', 'christocentric'); ?></p>
                 <?php endif; ?>
                 <?php if ($product->is_in_stock()) : ?>
-                    <p class="ccr-availability-live mt-2 text-sm text-green-700"><?php esc_html_e('Pick dates below to see how many are free', 'christocentric'); ?></p>
+                    <?php if ($rentopianFlow) : ?>
+                        <p class="ccr-availability-live mt-2 text-sm text-gray-600"><?php esc_html_e('Choose your rental period below, then add to cart.', 'christocentric'); ?></p>
+                    <?php else : ?>
+                        <p class="ccr-availability-live mt-2 text-sm text-green-700"><?php esc_html_e('Pick dates below to see how many are free', 'christocentric'); ?></p>
+                    <?php endif; ?>
                 <?php else : ?>
                     <p class="ccr-availability-live mt-2 text-sm text-gray-500"><?php esc_html_e('Currently unavailable', 'christocentric'); ?></p>
                 <?php endif; ?>
+                <?php if (! $rentopianFlow) : ?>
                 <div class="mt-5 border border-gray-200 bg-gray-50 p-4 text-sm text-gray-600">
-                    <p>Rental is charged per day. Choose your pickup and return dates and times below to see the total.</p>
+                    <p><?php esc_html_e('Rental is charged per day. Choose your pickup and return dates and times below to see the total.', 'christocentric'); ?></p>
                 </div>
+                <?php else : ?>
+                <div class="mt-5 border border-gray-200 bg-gray-50 p-4 text-sm text-gray-600">
+                    <p><?php esc_html_e('Rental is charged per day. Set pickup and return below — availability is checked for those dates.', 'christocentric'); ?></p>
+                </div>
+                <?php endif; ?>
                 <?php if ($product->is_in_stock()) : ?>
                     <div class="mt-6"><?php woocommerce_template_single_add_to_cart(); ?></div>
                 <?php endif; ?>

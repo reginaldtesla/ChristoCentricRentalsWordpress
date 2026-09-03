@@ -836,212 +836,277 @@ function ccr_kits_url(): string
 }
 
 /**
- * Ensure product categories used by the Categories nav exist.
+ * Category slugs hidden from the storefront category nav.
+ *
+ * @return string[]
  */
-function ccr_ensure_nav_categories(): void
+function ccr_nav_excluded_category_slugs(): array
 {
-    if (! taxonomy_exists('product_cat')) {
-        return;
-    }
+    return apply_filters('ccr_nav_excluded_category_slugs', ['uncategorized']);
+}
 
-    $needed = [
-        'projectors' => 'Projectors',
-        'cameras' => 'Cameras',
-        'lens' => 'Lens',
-        'canon-cameras' => 'Canon Cameras',
-        'canon-lenses' => 'Canon Lenses',
-        'sony-cameras' => 'Sony Cameras',
-        'sony-lenses' => 'Sony Lenses',
-        'sigma-lenses' => 'Sigma Lenses',
-        'continuous-light' => 'Continuous Light',
-        'strobes' => 'Strobes',
-        'flash' => 'Flash',
-        'gimbals' => 'Gimbals',
-        'drone' => 'Drone',
-        'audio-gears' => 'Audio Gears',
-        'video-switcher' => 'Video Switcher',
-        'transmitter' => 'Transmitter',
-        'accessories' => 'Accessories',
-        'live-streaming-gears' => 'Live streaming gears',
-        'storage' => 'Storage',
-        'new-arrivals' => 'New Arrivals',
+/**
+ * @return list<WP_Term>
+ */
+function ccr_nav_filter_terms(array $terms): array
+{
+    return array_values(array_filter($terms, static function ($term): bool {
+        return $term instanceof WP_Term && ! in_array($term->slug, ccr_nav_excluded_category_slugs(), true);
+    }));
+}
+
+/**
+ * @return list<WP_Term>
+ */
+function ccr_nav_fetch_terms(int $parent = 0): array
+{
+    $base = [
+        'taxonomy' => 'product_cat',
+        'parent' => $parent,
+        'hide_empty' => false,
+        'order' => 'ASC',
     ];
 
-    foreach ($needed as $slug => $name) {
-        $term = get_term_by('slug', $slug, 'product_cat');
-        if ($term instanceof WP_Term) {
-            continue;
-        }
-        wp_insert_term($name, 'product_cat', ['slug' => $slug]);
+    $terms = get_terms(array_merge($base, [
+        'orderby' => 'meta_value_num',
+        'meta_key' => 'order',
+    ]));
+
+    if (is_wp_error($terms) || $terms === []) {
+        $terms = get_terms(array_merge($base, ['orderby' => 'name']));
     }
+
+    if (is_wp_error($terms)) {
+        return [];
+    }
+
+    return ccr_nav_filter_terms($terms);
+}
+
+/**
+ * Known category groups for the storefront nav.
+ * Unlisted categories, or new top-level ones from admin, go under "Other".
+ * Categories assigned a parent in Products → Categories appear under that parent group.
+ *
+ * @return list<array{label:string,slugs:list<string>}>
+ */
+function ccr_nav_group_definitions(): array
+{
+    return apply_filters('ccr_nav_group_definitions', [
+        [
+            'label' => __('Cameras', 'christocentric'),
+            'slugs' => ['cameras', 'canon-cameras', 'sony-cameras'],
+        ],
+        [
+            'label' => __('Lenses', 'christocentric'),
+            'slugs' => ['lens', 'canon-lenses', 'sony-lenses', 'sigma-lenses'],
+        ],
+        [
+            'label' => __('Lighting', 'christocentric'),
+            'slugs' => ['continuous-light', 'strobes', 'flash'],
+        ],
+        [
+            'label' => __('Audio', 'christocentric'),
+            'slugs' => ['audio-gears'],
+        ],
+        [
+            'label' => __('Video & transmission', 'christocentric'),
+            'slugs' => ['video-switcher', 'transmitter'],
+        ],
+        [
+            'label' => __('Stabilization & flight', 'christocentric'),
+            'slugs' => ['gimbals', 'drone'],
+        ],
+        [
+            'label' => __('Projection', 'christocentric'),
+            'slugs' => ['projectors'],
+        ],
+        [
+            'label' => __('Kits & more', 'christocentric'),
+            'slugs' => ['accessories', 'live-streaming-gears', 'storage', 'new-arrivals'],
+        ],
+    ]);
+}
+
+/**
+ * @return list<WP_Term>
+ */
+function ccr_nav_all_category_terms(): array
+{
+    $terms = get_terms([
+        'taxonomy' => 'product_cat',
+        'hide_empty' => false,
+        'orderby' => 'name',
+        'order' => 'ASC',
+    ]);
+
+    if (is_wp_error($terms)) {
+        return [];
+    }
+
+    return ccr_nav_filter_terms($terms);
+}
+
+/**
+ * @return array{label:string,url:string,slug:string,type:string,active:bool,children:list<array>}|null
+ */
+function ccr_nav_term_item(WP_Term $term, string $activeSlug, bool $kitsView, bool $withChildren = true): ?array
+{
+    if (in_array($term->slug, ccr_nav_excluded_category_slugs(), true)) {
+        return null;
+    }
+
+    $link = get_term_link($term, 'product_cat');
+    $url = is_wp_error($link) ? ccr_shop_url(['product_cat' => $term->slug]) : (string) $link;
+    $isActive = ! $kitsView && $activeSlug === $term->slug;
+    $children = [];
+
+    if ($withChildren) {
+        foreach (ccr_nav_fetch_terms((int) $term->term_id) as $childTerm) {
+            $childItem = ccr_nav_term_item($childTerm, $activeSlug, $kitsView, true);
+            if ($childItem === null) {
+                continue;
+            }
+            $children[] = $childItem;
+            if (! empty($childItem['active'])) {
+                $isActive = true;
+            }
+        }
+    }
+
+    return [
+        'label' => $term->name,
+        'url' => $url,
+        'slug' => $term->slug,
+        'type' => 'category',
+        'active' => $isActive,
+        'children' => $children,
+    ];
+}
+
+/**
+ * @return array<string, string> slug => group key
+ */
+function ccr_nav_bootstrap_slug_groups(): array
+{
+    $map = [];
+    foreach (ccr_nav_group_definitions() as $definition) {
+        $key = 'bootstrap-' . sanitize_title($definition['label']);
+        foreach ($definition['slugs'] as $slug) {
+            $map[$slug] = $key;
+        }
+    }
+
+    return $map;
 }
 
 /**
  * Category nav groups for header / mobile / shop sidebar.
  *
- * @return list<array{label:string,items:list<array{label:string,url:string,slug:string,type:string,active:bool}>}>
+ * @return list<array{label:string,url:string,slug:string,items:list<array>,active:bool,link_only:bool}>
  */
 function ccr_nav_category_groups(): array
 {
+    if (! taxonomy_exists('product_cat')) {
+        return [];
+    }
+
     $active = ccr_active_product_cat_slug();
     $kitsView = ccr_is_kits_view();
-    $shopActive = function_exists('is_shop') && is_shop() && $active === '' && ! $kitsView;
+    $terms = ccr_nav_all_category_terms();
 
-    $resolve = null;
-    $resolve = static function (array $item) use (&$resolve, $active, $kitsView, $shopActive): array {
-        $type = (string) ($item['type'] ?? 'category');
-        $slug = (string) ($item['slug'] ?? '');
-        $label = (string) ($item['label'] ?? '');
-        $url = ccr_shop_url();
-        $isActive = false;
-        $children = [];
+    if ($terms === []) {
+        return [];
+    }
 
-        if ($type === 'kits') {
-            $url = ccr_kits_url();
-            $isActive = $kitsView;
-        } elseif ($type === 'shop') {
-            $url = ccr_shop_url();
-            $isActive = $shopActive;
-        } elseif ($slug !== '') {
-            $term = get_term_by('slug', $slug, 'product_cat');
-            if ($term instanceof WP_Term) {
-                $link = get_term_link($term, 'product_cat');
-                $url = is_wp_error($link) ? ccr_shop_url(['product_cat' => $slug]) : (string) $link;
+    /** @var array<string, array{label:string,primary_slug:string,items:array<string, array>}> $buckets */
+    $buckets = [];
+    $bootstrapSlugGroups = ccr_nav_bootstrap_slug_groups();
 
-                $childTerms = get_terms([
-                    'taxonomy' => 'product_cat',
-                    'parent' => (int) $term->term_id,
-                    'hide_empty' => false,
-                ]);
-                if (! is_wp_error($childTerms)) {
-                    foreach ($childTerms as $childTerm) {
-                        if (! $childTerm instanceof WP_Term) {
-                            continue;
-                        }
-                        $children[] = $resolve([
-                            'label' => $childTerm->name,
-                            'slug' => $childTerm->slug,
-                        ]);
-                    }
-                }
-            } else {
-                $url = ccr_shop_url(['product_cat' => $slug]);
-            }
-            $isActive = ! $kitsView && $active === $slug;
+    $ensureBucket = static function (string $key, string $label, string $primarySlug = '') use (&$buckets): void {
+        if (! isset($buckets[$key])) {
+            $buckets[$key] = [
+                'label' => $label,
+                'primary_slug' => $primarySlug,
+                'items' => [],
+            ];
         }
-
-        if (! empty($item['children']) && is_array($item['children'])) {
-            foreach ($item['children'] as $child) {
-                if (! is_array($child)) {
-                    continue;
-                }
-                $resolved = $resolve($child);
-                $dup = false;
-                foreach ($children as $existing) {
-                    if (($existing['slug'] ?? '') !== '' && ($existing['slug'] ?? '') === ($resolved['slug'] ?? '')) {
-                        $dup = true;
-                        break;
-                    }
-                }
-                if (! $dup) {
-                    $children[] = $resolved;
-                }
-            }
-        }
-
-        foreach ($children as $child) {
-            if (! empty($child['active'])) {
-                $isActive = true;
-                break;
-            }
-        }
-
-        return [
-            'label' => $label,
-            'url' => $url,
-            'slug' => $slug,
-            'type' => $type,
-            'active' => $isActive,
-            'children' => $children,
-        ];
     };
 
-    $map = [
-        [
-            'label' => __('Cameras', 'christocentric'),
-            'items' => [
-                ['label' => __('All cameras', 'christocentric'), 'slug' => 'cameras'],
-                ['label' => __('Canon Cameras', 'christocentric'), 'slug' => 'canon-cameras'],
-                ['label' => __('Sony Cameras', 'christocentric'), 'slug' => 'sony-cameras'],
-            ],
-        ],
-        [
-            'label' => __('Lenses', 'christocentric'),
-            'items' => [
-                ['label' => __('All lenses', 'christocentric'), 'slug' => 'lens'],
-                ['label' => __('Canon Lenses', 'christocentric'), 'slug' => 'canon-lenses'],
-                ['label' => __('Sony Lenses', 'christocentric'), 'slug' => 'sony-lenses'],
-                ['label' => __('Sigma Lenses', 'christocentric'), 'slug' => 'sigma-lenses'],
-            ],
-        ],
-        [
-            'label' => __('Lighting', 'christocentric'),
-            'items' => [
-                ['label' => __('Continuous Light', 'christocentric'), 'slug' => 'continuous-light'],
-                ['label' => __('Strobes', 'christocentric'), 'slug' => 'strobes'],
-                ['label' => __('Flash', 'christocentric'), 'slug' => 'flash'],
-            ],
-        ],
-        [
-            'label' => __('Audio', 'christocentric'),
-            'items' => [
-                ['label' => __('Audio Gears', 'christocentric'), 'slug' => 'audio-gears'],
-            ],
-        ],
-        [
-            'label' => __('Video & transmission', 'christocentric'),
-            'items' => [
-                ['label' => __('Video Switcher', 'christocentric'), 'slug' => 'video-switcher'],
-                ['label' => __('Transmitter', 'christocentric'), 'slug' => 'transmitter'],
-            ],
-        ],
-        [
-            'label' => __('Stabilization & flight', 'christocentric'),
-            'items' => [
-                ['label' => __('Gimbals', 'christocentric'), 'slug' => 'gimbals'],
-                ['label' => __('Drone', 'christocentric'), 'slug' => 'drone'],
-            ],
-        ],
-        [
-            'label' => __('Projection', 'christocentric'),
-            'items' => [
-                ['label' => __('Projectors', 'christocentric'), 'slug' => 'projectors'],
-            ],
-        ],
-        [
-            'label' => __('Kits & more', 'christocentric'),
-            'items' => [
-                ['label' => __('Kits', 'christocentric'), 'type' => 'kits'],
-                ['label' => __('Accessories', 'christocentric'), 'slug' => 'accessories'],
-                ['label' => __('Live streaming gears', 'christocentric'), 'slug' => 'live-streaming-gears'],
-                ['label' => __('Storage', 'christocentric'), 'slug' => 'storage'],
-                ['label' => __('New Arrivals', 'christocentric'), 'slug' => 'new-arrivals'],
-                ['label' => __('All products', 'christocentric'), 'type' => 'shop'],
-            ],
-        ],
-    ];
+    foreach (ccr_nav_group_definitions() as $definition) {
+        $key = 'bootstrap-' . sanitize_title($definition['label']);
+        $ensureBucket($key, $definition['label'], $definition['slugs'][0] ?? '');
+    }
+    $ensureBucket('other', __('Other', 'christocentric'));
+
+    foreach ($terms as $term) {
+        $item = ccr_nav_term_item($term, $active, $kitsView, true);
+        if ($item === null) {
+            continue;
+        }
+
+        $bucketKey = 'other';
+
+        if ((int) $term->parent > 0) {
+            $parent = get_term((int) $term->parent, 'product_cat');
+            if ($parent instanceof WP_Term) {
+                $bucketKey = 'parent-' . (int) $parent->term_id;
+                $ensureBucket($bucketKey, $parent->name, $parent->slug);
+            }
+        } elseif (isset($bootstrapSlugGroups[$term->slug])) {
+            $bucketKey = $bootstrapSlugGroups[$term->slug];
+        }
+
+        $buckets[$bucketKey]['items'][$term->slug] = $item;
+    }
 
     $groups = [];
-    foreach ($map as $group) {
-        $items = array_map($resolve, $group['items']);
+    $orderedKeys = array_merge(
+        array_map(static fn (array $definition): string => 'bootstrap-' . sanitize_title($definition['label']), ccr_nav_group_definitions()),
+        array_values(array_filter(array_keys($buckets), static fn (string $key): bool => str_starts_with($key, 'parent-'))),
+        ['other']
+    );
+    $orderedKeys = array_values(array_unique($orderedKeys));
+
+    foreach ($orderedKeys as $bucketKey) {
+        if (! isset($buckets[$bucketKey]) || $buckets[$bucketKey]['items'] === []) {
+            continue;
+        }
+
+        $bucket = $buckets[$bucketKey];
+        $items = array_values($bucket['items']);
+
+        usort($items, static fn (array $a, array $b): int => strcasecmp($a['label'], $b['label']));
+
+        $primarySlug = $bucket['primary_slug'];
+        if ($primarySlug !== '' && isset($bucket['items'][$primarySlug]) && count($items) > 1) {
+            $primary = $bucket['items'][$primarySlug];
+            $items = array_values(array_filter($items, static fn (array $item): bool => ($item['slug'] ?? '') !== $primarySlug));
+            array_unshift($items, [
+                'label' => sprintf(
+                    /* translators: %s: category name */
+                    __('All %s', 'christocentric'),
+                    $primary['label']
+                ),
+                'url' => $primary['url'],
+                'slug' => $primary['slug'],
+                'type' => 'category',
+                'active' => $primary['active'],
+                'children' => [],
+            ]);
+        }
+
         $groups[] = [
-            'label' => $group['label'],
+            'label' => $bucket['label'],
+            'url' => $items[0]['url'] ?? ccr_shop_url(),
+            'slug' => $items[0]['slug'] ?? '',
             'items' => $items,
-            'active' => (bool) array_filter($items, static fn ($item) => ! empty($item['active'])),
+            'active' => (bool) array_filter($items, static fn (array $item): bool => ! empty($item['active'])),
+            'link_only' => false,
         ];
     }
 
-    return $groups;
+    return apply_filters('ccr_nav_category_groups', $groups);
 }
 
 /**

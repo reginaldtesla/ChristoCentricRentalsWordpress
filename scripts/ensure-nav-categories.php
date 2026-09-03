@@ -1,12 +1,14 @@
 <?php
 require __DIR__ . '/../wp-load.php';
-if (! function_exists('ccr_ensure_nav_categories')) {
-    fwrite(STDERR, "ccr_ensure_nav_categories missing\n");
+
+if (! function_exists('ccr_nav_category_groups')) {
+    fwrite(STDERR, "ccr_nav_category_groups missing\n");
     exit(1);
 }
-ccr_ensure_nav_categories();
-echo 'opt=' . get_option('ccr_nav_categories_v2') . PHP_EOL;
-foreach (['strobes', 'flash', 'video-switcher', 'transmitter', 'live-streaming-gears', 'storage'] as $s) {
-    $t = get_term_by('slug', $s, 'product_cat');
-    echo $s . '=' . ($t instanceof WP_Term ? (string) $t->term_id : 'missing') . PHP_EOL;
+
+foreach (ccr_nav_category_groups() as $group) {
+    echo $group['label'] . PHP_EOL;
+    foreach ($group['items'] as $item) {
+        echo '  - ' . $item['label'] . ' (' . ($item['slug'] ?? '') . ')' . PHP_EOL;
+    }
 }

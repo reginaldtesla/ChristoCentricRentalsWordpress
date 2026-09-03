@@ -1,4 +1,12 @@
 (function ($) {
+    if ($('body').hasClass('ccr-rentopian-rental-flow')) {
+        return;
+    }
+
+    if (typeof ccrRental !== 'undefined' && ccrRental.rentopianFlow) {
+        return;
+    }
+
     var returnAuto = true;
 
     function $fields() {
